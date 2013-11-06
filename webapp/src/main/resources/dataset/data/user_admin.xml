@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<user>
+  <id>52602b9b92bede6f44717f87</id>
+  <username>admin</username>
+  <password>admin</password>
+  <removable>false</removable>
+  <role>
+    <id>52602b9b92bede6f44752e34</id>
+    <name>Administrator</name>
+  </role>
+</user>

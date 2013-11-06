@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>User Details</title>
+	<link href="../../../static/css/main.css" th:href="@{/static/css/main.css}" rel="stylesheet"/>
+	<script src="../../../static/js/lib/jquery-1.10.2.min.js" th:src="@{/static/js/lib/jquery-1.10.2.min.js}"></script>
+	<script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+</head>
+<body>
+<header th:substituteby="templates/header::header"></header>
+<div id="container">
+	<div th:substituteby="templates/navbar::navbar"></div>
+	<div id="content">
+		<form action="#" th:object="${userModel}">
+			<h1>User Details</h1>
+			<input type="hidden" th:field="*{userId}"/>
+			<table>
+				<tr>
+					<td>
+						<input type="text" th:field="*{username}"
+									 readonly="readonly" placeholder="Username" autofocus=""/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Select Role:</label><br/>
+						<input type="text" th:field="*{authorization}" readonly="readonly"/>
+					</td>
+				</tr>
+			</table>
+			<input type="button" id="editUser" value="Edit User" th:disabled="${!userModel.removable}"/>
+			<input type="button" id="deleteUser" value="Delete User" th:disabled="${!userModel.removable}"/>
+			<input type="button" id="goToUsers" value="Back"/>
+		</form>
+	</div>
+</div>
+<footer th:substituteby="templates/footer::footer"></footer>
+<script th:inline="javascript">
+	$(function () {
+		$("#goToUsers").click(function () {
+			window.location = /*[[@{/user/loadUsers}]]*/ "./users.html";
+		});
+
+		$("#editUser").click(function () {
+			window.location = /*[[@{/user/editUser/}+${userModel.userId}]]*/ "./userForm.html";
+		});
+
+		$("#deleteUser").click(function() {
+			window.location = /*[[@{/user/deleteUser/}+${userModel.userId}]]*/ "./userForm.html";
+		});
+	});
+</script>
+</body>
+</html>

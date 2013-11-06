@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+  <http create-session="ifRequired" use-expressions="true">
+    <intercept-url pattern="/" access="permitAll"/>
+    <intercept-url pattern="/static/**" access="permitAll"/>
+    <intercept-url pattern="/login" access="isAnonymous()"/>
+    <intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+    <!--<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>-->
+
+    <form-login login-page="/login" login-processing-url="/processLogin"
+        username-parameter="username" password-parameter="password"
+        default-target-url="/home" always-use-default-target="true"
+        authentication-success-handler-ref="sessionUserHandler"/>
+
+    <logout logout-url="/logout" delete-cookies="JSESSIONID"/>
+    <!--<security:session-management invalid-session-url="/invalidSession"/>-->
+  </http>
+
+  <authentication-manager>
+    <authentication-provider user-service-ref="userDetailsService"/>
+  </authentication-manager>
+
+  <beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.RecruitingUserDetailService"/>
+
+  <beans:bean id="authorityService" class="it.f2informatica.webapp.security.BasicAuthorityService"/>
+
+  <beans:bean id="sessionUserHandler" class="it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler"/>
+
+  <beans:bean id="securityAccessorService" class="it.f2informatica.webapp.security.SecurityAccessor"/>
+
+</beans:beans>

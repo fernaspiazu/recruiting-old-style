@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="../../../static/css/main.css" th:href="@{/static/css/main.css}" rel="stylesheet"/>
+	<script src="../../../static/js/lib/jquery-1.10.2.min.js" th:src="@{/static/js/lib/jquery-1.10.2.min.js}"></script>
+	<script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+</head>
+<body>
+<header class="header" th:fragment="header" role="banner">
+	<div id="logoutLink" class="float-right">
+		<img id="logout" th:src="@{/static/images/logout-icon.png}" src="../../../static/images/logout-icon.png" title="logout"/>
+	</div>
+	<div id="userInSession" class="float-right">
+		<img th:src="@{/static/images/user-icon.png}" src="../../../static/images/user-icon.png" title="User in session"/>
+		<span th:text="${session.user.username}">Username</span>
+	</div>
+	<div class="clear-both"></div>
+</header>
+</body>
+</html>
