@@ -13,6 +13,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.spring3.SpringTemplateEngine;
@@ -135,6 +137,18 @@ public class WebApplicationConfigTest {
 		assertThat(englishMessage).isEqualTo("Message in English");
 		String italianMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ITALIAN);
 		assertThat(italianMessage).isEqualTo("Messaggio in Italiano");
+	}
+
+	@Test
+	public void localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = webApplicationConfig.localeChangeInterceptor();
+		assertThat(localeChangeInterceptor.getParamName()).isEqualTo("siteLanguage");
+	}
+
+	@Test
+	public void localeResolver() {
+		CookieLocaleResolver cookieLocaleResolver = webApplicationConfig.localeResolver();
+		assertThat(cookieLocaleResolver).isNotNull();
 	}
 
 }

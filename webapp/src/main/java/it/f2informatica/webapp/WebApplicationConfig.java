@@ -8,12 +8,15 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -42,6 +45,27 @@ public class WebApplicationConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
+	}
+
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("siteLanguage");
+		return localeChangeInterceptor;
+	}
+
+	@Bean
+	public CookieLocaleResolver localeResolver() {
+		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+		// This line will must change because
+		// it will have to take the default locale.
+		cookieLocaleResolver.setDefaultLocale(Locale.ITALIAN);
+		return cookieLocaleResolver;
 	}
 
 	@Bean
