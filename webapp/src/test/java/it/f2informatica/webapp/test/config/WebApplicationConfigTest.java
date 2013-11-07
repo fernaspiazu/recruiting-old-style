@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +21,7 @@ import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -124,6 +126,15 @@ public class WebApplicationConfigTest {
 		ServletContextTemplateResolver templateResolver = webApplicationConfig.thymeleafTemplateResolver();
 		templateResolver.initialize();
 		assertThat(templateResolver.getTemplateMode()).isEqualTo("HTML5");
+	}
+
+	@Test
+	public void messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = webApplicationConfig.messageSource();
+		String englishMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ENGLISH);
+		assertThat(englishMessage).isEqualTo("Message in English");
+		String italianMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ITALIAN);
+		assertThat(italianMessage).isEqualTo("Messaggio in Italiano");
 	}
 
 }
