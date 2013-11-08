@@ -9,10 +9,14 @@
 <body>
 <header class="header" th:fragment="header" role="banner">
 	<div id="logoutLink" class="float-right">
-		<img id="logout" th:src="@{/static/images/logout-icon.png}" src="../../../static/images/logout-icon.png" title="logout"/>
+		<img id="logout" th:title="#{login.logout}" title="Logout"
+				 th:src="@{/static/images/logout-icon.png}"
+				 src="../../../static/images/logout-icon.png"/>
 	</div>
 	<div id="userInSession" class="float-right">
-		<img th:src="@{/static/images/user-icon.png}" src="../../../static/images/user-icon.png" title="User in session"/>
+		<img th:title="#{header.userInSession}" title="User in session"
+				 th:src="@{/static/images/user-icon.png}"
+				 src="../../../static/images/user-icon.png"/>
 		<span th:text="${session.user.username}">Username</span>
 	</div>
 	<div class="clear-both"></div>

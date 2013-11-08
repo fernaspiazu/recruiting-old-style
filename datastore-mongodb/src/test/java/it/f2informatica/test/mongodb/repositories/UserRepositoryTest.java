@@ -10,8 +10,6 @@ import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.test.mongodb.DatastoreUtils;
 import it.f2informatica.test.mongodb.constants.RoleConstants;
 import it.f2informatica.test.mongodb.constants.UserConstants;
-import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class UserRepositoryTest extends DatastoreUtils
 		implements UserConstants, RoleConstants {
-	private static final Logger log = Logger.getLogger(UserRepositoryTest.class);
 
 	@Autowired
 	UserRepository userRepository;
@@ -50,7 +47,6 @@ public class UserRepositoryTest extends DatastoreUtils
 	@Test
 	public void hasUserBeenSaved() {
 		assertThat(savedUser).isNotNull();
-		log.info("User saved >>> " + savedUser);
 	}
 
 	@Test
@@ -58,7 +54,6 @@ public class UserRepositoryTest extends DatastoreUtils
 		User userFoundByUsername = userRepository.findByUsername(USER_1_USERNAME);
 		assertThat(userFoundByUsername).isNotNull();
 		assertThat(userFoundByUsername.getUsername()).isEqualTo(USER_1_USERNAME);
-		log.info("findByUsername(...) result >>> " + userFoundByUsername);
 	}
 
 	@Test
@@ -71,7 +66,6 @@ public class UserRepositoryTest extends DatastoreUtils
 	@Test
 	public void findByRoleName() {
 		Iterable<User> administratorUsers = userRepository.findByRoleName(ROLE_1_NAME);
-		log.info("Users retrieved >>> " + administratorUsers);
 		User firstUserFound = Iterables.getFirst(administratorUsers, new User());
 		assert firstUserFound != null;
 		assertThat(firstUserFound.getRole().getName()).isEqualTo(ROLE_1_NAME);
@@ -115,7 +109,7 @@ public class UserRepositoryTest extends DatastoreUtils
 	}
 
 	private String parseObjectIdToString(Object id) {
-		return id == null ? null : id instanceof ObjectId ? ((ObjectId) id).toString() : id.toString();
+		return String.valueOf(id);
 	}
 
 	@Test
