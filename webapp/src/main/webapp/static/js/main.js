@@ -61,6 +61,10 @@ function readCookie(name) {
 			return c.substring(nameEQ.length, c.length);
 		}
 	}
+	return getCurrentNavigatorLanguage();
+}
+
+function getCurrentNavigatorLanguage() {
 	if (navigator.userLanguage) {
 		return navigator.userLanguage;
 	}
