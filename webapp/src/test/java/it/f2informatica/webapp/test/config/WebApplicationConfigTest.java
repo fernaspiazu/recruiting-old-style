@@ -54,6 +54,9 @@ public class WebApplicationConfigTest {
 	@Mock
 	DefaultServletHandlerConfigurer servletHandlerConfigurer;
 
+	@Mock
+	InterceptorRegistry interceptorRegistry;
+
 	@BeforeClass
 	public static void beforeClass() {
 		webApplicationConfig = new WebApplicationConfig();
@@ -140,6 +143,14 @@ public class WebApplicationConfigTest {
 	}
 
 	@Test
+	public void addInterceptors() {
+		ArgumentCaptor<LocaleChangeInterceptor> argument = ArgumentCaptor.forClass(LocaleChangeInterceptor.class);
+		webApplicationConfig.addInterceptors(interceptorRegistry);
+		verify(interceptorRegistry).addInterceptor(argument.capture());
+		assertThat(argument.getValue().getParamName()).isEqualTo("siteLanguage");
+	}
+
+	@Test
 	public void localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = webApplicationConfig.localeChangeInterceptor();
 		assertThat(localeChangeInterceptor.getParamName()).isEqualTo("siteLanguage");
@@ -148,7 +159,7 @@ public class WebApplicationConfigTest {
 	@Test
 	public void localeResolver() {
 		CookieLocaleResolver cookieLocaleResolver = webApplicationConfig.localeResolver();
-		assertThat(cookieLocaleResolver).isNotNull();
+		assertThat(cookieLocaleResolver.getCookieName()).isEqualTo("CURRENT_LOCALE");
 	}
 
 }

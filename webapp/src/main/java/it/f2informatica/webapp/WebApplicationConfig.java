@@ -16,7 +16,6 @@ import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
-import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -62,9 +61,7 @@ public class WebApplicationConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public CookieLocaleResolver localeResolver() {
 		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		// This line will must change because
-		// it will have to take the default locale.
-		cookieLocaleResolver.setDefaultLocale(Locale.ITALIAN);
+		cookieLocaleResolver.setCookieName("CURRENT_LOCALE");
 		return cookieLocaleResolver;
 	}
 

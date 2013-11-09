@@ -12,23 +12,23 @@
 	<div th:substituteby="templates/navbar::navbar"></div>
 	<div id="content">
 		<form action="#" th:object="${userModel}" method="post" th:action="@{/user/saveUser}">
-			<h1>Create new User</h1>
+			<h1 th:text="#{user.newuser}">Create new User</h1>
 			<table>
 				<tr>
 					<td>
-						<input type="text" th:field="*{username}" placeholder="Username"
-									 autofocus="" required=""/>
+						<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
+									 placeholder="Username" autofocus="" required=""/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="password" th:field="*{password}"
+						<input type="password" th:field="*{password}" th:placeholder="#{user.password}"
 									 placeholder="Password" required=""/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="roleId">Select Role:</label><br/>
+						<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
 						<select id="roleId" th:field="*{roleId}" th:class="${readOnly} ? 'select-readOnly' : ''" required="">
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
 								Role in Wireframe
@@ -37,8 +37,8 @@
 					</td>
 				</tr>
 			</table>
-			<input type="submit" id="saveUser" value="Save User"/>
-			<input type="button" id="goToUsers" value="Back"/>
+			<input type="submit" id="saveUser" th:value="#{user.saveuser}" value="Save User"/>
+			<input type="button" id="goToUsers" th:value="#{global.back}" value="Back"/>
 		</form>
 	</div>
 </div>

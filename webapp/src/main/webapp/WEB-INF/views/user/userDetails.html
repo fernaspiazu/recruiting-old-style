@@ -12,25 +12,28 @@
 	<div th:substituteby="templates/navbar::navbar"></div>
 	<div id="content">
 		<form action="#" th:object="${userModel}">
-			<h1>User Details</h1>
+			<h1 th:text="#{user.userdetails}">User Details</h1>
 			<input type="hidden" th:field="*{userId}"/>
 			<table>
 				<tr>
 					<td>
-						<input type="text" th:field="*{username}"
-									 readonly="readonly" placeholder="Username" autofocus=""/>
+						<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
+									 placeholder="Username" readonly="readonly" autofocus=""/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label>Select Role:</label><br/>
+						<label th:text="#{user.selectrole}">Select Role:</label><br/>
 						<input type="text" th:field="*{authorization}" readonly="readonly"/>
 					</td>
 				</tr>
 			</table>
-			<input type="button" id="editUser" value="Edit User" th:disabled="${!userModel.removable}"/>
-			<input type="button" id="deleteUser" value="Delete User" th:disabled="${!userModel.removable}"/>
-			<input type="button" id="goToUsers" value="Back"/>
+			<input type="button" id="editUser" th:value="#{user.edituser}"
+						 value="Edit User" th:disabled="${!userModel.removable}"/>
+			<input type="button" id="deleteUser" th:value="#{user.deleteuser}"
+						 value="Delete User" th:disabled="${!userModel.removable}"/>
+			<input type="button" id="goToUsers" th:value="#{global.back}"
+						 value="Back"/>
 		</form>
 	</div>
 </div>

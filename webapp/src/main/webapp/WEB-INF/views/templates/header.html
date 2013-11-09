@@ -19,6 +19,16 @@
 				 src="../../../static/images/user-icon.png"/>
 		<span th:text="${session.user.username}">Username</span>
 	</div>
+	<div class="float-right">
+		<label for="select-language"
+					 th:text="#{header.selectlanguage}">
+			Select language
+		</label>
+		<select id="select-language">
+			<option value="en" th:text="#{header.english}">English</option>
+			<option value="it" th:text="#{header.italian}">Italian</option>
+		</select>
+	</div>
 	<div class="clear-both"></div>
 </header>
 </body>

@@ -11,6 +11,10 @@
   <listener>
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
+
+  <listener>
+    <listener-class>it.f2informatica.webapp.listeners.SessionLocalesAggregatorListener</listener-class>
+  </listener>
   
   <context-param>
     <param-name>contextClass</param-name>

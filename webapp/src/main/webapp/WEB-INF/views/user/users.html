@@ -11,12 +11,12 @@
 <div id="container">
 	<div th:substituteby="templates/navbar::navbar"></div>
 	<div id="content">
-		<h1 th:text="#{users}">Users</h1>
+		<h1 th:text="#{user.users}">Users</h1>
 		<table class="bordered">
 			<thead>
 			<tr>
-				<th th:text="#{username}">Username</th>
-				<th th:text="#{password}">Password</th>
+				<th th:text="#{user.username}">Username</th>
+				<th th:text="#{user.password}">Password</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -27,21 +27,21 @@
 				<td th:text="${user.authorization}">Some Role</td>
 				<td class="cell-text-align-center">
 					<a th:href="@{/user/findUser/}+${user.userId}"
-						 href="userForm.html" th:text="#{details}">
-						Details WF
+						 href="userForm.html" th:text="#{user.details}">
+						Details
 					</a>
 				</td>
 				<td class="cell-text-align-center">
 					<a th:href="@{/user/changePassword/}+${user.userId}" href="userForm.html"
-						 th:unless="${!user.removable}" th:text="#{changePassword}">
-						Change Password WF
+						 th:unless="${!user.removable}" th:text="#{user.changePassword}">
+						Change Password
 					</a>
 				</td>
 			</tr>
 			</tbody>
 		</table>
 		<a th:href="@{/user/createNewUser}" href="userForm.html"
-				th:text="#{newuser}">
+				th:text="#{user.newuser}">
 			New User
 		</a>
 	</div>

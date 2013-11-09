@@ -12,18 +12,18 @@
 	<div th:substituteby="templates/navbar::navbar"></div>
 	<div id="content">
 		<form action="#" th:object="${userModel}" th:action="@{/user/updateUser}" method="post">
-			<h1>Edit User</h1>
+			<h1 th:text="#{user.edituser}">Edit User</h1>
 			<input type="hidden" th:field="*{userId}"/>
 			<table>
 				<tr>
 					<td>
-						<input type="text" th:field="*{username}"
+						<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
 									 placeholder="Username" autofocus="" required=""/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="roleId">Select Role:</label><br/>
+						<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
 						<select id="roleId" th:field="*{roleId}" required="">
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
 								Role in Wireframe
@@ -32,8 +32,8 @@
 					</td>
 				</tr>
 			</table>
-			<input type="submit" id="updateUser" value="Update User"/>
-			<input type="button" id="goToUsers" value="Back"/>
+			<input type="submit" id="updateUser" th:value="#{user.updateuser}" value="Update User"/>
+			<input type="button" id="goToUsers" th:value="#{global.back}" value="Back"/>
 		</form>
 	</div>
 </div>
