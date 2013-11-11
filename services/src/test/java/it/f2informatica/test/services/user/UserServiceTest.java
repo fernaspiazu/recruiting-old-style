@@ -122,6 +122,13 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void findRoleByName() {
+		when(roleRepository.findByName("ROLE_ADMIN")).thenReturn(createRole("ROLE_ADMIN"));
+		RoleResponse response = userService.findRoleByName("ROLE_ADMIN");
+		assertThat(response.getRoleName()).isEqualTo("ROLE_ADMIN");
+	}
+
+	@Test
 	public void deleteUserByUserId() {
 		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
 		userService.deleteUser("1234567890");
@@ -164,7 +171,7 @@ public class UserServiceTest {
 		ChangePasswordRequest request = new ChangePasswordRequest();
 		request.setUserId("1234567890");
 		request.setCurrentPassword("old password");
-		request.setNewPassword(null);
+		request.setNewPassword("new password");
 		request.setPasswordConfirmed(null);
 		boolean success = userService.changePassword(request);
 		assertThat(success).isFalse();
