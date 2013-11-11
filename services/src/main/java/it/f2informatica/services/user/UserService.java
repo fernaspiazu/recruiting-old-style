@@ -44,7 +44,7 @@ public interface UserService {
 			// After saving document "id" field can be of ObjectId type
 			userResponse.setUserId(String.valueOf(input.getId()));
 			userResponse.setUsername(input.getUsername());
-			userResponse.setRemovable(input.isRemovable());
+			userResponse.setNotRemovable(input.isNotRemovable());
 			userResponse.setAuthorization(input.getRole().getName());
 			return userResponse;
 		}

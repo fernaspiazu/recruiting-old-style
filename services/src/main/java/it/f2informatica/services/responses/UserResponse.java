@@ -13,7 +13,7 @@ public class UserResponse {
 
 	private String username;
 
-	private boolean removable;
+	private boolean notRemovable;
 
 	private String authorization;
 

@@ -33,7 +33,7 @@
 				</td>
 				<td class="cell-text-align-center">
 					<a th:href="@{/user/changePassword/}+${user.userId}" href="userForm.html"
-						 th:unless="${!user.removable}" th:text="#{user.changePassword}">
+						 th:unless="${user.notRemovable}" th:text="#{user.changePassword}">
 						Change Password
 					</a>
 				</td>

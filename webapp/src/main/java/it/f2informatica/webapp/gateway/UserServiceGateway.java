@@ -54,7 +54,7 @@ public class UserServiceGateway {
 
 	public UserRequest prepareNewUserToSave() {
 		UserRequest userRequest = new UserRequest();
-		userRequest.setRemovable(true);
+		userRequest.setNotRemovable(false);
 		return userRequest;
 	}
 
@@ -65,7 +65,7 @@ public class UserServiceGateway {
 		userRequest.setUsername(userResponse.getUsername());
 		RoleResponse role = userService.findRoleByName(userResponse.getAuthorization());
 		userRequest.setRoleId(role.getRoleId());
-		userRequest.setRemovable(userResponse.isRemovable());
+		userRequest.setNotRemovable(userResponse.isNotRemovable());
 		return userRequest;
 	}
 

@@ -87,7 +87,7 @@ public class UserRepositoryTest extends DatastoreUtils
 	@Test
 	public void deleteRemovableUser() {
 		User removableUser = createUser(USER_2_USERNAME, USER_2_PASSWORD);
-		assertThat(removableUser.isRemovable()).isTrue();
+		assertThat(removableUser.isNotRemovable()).isFalse();
 		Role removableUserRole = createRole(ROLE_2_NAME);
 		removableUser.setRole(roleRepository.save(removableUserRole));
 		User removableUserSaved = userRepository.save(removableUser);
@@ -98,10 +98,10 @@ public class UserRepositoryTest extends DatastoreUtils
 	@Test
 	public void deleteNotRemovableUser() {
 		User notRemovableUser = createUser(USER_2_USERNAME, USER_2_PASSWORD);
-		assertThat(notRemovableUser.isRemovable()).isTrue();
+		assertThat(notRemovableUser.isNotRemovable()).isFalse();
 		Role someRole = createRole(ROLE_2_NAME);
 		notRemovableUser.setRole(roleRepository.save(someRole));
-		notRemovableUser.setRemovable(false);
+		notRemovableUser.setNotRemovable(true);
 		User notRemovableUserSaved = userRepository.save(notRemovableUser);
 		userRepository.deleteRemovableUser(parseObjectIdToString(notRemovableUserSaved.getId()));
 		User notRemovableRetrieved = userRepository.findOne(notRemovableUserSaved.getId());

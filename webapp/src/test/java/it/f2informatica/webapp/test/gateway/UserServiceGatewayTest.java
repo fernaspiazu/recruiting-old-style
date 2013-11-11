@@ -103,7 +103,7 @@ public class UserServiceGatewayTest {
 
 	@Test
 	public void prepareNewUserToSave() {
-		assertThat(userServiceGateway.prepareNewUserToSave().isRemovable()).isTrue();
+		assertThat(userServiceGateway.prepareNewUserToSave().isNotRemovable()).isFalse();
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class UserServiceGatewayTest {
 		UserResponse userResponse = new UserResponse();
 		userResponse.setUserId("1234567890");
 		userResponse.setUsername("username");
-		userResponse.setRemovable(true);
+		userResponse.setNotRemovable(false);
 		userResponse.setAuthorization("Administrator");
 		return userResponse;
 	}
@@ -134,7 +134,7 @@ public class UserServiceGatewayTest {
 		userRequest.setUserId("1234567890");
 		userRequest.setUsername("username");
 		userRequest.setPassword("password");
-		userRequest.setRemovable(true);
+		userRequest.setNotRemovable(false);
 		userRequest.setRoleId("555");
 		return userRequest;
 	}

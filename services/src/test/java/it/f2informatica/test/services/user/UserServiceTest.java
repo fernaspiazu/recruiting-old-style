@@ -222,7 +222,7 @@ public class UserServiceTest {
 		user.setId("1234567890");
 		user.setUsername(username);
 		user.setPassword(password);
-		user.setRemovable(true);
+		user.setNotRemovable(false);
 		user.setRole(role);
 		return user;
 	}

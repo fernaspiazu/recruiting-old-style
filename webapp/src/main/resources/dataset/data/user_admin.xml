@@ -4,7 +4,7 @@
   <id>52602b9b92bede6f44717f87</id>
   <username>admin</username>
   <password>admin</password>
-  <removable>false</removable>
+  <notRemovable>true</notRemovable>
   <role>
     <id>52602b9b92bede6f44752e34</id>
     <name>Administrator</name>

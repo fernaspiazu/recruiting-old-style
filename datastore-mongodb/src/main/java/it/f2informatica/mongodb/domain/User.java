@@ -18,9 +18,13 @@ public class User extends Identifiable<String> {
 
 	private String password;
 
-	private boolean removable = true;
+	private String firstName;
+
+	private String lastName;
 
 	@DBRef
 	private Role role;
+
+	private boolean notRemovable;
 
 }

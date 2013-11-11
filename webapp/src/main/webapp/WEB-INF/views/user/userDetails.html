@@ -29,9 +29,9 @@
 				</tr>
 			</table>
 			<input type="button" id="editUser" th:value="#{user.edituser}"
-						 value="Edit User" th:disabled="${!userModel.removable}"/>
+						 value="Edit User" th:disabled="${userModel.notRemovable}"/>
 			<input type="button" id="deleteUser" th:value="#{user.deleteuser}"
-						 value="Delete User" th:disabled="${!userModel.removable}"/>
+						 value="Delete User" th:disabled="${userModel.removable}"/>
 			<input type="button" id="goToUsers" th:value="#{global.back}"
 						 value="Back"/>
 		</form>

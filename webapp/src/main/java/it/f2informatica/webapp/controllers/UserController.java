@@ -1,6 +1,5 @@
 package it.f2informatica.webapp.controllers;
 
-import it.f2informatica.mongodb.MongoDataEvent;
 import it.f2informatica.services.requests.ChangePasswordRequest;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
@@ -38,23 +37,19 @@ public class UserController {
 
 	@RequestMapping(value = "/findUser/{userId}", method = RequestMethod.GET)
 	public String findUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("readOnly", true)
-						.addAttribute("operation", MongoDataEvent.DETAIL.toString())
-						.addAttribute("userModel", userServiceGateway.findUserById(userId));
+		modelMap.addAttribute("userModel", userServiceGateway.findUserById(userId));
 		return "user/userDetails";
 	}
 
 	@RequestMapping(value = "/createNewUser", method = RequestMethod.GET)
 	public String createNewUser(ModelMap modelMap) {
-		modelMap.addAttribute("operation", MongoDataEvent.SAVE.toString())
-						.addAttribute("userModel", userServiceGateway.prepareNewUserToSave());
+		modelMap.addAttribute("userModel", userServiceGateway.prepareNewUserToSave());
 		return "user/createNewUser";
 	}
 
 	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
 	public String editUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("operation", MongoDataEvent.EDIT.toString())
-						.addAttribute("userModel", userServiceGateway.prepareUserToUpdate(userId));
+		modelMap.addAttribute("userModel", userServiceGateway.prepareUserToUpdate(userId));
 		return "user/userEdit";
 	}
 

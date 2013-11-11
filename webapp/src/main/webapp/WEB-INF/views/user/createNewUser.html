@@ -29,7 +29,7 @@
 				<tr>
 					<td>
 						<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
-						<select id="roleId" th:field="*{roleId}" th:class="${readOnly} ? 'select-readOnly' : ''" required="">
+						<select id="roleId" th:field="*{roleId}" required="">
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
 								Role in Wireframe
 							</option>

@@ -32,7 +32,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	public void deleteRemovableUser(String userId) {
 		mongoTemplate.remove(
 				query(where("id").is(userId)
-						.and("removable").is(true)), User.class);
+						.and("notRemovable").is(false)), User.class);
 	}
 
 }

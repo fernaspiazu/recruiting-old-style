@@ -15,7 +15,7 @@ public class UserRequest {
 
 	private String password;
 
-	private boolean removable = true;
+	private boolean notRemovable;
 
 	private String roleId;
 

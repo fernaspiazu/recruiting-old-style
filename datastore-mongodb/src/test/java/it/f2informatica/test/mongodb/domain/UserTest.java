@@ -46,9 +46,9 @@ public class UserTest implements UserConstants, RoleConstants {
 
 	@Test
 	public void isRemovable() {
-		assertThat(user.isRemovable()).isTrue();
-		user.setRemovable(false);
-		assertThat(user.isRemovable()).isFalse();
+		assertThat(user.isNotRemovable()).isFalse();
+		user.setNotRemovable(true);
+		assertThat(user.isNotRemovable()).isTrue();
 	}
 
 	private User createUser(String username, String password, String roleName) {
