@@ -17,7 +17,7 @@ body {
 }
 
 .header {
-	border: 1px solid;
+	border: 0px solid;
 	padding: 10px 10px 10px 10px;
 	background-color: #444444;
 	color: #ffffff;
@@ -57,7 +57,7 @@ body {
 }
 
 #content {
-	border: 1px solid;
+	border: 0px solid;
 	float: right;
 	width: 85%;
 	padding: 0 15px 15px 15px;
@@ -73,7 +73,7 @@ body {
 }
 
 .footer {
-	border: 1px solid;
+	border: 0px solid;
 	bottom: 0px;
 	position: absolute;
 	width: 100%;

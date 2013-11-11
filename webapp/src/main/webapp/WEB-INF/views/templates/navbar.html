@@ -8,10 +8,21 @@
 </head>
 <body>
 <div th:fragment="navbar" class="navbar">
-	<div>Voice 1</div>
-	<div>Voice 2</div>
-	<div>Voice 3</div>
-	<div>Voice 4</div>
+	<div>
+		<a th:text="#{home.home}" th:href="@{/home}" href="../homePage.html">Home</a>
+	</div>
+	<div>
+		<a th:text="#{user.usermanagement}"
+			 th:href="@{/user/loadUsers}"
+			 href="../user/users.html">User Management</a>
+	</div>
+	<div>
+		<a th:text="#{consultant.consultants}"
+			 th:href="@{/consultant/consultant-management}"
+			 href="../consultant/consultants.html">Consultants</a>
+	</div>
+	<div>TODO</div>
+	<div>TODO</div>
 </div>
 </body>
 </html>

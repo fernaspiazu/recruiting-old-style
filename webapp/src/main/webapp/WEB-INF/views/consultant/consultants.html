@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{consultant.management}">Consultant Management</title>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+</head>
+<body>
+<header th:substituteby="templates/header::header"></header>
+<div id="container">
+	<div th:substituteby="templates/navbar::navbar"></div>
+	<div id="content">
+		<h1 th:text="#{consultant.consultants}">Consultants</h1>
+	</div>
+</div>
+<footer th:substituteby="templates/footer::footer"></footer>
+</body>
+</html>
