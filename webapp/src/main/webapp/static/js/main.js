@@ -48,6 +48,7 @@ function mantainLocaleSelected() {
 	$("#select-language option").each(function() {
 		if ($(this).val() == currentLocaleValue) {
 			$(this).attr("selected", "selected");
+			return;
 		}
 	});
 }

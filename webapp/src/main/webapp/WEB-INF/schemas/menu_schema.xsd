@@ -1,42 +1,43 @@
 <?xml version="1.0"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://www.f2informatica.it/menu"
-            elementFormDefault="unqualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:menu="http://www.f2informatica.it/schema/menu"
+            targetNamespace="http://www.f2informatica.it/schema/menu"
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xsd:element name="menu" type="Menu"/>
+  <xs:element name="menu" type="menu:Menu"/>
 
-  <xsd:complexType name="Menu">
-    <xsd:sequence>
-      <xsd:element name="menuComposite" type="MenuComposite"/>
-      <xsd:element name="menuItem" type="MenuItem"/>
-    </xsd:sequence>
-  </xsd:complexType>
+  <xs:complexType name="Menu">
+    <xs:sequence>
+      <xs:element name="menuComposite" type="menu:MenuComposite" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="menuItem" type="menu:MenuItem" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xsd:complexType name="MenuComposite">
-    <xsd:sequence>
-      <xsd:element name="menuItem" type="MenuItem"/>
-      <xsd:element name="menuComposite" type="MenuComposite"/>
-    </xsd:sequence>
-    <xsd:attribute name="label" type="xsd:string" use="required"/>
-    <xsd:attribute name="url" type="xsd:string" use="required"/>
-  </xsd:complexType>
+  <xs:complexType name="MenuComposite">
+    <xs:sequence>
+      <xs:element name="menuItem" type="menu:MenuItem" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="menuComposite" type="menu:MenuComposite" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="url" type="xs:string" use="required"/>
+  </xs:complexType>
 
-  <xsd:complexType name="MenuItem">
-    <xsd:sequence>
-      <xsd:element name="authorities">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="authority">
-              <xsd:complexType>
-                <xsd:attribute name="name" type="xsd:string"/>
-              </xsd:complexType>
-            </xsd:element>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute name="label" type="xsd:string" use="required"/>
-    <xsd:attribute name="url" type="xsd:string" use="required"/>
-  </xsd:complexType>
+  <xs:complexType name="MenuItem">
+    <xs:sequence>
+      <xs:element name="authorities" type="menu:Authorities"/>
+    </xs:sequence>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="url" type="xs:string" use="required"/>
+  </xs:complexType>
 
-</xsd:schema>
+  <xs:complexType name="Authorities">
+    <xs:sequence>
+      <xs:element name="authority" type="menu:Authority" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Authority">
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>

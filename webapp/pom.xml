@@ -64,6 +64,22 @@
           <stopKey>recruiting</stopKey>
         </configuration>
       </plugin>
+      <!--<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <version>1.5</version>
+        <configuration>
+          <schemaDirectory>src/main/webapp/WEB-INF/schemas/</schemaDirectory>
+          <packageName>it.f2informatica.webapp.jaxb.menu</packageName>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>-->
     </plugins>
   </build>
 
