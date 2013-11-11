@@ -2,10 +2,11 @@ package it.f2informatica.webapp.menu;
 
 import it.f2informatica.webapp.security.Authority;
 import org.apache.commons.lang.NotImplementedException;
-import org.springframework.util.Assert;
 
 import java.util.Map;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class Menu {
 
@@ -19,10 +20,8 @@ public abstract class Menu {
 	}
 
 	public Menu(String label, String url) {
-		Assert.notNull(label);
-		Assert.notNull(url);
-		this.label = label;
-		this.url = url;
+		this.label = checkNotNull(label);
+		this.url = checkNotNull(url);
 	}
 
 	public void add(Menu menu) {
