@@ -22,6 +22,8 @@ public class User extends Identifiable<String> {
 
 	private String lastName;
 
+	private String email;
+
 	@DBRef
 	private Role role;
 

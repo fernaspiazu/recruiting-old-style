@@ -1,58 +1,43 @@
 package it.f2informatica.test.mongodb.domain;
 
 import it.f2informatica.mongodb.domain.Role;
-import it.f2informatica.test.mongodb.constants.RoleConstants;
-import org.junit.Before;
 import org.junit.Test;
 
+import static it.f2informatica.test.mongodb.builders.RoleDataBuilder.role;
 import static org.fest.assertions.Assertions.assertThat;
 
-public class RoleTest implements RoleConstants {
-
-	Role role;
-	Role emptyRole;
-	Role copyRole;
-
-	@Before
-	public void setUp() {
-		emptyRole = new Role();
-		role = createRole();
-		copyRole = createRole();
-	}
-
-	private Role createRole() {
-		Role _role = new Role();
-		_role.setId(ROLE_1_ID);
-		_role.setName(ROLE_1_NAME);
-		return _role;
-	}
+public class RoleTest {
 
 	@Test
 	public void isRoleNameNull() {
-		assertThat(emptyRole.getName()).isNull();
+		Role roleWithoutRoleName = role().withoutAuthorization();
+		assertThat(roleWithoutRoleName.getName()).isNull();
 	}
 
 	@Test
 	public void roleId() {
-		assertThat(role.getId()).isEqualTo(ROLE_1_ID);
+		Role administrator = role().thatIsAdministrator();
+		assertThat(administrator.getId()).isEqualTo("527b49ae92bea464ab0d7g23");
 	}
 
 	@Test
 	public void roleName() {
-		assertThat(role.getName()).isEqualTo(ROLE_1_NAME);
+		Role administrator = role().thatIsAdministrator();
+		assertThat(administrator.getName()).isEqualTo("ADMIN");
 	}
 
 	@Test
 	public void roleEquality() {
-		assertThat(role).isEqualTo(copyRole);
+		Role administrator = role().thatIsAdministrator();
+		Role similarAdministrator = role().withAuthorization("ADMIN").build();
+		assertThat(administrator).isEqualTo(similarAdministrator);
 	}
 
 	@Test
 	public void testRoleInequality() {
-		Role differentRole = new Role();
-		differentRole.setId(ROLE_2_ID);
-		differentRole.setName(ROLE_2_NAME);
-		assertThat(differentRole).isNotEqualTo(role);
+		Role administrator = role().thatIsAdministrator();
+		Role user = role().withAuthorization("USER").build();
+		assertThat(administrator).isNotEqualTo(user);
 	}
 
 }

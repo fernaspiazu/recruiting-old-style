@@ -1,64 +1,73 @@
 package it.f2informatica.test.mongodb.domain;
 
-import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.test.mongodb.constants.RoleConstants;
-import it.f2informatica.test.mongodb.constants.UserConstants;
-import org.junit.Before;
 import org.junit.Test;
 
+import static it.f2informatica.test.mongodb.builders.RoleDataBuilder.role;
+import static it.f2informatica.test.mongodb.builders.UserDataBuilder.user;
 import static org.fest.assertions.Assertions.assertThat;
 
-public class UserTest implements UserConstants, RoleConstants {
+public class UserTest {
 
-	User user;
-	User user1;
-	User user2;
-	User user3;
-
-	@Before
-	public void setUp() {
-		user = createUser(USER_1_USERNAME, USER_1_PASSWORD, null);
-		user1 = createUser(USER_2_USERNAME, USER_2_PASSWORD, ROLE_1_NAME);
-		user2 = createUser(USER_3_USERNAME, USER_3_PASSWORD, ROLE_2_NAME);
-		user3 = createUser(USER_3_USERNAME, USER_3_PASSWORD, ROLE_2_NAME);
+	@Test
+	public void usernameTest() {
+		User user = user().build();
+		assertThat(user.getUsername()).isEqualTo("jhon_kent77");
 	}
 
 	@Test
-	public void username() {
-		assertThat(user.getUsername()).isEqualTo(USER_1_USERNAME);
+	public void passwordTest() {
+		User user = user().withPassword("123456").build();
+		assertThat(user.getPassword()).isEqualTo("123456");
 	}
 
 	@Test
-	public void password() {
-		assertThat(user.getPassword()).isEqualTo(USER_1_PASSWORD);
+	public void firstNameTest() {
+		User user = user().withFirstName("Maria").build();
+		assertThat("Maria").isEqualTo(user.getFirstName());
+	}
+
+	@Test
+	public void lastNameTest() {
+		User user = user().withLastName("Lambda").build();
+		assertThat("Lambda").isEqualTo(user.getLastName());
+	}
+
+	@Test
+	public void emailTest() {
+		User user = user().withEmail("karmaliu_77@aol.com").build();
+		assertThat("karmaliu_77@aol.com").isEqualTo(user.getEmail());
+	}
+
+	@Test
+	public void roleTest() {
+		User user = user().withRole(role().thatIsAdministrator()).build();
+		assertThat(user.getRole().getName()).isEqualTo("ADMIN");
 	}
 
 	@Test
 	public void areUsersEquals() {
-		assertThat(user2).isEqualTo(user3);
+		User user = user().build();
+		assertThat(user).isEqualTo(user().build());
 	}
 
 	@Test
 	public void areUserNotEquals() {
-		assertThat(user1).isNotEqualTo(user2);
+		User user = user().withUsername("fabian").build();
+		User differentUser = user().withUsername("francesco").build();
+		assertThat(user).isNotEqualTo(differentUser);
+	}
+
+	@Test
+	public void isNotRemovable() {
+		User user = user().thatIsNotRemovable().build();
+		assertThat(user.isNotRemovable()).isTrue();
 	}
 
 	@Test
 	public void isRemovable() {
+		User user = user().thatIsRemovable().build();
 		assertThat(user.isNotRemovable()).isFalse();
-		user.setNotRemovable(true);
-		assertThat(user.isNotRemovable()).isTrue();
-	}
-
-	private User createUser(String username, String password, String roleName) {
-		User user = new User();
-		Role role = new Role();
-		role.setName(roleName);
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setRole(role);
-		return user;
 	}
 
 }

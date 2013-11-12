@@ -8,112 +8,113 @@ import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.test.mongodb.DatastoreUtils;
-import it.f2informatica.test.mongodb.constants.RoleConstants;
-import it.f2informatica.test.mongodb.constants.UserConstants;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexField;
 import org.springframework.data.mongodb.core.index.IndexInfo;
 
 import java.util.List;
 
+import static it.f2informatica.test.mongodb.builders.RoleDataBuilder.role;
+import static it.f2informatica.test.mongodb.builders.UserDataBuilder.user;
 import static org.fest.assertions.Assertions.assertThat;
 
-public class UserRepositoryTest extends DatastoreUtils
-		implements UserConstants, RoleConstants {
+public class UserRepositoryTest extends DatastoreUtils {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	RoleRepository roleRepository;
-
-	static User savedUser= null;
-
-	@BeforeClass
-	public static void setUp() {
-		UserRepository _userRepository = getBean(UserRepository.class);
-		MongoTemplate _mongoTemplateTest = getBean("mongoTemplateTest", MongoTemplate.class);
-		savedUser = createUser(USER_1_USERNAME, USER_1_PASSWORD);
-		savedUser.setRole(getBean(RoleRepository.class).save(createRole(ROLE_1_NAME)));
-		_userRepository.save(savedUser);
-		_mongoTemplateTest.indexOps(User.class).ensureIndex(new Index().on("username", Sort.Direction.ASC));
-	}
+	private RoleRepository roleRepository;
 
 	@Test
-	public void hasUserBeenSaved() {
+	public void crudTest() {
+		Role role = saveRoleUser();
+		User user = saveSimpleUser(role);
+		Role roleAdmin = saveRoleAdmin();
+		User savedNotRemovableUser = saveNotRemovableUser(roleAdmin);
+		mongoTemplateTest.indexOps(User.class).ensureIndex(new Index().on("username", Sort.Direction.ASC));
+
+		assertThatUserHasBeenSaved(user);
+		findByUsername();
+		findByUsernameAndPassword();
+		findByRoleName();
+		findByRole();
+		findByRoleNameReturningEmptyResult();
+		isIndexExistentInDocument();
+		deleteRemovableUser(user);
+		deleteNotRemovableUser(savedNotRemovableUser);
+	}
+
+	private User saveSimpleUser(Role role) {
+		return userRepository.save(
+				user()
+						.withRole(role)
+						.build()
+		);
+	}
+
+	private Role saveRoleUser() {
+		return roleRepository.save(
+				role()
+						.withId("52820f4634bdf55624303fbf")
+						.withAuthorization("USER")
+						.build()
+		);
+	}
+
+	private Role saveRoleAdmin() {
+		return roleRepository.save(role().thatIsAdministrator());
+	}
+
+	private User saveNotRemovableUser(Role role) {
+		return userRepository.save(
+				user()
+						.withId("52820f5b34bdf55624303fc0")
+						.withUsername("super_user")
+						.withPassword("super_user")
+						.withFirstName("Barack")
+						.withLastName("Obama")
+						.withEmail("king_of_war@hell.com")
+						.withRole(role)
+						.thatIsNotRemovable()
+						.build()
+		);
+	}
+
+	private void assertThatUserHasBeenSaved(User savedUser) {
 		assertThat(savedUser).isNotNull();
 	}
 
-	@Test
-	public void findByUsername() {
-		User userFoundByUsername = userRepository.findByUsername(USER_1_USERNAME);
-		assertThat(userFoundByUsername).isNotNull();
-		assertThat(userFoundByUsername.getUsername()).isEqualTo(USER_1_USERNAME);
+	private void findByUsername() {
+		String username = user().build().getUsername();
+		User userFoundByUsername = userRepository.findByUsername(username);
+		assertThat(userFoundByUsername.getUsername()).isEqualTo(username);
 	}
 
-	@Test
-	public void findByUsernameAndPassword() {
-		User user = userRepository.findByUsernameAndPassword(USER_1_USERNAME, USER_1_PASSWORD);
-		assertThat(user).isNotNull();
-		assertThat(user.getPassword()).isEqualTo(USER_1_PASSWORD);
+	private void findByUsernameAndPassword() {
+		User user = userRepository.findByUsernameAndPassword("jhon_kent77", "okisteralio");
+		assertThat(user.getPassword()).isEqualTo("okisteralio");
 	}
 
-	@Test
-	public void findByRoleName() {
-		Iterable<User> administratorUsers = userRepository.findByRoleName(ROLE_1_NAME);
-		User firstUserFound = Iterables.getFirst(administratorUsers, new User());
-		assert firstUserFound != null;
-		assertThat(firstUserFound.getRole().getName()).isEqualTo(ROLE_1_NAME);
+	@SuppressWarnings("ConstantConditions")
+	private void findByRoleName() {
+		User firstUserFound = Iterables.getFirst(userRepository.findByRoleName("USER"), new User());
+		assertThat(firstUserFound.getRole().getName()).isEqualTo("USER");
 	}
 
-	@Test
-	public void findByRoleNameReturningEmptyResult() {
-		Iterable<User> administratorUsers = userRepository.findByRoleName("Unknown");
-		assertThat(administratorUsers).isEmpty();
-	}
-
-	@Test
-	public void findByRole() {
-		Role role = roleRepository.findByName("Administrator");
-		Iterable<User> administratorUsers = userRepository.findByRole(role);
+	private void findByRole() {
+		Iterable<User> administratorUsers = userRepository.findByRole(roleRepository.findByName("USER"));
 		assertThat(administratorUsers).isNotEmpty();
 	}
 
-	@Test
-	public void deleteRemovableUser() {
-		User removableUser = createUser(USER_2_USERNAME, USER_2_PASSWORD);
-		assertThat(removableUser.isNotRemovable()).isFalse();
-		Role removableUserRole = createRole(ROLE_2_NAME);
-		removableUser.setRole(roleRepository.save(removableUserRole));
-		User removableUserSaved = userRepository.save(removableUser);
-		userRepository.deleteRemovableUser(parseObjectIdToString(removableUserSaved.getId()));
-		assertThat(userRepository.findOne(removableUserSaved.getId())).isNull();
+	private void findByRoleNameReturningEmptyResult() {
+		assertThat(userRepository.findByRoleName("Unknown")).isEmpty();
 	}
 
-	@Test
-	public void deleteNotRemovableUser() {
-		User notRemovableUser = createUser(USER_2_USERNAME, USER_2_PASSWORD);
-		assertThat(notRemovableUser.isNotRemovable()).isFalse();
-		Role someRole = createRole(ROLE_2_NAME);
-		notRemovableUser.setRole(roleRepository.save(someRole));
-		notRemovableUser.setNotRemovable(true);
-		User notRemovableUserSaved = userRepository.save(notRemovableUser);
-		userRepository.deleteRemovableUser(parseObjectIdToString(notRemovableUserSaved.getId()));
-		User notRemovableRetrieved = userRepository.findOne(notRemovableUserSaved.getId());
-		assertThat(notRemovableRetrieved.getUsername()).isEqualTo(USER_2_USERNAME);
-	}
-
-	private String parseObjectIdToString(Object id) {
-		return String.valueOf(id);
-	}
-
-	@Test
-	public void isIndexExistentInDocument() {
+	private void isIndexExistentInDocument() {
 		List<IndexInfo> indexInfoList = mongoTemplateTest.indexOps(User.class).getIndexInfo();
 		Optional<IndexInfo> usernameKeyIndex = findIndexOnUsernameField(indexInfoList);
 		assertThat(usernameKeyIndex).isNotEqualTo(Optional.absent());
@@ -138,17 +139,16 @@ public class UserRepositoryTest extends DatastoreUtils
 		}, null);
 	}
 
-	private static User createUser(String username, String password) {
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
-		return user;
+	private void deleteRemovableUser(User user) {
+		String userId = String.valueOf(user.getId());
+		userRepository.deleteRemovableUser(userId);
+		assertThat(userRepository.findOne(userId)).isNull();
 	}
 
-	private static Role createRole(String roleName) {
-		Role role = new Role();
-		role.setName(roleName);
-		return role;
+	private void deleteNotRemovableUser(User notRemovableUser) {
+		String userId = String.valueOf(notRemovableUser.getId());
+		userRepository.deleteRemovableUser(userId);
+		assertThat(userRepository.findOne(userId)).isNotNull();
 	}
 
 }
