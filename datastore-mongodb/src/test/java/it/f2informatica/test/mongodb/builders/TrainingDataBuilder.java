@@ -11,6 +11,7 @@ public class TrainingDataBuilder {
 	private String schoolFieldOfStudy = "Accounting";
 	private String schoolGrade = "98/100";
 	private String schoolActivities = "No details about";
+	private boolean isCurrent = false;
 	private String description = "No description";
 
 	public static TrainingDataBuilder training() {
@@ -28,12 +29,14 @@ public class TrainingDataBuilder {
 	}
 
 	public TrainingDataBuilder finishedInYear(int year) {
-		this.endYear =year;
+		this.endYear = year;
+		this.isCurrent = false;
 		return this;
 	}
 
 	public TrainingDataBuilder notYetFinished() {
 		this.endYear = -1;
+		this.isCurrent = true;
 		return this;
 	}
 
@@ -71,6 +74,7 @@ public class TrainingDataBuilder {
 		training.setSchoolFieldOfStudy(schoolFieldOfStudy);
 		training.setSchoolGrade(schoolGrade);
 		training.setSchoolActivities(schoolActivities);
+		training.setCurrent(isCurrent);
 		training.setDescription(description);
 		return training;
 	}

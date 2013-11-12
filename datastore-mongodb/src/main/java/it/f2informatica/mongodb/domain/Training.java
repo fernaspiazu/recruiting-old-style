@@ -23,6 +23,8 @@ public class Training {
 
 	private String schoolActivities;
 
+	private boolean isCurrent;
+
 	private String description;
 
 }
