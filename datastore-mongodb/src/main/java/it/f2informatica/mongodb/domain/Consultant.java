@@ -37,9 +37,9 @@ public class Consultant extends Identifiable<String> {
 
 	private Date birthDate;
 
-	private String birthCountry;
-
 	private String birthCity;
+
+	private String birthCountry;
 
 	private String nationality;
 

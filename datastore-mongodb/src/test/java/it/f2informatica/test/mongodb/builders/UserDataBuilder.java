@@ -47,13 +47,12 @@ public class UserDataBuilder {
 		return this;
 	}
 
-	public UserDataBuilder withRole(Role role) {
-		this.role = role;
-		return this;
+	public UserDataBuilder withRole(RoleDataBuilder role) {
+		return withRole(role.build());
 	}
 
-	public UserDataBuilder withRole(RoleDataBuilder role) {
-		this.role = role.build();
+	public UserDataBuilder withRole(Role role) {
+		this.role = role;
 		return this;
 	}
 
