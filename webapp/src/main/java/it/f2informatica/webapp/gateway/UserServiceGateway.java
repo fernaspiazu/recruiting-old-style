@@ -1,10 +1,10 @@
 package it.f2informatica.webapp.gateway;
 
-import it.f2informatica.services.requests.ChangePasswordRequest;
+import it.f2informatica.services.domain.user.UserService;
+import it.f2informatica.services.requests.UpdatePasswordRequest;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;
-import it.f2informatica.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,10 +48,6 @@ public class UserServiceGateway {
 		userService.deleteUser(userId);
 	}
 
-	public boolean updatePassword(ChangePasswordRequest request) {
-		return userService.changePassword(request);
-	}
-
 	public UserRequest prepareNewUserToSave() {
 		UserRequest userRequest = new UserRequest();
 		userRequest.setNotRemovable(false);
@@ -67,12 +63,6 @@ public class UserServiceGateway {
 		userRequest.setRoleId(role.getRoleId());
 		userRequest.setNotRemovable(userResponse.isNotRemovable());
 		return userRequest;
-	}
-
-	public ChangePasswordRequest prepareChangePasswordRequest(String userId) {
-		ChangePasswordRequest request = new ChangePasswordRequest();
-		request.setUserId(userId);
-		return request;
 	}
 
 }

@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.services.responses.LoginResponse;
-import it.f2informatica.webapp.gateway.LoginServiceGateway;
+import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.webapp.gateway.AuthenticationServiceGateway;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,10 +11,10 @@ public class RecruitingUserDetailService implements UserDetailsService {
 	private static final Logger log = Logger.getLogger(RecruitingUserDetailService.class);
 
 	private AuthorityService authorityService;
-	private LoginServiceGateway loginServiceGateway;
+	private AuthenticationServiceGateway loginServiceGateway;
 
 	@Autowired
-	public void setLoginServiceGateway(LoginServiceGateway loginServiceGateway) {
+	public void setLoginServiceGateway(AuthenticationServiceGateway loginServiceGateway) {
 		this.loginServiceGateway = loginServiceGateway;
 	}
 
@@ -26,11 +26,11 @@ public class RecruitingUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("Loding user >>> " + username);
-		LoginResponse loginResponse = loginServiceGateway.processLogin(username);
-		return createUserDetails(loginResponse);
+		AuthenticationResponse authenticationResponse = loginServiceGateway.processLogin(username);
+		return createUserDetails(authenticationResponse);
 	}
 
-	private UserDetails createUserDetails(LoginResponse userLogged) {
+	private UserDetails createUserDetails(AuthenticationResponse userLogged) {
 		return new UserDetails(userLogged, authorityService.createAuthorities(userLogged.getAuthorization()));
 	}
 

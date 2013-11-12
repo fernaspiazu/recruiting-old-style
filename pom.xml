@@ -86,6 +86,8 @@
               <excludes>
                 <exclude>**/test/*</exclude>
                 <exclude>**/domain/*</exclude>
+                <exclude>**/builders/*</exclude>
+                <exclude>**/constants/*</exclude>
                 <exclude>**/requests/*</exclude>
                 <exclude>**/responses/*</exclude>
                 <exclude>**/RecruitingMain.class</exclude>

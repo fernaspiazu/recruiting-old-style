@@ -1,9 +1,9 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.responses.LoginResponse;
-import it.f2informatica.webapp.gateway.LoginServiceGateway;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
+import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.webapp.gateway.AuthenticationServiceGateway;
 import it.f2informatica.webapp.security.AuthorityService;
 import it.f2informatica.webapp.security.RecruitingUserDetailService;
 import org.junit.Before;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class RecruitingUserDetailServiceTest {
 
 	@Mock
-	private LoginServiceGateway loginServiceGateway;
+	private AuthenticationServiceGateway loginServiceGateway;
 
 	@Mock
 	private AuthorityService authorityService;
@@ -64,12 +64,12 @@ public class RecruitingUserDetailServiceTest {
 		);
 	}
 
-	private static LoginResponse createResponse() {
-		LoginResponse loginResponse = new LoginResponse();
-		loginResponse.setUsername("username1");
-		loginResponse.setPassword("password1");
-		loginResponse.setAuthorization("role_admin");
-		return loginResponse;
+	private static AuthenticationResponse createResponse() {
+		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+		authenticationResponse.setUsername("username1");
+		authenticationResponse.setPassword("password1");
+		authenticationResponse.setAuthorization("role_admin");
+		return authenticationResponse;
 	}
 
 }

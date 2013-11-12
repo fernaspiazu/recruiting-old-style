@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class ChangePasswordRequest {
+public class UpdatePasswordRequest {
 
 	private String userId;
 

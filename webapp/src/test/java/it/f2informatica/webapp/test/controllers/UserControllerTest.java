@@ -1,6 +1,7 @@
 package it.f2informatica.webapp.test.controllers;
 
 import it.f2informatica.webapp.controllers.UserController;
+import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,9 @@ public class UserControllerTest {
 
 	@Mock
 	private UserServiceGateway userServiceGateway;
+
+	@Mock
+	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
 
 	@InjectMocks
 	private UserController userController;

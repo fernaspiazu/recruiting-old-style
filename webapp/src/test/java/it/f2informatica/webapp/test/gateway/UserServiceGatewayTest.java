@@ -1,11 +1,10 @@
 package it.f2informatica.webapp.test.gateway;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.requests.ChangePasswordRequest;
+import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;
-import it.f2informatica.services.user.UserService;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,17 +90,6 @@ public class UserServiceGatewayTest {
 	}
 
 	@Test
-	public void updatePassword() {
-		ChangePasswordRequest request = new ChangePasswordRequest();
-		request.setUserId("1234567890");
-		request.setCurrentPassword("old password");
-		request.setNewPassword("new password");
-		request.setPasswordConfirmed("new password");
-		when(userService.changePassword(any(ChangePasswordRequest.class))).thenReturn(true);
-		assertThat(userServiceGateway.updatePassword(request)).isTrue();
-	}
-
-	@Test
 	public void prepareNewUserToSave() {
 		assertThat(userServiceGateway.prepareNewUserToSave().isNotRemovable()).isFalse();
 	}
@@ -112,12 +100,6 @@ public class UserServiceGatewayTest {
 		when(userService.findRoleByName("Administrator")).thenReturn(createRoleResponse("Administrator"));
 		UserRequest request = userServiceGateway.prepareUserToUpdate("12345");
 		assertThat(request.getRoleId()).isEqualTo("555");
-	}
-
-	@Test
-	public void prepareChangePasswordRequest() {
-		ChangePasswordRequest request = userServiceGateway.prepareChangePasswordRequest("12345");
-		assertThat(request.getUserId()).isEqualTo("12345");
 	}
 
 	private UserResponse createUserResponse() {

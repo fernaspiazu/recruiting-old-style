@@ -1,6 +1,8 @@
 package it.f2informatica.mongodb.domain.builders;
 
 import it.f2informatica.mongodb.domain.*;
+import it.f2informatica.mongodb.domain.constants.Gender;
+import it.f2informatica.mongodb.domain.constants.MaritalStatus;
 
 import java.util.Date;
 

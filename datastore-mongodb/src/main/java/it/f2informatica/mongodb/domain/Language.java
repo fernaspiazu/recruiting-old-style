@@ -1,5 +1,6 @@
 package it.f2informatica.mongodb.domain;
 
+import it.f2informatica.mongodb.domain.constants.LanguageProficiency;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

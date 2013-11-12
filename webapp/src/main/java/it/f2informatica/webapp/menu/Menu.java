@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.menu;
 
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.util.Map;

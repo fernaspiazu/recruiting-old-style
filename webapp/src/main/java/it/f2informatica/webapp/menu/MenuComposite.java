@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
 
 import java.util.Map;
 import java.util.Set;

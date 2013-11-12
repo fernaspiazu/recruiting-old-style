@@ -1,8 +1,8 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.responses.LoginResponse;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.mongodb.domain.constants.Authority;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import it.f2informatica.webapp.security.UserDetails;
 import org.junit.Before;
@@ -98,8 +98,8 @@ public class SecurityAccessorTest {
 		return new SimpleGrantedAuthority(authorityName);
 	}
 
-	private LoginResponse createLoginResponse() {
-		LoginResponse response = new LoginResponse();
+	private AuthenticationResponse createLoginResponse() {
+		AuthenticationResponse response = new AuthenticationResponse();
 		response.setUsername("response");
 		response.setPassword("password");
 		response.setAuthorization("Administrator");

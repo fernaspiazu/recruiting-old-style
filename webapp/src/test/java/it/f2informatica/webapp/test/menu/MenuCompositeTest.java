@@ -2,7 +2,7 @@ package it.f2informatica.webapp.test.menu;
 
 import com.google.common.collect.Sets;
 import it.f2informatica.webapp.menu.*;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
 import org.apache.commons.lang.NotImplementedException;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.menu;
 
 import com.google.common.base.Predicate;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Set;

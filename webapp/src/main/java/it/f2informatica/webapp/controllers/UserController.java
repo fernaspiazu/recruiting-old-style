@@ -1,8 +1,9 @@
 package it.f2informatica.webapp.controllers;
 
-import it.f2informatica.services.requests.ChangePasswordRequest;
+import it.f2informatica.services.requests.UpdatePasswordRequest;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
+import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
 	private UserServiceGateway userServiceGateway;
+	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
 
 	@Autowired
 	public void setUserServiceGateway(UserServiceGateway userServiceGateway) {
 		this.userServiceGateway = userServiceGateway;
+	}
+
+	@Autowired
+	public void setPasswordUpdaterServiceGateway(PasswordUpdaterServiceGateway passwordUpdaterServiceGateway) {
+		this.passwordUpdaterServiceGateway = passwordUpdaterServiceGateway;
 	}
 
 	@ModelAttribute("roles")
@@ -73,13 +80,13 @@ public class UserController {
 
 	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.GET)
 	public String changePasswordForm(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("changePasswordModel", userServiceGateway.prepareChangePasswordRequest(userId));
+		modelMap.addAttribute("changePasswordModel", passwordUpdaterServiceGateway.prepareUpdatePasswordRequest(userId));
 		return "user/changePasswordForm";
 	}
 
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("changePasswordModel") ChangePasswordRequest request) {
-		userServiceGateway.updatePassword(request);
+	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
+		passwordUpdaterServiceGateway.updatePassword(request);
 		return "redirect:/user/loadUsers";
 	}
 

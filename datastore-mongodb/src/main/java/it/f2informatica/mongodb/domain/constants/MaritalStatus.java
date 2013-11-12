@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.domain;
+package it.f2informatica.mongodb.domain.constants;
 
 public enum MaritalStatus {
 

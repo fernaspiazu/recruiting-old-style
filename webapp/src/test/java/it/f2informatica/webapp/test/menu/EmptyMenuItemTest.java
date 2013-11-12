@@ -3,7 +3,7 @@ package it.f2informatica.webapp.test.menu;
 import com.google.common.collect.Sets;
 import it.f2informatica.webapp.menu.EmptyMenuItem;
 import it.f2informatica.webapp.menu.MenuItemException;
-import it.f2informatica.webapp.security.Authority;
+import it.f2informatica.mongodb.domain.constants.Authority;
 import org.junit.Test;
 
 public class EmptyMenuItemTest {

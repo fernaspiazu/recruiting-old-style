@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class LoginResponse {
+public class AuthenticationResponse {
 
 	private String username;
 
