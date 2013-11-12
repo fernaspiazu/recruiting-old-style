@@ -3,16 +3,22 @@ package it.f2informatica.mongodb.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-@Document
-public class Profile extends Identifiable<String> {
+@EqualsAndHashCode
+@ToString
+public class Profile {
 
-	private String profileName;
+	private List<Experience> experiences;
 
-	private String title;
+	private List<Training> trainingList;
+
+	private List<String> skills;
+
+	private List<Language> languages;
+
+	private String interests;
 
 }

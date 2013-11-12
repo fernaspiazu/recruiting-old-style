@@ -1,6 +1,8 @@
 package it.f2informatica.test.mongodb;
 
-import it.f2informatica.mongodb.domain.*;
+import it.f2informatica.mongodb.domain.Consultant;
+import it.f2informatica.mongodb.domain.Role;
+import it.f2informatica.mongodb.domain.User;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +45,7 @@ public abstract class DatastoreUtils {
 		MongoTemplate _mongoTemplateTest = getBean("mongoTemplateTest", MongoTemplate.class);
 		_mongoTemplateTest.dropCollection(Role.class);
 		_mongoTemplateTest.dropCollection(User.class);
-		_mongoTemplateTest.dropCollection(Address.class);
-		_mongoTemplateTest.dropCollection(Person.class);
 		_mongoTemplateTest.dropCollection(Consultant.class);
-		_mongoTemplateTest.dropCollection(Profile.class);
-		_mongoTemplateTest.dropCollection(Skill.class);
 	}
 
 }

@@ -5,11 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,21 +21,42 @@ public class Consultant extends Identifiable<String> {
 	@Indexed(direction = IndexDirection.DESCENDING)
 	private Date registrationDate;
 
-	@Indexed(direction = IndexDirection.DESCENDING)
-	private Date startActivityDate;
+	private String fiscalCode;
 
-	@DBRef
-	private Person person;
+	private String email;
 
-	@DBRef
+	private String firstName;
+
+	private String lastName;
+
+	private Gender gender;
+
+	private String phoneNumber;
+
+	private String mobileNumber;
+
+	private Date birthDate;
+
+	private String birthCountry;
+
+	private String birthCity;
+
+	private String nationality;
+
+	private String identityCardNo;
+
+	private String passportNo;
+
+	private MaritalStatus maritalStatus;
+
 	private Profile profile;
 
-	private List<Skill> skills;
+	private Address residence;
 
-	private String contract;
+	private Address domicile;
 
-	private String curriculum;
+	private String curriculum; // TODO: GridFSFile
 
-	private boolean enabled = false;
+	private String photo; // TODO: GridFSFile
 
 }

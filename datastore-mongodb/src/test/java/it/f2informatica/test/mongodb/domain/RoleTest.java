@@ -17,7 +17,7 @@ public class RoleTest {
 	@Test
 	public void roleId() {
 		Role administrator = role().thatIsAdministrator();
-		assertThat(administrator.getId()).isEqualTo("527b49ae92bea464ab0d7g23");
+		assertThat(administrator.getId()).isEqualTo("52820f3834bdf55624303fbe");
 	}
 
 	@Test
