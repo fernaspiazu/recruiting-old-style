@@ -1,6 +1,6 @@
 package it.f2informatica.services.requests;
 
-public class LoginRequest {
+public class AuthenticationRequest {
 
 	private String username;
 
