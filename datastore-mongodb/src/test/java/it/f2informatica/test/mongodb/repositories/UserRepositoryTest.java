@@ -10,6 +10,8 @@ import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.test.mongodb.DatastoreUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexField;
@@ -33,6 +35,7 @@ public class UserRepositoryTest extends DatastoreUtils {
 	public void crudTest() {
 		Role role = saveRoleUser();
 		User user = saveSimpleUser(role);
+		User hughJackmanUser = saveHughJackmanUser(role);
 		Role roleAdmin = saveRoleAdmin();
 		User savedNotRemovableUser = saveNotRemovableUser(roleAdmin);
 		mongoTemplateTest.indexOps(User.class).ensureIndex(new Index().on("username", Sort.Direction.ASC));
@@ -40,6 +43,7 @@ public class UserRepositoryTest extends DatastoreUtils {
 		assertThatUserHasBeenSaved(user);
 		findByUsername();
 		findByUsernameAndPassword();
+		findAllExceptCurrentUser(hughJackmanUser);
 		findByRoleName();
 		findByRole();
 		findByRoleNameReturningEmptyResult();
@@ -84,6 +88,21 @@ public class UserRepositoryTest extends DatastoreUtils {
 		);
 	}
 
+	private User saveHughJackmanUser(Role role) {
+		return userRepository.save(
+				user()
+						.withId("52820f5b34bdf55624303fc1")
+						.withUsername("hughjackman")
+						.withPassword("wolverine")
+						.withFirstName("Hugh")
+						.withLastName("Jackman")
+						.withEmail("hughjackman@marvel.com")
+						.withRole(role)
+						.thatIsRemovable()
+						.build()
+		);
+	}
+
 	private void assertThatUserHasBeenSaved(User savedUser) {
 		assertThat(savedUser).isNotNull();
 	}
@@ -97,6 +116,11 @@ public class UserRepositoryTest extends DatastoreUtils {
 	private void findByUsernameAndPassword() {
 		User user = userRepository.findByUsernameAndPassword("jhon_kent77", "okisteralio");
 		assertThat(user.getPassword()).isEqualTo("okisteralio");
+	}
+
+	private void findAllExceptCurrentUser(User hughJackmanUser) {
+		Page<User> users = userRepository.findAllExcludingUser(new PageRequest(0, 10), "super_user");
+		assertThat(users).hasSize(2).contains(hughJackmanUser);
 	}
 
 	@SuppressWarnings("ConstantConditions")

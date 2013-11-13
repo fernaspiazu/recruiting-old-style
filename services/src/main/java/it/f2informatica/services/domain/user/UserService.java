@@ -14,7 +14,7 @@ public interface UserService {
 
 	UserResponse findByUsernameAndPassword(String username, String password);
 
-	Page<UserResponse> findAll(Pageable pageable);
+	Page<UserResponse> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
 	Iterable<UserResponse> findUsersByRoleName(String roleName);
 

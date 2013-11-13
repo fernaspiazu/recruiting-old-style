@@ -6,10 +6,11 @@ import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
-import org.junit.Before;
+import it.f2informatica.webapp.security.SecurityAccessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,13 +30,11 @@ public class UserServiceGatewayTest {
 	@Mock
 	private UserService userService;
 
-	private UserServiceGateway userServiceGateway;
+	@Mock
+	private SecurityAccessor securityAccessor;
 
-	@Before
-	public void setUp() {
-		userServiceGateway = new UserServiceGateway();
-		userServiceGateway.setUserService(userService);
-	}
+	@InjectMocks
+	private UserServiceGateway userServiceGateway = new UserServiceGateway();
 
 	@Test
 	public void getAuthenticatedUser() {
@@ -54,7 +54,7 @@ public class UserServiceGatewayTest {
 
 	@Test
 	public void findAllUsers() {
-		when(userService.findAll(any(Pageable.class)))
+		when(userService.findAllExcludingCurrentUser(any(Pageable.class), anyString()))
 				.thenReturn(new PageImpl<>(Lists.newArrayList(createUserResponse())));
 		Page<UserResponse> pageResponse = userServiceGateway.findAllUsers(new PageRequest(1, 10));
 		assertThat(pageResponse).hasSize(1);

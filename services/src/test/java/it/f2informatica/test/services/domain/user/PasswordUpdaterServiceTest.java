@@ -43,10 +43,20 @@ public class PasswordUpdaterServiceTest {
 	}
 
 	@Test
-	public void assertThatPasswordIsNotUpdatedSinceNewPasswordIsEmpty() {
+	public void assertThatPasswordIsNotUpdatedBecauseNewPasswordIsEmpty() {
 		UpdatePasswordRequest requestWithoutNewPassword =
 				updatePasswordRequest()
 						.withoutNewPassword()
+						.build();
+		boolean success = passwordUpdaterService.updatePassword(requestWithoutNewPassword);
+		assertThat(success).isFalse();
+	}
+
+	@Test
+	public void assertThatPasswordIsNotUpdatedBecauseConfirmedPasswordIsEmpty() {
+		UpdatePasswordRequest requestWithoutNewPassword =
+				updatePasswordRequest()
+						.withoutConfirmedPassword()
 						.build();
 		boolean success = passwordUpdaterService.updatePassword(requestWithoutNewPassword);
 		assertThat(success).isFalse();
@@ -67,7 +77,7 @@ public class PasswordUpdaterServiceTest {
 	public void assertThatPasswordIsNotUpdatedBecauseNewPasswordAndConfirmedPasswordAreNotEquals() {
 		UpdatePasswordRequest requestWithoutNewPassword =
 				updatePasswordRequest()
-						.withoutNewPassword()
+						.withNewPassword("correct password")
 						.withConfirmedPassword("other password")
 						.build();
 		boolean success = passwordUpdaterService.updatePassword(requestWithoutNewPassword);

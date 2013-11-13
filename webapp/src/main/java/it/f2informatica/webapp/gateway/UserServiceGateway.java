@@ -4,6 +4,7 @@ import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +16,16 @@ import static it.f2informatica.services.requests.builders.UserRequestBuilder.use
 public class UserServiceGateway {
 
 	private UserService userService;
+	private SecurityAccessor securityAccessor;
 
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Autowired
+	public void setSecurityAccessor(SecurityAccessor securityAccessor) {
+		this.securityAccessor = securityAccessor;
 	}
 
 	public UserResponse getAuthenticatedUser(String username) {
@@ -30,7 +37,7 @@ public class UserServiceGateway {
 	}
 
 	public Page<UserResponse> findAllUsers(Pageable pageable) {
-		return userService.findAll(pageable);
+		return userService.findAllExcludingCurrentUser(pageable, securityAccessor.getCurrentUsername());
 	}
 
 	public UserResponse findUserById(String userId) {

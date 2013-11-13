@@ -74,8 +74,8 @@ public class UserServiceTest {
 	@Test
 	public void findAllWithPageable() {
 		PageImpl<User> paginatedResult = new PageImpl<>(getUserList().subList(0, 10));
-		when(userRepository.findAll(any(Pageable.class))).thenReturn(paginatedResult);
-		Page<UserResponse> users = userService.findAll(new PageRequest(1, 10));
+		when(userRepository.findAllExcludingUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
+		Page<UserResponse> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
 		assertThat(users.getContent()).hasSize(10);
 	}
 

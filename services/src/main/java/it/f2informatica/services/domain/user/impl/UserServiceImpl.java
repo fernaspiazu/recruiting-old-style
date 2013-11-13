@@ -51,9 +51,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<UserResponse> findAll(Pageable pageable) {
+	public Page<UserResponse> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
 		return new PageImpl<>(Lists.newArrayList(
-				Iterables.transform(userRepository.findAll(pageable), transformUserToUserResponse())
+				Iterables.transform(
+						userRepository.findAllExcludingUser(pageable, usernameToExclude),
+						transformUserToUserResponse())
 		));
 	}
 
