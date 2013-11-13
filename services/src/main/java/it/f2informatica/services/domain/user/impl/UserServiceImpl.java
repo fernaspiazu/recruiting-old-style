@@ -37,44 +37,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserResponse findUserById(String userId) {
-		return userToUserResponse().apply(userRepository.findOne(userId));
+		return transformUserToUserResponse().apply(userRepository.findOne(userId));
 	}
 
 	@Override
 	public UserResponse findByUsername(String username) {
-		return userToUserResponse().apply(userRepository.findByUsername(username));
+		return transformUserToUserResponse().apply(userRepository.findByUsername(username));
 	}
 
 	@Override
 	public UserResponse findByUsernameAndPassword(String username, String password) {
-		return userToUserResponse().apply(userRepository.findByUsernameAndPassword(username, password));
+		return transformUserToUserResponse().apply(userRepository.findByUsernameAndPassword(username, password));
 	}
 
 	@Override
 	public Page<UserResponse> findAll(Pageable pageable) {
 		return new PageImpl<>(Lists.newArrayList(
-				Iterables.transform(userRepository.findAll(pageable), userToUserResponse())
+				Iterables.transform(userRepository.findAll(pageable), transformUserToUserResponse())
 		));
 	}
 
 	@Override
 	public Iterable<UserResponse> findUsersByRoleName(String roleName) {
-		return Iterables.transform(userRepository.findByRoleName(roleName), userToUserResponse());
-	}
-
-	@Override
-	public Iterable<RoleResponse> loadRoles() {
-		return Iterables.transform(roleRepository.findAll(), roleToRoleResponse());
-	}
-
-	@Override
-	public RoleResponse findRoleByName(String roleName) {
-		return roleToRoleResponse().apply(roleRepository.findByName(roleName));
-	}
-
-	@Override
-	public void deleteUser(String userId) {
-		userRepository.deleteRemovableUser(userId);
+		return Iterables.transform(userRepository.findByRoleName(roleName), transformUserToUserResponse());
 	}
 
 	@Override
@@ -85,20 +70,10 @@ public class UserServiceImpl implements UserService {
 				.withRole(roleRepository.findOne(request.getRoleId()))
 				.thatIsRemovable()
 				.build());
-		return userToUserResponse().apply(newUser);
+		return transformUserToUserResponse().apply(newUser);
 	}
 
-	@Override
-	public boolean updateUser(UserRequest request) {
-		return mongoTemplate.updateFirst(
-				query(where("id").is(request.getUserId())),
-				update("username", request.getUsername())
-					.set("role", roleRepository.findOne(request.getRoleId())),
-				User.class
-		).getLastError().ok();
-	}
-
-	private static Function<User, UserResponse> userToUserResponse() {
+	private static Function<User, UserResponse> transformUserToUserResponse() {
 		return new Function<User, UserResponse>() {
 			@Override
 			public UserResponse apply(User input) {
@@ -113,7 +88,32 @@ public class UserServiceImpl implements UserService {
 		};
 	}
 
-	private static Function<Role, RoleResponse> roleToRoleResponse() {
+	@Override
+	public boolean updateUser(UserRequest request) {
+		return mongoTemplate.updateFirst(
+				query(where("id").is(request.getUserId())),
+				update("username", request.getUsername())
+					.set("role", roleRepository.findOne(request.getRoleId())),
+				User.class
+		).getLastError().ok();
+	}
+
+	@Override
+	public void deleteUser(String userId) {
+		userRepository.deleteRemovableUser(userId);
+	}
+
+	@Override
+	public Iterable<RoleResponse> loadRoles() {
+		return Iterables.transform(roleRepository.findAll(), transformRoleToRoleResponse());
+	}
+
+	@Override
+	public RoleResponse findRoleByName(String roleName) {
+		return transformRoleToRoleResponse().apply(roleRepository.findByName(roleName));
+	}
+
+	private static Function<Role, RoleResponse> transformRoleToRoleResponse() {
 		return new Function<Role, RoleResponse>() {
 			@Override
 			public RoleResponse apply(Role input) {

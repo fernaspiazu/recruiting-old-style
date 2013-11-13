@@ -22,10 +22,10 @@ public interface UserService {
 
 	boolean updateUser(UserRequest userRequest);
 
+	void deleteUser(String userId);
+
 	Iterable<RoleResponse> loadRoles();
 
 	RoleResponse findRoleByName(String roleName);
-
-	void deleteUser(String userId);
 
 }
