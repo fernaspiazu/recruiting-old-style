@@ -18,12 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 import static it.f2informatica.services.responses.builders.ConsultantPaginatedResponseBuilder.consultantPaginatedResponse;
 
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
-	public static final String COMMA_DELIMITER = ", ";
+	private static final String COMMA_DELIMITER = ", ";
+	private static final int MAX_SKILLS = 3;
 
 	@Autowired
 	private ConsultantRepository consultantRepository;
@@ -57,8 +59,11 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	private String getSkillSetInString(Profile profile) {
-		return profile == null ? ""
-				: StringUtils.collectionToDelimitedString(profile.getSkills(), COMMA_DELIMITER);
+		if (profile == null) {
+			return "";
+		}
+		List<String> skillsLimited = Lists.newArrayList(Iterables.limit(profile.getSkills(), MAX_SKILLS));
+		return StringUtils.collectionToDelimitedString(skillsLimited, COMMA_DELIMITER);
 	}
 
 }
