@@ -13,7 +13,7 @@ import static it.f2informatica.test.mongodb.builders.ExperienceDataBuilder.exper
 import static it.f2informatica.test.mongodb.builders.LanguageDataBuilder.english;
 import static it.f2informatica.test.mongodb.builders.LanguageDataBuilder.italian;
 import static it.f2informatica.test.mongodb.builders.ProfileDataBuilder.profile;
-import static it.f2informatica.test.mongodb.builders.TrainingDataBuilder.training;
+import static it.f2informatica.test.mongodb.builders.EducationDataBuilder.education;
 
 public class ConsultantDataBuilder {
 
@@ -188,8 +188,8 @@ public class ConsultantDataBuilder {
 				.withExperienceIn(experience().thisIsTheCurrentJob())
 				.withSkill("Functional methods")
 				.withSkill("Java Programming")
-				.withTrainingIn(training())
-				.withTrainingIn(training()
+				.withTrainingIn(education())
+				.withTrainingIn(education()
 						.inSchool("Harvard")
 						.startedInYear(2000)
 						.notYetFinished()

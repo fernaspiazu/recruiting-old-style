@@ -4,14 +4,14 @@ import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
 import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.domain.Training;
+import it.f2informatica.mongodb.domain.Education;
 
 import java.util.List;
 
 public class ProfileDataBuilder {
 
 	private List<Experience> experiences = Lists.newArrayList();
-	private List<Training> trainingList = Lists.newArrayList();
+	private List<Education> educationList = Lists.newArrayList();
 	private List<String> skills = Lists.newArrayList();
 	private List<Language> languages = Lists.newArrayList();
 	private String interests = "Programming, Swimming, Running";
@@ -29,12 +29,12 @@ public class ProfileDataBuilder {
 		return this;
 	}
 
-	public ProfileDataBuilder withTrainingIn(TrainingDataBuilder training) {
+	public ProfileDataBuilder withTrainingIn(EducationDataBuilder training) {
 		return withTrainingIn(training.build());
 	}
 
-	public ProfileDataBuilder withTrainingIn(Training training) {
-		this.trainingList.add(training);
+	public ProfileDataBuilder withTrainingIn(Education education) {
+		this.educationList.add(education);
 		return this;
 	}
 
@@ -60,7 +60,7 @@ public class ProfileDataBuilder {
 	public Profile build() {
 		Profile profile = new Profile();
 		profile.setExperiences(experiences);
-		profile.setTrainingList(trainingList);
+		profile.setEducationList(educationList);
 		profile.setSkills(skills);
 		profile.setLanguages(languages);
 		profile.setInterests(interests);

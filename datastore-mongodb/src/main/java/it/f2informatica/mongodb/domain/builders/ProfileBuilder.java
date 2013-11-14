@@ -1,9 +1,11 @@
 package it.f2informatica.mongodb.domain.builders;
 
+import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
 import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.domain.Training;
+
+import java.util.List;
 
 public class ProfileBuilder {
 
@@ -22,17 +24,32 @@ public class ProfileBuilder {
 		return this;
 	}
 
-	public ProfileBuilder withTrainingIn(TrainingBuilder training) {
-		return withTrainingIn(training.build());
+	public ProfileBuilder withExperiencesIn(List<Experience> experiences) {
+		profile.getExperiences().addAll(experiences);
+		return this;
 	}
 
-	public ProfileBuilder withTrainingIn(Training training) {
-		profile.getTrainingList().add(training);
+	public ProfileBuilder withEducationIn(EducationBuilder training) {
+		return withEducationIn(training.build());
+	}
+
+	public ProfileBuilder withEducationIn(Education education) {
+		profile.getEducationList().add(education);
+		return this;
+	}
+
+	public ProfileBuilder withEducationIn(List<Education> educations) {
+		profile.getEducationList().addAll(educations);
 		return this;
 	}
 
 	public ProfileBuilder withSkill(String skill) {
 		profile.getSkills().add(skill);
+		return this;
+	}
+
+	public ProfileBuilder withSkills(List<String> skills) {
+		profile.getSkills().addAll(skills);
 		return this;
 	}
 
@@ -42,6 +59,11 @@ public class ProfileBuilder {
 
 	public ProfileBuilder speaking(Language language) {
 		profile.getLanguages().add(language);
+		return this;
+	}
+
+	public ProfileBuilder speakingLanguages(List<Language> languages) {
+		profile.getLanguages().addAll(languages);
 		return this;
 	}
 

@@ -6,7 +6,7 @@ public class AddressBuilder {
 
 	private Address address = new Address();
 
-	public static AddressBuilder address() {
+	public static AddressBuilder anAddress() {
 		return new AddressBuilder();
 	}
 

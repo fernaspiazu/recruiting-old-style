@@ -14,12 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import static it.f2informatica.mongodb.domain.builders.ConsultantBuilder.consultant;
-import static it.f2informatica.mongodb.domain.builders.ProfileBuilder.profile;
+import static it.f2informatica.services.requests.builders.ConsultantRequestBuilder.consultantRequest;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -36,33 +31,15 @@ public class ConsultantServiceTest {
 	@Test
 	public void findAllConsultants() {
 		when(consultantRepository.findAll(any(Pageable.class)))
-				.thenReturn(new PageImpl<>(getConsultantList(5)));
+				.thenReturn(new PageImpl<>(Lists.<Consultant>newArrayListWithExpectedSize(6)));
 		assertThat(consultantService.findAll(new PageRequest(0, 10))).hasSize(6);
 	}
 
-	private List<Consultant> getConsultantList(int size) {
-		List<Consultant> consultants = Lists.newArrayList();
-		for (int i = 0; i < size; i++) {
-			int j = i + 1;
-			consultants.add(
-					consultant()
-							.withFirstName("consultant_" + j)
-							.withLastName("lastname_" + j)
-							.withBirthDate(new GregorianCalendar(1987 + j, Calendar.MONTH + i, j).getTime())
-							.build()
-			);
-		}
-		consultants.add(consultant()
-				.withFirstName("consultant_last")
-				.withLastName("lastname_last")
-				.withBirthDate(new GregorianCalendar(1987, Calendar.NOVEMBER, 15).getTime())
-				.withProfile(profile()
-						.withSkill("Java")
-						.withSkill("PHP")
-						.withSkill("SQL")
-						.withSkill("Oracle")
-				).build());
-		return consultants;
+	@Test
+	public void saveConsultantTest() {
+		when(consultantRepository.save(any(Consultant.class))).thenReturn(new Consultant());
+		String newConsultantId = consultantService.saveConsultant(consultantRequest().build());
+		assertThat(newConsultantId).isNotNull().isNotEmpty().isEqualTo("52822b8834bdf55624303fc2");
 	}
 
 }

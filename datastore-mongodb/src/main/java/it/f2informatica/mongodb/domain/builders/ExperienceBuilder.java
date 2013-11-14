@@ -3,7 +3,6 @@ package it.f2informatica.mongodb.domain.builders;
 import it.f2informatica.mongodb.domain.Experience;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class ExperienceBuilder {
 
@@ -25,6 +24,14 @@ public class ExperienceBuilder {
 
 	public ExperienceBuilder toPeriod(Date periodTo) {
 		this.experience.setPeriodTo(periodTo);
+		this.experience.setCurrent(false);
+		return this;
+	}
+
+	public ExperienceBuilder isThisTheCurrentJob(boolean isCurrent) {
+		if (isCurrent) {
+			return thisIsTheCurrentJob();
+		}
 		this.experience.setCurrent(false);
 		return this;
 	}

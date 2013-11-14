@@ -1,6 +1,8 @@
 package it.f2informatica.mongodb.domain.builders;
 
-import it.f2informatica.mongodb.domain.*;
+import it.f2informatica.mongodb.domain.Address;
+import it.f2informatica.mongodb.domain.Consultant;
+import it.f2informatica.mongodb.domain.Profile;
 import it.f2informatica.mongodb.domain.constants.Gender;
 import it.f2informatica.mongodb.domain.constants.MaritalStatus;
 
@@ -10,7 +12,7 @@ public class ConsultantBuilder {
 
 	private Consultant consultant = new Consultant();
 
-	public static ConsultantBuilder consultant() {
+	public static ConsultantBuilder aConsultant() {
 		return new ConsultantBuilder();
 	}
 

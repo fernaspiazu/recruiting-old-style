@@ -14,7 +14,7 @@ public class Profile {
 
 	private List<Experience> experiences = Lists.newArrayList();
 
-	private List<Training> trainingList = Lists.newArrayList();
+	private List<Education> educationList = Lists.newArrayList();
 
 	private List<String> skills = Lists.newArrayList();
 

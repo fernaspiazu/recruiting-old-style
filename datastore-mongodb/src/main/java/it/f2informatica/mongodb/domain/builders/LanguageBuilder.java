@@ -5,7 +5,7 @@ import it.f2informatica.mongodb.domain.constants.LanguageProficiency;
 
 public class LanguageBuilder {
 
-	private Language lang;
+	private Language lang = new Language();
 
 	private LanguageBuilder(String language) {
 		this.lang.setLanguage(language);
@@ -27,7 +27,7 @@ public class LanguageBuilder {
 		return new LanguageBuilder("French");
 	}
 
-	public LanguageBuilder language(String language) {
+	public static LanguageBuilder language(String language) {
 		return new LanguageBuilder(language);
 	}
 
