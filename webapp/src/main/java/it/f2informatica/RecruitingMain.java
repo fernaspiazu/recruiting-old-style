@@ -1,4 +1,4 @@
-package it.f2informatica.webapp;
+package it.f2informatica;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -22,12 +22,12 @@ public class RecruitingMain {
 
 	private static Server createServer() {
 		Server server = new Server();
-		ServerConnector httpConnector = new ServerConnector(server);
-		httpConnector.setHost("localhost");
-		httpConnector.setPort(defaultPort());
-		httpConnector.setIdleTimeout(30000);
-		httpConnector.setAcceptQueueSize(200);
-		server.addConnector(httpConnector);
+		ServerConnector httpServerConnector = new ServerConnector(server);
+		httpServerConnector.setHost("localhost");
+		httpServerConnector.setPort(defaultPort());
+		httpServerConnector.setIdleTimeout(30000);
+		httpServerConnector.setAcceptQueueSize(200);
+		server.addConnector(httpServerConnector);
 		return server;
 	}
 

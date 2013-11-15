@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.config;
 
 import com.google.common.collect.Iterables;
-import it.f2informatica.webapp.WebApplicationConfig;
+import it.f2informatica.webapp.config.WebApplicationConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

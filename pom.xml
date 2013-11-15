@@ -80,7 +80,7 @@
           <configuration>
             <instrumentation>
               <ignores>
-                <ignore>it.f2informatica.webapp.RecruitingMain</ignore>
+                <ignore>it.f2informatica.RecruitingMain</ignore>
                 <ignore>it.f2informatica.webapp.menu.MenuPredicates</ignore>
               </ignores>
               <excludes>

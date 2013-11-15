@@ -2,7 +2,7 @@ package it.f2informatica;
 
 import it.f2informatica.mongodb.MongoDBApplicationConfig;
 import it.f2informatica.services.ServicesConfig;
-import it.f2informatica.webapp.WebApplicationConfig;
+import it.f2informatica.webapp.config.WebApplicationConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
