@@ -10,7 +10,7 @@ import it.f2informatica.mongodb.domain.constants.Authority;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.services.domain.user.UserService;
-import it.f2informatica.services.domain.user.impl.UserServiceImpl;
+import it.f2informatica.services.domain.user.UserServiceImpl;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;

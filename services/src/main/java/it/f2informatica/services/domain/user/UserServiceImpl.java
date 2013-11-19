@@ -1,4 +1,4 @@
-package it.f2informatica.services.domain.user.impl;
+package it.f2informatica.services.domain.user;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -7,7 +7,6 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
-import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.requests.UserRequest;
 import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.services.responses.UserResponse;

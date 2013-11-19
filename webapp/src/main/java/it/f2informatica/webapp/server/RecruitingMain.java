@@ -1,4 +1,4 @@
-package it.f2informatica;
+package it.f2informatica.webapp.server;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;

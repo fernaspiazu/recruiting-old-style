@@ -8,12 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationServiceGateway {
 
-	private AuthenticationService authenticationService;
-
 	@Autowired
-	public void setAuthenticationService(AuthenticationService authenticationService) {
-		this.authenticationService = authenticationService;
-	}
+	private AuthenticationService authenticationService;
 
 	public AuthenticationResponse processLogin(String username) {
 		return authenticationService.processLogin(username);

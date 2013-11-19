@@ -1,7 +1,6 @@
-package it.f2informatica.services.domain.user.impl;
+package it.f2informatica.services.domain.user;
 
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.services.domain.user.PasswordUpdaterService;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,12 +14,8 @@ import static org.springframework.data.mongodb.core.query.Update.update;
 @Service
 public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
 
-	private MongoTemplate mongoTemplate;
-
 	@Autowired
-	public void setMongoTemplate(MongoTemplate mongoTemplate) {
-		this.mongoTemplate = mongoTemplate;
-	}
+	private MongoTemplate mongoTemplate;
 
 	@Override
 	public boolean updatePassword(UpdatePasswordRequest request) {

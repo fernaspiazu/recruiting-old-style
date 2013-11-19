@@ -11,12 +11,8 @@ import static it.f2informatica.services.requests.builders.UpdatePasswordRequestB
 @Service
 public class PasswordUpdaterServiceGateway {
 
-	private PasswordUpdaterService passwordUpdaterService;
-
 	@Autowired
-	public void setPasswordUpdaterService(PasswordUpdaterService passwordUpdaterService) {
-		this.passwordUpdaterService = passwordUpdaterService;
-	}
+	private PasswordUpdaterService passwordUpdaterService;
 
 	public boolean updatePassword(UpdatePasswordRequest request) {
 		return passwordUpdaterService.updatePassword(request);

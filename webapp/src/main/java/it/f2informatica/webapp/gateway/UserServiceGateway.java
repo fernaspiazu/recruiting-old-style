@@ -15,18 +15,11 @@ import static it.f2informatica.services.requests.builders.UserRequestBuilder.use
 @Service
 public class UserServiceGateway {
 
+	@Autowired
 	private UserService userService;
+
+	@Autowired
 	private SecurityAccessor securityAccessor;
-
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	@Autowired
-	public void setSecurityAccessor(SecurityAccessor securityAccessor) {
-		this.securityAccessor = securityAccessor;
-	}
 
 	public UserResponse getAuthenticatedUser(String username) {
 		return userService.findByUsername(username);

@@ -18,18 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/user")
 public class UserController {
 
+	@Autowired
 	private UserServiceGateway userServiceGateway;
+
+	@Autowired
 	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
-
-	@Autowired
-	public void setUserServiceGateway(UserServiceGateway userServiceGateway) {
-		this.userServiceGateway = userServiceGateway;
-	}
-
-	@Autowired
-	public void setPasswordUpdaterServiceGateway(PasswordUpdaterServiceGateway passwordUpdaterServiceGateway) {
-		this.passwordUpdaterServiceGateway = passwordUpdaterServiceGateway;
-	}
 
 	@ModelAttribute("roles")
 	public Iterable<RoleResponse> roles() {

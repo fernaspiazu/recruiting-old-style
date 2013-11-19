@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.test.config;
 
-import it.f2informatica.ApplicationConfig;
+import it.f2informatica.webapp.config.ApplicationConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

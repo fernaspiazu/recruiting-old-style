@@ -1,7 +1,7 @@
 package it.f2informatica.test.mongodb.config;
 
 import com.mongodb.Mongo;
-import it.f2informatica.mongodb.MongoDBApplicationConfig;
+import it.f2informatica.mongodb.config.MongoDBApplicationConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -27,7 +27,7 @@ public class MongoDBApplicationConfigTest {
 	}
 
 	@Test
-	public void mongoDBFactory() throws Exception {
+	public void mongoDBFactoryToProductionEnvironment() throws Exception {
 		SimpleMongoDbFactory mongoDbFactory = mongoDBApplicationConfig.mongoDbFactory();
 		assertThat("recruiting").isEqualTo(mongoDbFactory.getDb().getName());
 	}

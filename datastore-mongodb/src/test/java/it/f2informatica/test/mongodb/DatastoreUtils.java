@@ -34,10 +34,7 @@ public abstract class DatastoreUtils {
 
 	protected static <T> T getBean(String beanName, Class<T> clazz) {
 		ApplicationContext appContext = new AnnotationConfigApplicationContext(MongoDBApplicationConfigTest.class);
-		if (beanName == null) {
-			return appContext.getBean(clazz);
-		}
-		return appContext.getBean(beanName, clazz);
+		return beanName == null ? appContext.getBean(clazz) : appContext.getBean(beanName, clazz);
 	}
 
 	@AfterClass

@@ -3,7 +3,7 @@ package it.f2informatica.test.services.domain.authentication;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.services.domain.authentication.AuthenticationService;
-import it.f2informatica.services.domain.authentication.impl.AuthenticationServiceImpl;
+import it.f2informatica.services.domain.authentication.AuthenticationServiceImpl;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;

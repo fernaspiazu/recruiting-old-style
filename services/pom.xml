@@ -22,6 +22,35 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <instrumentation>
+            <excludes>
+              <exclude>**/requests/*</exclude>
+              <exclude>**/responses/*</exclude>
+              <exclude>**/builders/*</exclude>
+            </excludes>
+          </instrumentation>
+          <formats>
+            <format>html</format>
+          </formats>
+          <check>
+            <haltOnFailure>true</haltOnFailure>
+            <branchRate>80</branchRate>
+            <lineRate>85</lineRate>
+            <totalBranchRate>80</totalBranchRate>
+            <totalLineRate>85</totalLineRate>
+            <packageBranchRate>80</packageBranchRate>
+            <packageLineRate>85</packageLineRate>
+          </check>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>clean</goal>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
