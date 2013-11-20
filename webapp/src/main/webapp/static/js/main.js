@@ -9,6 +9,8 @@ $(document).ready(function() {
 	mantainLocaleSelected();
 	evaluateSelectedLocale();
 	disableSelectElementsWithClassSelectReadOnly();
+	//validateRequiredInputFields();
+	//validateRequiredFieldsOnFormSubmit();
 });
 
 function evaluateContextRoot() {
@@ -66,8 +68,6 @@ function readCookie(name) {
 }
 
 function getCurrentNavigatorLanguage() {
-	if (navigator.userLanguage) {
-		return navigator.userLanguage;
-	}
-	return navigator.language;
+	return navigator.userLanguage ? navigator.userLanguage : navigator.language;
+
 }

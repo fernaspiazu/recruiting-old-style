@@ -3,6 +3,9 @@
 <head>
 	<title th:text="#{login.login}">Login Page</title>
 	<link href="../../../static/css/login.css" th:href="@{/static/css/login.css}" rel="stylesheet"/>
+	<script src="../../../static/js/lib/jquery-1.10.2.min.js" th:src="@{/static/js/lib/jquery-1.10.2.min.js}"></script>
+	<script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+	<script src="../../../static/js/validation.js" th:src="@{/static/js/validation.js}"></script>
 </head>
 <body>
 <form id="loginForm" action="#" th:action="@{/processLogin}" method="post">

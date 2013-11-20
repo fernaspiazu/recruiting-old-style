@@ -216,3 +216,7 @@ fieldset {
 	text-align: center;
 	top: 60px;
 }
+
+.error-block {
+	color: red;
+}
