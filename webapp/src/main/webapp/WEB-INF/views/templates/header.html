@@ -17,7 +17,7 @@
 		<img th:title="#{header.userInSession}" title="User in session"
 				 th:src="@{/static/images/user-icon.png}"
 				 src="../../../static/images/user-icon.png"/>
-		<span th:text="${session.user.username}">Username</span>
+		<span id="userLoggedIn" th:text="${session.user.username}">Username</span>
 	</div>
 	<div class="float-right">
 		<label for="select-language"

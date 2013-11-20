@@ -14,6 +14,7 @@
   <description>Recruiting acceptance-test which will contain end-to-end tests for each task</description>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <deployable.name>recruiting</deployable.name>
     <deployable.path>${basedir}/../webapp/target/${deployable.name}.war</deployable.path>
     <selenium.version>2.37.1</selenium.version>
