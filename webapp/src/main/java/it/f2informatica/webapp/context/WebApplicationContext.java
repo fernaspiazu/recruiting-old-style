@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.config;
+package it.f2informatica.webapp.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +24,7 @@ import java.util.List;
 		"it.f2informatica.webapp.controllers",
 		"it.f2informatica.webapp.gateway"
 })
-public class WebApplicationConfig extends WebMvcConfigurerAdapter {
+public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

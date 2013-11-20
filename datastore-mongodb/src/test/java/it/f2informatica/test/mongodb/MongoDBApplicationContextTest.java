@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
-public class MongoDBApplicationConfigTest extends AbstractMongoConfiguration {
+public class MongoDBApplicationContextTest extends AbstractMongoConfiguration {
 
 	@Override
 	protected String getDatabaseName() {

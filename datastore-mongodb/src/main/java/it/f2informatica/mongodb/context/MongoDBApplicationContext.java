@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.config;
+package it.f2informatica.mongodb.context;
 
 import com.mongodb.Mongo;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 @Configuration
 @ImportResource("classpath:repository-populator-config.xml")
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
-public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
+public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 	private static final String DEFAULT_HOST = "localhost";
 	private static final int DEFAULT_PORT = 27017;
 

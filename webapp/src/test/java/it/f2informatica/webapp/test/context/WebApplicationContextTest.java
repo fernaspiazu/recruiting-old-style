@@ -1,7 +1,7 @@
-package it.f2informatica.webapp.test.config;
+package it.f2informatica.webapp.test.context;
 
 import com.google.common.collect.Iterables;
-import it.f2informatica.webapp.config.WebApplicationConfig;
+import it.f2informatica.webapp.context.WebApplicationContext;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,9 +29,9 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WebApplicationConfigTest {
+public class WebApplicationContextTest {
 
-	static WebApplicationConfig webApplicationConfig;
+	static WebApplicationContext webApplicationContext;
 
 	@Mock
 	ResourceHandlerRegistry handlerRegistry;
@@ -59,14 +59,14 @@ public class WebApplicationConfigTest {
 
 	@BeforeClass
 	public static void beforeClass() {
-		webApplicationConfig = new WebApplicationConfig();
+		webApplicationContext = new WebApplicationContext();
 	}
 
 	@Test
 	public void resourceHandlers() {
 		when(handlerRegistry.addResourceHandler("/static/**")).thenReturn(resourceHandlerRegistration);
 		when(resourceHandlerRegistration.addResourceLocations("/static/")).thenReturn(resourceHandlerRegistration);
-		webApplicationConfig.addResourceHandlers(handlerRegistry);
+		webApplicationContext.addResourceHandlers(handlerRegistry);
 		verify(handlerRegistry).addResourceHandler("/static/**");
 		verify(resourceHandlerRegistration).addResourceLocations("/static/");
 	}
@@ -74,7 +74,7 @@ public class WebApplicationConfigTest {
 	@Test
 	public void argumentResolvers() {
 		ArgumentCaptor<PageableHandlerMethodArgumentResolver> argument = pageableArgumentCaptor();
-		webApplicationConfig.addArgumentResolvers(argumentResolvers);
+		webApplicationContext.addArgumentResolvers(argumentResolvers);
 		verify(argumentResolvers).add(argument.capture());
 		assertThat(argument.getValue()).isInstanceOf(PageableHandlerMethodArgumentResolver.class);
 	}
@@ -91,7 +91,7 @@ public class WebApplicationConfigTest {
 		when(viewControllerRegistry.addViewController("/")).thenReturn(viewControllerRegistration);
 		doNothing().when(viewControllerRegistration).setViewName("redirect:/home");
 
-		webApplicationConfig.addViewControllers(viewControllerRegistry);
+		webApplicationContext.addViewControllers(viewControllerRegistry);
 
 		verify(viewControllerRegistry).addViewController(urlPathArgument.capture());
 		verify(viewControllerRegistration).setViewName(viewNameArgument.capture());
@@ -103,39 +103,39 @@ public class WebApplicationConfigTest {
 	@Test
 	public void configureDefaultServletHandling() {
 		doNothing().when(servletHandlerConfigurer).enable();
-		webApplicationConfig.configureDefaultServletHandling(servletHandlerConfigurer);
+		webApplicationContext.configureDefaultServletHandling(servletHandlerConfigurer);
 		verify(servletHandlerConfigurer).enable();
 	}
 
 	@Test
 	public void beanNameViewResolver() {
-		BeanNameViewResolver beanNameViewResolver = webApplicationConfig.beanNameViewResolver();
+		BeanNameViewResolver beanNameViewResolver = webApplicationContext.beanNameViewResolver();
 		assertThat(beanNameViewResolver.getOrder()).isEqualTo(1);
 	}
 
 	@Test
 	public void thymeleafViewResolver() {
-		ThymeleafViewResolver thymeleafViewResolver = webApplicationConfig.thymeleafViewResolver();
+		ThymeleafViewResolver thymeleafViewResolver = webApplicationContext.thymeleafViewResolver();
 		assertThat(thymeleafViewResolver.getOrder()).isEqualTo(2);
 	}
 
 	@Test
 	public void thymeleafTemplateEngine() {
-		SpringTemplateEngine thymeleafTemplateEngine = webApplicationConfig.thymeleafTemplateEngine();
+		SpringTemplateEngine thymeleafTemplateEngine = webApplicationContext.thymeleafTemplateEngine();
 		IDialect springDialiect = Iterables.getFirst(thymeleafTemplateEngine.getDialects(), null);
 		assertThat(springDialiect).isInstanceOf(SpringStandardDialect.class);
 	}
 
 	@Test
 	public void thymeleafTemplateResolver() {
-		ServletContextTemplateResolver templateResolver = webApplicationConfig.thymeleafTemplateResolver();
+		ServletContextTemplateResolver templateResolver = webApplicationContext.thymeleafTemplateResolver();
 		templateResolver.initialize();
 		assertThat(templateResolver.getTemplateMode()).isEqualTo("HTML5");
 	}
 
 	@Test
 	public void messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = webApplicationConfig.messageSource();
+		ReloadableResourceBundleMessageSource messageSource = webApplicationContext.messageSource();
 		String englishMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ENGLISH);
 		assertThat(englishMessage).isEqualTo("Message in English");
 		String italianMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ITALIAN);
@@ -145,20 +145,20 @@ public class WebApplicationConfigTest {
 	@Test
 	public void addInterceptors() {
 		ArgumentCaptor<LocaleChangeInterceptor> argument = ArgumentCaptor.forClass(LocaleChangeInterceptor.class);
-		webApplicationConfig.addInterceptors(interceptorRegistry);
+		webApplicationContext.addInterceptors(interceptorRegistry);
 		verify(interceptorRegistry).addInterceptor(argument.capture());
 		assertThat(argument.getValue().getParamName()).isEqualTo("siteLanguage");
 	}
 
 	@Test
 	public void localeChangeInterceptor() {
-		LocaleChangeInterceptor localeChangeInterceptor = webApplicationConfig.localeChangeInterceptor();
+		LocaleChangeInterceptor localeChangeInterceptor = webApplicationContext.localeChangeInterceptor();
 		assertThat(localeChangeInterceptor.getParamName()).isEqualTo("siteLanguage");
 	}
 
 	@Test
 	public void localeResolver() {
-		CookieLocaleResolver cookieLocaleResolver = webApplicationConfig.localeResolver();
+		CookieLocaleResolver cookieLocaleResolver = webApplicationContext.localeResolver();
 		assertThat(cookieLocaleResolver.getCookieName()).isEqualTo("CURRENT_LOCALE");
 	}
 
