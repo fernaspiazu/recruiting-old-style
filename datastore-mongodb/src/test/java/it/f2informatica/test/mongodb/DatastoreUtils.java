@@ -16,12 +16,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * In order to run this unit test correctly, it is necessary
  * to have a MongoDB instance running on localhost port: 27018.
- * See {@link MongoDBApplicationConfigTest} for more information
+ * See {@link MongoDBApplicationContextTest} for more information
  * about the configuration of this test.
- * @see MongoDBApplicationConfigTest
+ * @see MongoDBApplicationContextTest
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {MongoDBApplicationConfigTest.class})
+@ContextConfiguration(classes = {MongoDBApplicationContextTest.class})
 public abstract class DatastoreUtils {
 
 	@Autowired
@@ -33,7 +33,7 @@ public abstract class DatastoreUtils {
 	}
 
 	protected static <T> T getBean(String beanName, Class<T> clazz) {
-		ApplicationContext appContext = new AnnotationConfigApplicationContext(MongoDBApplicationConfigTest.class);
+		ApplicationContext appContext = new AnnotationConfigApplicationContext(MongoDBApplicationContextTest.class);
 		return beanName == null ? appContext.getBean(clazz) : appContext.getBean(beanName, clazz);
 	}
 

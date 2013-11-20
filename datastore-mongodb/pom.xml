@@ -29,7 +29,7 @@
         <configuration>
           <instrumentation>
             <excludes>
-              <exclude>**/config/*</exclude>
+              <exclude>**/context/*</exclude>
               <exclude>**/domain/*</exclude>
               <exclude>**/builders/*</exclude>
               <exclude>**/constants/*</exclude>

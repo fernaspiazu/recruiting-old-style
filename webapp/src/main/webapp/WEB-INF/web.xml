@@ -23,7 +23,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>it.f2informatica.webapp.config.ApplicationConfig</param-value>
+    <param-value>it.f2informatica.webapp.context.RootApplicationContext</param-value>
   </context-param>
 
   <servlet>
@@ -35,9 +35,14 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>it.f2informatica.webapp.config.ApplicationConfig</param-value>
+      <param-value>it.f2informatica.webapp.context.RootApplicationContext</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    <!-- Since Servlet 3.x -->
+    <multipart-config>
+      <max-file-size>5242880</max-file-size>
+      <max-request-size>5242880</max-request-size>
+    </multipart-config>
   </servlet>
   
   <servlet-mapping>
