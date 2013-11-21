@@ -2,9 +2,8 @@ package it.f2informatica.webapp.test.gateway;
 
 import com.google.common.collect.Lists;
 import it.f2informatica.services.domain.user.UserService;
-import it.f2informatica.services.requests.UserRequest;
-import it.f2informatica.services.responses.RoleResponse;
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import org.junit.Test;
@@ -38,46 +37,46 @@ public class UserServiceGatewayTest {
 
 	@Test
 	public void getAuthenticatedUser() {
-		when(userService.findByUsername("username")).thenReturn(createUserResponse());
-		UserResponse response = userServiceGateway.getAuthenticatedUser("username");
-		assertThat(response).isEqualTo(createUserResponse());
+		when(userService.findByUsername("username")).thenReturn(createUserModel());
+		UserModel response = userServiceGateway.getAuthenticatedUser("username");
+		assertThat(response).isEqualTo(createUserModel());
 		assertThat(response.getUsername()).isEqualTo("username");
 	}
 
 	@Test
 	public void loadRoles() {
 		when(userService.loadRoles()).thenReturn(
-				Lists.newArrayList(createRoleResponse("admin"), createRoleResponse("user"))
+				Lists.newArrayList(createRoleModel("admin"), createRoleModel("user"))
 		);
-		assertThat(userServiceGateway.loadRoles()).hasSize(2).contains(createRoleResponse("admin"));
+		assertThat(userServiceGateway.loadRoles()).hasSize(2).contains(createRoleModel("admin"));
 	}
 
 	@Test
 	public void findAllUsers() {
 		when(userService.findAllExcludingCurrentUser(any(Pageable.class), anyString()))
-				.thenReturn(new PageImpl<>(Lists.newArrayList(createUserResponse())));
-		Page<UserResponse> pageResponse = userServiceGateway.findAllUsers(new PageRequest(1, 10));
+				.thenReturn(new PageImpl<>(Lists.newArrayList(createUserModel())));
+		Page<UserModel> pageResponse = userServiceGateway.findAllUsers(new PageRequest(1, 10));
 		assertThat(pageResponse).hasSize(1);
 	}
 
 	@Test
 	public void findUserById() {
-		when(userService.findUserById("1234567890")).thenReturn(createUserResponse());
-		UserResponse response = userServiceGateway.findUserById("1234567890");
+		when(userService.findUserById("1234567890")).thenReturn(createUserModel());
+		UserModel response = userServiceGateway.findUserById("1234567890");
 		assertThat(response.getUsername()).isEqualTo("username");
 	}
 
 	@Test
 	public void	saveUser() {
-		when(userService.saveUser(any(UserRequest.class))).thenReturn(createUserResponse());
-		UserResponse response = userServiceGateway.saveUser(createUserRequest());
+		when(userService.saveUser(any(UserModel.class))).thenReturn(createUserModel());
+		UserModel response = userServiceGateway.saveUser(createUserModel());
 		assertThat(response).isNotNull();
 	}
 
 	@Test
 	public void	updateUser() {
-		when(userService.updateUser(any(UserRequest.class))).thenReturn(true);
-		boolean success = userServiceGateway.updateUser(createUserRequest());
+		when(userService.updateUser(any(UserModel.class))).thenReturn(true);
+		boolean success = userServiceGateway.updateUser(createUserModel());
 		assertThat(success).isTrue();
 	}
 
@@ -91,38 +90,31 @@ public class UserServiceGatewayTest {
 
 	@Test
 	public void prepareNewUserToSave() {
-		assertThat(userServiceGateway.prepareNewUserToSave().isNotRemovable()).isFalse();
+		assertThat(userServiceGateway.prepareNewUserModel().isNotRemovable()).isFalse();
 	}
 
 	@Test
 	public void prepareUserToUpdate() {
-		when(userService.findUserById("12345")).thenReturn(createUserResponse());
-		when(userService.findRoleByName("Administrator")).thenReturn(createRoleResponse("Administrator"));
-		UserRequest request = userServiceGateway.prepareUserToUpdate("12345");
-		assertThat(request.getRoleId()).isEqualTo("555");
+		when(userService.findUserById("12345")).thenReturn(createUserModel());
+		when(userService.findRoleByName("Administrator")).thenReturn(createRoleModel("Administrator"));
+		UserModel userModel = userServiceGateway.prepareUpdatingUserModel("12345");
+		assertThat(userModel.getRole().getRoleId()).isEqualTo("555");
 	}
 
-	private UserResponse createUserResponse() {
-		UserResponse userResponse = new UserResponse();
-		userResponse.setUserId("1234567890");
-		userResponse.setUsername("username");
-		userResponse.setNotRemovable(false);
-		userResponse.setAuthorization("Administrator");
-		return userResponse;
+	private UserModel createUserModel() {
+		UserModel userModel = new UserModel();
+		userModel.setUserId("1234567890");
+		userModel.setUsername("username");
+		userModel.setNotRemovable(false);
+		RoleModel role = new RoleModel();
+		role.setRoleId("123456");
+		role.setRoleName("Administrator");
+		userModel.setRole(role);
+		return userModel;
 	}
 
-	private UserRequest createUserRequest() {
-		UserRequest userRequest = new UserRequest();
-		userRequest.setUserId("1234567890");
-		userRequest.setUsername("username");
-		userRequest.setPassword("password");
-		userRequest.setNotRemovable(false);
-		userRequest.setRoleId("555");
-		return userRequest;
-	}
-
-	private RoleResponse createRoleResponse(String roleName) {
-		RoleResponse roleResponse = new RoleResponse();
+	private RoleModel createRoleModel(String roleName) {
+		RoleModel roleResponse = new RoleModel();
 		roleResponse.setRoleId("555");
 		roleResponse.setRoleName(roleName);
 		return roleResponse;

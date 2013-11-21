@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.UserModel;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,13 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 										Authentication authentication) throws ServletException, IOException {
 		String username = authentication.getName();
-		UserResponse user = setUserInSession(request.getSession(true), username);
+		UserModel user = setUserInSession(request.getSession(true), username);
 		log.info("user in session: [username: " + user.getUsername() + ", id: " + user.getUserId() + "]");
 		super.handle(request, response, authentication);
 	}
 
-	private UserResponse setUserInSession(HttpSession session, String username) {
-		UserResponse user = userServiceGateway.getAuthenticatedUser(username);
+	private UserModel setUserInSession(HttpSession session, String username) {
+		UserModel user = userServiceGateway.getAuthenticatedUser(username);
 		session.setAttribute("user", user);
 		return user;
 	}

@@ -7,9 +7,8 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
-import it.f2informatica.services.requests.UserRequest;
-import it.f2informatica.services.responses.RoleResponse;
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,22 +34,22 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepository;
 
 	@Override
-	public UserResponse findUserById(String userId) {
+	public UserModel findUserById(String userId) {
 		return transformUserToUserResponse().apply(userRepository.findOne(userId));
 	}
 
 	@Override
-	public UserResponse findByUsername(String username) {
+	public UserModel findByUsername(String username) {
 		return transformUserToUserResponse().apply(userRepository.findByUsername(username));
 	}
 
 	@Override
-	public UserResponse findByUsernameAndPassword(String username, String password) {
+	public UserModel findByUsernameAndPassword(String username, String password) {
 		return transformUserToUserResponse().apply(userRepository.findByUsernameAndPassword(username, password));
 	}
 
 	@Override
-	public Page<UserResponse> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
+	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
 		return new PageImpl<>(Lists.newArrayList(
 				Iterables.transform(
 						userRepository.findAllExcludingUser(pageable, usernameToExclude),
@@ -59,42 +58,42 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Iterable<UserResponse> findUsersByRoleName(String roleName) {
+	public Iterable<UserModel> findUsersByRoleName(String roleName) {
 		return Iterables.transform(userRepository.findByRoleName(roleName), transformUserToUserResponse());
 	}
 
 	@Override
-	public UserResponse saveUser(UserRequest request) {
+	public UserModel saveUser(UserModel userModel) {
 		User newUser = userRepository.save(user()
-				.withUsername(request.getUsername())
-				.withPassword(request.getPassword())
-				.withRole(roleRepository.findOne(request.getRoleId()))
+				.withUsername(userModel.getUsername())
+				.withPassword(userModel.getPassword())
+				.withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
 				.thatIsRemovable()
 				.build());
 		return transformUserToUserResponse().apply(newUser);
 	}
 
-	private static Function<User, UserResponse> transformUserToUserResponse() {
-		return new Function<User, UserResponse>() {
+	private static Function<User, UserModel> transformUserToUserResponse() {
+		return new Function<User, UserModel>() {
 			@Override
-			public UserResponse apply(User input) {
-				UserResponse userResponse = new UserResponse();
+			public UserModel apply(User user) {
+				UserModel model = new UserModel();
 				// After saving document "id" field can be of ObjectId type
-				userResponse.setUserId(String.valueOf(input.getId()));
-				userResponse.setUsername(input.getUsername());
-				userResponse.setNotRemovable(input.isNotRemovable());
-				userResponse.setAuthorization(input.getRole().getName());
-				return userResponse;
+				model.setUserId(String.valueOf(user.getId()));
+				model.setUsername(user.getUsername());
+				model.setNotRemovable(user.isNotRemovable());
+				model.setRole(transformRoleToRoleResponse().apply(user.getRole()));
+				return model;
 			}
 		};
 	}
 
 	@Override
-	public boolean updateUser(UserRequest request) {
+	public boolean updateUser(UserModel userModel) {
 		return mongoTemplate.updateFirst(
-				query(where("id").is(request.getUserId())),
-				update("username", request.getUsername())
-					.set("role", roleRepository.findOne(request.getRoleId())),
+				query(where("id").is(userModel.getUserId())),
+				update("username", userModel.getUsername())
+					.set("role", roleRepository.findOne(userModel.getRole().getRoleId())),
 				User.class
 		).getLastError().ok();
 	}
@@ -105,23 +104,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Iterable<RoleResponse> loadRoles() {
+	public Iterable<RoleModel> loadRoles() {
 		return Iterables.transform(roleRepository.findAll(), transformRoleToRoleResponse());
 	}
 
 	@Override
-	public RoleResponse findRoleByName(String roleName) {
+	public RoleModel findRoleByName(String roleName) {
 		return transformRoleToRoleResponse().apply(roleRepository.findByName(roleName));
 	}
 
-	private static Function<Role, RoleResponse> transformRoleToRoleResponse() {
-		return new Function<Role, RoleResponse>() {
+	private static Function<Role, RoleModel> transformRoleToRoleResponse() {
+		return new Function<Role, RoleModel>() {
 			@Override
-			public RoleResponse apply(Role input) {
-				RoleResponse roleResponse = new RoleResponse();
-				roleResponse.setRoleId(input.getId());
-				roleResponse.setRoleName(input.getName());
-				return roleResponse;
+			public RoleModel apply(Role role) {
+				RoleModel model = new RoleModel();
+				model.setRoleId(role.getId());
+				model.setRoleName(role.getName());
+				return model;
 			}
 		};
 	}

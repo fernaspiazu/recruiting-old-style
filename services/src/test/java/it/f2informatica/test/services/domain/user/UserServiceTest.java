@@ -11,9 +11,8 @@ import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.domain.user.UserServiceImpl;
-import it.f2informatica.services.requests.UserRequest;
-import it.f2informatica.services.responses.RoleResponse;
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -32,6 +31,7 @@ import java.util.List;
 
 import static it.f2informatica.mongodb.domain.builders.RoleBuilder.role;
 import static it.f2informatica.mongodb.domain.builders.UserBuilder.user;
+import static it.f2informatica.test.services.builder.UserModelDataBuilder.userModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -53,21 +53,21 @@ public class UserServiceTest {
 	@Test
 	public void findUserById() {
 		when(userRepository.findOne(anyString())).thenReturn(getUser());
-		UserResponse userResponse = userService.findUserById("1234567890");
+		UserModel userResponse = userService.findUserById("1234567890");
 		assertThat(userResponse.getUsername()).isEqualTo("jhon");
 	}
 
 	@Test
 	public void findByUsername() {
 		when(userRepository.findByUsername(anyString())).thenReturn(getUser());
-		UserResponse userResponse = userService.findByUsername("jhon");
+		UserModel userResponse = userService.findByUsername("jhon");
 		assertThat(userResponse.getUsername()).isEqualTo("jhon");
 	}
 
 	@Test
 	public void findByUsernameAndPassword() {
 		when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUser());
-		UserResponse userResponse = userService.findByUsernameAndPassword("jhon", "jhon78*");
+		UserModel userResponse = userService.findByUsernameAndPassword("jhon", "jhon78*");
 		assertThat(userResponse.getUsername()).isEqualTo("jhon");
 	}
 
@@ -75,7 +75,7 @@ public class UserServiceTest {
 	public void findAllWithPageable() {
 		PageImpl<User> paginatedResult = new PageImpl<>(getUserList().subList(0, 10));
 		when(userRepository.findAllExcludingUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
-		Page<UserResponse> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
+		Page<UserModel> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
 		assertThat(users.getContent()).hasSize(10);
 	}
 
@@ -113,7 +113,8 @@ public class UserServiceTest {
 	@Test
 	public void saveUser() {
 		when(userRepository.save(any(User.class))).thenReturn(getUser());
-		assertThat(userService.saveUser(new UserRequest()).getUsername()).isEqualTo("jhon");
+		UserModel userModelSaved = userService.saveUser(userModel().build());
+		assertThat(userModelSaved.getUsername()).isEqualTo("jhon");
 	}
 
 	private User getUser() {
@@ -128,21 +129,21 @@ public class UserServiceTest {
 	@Test
 	public void loadRoles() {
 		String userAuthority = Authority.ROLE_USER.toString();
-		RoleResponse response = new RoleResponse();
-		response.setRoleName(userAuthority);
+		RoleModel roleModel = new RoleModel();
+		roleModel.setRoleName(userAuthority);
 		List<Role> roles = Lists.newArrayList(
 				role().thatIsAdministrator(),
 				role().withAuthorization(userAuthority).build()
 		);
 		when(roleRepository.findAll()).thenReturn(roles);
-		assertThat(userService.loadRoles()).hasSize(2).contains(response);
+		assertThat(userService.loadRoles()).hasSize(2).contains(roleModel);
 	}
 
 	@Test
 	public void findRoleByName() {
 		String roleAdmin = Authority.ROLE_ADMIN.toString();
 		when(roleRepository.findByName(roleAdmin)).thenReturn(role().thatIsAdministrator());
-		RoleResponse response = userService.findRoleByName(roleAdmin);
+		RoleModel response = userService.findRoleByName(roleAdmin);
 		assertThat(response.getRoleName()).isEqualTo("ROLE_ADMIN");
 	}
 
@@ -157,7 +158,7 @@ public class UserServiceTest {
 	@Test
 	public void updateUser() {
 		stubUpdateSuccess();
-		boolean recordUpdated = userService.updateUser(new UserRequest());
+		boolean recordUpdated = userService.updateUser(userModel().build());
 		assertThat(recordUpdated).isTrue();
 	}
 

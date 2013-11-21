@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.security;
 
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.UserModel;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler;
 import org.junit.Before;
@@ -63,8 +63,8 @@ public class CustomAuthenticationSuccessHandlerTest {
 		assertThat(userArgumentCaptor.getValue()).isEqualTo(createUser());
 	}
 
-	private UserResponse createUser() {
-		UserResponse user = new UserResponse();
+	private UserModel createUser() {
+		UserModel user = new UserModel();
 		user.setUserId("1234567890");
 		user.setUsername("username");
 		return user;

@@ -59,7 +59,7 @@ public class I18NJavascriptResolverTest {
 
 	private boolean isLocaleEnglish() {
 		System.out.println(Locale.getDefault());
-		return Locale.getDefault().equals(Locale.US);
+		return Locale.getDefault().equals(Locale.US) || Locale.getDefault().equals(Locale.UK);
 	}
 
 	private boolean isLocaleItalian() {

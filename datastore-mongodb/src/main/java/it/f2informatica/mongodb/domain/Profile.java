@@ -16,9 +16,9 @@ public class Profile {
 
 	private List<Education> educationList = Lists.newArrayList();
 
-	private List<String> skills = Lists.newArrayList();
-
 	private List<Language> languages = Lists.newArrayList();
+
+	private List<String> skills = Lists.newArrayList();
 
 	private String interests;
 

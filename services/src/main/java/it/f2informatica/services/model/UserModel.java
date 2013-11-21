@@ -1,4 +1,4 @@
-package it.f2informatica.services.requests;
+package it.f2informatica.services.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class UserRequest {
+public class UserModel {
 
 	private String userId;
 
@@ -15,8 +15,14 @@ public class UserRequest {
 
 	private String password;
 
+	private String firstName;
+
+	private String lastName;
+
+	private String email;
+
 	private boolean notRemovable;
 
-	private String roleId;
+	private RoleModel role;
 
 }

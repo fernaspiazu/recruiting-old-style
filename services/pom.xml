@@ -25,9 +25,10 @@
         <configuration>
           <instrumentation>
             <excludes>
+              <exclude>**/model/*</exclude>
               <exclude>**/requests/*</exclude>
               <exclude>**/responses/*</exclude>
-              <exclude>**/builders/*</exclude>
+              <exclude>**/builder/*</exclude>
             </excludes>
           </instrumentation>
           <formats>

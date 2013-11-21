@@ -1,4 +1,4 @@
-package it.f2informatica.services.responses;
+package it.f2informatica.services.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class RoleResponse {
+public class RoleModel {
 
 	private String roleId;
 

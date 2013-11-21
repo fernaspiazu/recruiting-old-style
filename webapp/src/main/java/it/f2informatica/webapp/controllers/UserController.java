@@ -1,8 +1,8 @@
 package it.f2informatica.webapp.controllers;
 
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
-import it.f2informatica.services.requests.UserRequest;
-import it.f2informatica.services.responses.RoleResponse;
 import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class UserController {
 	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
 
 	@ModelAttribute("roles")
-	public Iterable<RoleResponse> roles() {
+	public Iterable<RoleModel> roles() {
 		return userServiceGateway.loadRoles();
 	}
 
@@ -43,25 +43,25 @@ public class UserController {
 
 	@RequestMapping(value = "/createNewUser", method = RequestMethod.GET)
 	public String createNewUser(ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.prepareNewUserToSave());
+		modelMap.addAttribute("userModel", userServiceGateway.prepareNewUserModel());
 		return "user/createNewUser";
 	}
 
 	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
 	public String editUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.prepareUserToUpdate(userId));
+		modelMap.addAttribute("userModel", userServiceGateway.prepareUpdatingUserModel(userId));
 		return "user/userEdit";
 	}
 
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userModel") UserRequest userRequest) {
-		userServiceGateway.saveUser(userRequest);
+	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
+		userServiceGateway.saveUser(userModel);
 		return "redirect:/user/loadUsers";
 	}
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("userModel") UserRequest userRequest) {
-		userServiceGateway.updateUser(userRequest);
+	public String updateUser(@ModelAttribute("userModel") UserModel userModel) {
+		userServiceGateway.updateUser(userModel);
 		return "redirect:/user/loadUsers";
 	}
 

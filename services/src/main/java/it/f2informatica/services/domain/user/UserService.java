@@ -1,31 +1,30 @@
 package it.f2informatica.services.domain.user;
 
-import it.f2informatica.services.requests.UserRequest;
-import it.f2informatica.services.responses.RoleResponse;
-import it.f2informatica.services.responses.UserResponse;
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-	UserResponse findUserById(String userId);
+	UserModel findUserById(String userId);
 
-	UserResponse findByUsername(String username);
+	UserModel findByUsername(String username);
 
-	UserResponse findByUsernameAndPassword(String username, String password);
+	UserModel findByUsernameAndPassword(String username, String password);
 
-	Page<UserResponse> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
+	Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
-	Iterable<UserResponse> findUsersByRoleName(String roleName);
+	Iterable<UserModel> findUsersByRoleName(String roleName);
 
-	UserResponse saveUser(UserRequest user);
+	UserModel saveUser(UserModel user);
 
-	boolean updateUser(UserRequest userRequest);
+	boolean updateUser(UserModel userRequest);
 
 	void deleteUser(String userId);
 
-	Iterable<RoleResponse> loadRoles();
+	Iterable<RoleModel> loadRoles();
 
-	RoleResponse findRoleByName(String roleName);
+	RoleModel findRoleByName(String roleName);
 
 }
