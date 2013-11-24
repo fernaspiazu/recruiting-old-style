@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode
 @ToString
-public class UpdatePasswordRequest {
+public class UpdatePasswordRequest implements Serializable {
 
 	private String userId;
 

@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @EqualsAndHashCode
 @ToString
-public class ExperienceModel {
+public class ExperienceModel implements Serializable {
 
 	private String companyName;
 

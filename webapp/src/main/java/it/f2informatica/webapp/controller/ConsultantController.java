@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.controllers;
+package it.f2informatica.webapp.controller;
 
 import com.google.common.collect.Lists;
 import org.springframework.data.domain.Pageable;

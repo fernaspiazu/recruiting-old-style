@@ -11,8 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static it.f2informatica.mongodb.domain.builders.RoleBuilder.role;
-import static it.f2informatica.mongodb.domain.builders.UserBuilder.user;
+import static it.f2informatica.mongodb.domain.builder.RoleBuilder.role;
+import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 

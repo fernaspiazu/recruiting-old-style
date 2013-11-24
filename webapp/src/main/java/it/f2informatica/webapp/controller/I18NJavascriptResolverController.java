@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.controllers;
+package it.f2informatica.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

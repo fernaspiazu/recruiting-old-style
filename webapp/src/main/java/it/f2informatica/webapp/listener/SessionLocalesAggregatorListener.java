@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.listeners;
+package it.f2informatica.webapp.listener;
 
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;

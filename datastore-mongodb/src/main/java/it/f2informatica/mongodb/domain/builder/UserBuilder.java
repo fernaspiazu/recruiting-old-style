@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.domain.builders;
+package it.f2informatica.mongodb.domain.builder;
 
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;

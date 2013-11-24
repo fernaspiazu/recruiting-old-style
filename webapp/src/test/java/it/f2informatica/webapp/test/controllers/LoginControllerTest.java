@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.test.controllers;
 
-import it.f2informatica.webapp.controllers.LoginController;
+import it.f2informatica.webapp.controller.LoginController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

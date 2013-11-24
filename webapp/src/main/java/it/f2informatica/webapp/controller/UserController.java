@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.controllers;
+package it.f2informatica.webapp.controller;
 
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
@@ -54,7 +57,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
+	public String saveUser(@ModelAttribute("userModel") @Valid UserModel userModel, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "user/createNewUser";
+		}
 		userServiceGateway.saveUser(userModel);
 		return "redirect:/user/loadUsers";
 	}

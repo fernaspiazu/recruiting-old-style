@@ -22,9 +22,10 @@ import java.util.List;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = {
-		"it.f2informatica.webapp.controllers",
+		"it.f2informatica.webapp.controller",
 		"it.f2informatica.webapp.gateway",
-		"it.f2informatica.webapp.i18n"
+		"it.f2informatica.webapp.i18n",
+		"it.f2informatica.webapp.validator"
 })
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 

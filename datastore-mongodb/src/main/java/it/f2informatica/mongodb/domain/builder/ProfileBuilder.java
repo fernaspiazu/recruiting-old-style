@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.domain.builders;
+package it.f2informatica.mongodb.domain.builder;
 
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;

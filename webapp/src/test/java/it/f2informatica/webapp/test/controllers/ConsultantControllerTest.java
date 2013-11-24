@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.test.controllers;
 
-import it.f2informatica.webapp.controllers.ConsultantController;
+import it.f2informatica.webapp.controller.ConsultantController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

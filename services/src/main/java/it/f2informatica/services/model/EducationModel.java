@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode
 @ToString
-public class EducationModel {
+public class EducationModel implements Serializable {
 
 	private String school;
 

@@ -1,8 +1,9 @@
 package it.f2informatica.webapp.test.controllers;
 
-import it.f2informatica.webapp.controllers.UserController;
+import it.f2informatica.webapp.controller.UserController;
 import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
+import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +13,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,6 +29,9 @@ public class UserControllerTest {
 	@Mock
 	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
 
+	@Mock
+	private RegistrationUserValidator registrationUserValidator;
+
 	@InjectMocks
 	private UserController userController;
 
@@ -35,8 +41,13 @@ public class UserControllerTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(userController)
-				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+				.setValidator(new RegistrationUserValidator())
+				.setCustomArgumentResolvers(argumentResolvers())
 				.build();
+	}
+
+	private HandlerMethodArgumentResolver[] argumentResolvers() {
+		return new HandlerMethodArgumentResolver[]{new PageableHandlerMethodArgumentResolver()};
 	}
 
 	@Test
@@ -69,8 +80,22 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void saveUser() throws Exception {
+	public void failingUserRegistration() throws Exception {
 		mockMvc.perform(post("/user/saveUser"))
+				.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(model().errorCount(3))
+				.andExpect(view().name("user/createNewUser"));
+	}
+
+	@Test
+	public void successfulUserRegistration() throws Exception {
+		mockMvc.perform(post("/user/saveUser")
+					.param("username", "username")
+					.param("password", "password")
+					.param("role.roleId", "52602b9b92bede6f44752e35")
+					.param("role.roleName", "ADMIN"))
+				.andDo(print())
 				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/user/loadUsers"));
 	}

@@ -31,7 +31,7 @@
             <excludes>
               <exclude>**/context/*</exclude>
               <exclude>**/domain/*</exclude>
-              <exclude>**/builders/*</exclude>
+              <exclude>**/builder/*</exclude>
               <exclude>**/constants/*</exclude>
             </excludes>
           </instrumentation>

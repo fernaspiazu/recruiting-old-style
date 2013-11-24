@@ -13,7 +13,7 @@
   </listener>
 
   <listener>
-    <listener-class>it.f2informatica.webapp.listeners.SessionLocalesAggregatorListener</listener-class>
+    <listener-class>it.f2informatica.webapp.listener.SessionLocalesAggregatorListener</listener-class>
   </listener>
   
   <context-param>

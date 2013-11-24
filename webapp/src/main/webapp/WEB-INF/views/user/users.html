@@ -25,7 +25,7 @@
 			<tbody>
 			<tr th:each="user : ${users}">
 				<td th:text="${user.username}">Some username</td>
-				<td th:text="${user.authorization}">Some Role</td>
+				<td th:text="${user.role.roleName}">Some Role</td>
 				<td class="cell-text-align-center">
 					<a th:href="@{/user/findUser/}+${user.userId}"
 						 href="userForm.html" th:text="#{user.details}">

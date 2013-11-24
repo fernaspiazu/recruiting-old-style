@@ -25,7 +25,8 @@
 				<tr>
 					<td>
 						<label th:text="#{user.selectrole}">Select Role:</label><br/>
-						<input type="text" th:field="*{authorization}" readonly="readonly"/>
+						<input type="text" th:field="*{role.roleName}" readonly="readonly"/>
+						<input type="hidden" th:field="*{role.roleId}"/>
 					</td>
 				</tr>
 			</table>

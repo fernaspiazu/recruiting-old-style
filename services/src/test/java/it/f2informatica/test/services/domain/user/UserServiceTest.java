@@ -5,7 +5,7 @@ import com.mongodb.CommandResult;
 import com.mongodb.WriteResult;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.domain.builders.RoleBuilder;
+import it.f2informatica.mongodb.domain.builder.RoleBuilder;
 import it.f2informatica.mongodb.domain.constants.Authority;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
@@ -29,8 +29,8 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 
-import static it.f2informatica.mongodb.domain.builders.RoleBuilder.role;
-import static it.f2informatica.mongodb.domain.builders.UserBuilder.user;
+import static it.f2informatica.mongodb.domain.builder.RoleBuilder.role;
+import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static it.f2informatica.test.services.builder.UserModelDataBuilder.userModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;

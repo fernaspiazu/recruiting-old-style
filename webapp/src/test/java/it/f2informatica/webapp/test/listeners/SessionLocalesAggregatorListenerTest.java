@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.test.listeners;
 
-import it.f2informatica.webapp.listeners.SessionLocalesAggregatorListener;
+import it.f2informatica.webapp.listener.SessionLocalesAggregatorListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
