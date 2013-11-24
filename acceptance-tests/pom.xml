@@ -17,6 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <deployable.name>recruiting</deployable.name>
     <deployable.path>${basedir}/../webapp/target/${deployable.name}.war</deployable.path>
+    <deployable.url>http://localhost:8082/${deployable.name}</deployable.url>
     <selenium.version>2.37.1</selenium.version>
   </properties>
 
@@ -58,7 +59,7 @@
           <deployables>
             <deployable>
               <location>${deployable.path}</location>
-              <pingURL>http://localhost:8081/${deployable.name}</pingURL>
+              <pingURL>${deployable.url}</pingURL>
               <type>war</type>
             </deployable>
           </deployables>
