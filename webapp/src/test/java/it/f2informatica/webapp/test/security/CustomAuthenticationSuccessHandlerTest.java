@@ -40,15 +40,15 @@ public class CustomAuthenticationSuccessHandlerTest {
 	@Mock
 	private Authentication authentication;
 
-	private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 	@Before
 	public void setUp() {
-		authenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
+		customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
 		when(authentication.getName()).thenReturn("username");
 		when(request.getSession(true)).thenReturn(session);
 		when(userServiceGateway.getAuthenticatedUser("username")).thenReturn(createUser());
-		authenticationSuccessHandler.setUserServiceGateway(userServiceGateway);
+		customAuthenticationSuccessHandler.setUserServiceGateway(userServiceGateway);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class CustomAuthenticationSuccessHandlerTest {
 		ArgumentCaptor<String> attributeArgumentCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
 		// ------- invocation time --------------
-		authenticationSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+		customAuthenticationSuccessHandler.onAuthenticationSuccess(request, response, authentication);
 		// --------------------------------------
 		verify(session).setAttribute(attributeArgumentCaptor.capture(), userArgumentCaptor.capture());
 		assertThat(attributeArgumentCaptor.getValue()).isEqualTo("user");

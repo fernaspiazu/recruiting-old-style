@@ -30,35 +30,6 @@
         <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <configuration>
-          <instrumentation>
-            <excludes>
-              <exclude>**/context/*</exclude>
-              <exclude>**/RecruitingMain.class</exclude>
-              <exclude>**/GlobalValidator.class</exclude>
-            </excludes>
-          </instrumentation>
-          <formats>
-            <format>html</format>
-          </formats>
-          <check>
-            <haltOnFailure>true</haltOnFailure>
-            <lineRate>60</lineRate>
-            <totalLineRate>60</totalLineRate>
-          </check>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>clean</goal>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>${maven.war.version}</version>

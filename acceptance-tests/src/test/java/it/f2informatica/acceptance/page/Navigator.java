@@ -3,7 +3,7 @@ package it.f2informatica.acceptance.page;
 import org.openqa.selenium.WebDriver;
 
 public class Navigator {
-	private static final String DEFAULT_BASE_URL = "http://localhost:8081/recruiting";
+	private static final String DEFAULT_BASE_URL = "http://localhost:8082/recruiting";
 
 	private String baseUrl;
 	private WebDriver driver;

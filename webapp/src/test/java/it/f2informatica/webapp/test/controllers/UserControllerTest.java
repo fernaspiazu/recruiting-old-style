@@ -13,7 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,12 +41,8 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(userController)
 				.setValidator(new RegistrationUserValidator())
-				.setCustomArgumentResolvers(argumentResolvers())
+				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
 				.build();
-	}
-
-	private HandlerMethodArgumentResolver[] argumentResolvers() {
-		return new HandlerMethodArgumentResolver[]{new PageableHandlerMethodArgumentResolver()};
 	}
 
 	@Test

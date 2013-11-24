@@ -10,13 +10,15 @@
 <body>
 <form id="loginForm" action="#" th:action="@{/processLogin}" method="post">
 	<h1 id="loginHeader" th:text="#{login.login}">Login</h1>
+	<div th:if="${hasErrors}" id="login-error-msg">
+		Login Failure
+	</div>
 	<fieldset id="inputs">
 		<input type="text" id="usernameId" name="username"
 					 th:placeholder="#{login.username}" placeholder="Username"
-					 autofocus="" required=""/>
+					 autofocus=""/>
 		<input type="password" id="passwordId" name="password"
-					 th:placeholder="#{login.password}" placeholder="Password"
-					 required=""/>
+					 th:placeholder="#{login.password}" placeholder="Password"/>
 	</fieldset>
 	<fieldset id="actions">
 		<input id="submit" type="submit" th:value="#{login.login}" value="Login"/>

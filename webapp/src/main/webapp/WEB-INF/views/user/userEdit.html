@@ -19,13 +19,13 @@
 				<tr>
 					<td>
 						<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
-									 placeholder="Username" autofocus="" required=""/>
+									 placeholder="Username" autofocus=""/>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
-						<select id="roleId" th:field="*{role}" required="">
+						<select id="roleId" th:field="*{role}">
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
 								Role in Wireframe
 							</option>

@@ -26,6 +26,10 @@ public class Page {
 		element.click();
 	}
 
+	protected void submit(WebElement element) {
+		element.submit();
+	}
+
 	protected WebElement findElement(String xpath) {
 		return driver.findElement(By.xpath(xpath));
 	}

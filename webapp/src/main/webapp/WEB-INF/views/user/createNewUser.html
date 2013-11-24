@@ -18,7 +18,7 @@
 				<tr>
 					<td>
 						<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
-									 placeholder="Username" autofocus="" required=""/>
+									 placeholder="Username" autofocus=""/>
 						<span th:if="${#fields.hasErrors('username')}"
 									th:errors="*{username}" class="error-block">Incorrect Username</span>
 					</td>
@@ -26,7 +26,7 @@
 				<tr>
 					<td>
 						<input type="password" th:field="*{password}" th:placeholder="#{user.password}"
-									 placeholder="Password" required=""/>
+									 placeholder="Password"/>
 						<span th:if="${#fields.hasErrors('password')}"
 									th:errors="*{password}" class="error-block">Incorrect Password</span>
 					</td>
@@ -34,7 +34,7 @@
 				<tr>
 					<td>
 						<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
-						<select id="roleId" th:field="*{role.roleId}" required="">
+						<select id="roleId" th:field="*{role.roleId}">
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
 								Role in Wireframe
 							</option>

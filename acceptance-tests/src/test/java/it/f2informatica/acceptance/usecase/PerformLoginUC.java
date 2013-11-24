@@ -29,7 +29,7 @@ public class PerformLoginUC extends UseCaseTest {
 		loginPage.typeUsername("unknown_user");
 		loginPage.typePassword("unknown_password");
 		LoginPage loginPageAfterLoginFailure = loginPage.clickOnLoginButtonExpectingFailure();
-		assertThat(loginPageAfterLoginFailure).isInstanceOf(LoginPage.class);
+		assertThat(loginPageAfterLoginFailure.isLoginErrorMessagePresent()).isTrue();
 	}
 
 }

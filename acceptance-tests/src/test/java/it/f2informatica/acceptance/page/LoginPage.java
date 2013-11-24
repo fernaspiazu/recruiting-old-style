@@ -6,6 +6,7 @@ public class LoginPage extends Page {
 	private static final String USERNAME_INPUT_XPATH = "//input[@name='username']";
 	private static final String PASSWORD_INPUT_XPATH = "//input[@name='password']";
 	private static final String LOGIN_BUTTON_XPATH = "//input[@id='submit']";
+	private static final String LOGIN_ERROR_MSG_XPATH = "//div[@id='login-error-msg']";
 
 	public LoginPage(WebDriver driver, String baseUrl) {
 		super(driver, baseUrl, "/");
@@ -25,8 +26,13 @@ public class LoginPage extends Page {
 	}
 
 	public LoginPage clickOnLoginButtonExpectingFailure() {
-		click(findElement(LOGIN_BUTTON_XPATH));
+		submit(findElement(LOGIN_BUTTON_XPATH));
+		driver.get(baseUrl + "/login_failed");
 		return new LoginPage(driver, baseUrl);
 	}
 
+
+	public boolean isLoginErrorMessagePresent() {
+		return findElement(LOGIN_ERROR_MSG_XPATH).isDisplayed();
+	}
 }
