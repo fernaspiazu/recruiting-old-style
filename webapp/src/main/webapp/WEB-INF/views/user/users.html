@@ -13,7 +13,7 @@
 	<div th:substituteby="templates/navbar::navbar"></div>
 	<div id="content">
 		<h1 th:text="#{user.users}">Users</h1>
-		<table class="bordered">
+		<table id="user-list" class="bordered">
 			<thead>
 			<tr>
 				<th th:text="#{user.username}">Username</th>

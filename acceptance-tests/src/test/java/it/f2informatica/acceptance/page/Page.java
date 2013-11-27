@@ -4,6 +4,7 @@ import it.f2informatica.acceptance.predicates.HasPageBeenLoaded;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Page {
@@ -18,6 +19,7 @@ public class Page {
 		this.baseUrl = baseUrl;
 		this.path = path;
 		this.url = baseUrl + path;
+		System.out.println("----------------- Loading URL: [" + this.url + "]");
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(new HasPageBeenLoaded(url));
 	}
@@ -34,6 +36,14 @@ public class Page {
 		return driver.findElement(By.xpath(xpath));
 	}
 
+	protected WebElement findElement(WebElement element, String xpath) {
+		return element.findElement(By.xpath(xpath));
+	}
+
+	protected String getValue(WebElement element) {
+		return element.getAttribute("value");
+	}
+
 	protected void clearAndSendKeys(WebElement element, String input) {
 		this.clear(element);
 		this.sendKeys(element, input);
@@ -45,6 +55,10 @@ public class Page {
 
 	protected void sendKeys(WebElement element, String input) {
 		element.sendKeys(input);
+	}
+
+	protected void select(WebElement element, String value) {
+		new Select(element).selectByVisibleText(value);
 	}
 
 }

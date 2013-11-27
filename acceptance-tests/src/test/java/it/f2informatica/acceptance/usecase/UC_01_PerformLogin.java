@@ -1,13 +1,13 @@
 package it.f2informatica.acceptance.usecase;
 
 import it.f2informatica.acceptance.page.HomePage;
-import it.f2informatica.acceptance.page.LoginPage;
+import it.f2informatica.acceptance.page.login.LoginPage;
 import org.junit.After;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class PerformLoginUC extends UseCaseTest {
+public class UC_01_PerformLogin extends UseCaseTest {
 
 	@After
 	public void logout() {

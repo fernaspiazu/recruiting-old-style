@@ -1,5 +1,7 @@
-package it.f2informatica.acceptance.page;
+package it.f2informatica.acceptance.page.login;
 
+import it.f2informatica.acceptance.page.HomePage;
+import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends Page {
@@ -10,6 +12,12 @@ public class LoginPage extends Page {
 
 	public LoginPage(WebDriver driver, String baseUrl) {
 		super(driver, baseUrl, "/");
+	}
+
+	public void login(String username, String password) {
+		typeUsername(username);
+		typePassword(password);
+		clickOnLoginButton();
 	}
 
 	public void typeUsername(String username) {
@@ -35,4 +43,5 @@ public class LoginPage extends Page {
 	public boolean isLoginErrorMessagePresent() {
 		return findElement(LOGIN_ERROR_MSG_XPATH).isDisplayed();
 	}
+
 }

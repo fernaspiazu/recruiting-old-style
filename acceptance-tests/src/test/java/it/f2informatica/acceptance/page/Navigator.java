@@ -1,5 +1,7 @@
 package it.f2informatica.acceptance.page;
 
+import it.f2informatica.acceptance.page.login.LoginPage;
+import it.f2informatica.acceptance.page.user.UserManagementPage;
 import org.openqa.selenium.WebDriver;
 
 public class Navigator {
@@ -38,8 +40,12 @@ public class Navigator {
 		return new HomePage(driver, baseUrl);
 	}
 
+	public UserManagementPage goToUserManagementPage() {
+		driver.get(baseUrl + "/user/loadUsers");
+		return new UserManagementPage(driver, baseUrl);
+	}
+
 	public void logOut() {
 		driver.get(baseUrl + "/logout");
 	}
-
 }
