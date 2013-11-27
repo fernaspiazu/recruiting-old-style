@@ -43,8 +43,6 @@ public class Consultant extends Identifiable<String> {
 
 	private String birthCountry;
 
-	private String nationality;
-
 	private String identityCardNo;
 
 	private String passportNo;

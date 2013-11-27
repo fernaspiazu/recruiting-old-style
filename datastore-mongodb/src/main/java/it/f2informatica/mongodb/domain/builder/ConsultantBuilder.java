@@ -81,11 +81,6 @@ public class ConsultantBuilder {
 		return this;
 	}
 
-	public ConsultantBuilder withNationality(String nationality) {
-		consultant.setNationality(nationality);
-		return this;
-	}
-
 	public ConsultantBuilder withIdentityCardNo(String identityCardNo) {
 		consultant.setIdentityCardNo(identityCardNo);
 		return this;

@@ -61,4 +61,8 @@ public class Page {
 		new Select(element).selectByVisibleText(value);
 	}
 
+	protected void selectByValue(WebElement element, String value) {
+		new Select(element).selectByValue(value);
+	}
+
 }

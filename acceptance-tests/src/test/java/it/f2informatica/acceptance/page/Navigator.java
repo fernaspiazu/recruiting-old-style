@@ -1,5 +1,6 @@
 package it.f2informatica.acceptance.page;
 
+import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
 import it.f2informatica.acceptance.page.login.LoginPage;
 import it.f2informatica.acceptance.page.user.UserManagementPage;
 import org.openqa.selenium.WebDriver;
@@ -30,6 +31,10 @@ public class Navigator {
 		this.driver = driver;
 	}
 
+	public void logOut() {
+		driver.get(baseUrl + "/logout");
+	}
+
 	public LoginPage goToLoginPage() {
 		driver.get(baseUrl);
 		return new LoginPage(driver, baseUrl);
@@ -45,7 +50,8 @@ public class Navigator {
 		return new UserManagementPage(driver, baseUrl);
 	}
 
-	public void logOut() {
-		driver.get(baseUrl + "/logout");
+	public ConsultantManagementPage goToConsultantManagementPage() {
+		driver.get(baseUrl + "/consultant");
+		return new ConsultantManagementPage(driver, baseUrl);
 	}
 }

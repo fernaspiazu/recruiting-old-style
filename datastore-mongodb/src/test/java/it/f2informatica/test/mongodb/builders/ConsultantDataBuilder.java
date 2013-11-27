@@ -30,7 +30,6 @@ public class ConsultantDataBuilder {
 	private Date birthDate = new GregorianCalendar(1975, 3, 10).getTime();
 	private String birthCountry = "Italy";
 	private String birthCity = "Milano";
-	private String nationality = "Italian";
 	private String identityCardNo = "AO652R";
 	private String passportNo = "0653214555";
 	private MaritalStatus maritalStatus = MaritalStatus.SINGLE;
@@ -109,11 +108,6 @@ public class ConsultantDataBuilder {
 		return this;
 	}
 
-	public ConsultantDataBuilder withNationality(String nationality) {
-		this.nationality = nationality;
-		return this;
-	}
-
 	public ConsultantDataBuilder withIdentityCardNo(String identityCardNo) {
 		this.identityCardNo = identityCardNo;
 		return this;
@@ -171,7 +165,6 @@ public class ConsultantDataBuilder {
 		consultant.setBirthDate(birthDate);
 		consultant.setBirthCity(birthCity);
 		consultant.setBirthCountry(birthCountry);
-		consultant.setNationality(nationality);
 		consultant.setIdentityCardNo(identityCardNo);
 		consultant.setPassportNo(passportNo);
 		consultant.setMaritalStatus(maritalStatus);
