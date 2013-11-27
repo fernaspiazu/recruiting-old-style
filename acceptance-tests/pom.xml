@@ -93,13 +93,6 @@
       <scope>test</scope>
       <type>jar</type>
     </dependency>
-    <dependency>
-      <groupId>it.f2informatica</groupId>
-      <artifactId>webapp</artifactId>
-      <version>${project.parent.version}</version>
-      <scope>test</scope>
-      <type>war</type>
-    </dependency>
 
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
@@ -128,6 +121,7 @@
           <groupId>org.slf4j</groupId>
         </exclusion>
       </exclusions>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
