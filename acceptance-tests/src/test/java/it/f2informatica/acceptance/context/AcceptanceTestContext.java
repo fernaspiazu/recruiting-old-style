@@ -1,6 +1,5 @@
 package it.f2informatica.acceptance.context;
 
-import com.mongodb.ServerAddress;
 import it.f2informatica.mongodb.context.MongoDBApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,18 +24,28 @@ public class AcceptanceTestContext {
 
 	@PostConstruct
 	public void init() {
-		ServerAddress mongoAddress = mongoTemplate.getDb().getMongo().getConnector().getAddress();
-		String host = mongoAddress.getHost();
-		int port = mongoAddress.getPort();
-		String database = mongoTemplate.getDb().getName();
-		System.out.println("MongoDB host[" + host + "]; port[" + port + "]; database[" + database + "]");
+		System.out.println(
+				"\n==========>> MongoDB host[" + getHost() + "]; " +
+				"port[" + getPort() + "]; " +
+				"database[" + getDatabaseName() + "]\n");
 	}
 
 	@PreDestroy
 	public void dropDatabase() {
-		String database = mongoTemplate.getDb().getName();
-		System.out.println("Dropping DB[" + database + "]");
+		System.out.println("==========>> Dropping DB[" + getDatabaseName() + "]\n");
 		mongoTemplate.getDb().dropDatabase();
+	}
+
+	private String getHost() {
+		return mongoTemplate.getDb().getMongo().getConnector().getAddress().getHost();
+	}
+
+	private int getPort() {
+		return mongoTemplate.getDb().getMongo().getConnector().getAddress().getPort();
+	}
+
+	private String getDatabaseName() {
+		return mongoTemplate.getDb().getName();
 	}
 
 }
