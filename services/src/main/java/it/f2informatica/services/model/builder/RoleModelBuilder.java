@@ -5,7 +5,7 @@ import it.f2informatica.services.model.RoleModel;
 public class RoleModelBuilder {
 	private RoleModel role = new RoleModel();
 
-	public static RoleModelBuilder role() {
+	public static RoleModelBuilder roleModel() {
 		return new RoleModelBuilder();
 	}
 

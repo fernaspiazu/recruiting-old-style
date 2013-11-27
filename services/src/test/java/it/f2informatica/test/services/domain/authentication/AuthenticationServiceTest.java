@@ -1,9 +1,8 @@
 package it.f2informatica.test.services.domain.authentication;
 
-import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.services.domain.authentication.AuthenticationService;
 import it.f2informatica.services.domain.authentication.AuthenticationServiceImpl;
+import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static it.f2informatica.mongodb.domain.builder.RoleBuilder.role;
-import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -20,23 +17,24 @@ import static org.mockito.Mockito.when;
 public class AuthenticationServiceTest {
 
 	@Mock
-	private UserRepository userRepository;
+	private UserRepositoryGateway userRepositoryGateway;
 
 	@InjectMocks
 	private AuthenticationService authenticationService = new AuthenticationServiceImpl();
 
 	@Test
 	public void processLoginTest() {
-		when(userRepository.findByUsername("jhon")).thenReturn(getUser());
+		when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(response());
 		AuthenticationResponse response = authenticationService.processLogin("jhon");
 		assertThat(response.getUsername()).isEqualTo("jhon");
 	}
 
-	public User getUser() {
-		return user()
-				.withUsername("jhon")
-				.withPassword("jhon85*")
-				.withRole(role().thatIsAdministrator())
-				.build();
+	private AuthenticationResponse response() {
+		AuthenticationResponse response = new AuthenticationResponse();
+		response.setUsername("jhon");
+		response.setPassword("jhon85*");
+		response.setAuthorization("Administrator");
+		return response;
 	}
+
 }
