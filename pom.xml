@@ -56,7 +56,7 @@
     <gson.version>2.2.4</gson.version>
   </properties>
 
-  <reporting>
+  <!--<reporting>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -64,7 +64,7 @@
         <version>${cobertura.version}</version>
       </plugin>
     </plugins>
-  </reporting>
+  </reporting>-->
 
   <build>
     <pluginManagement>
@@ -78,11 +78,11 @@
             <target>${jvm.version}</target>
           </configuration>
         </plugin>
-        <plugin>
+        <!--<plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>cobertura-maven-plugin</artifactId>
           <version>${cobertura.version}</version>
-        </plugin>
+        </plugin>-->
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
           <artifactId>cargo-maven2-plugin</artifactId>
