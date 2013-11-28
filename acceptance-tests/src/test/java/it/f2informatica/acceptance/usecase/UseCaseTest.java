@@ -4,6 +4,7 @@ import it.f2informatica.acceptance.context.AcceptanceTestContext;
 import it.f2informatica.acceptance.driver.WebDriverFacade;
 import it.f2informatica.acceptance.driver.WebDriverFactory;
 import it.f2informatica.acceptance.page.Navigator;
+import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import org.apache.commons.io.FileUtils;
@@ -39,6 +40,9 @@ public abstract class UseCaseTest {
 
 	@Autowired
 	protected RoleRepository roleRepository;
+
+	@Autowired
+	protected ConsultantRepository consultantRepository;
 
 	public UseCaseTest() {
 		this.driverFactory = WebDriverFacade.getHtmlUnitDriverFactory();

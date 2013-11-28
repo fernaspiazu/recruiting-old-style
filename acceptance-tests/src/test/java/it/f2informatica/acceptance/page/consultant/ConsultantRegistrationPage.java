@@ -91,8 +91,7 @@ public class ConsultantRegistrationPage extends Page {
 		clearAndSendKeys(findElement(INPUT_MOBILENUMBER_XPATH), mobileNumber);
 	}
 
-	public ProfileRegistrationPage clickOnSaveAndContinueRegisteringProfile() {
+	public void clickOnSaveAndContinueRegisteringProfile() {
 		click(findElement(SAVE_AND_CONTINUE_PROFILE_PAGE_BUTTON));
-		return new ProfileRegistrationPage(driver, baseUrl, "/TODO"); // TODO:
 	}
 }

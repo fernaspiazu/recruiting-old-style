@@ -5,10 +5,10 @@ import com.mongodb.CommandResult;
 import com.mongodb.WriteResult;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.domain.builder.RoleBuilder;
 import it.f2informatica.mongodb.domain.constants.Authority;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
+import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.gateway.mongodb.UserRepositoryGatewayMongoDB;
 import it.f2informatica.services.model.RoleModel;
@@ -19,10 +19,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -38,7 +34,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserRepositoryGatewayTest {
+public class UserRepositoryGatewayMongoDBTest {
 
 	@Mock
 	private MongoTemplate mongoTemplate;
@@ -49,58 +45,50 @@ public class UserRepositoryGatewayTest {
 	@Mock
 	private RoleRepository roleRepository;
 
+	@Mock
+	private EntityToModelConverter<User, UserModel> userToModelConverter;
+
 	@InjectMocks
 	private UserRepositoryGateway userRepositoryGateway = new UserRepositoryGatewayMongoDB();
 
 	@Test
 	public void findUserById() {
 		when(userRepository.findOne(anyString())).thenReturn(getUser());
-		UserModel userResponse = userRepositoryGateway.findUserById("1234567890");
-		assertThat(userResponse.getUsername()).isEqualTo("jhon");
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findUserById("52820f6f34bdf55624303fc1");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
 	}
 
 	@Test
 	public void findByUsername() {
 		when(userRepository.findByUsername(anyString())).thenReturn(getUser());
-		UserModel userResponse = userRepositoryGateway.findByUsername("jhon");
-		assertThat(userResponse.getUsername()).isEqualTo("jhon");
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findByUsername("jhon_kent77");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
 	}
 
 	@Test
 	public void findByUsernameAndPassword() {
 		when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUser());
-		UserModel userResponse = userRepositoryGateway.findByUsernameAndPassword("jhon", "jhon78*");
-		assertThat(userResponse.getUsername()).isEqualTo("jhon");
-	}
-
-	@Test
-	public void findAllWithPageable() {
-		PageImpl<User> paginatedResult = new PageImpl<>(getUserList().subList(0, 10));
-		when(userRepository.findAllExcludingUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
-		Page<UserModel> users = userRepositoryGateway.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
-		assertThat(users.getContent()).hasSize(10);
-	}
-
-	@Test
-	@SuppressWarnings("ConstantConditions")
-	public void findUserByRoleName() {
-		String roleAdmin = Authority.ROLE_ADMIN.toString();
-		when(userRepository.findByRoleName(roleAdmin)).thenReturn(getUserList().subList(0, 2));
-		assertThat(userRepositoryGateway.findUsersByRoleName(roleAdmin)).hasSize(2);
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findByUsernameAndPassword("jhon_kent77", "okisteralio");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
 	}
 
 	@Test
 	public void saveUser() {
-		when(userRepository.save(any(User.class))).thenReturn(getUser());
+		User user = getUser();
+		when(userRepository.save(any(User.class))).thenReturn(user);
+		when(userToModelConverter.convert(user)).thenReturn(userModel().build());
 		UserModel userModelSaved = userRepositoryGateway.saveUser(userModel().build());
-		assertThat(userModelSaved.getUsername()).isEqualTo("jhon");
+		assertThat(userModelSaved.getUsername()).isEqualTo("jhon_kent77");
 	}
 
 	private User getUser() {
 		return user()
-				.withId("1234567890")
-				.withUsername("jhon")
-				.withPassword("jhon78*")
+				.withId("52820f6f34bdf55624303fc1")
+				.withUsername("jhon_kent77")
+				.withPassword("okisteralio")
 				.withRole(role().thatIsAdministrator())
 				.build();
 	}
@@ -151,29 +139,6 @@ public class UserRepositoryGatewayTest {
 				any(Update.class),
 				any(Class.class))
 		).thenReturn(writeResultMock);
-	}
-
-	private List<User> getUserList() {
-		String roleUser = Authority.ROLE_USER.toString();
-		Role adminRole = role().thatIsAdministrator();
-		RoleBuilder userRole = role().withAuthorization(roleUser);
-		return Lists.newArrayList(
-				user().withUsername("user1").withPassword("password1").withRole(adminRole).build(),
-				user().withUsername("user2").withPassword("password2").withRole(adminRole).build(),
-				user().withUsername("user3").withPassword("password3").withRole(userRole).build(),
-				user().withUsername("user4").withPassword("password4").withRole(userRole).build(),
-				user().withUsername("user5").withPassword("password5").withRole(userRole).build(),
-				user().withUsername("user6").withPassword("password6").withRole(userRole).build(),
-				user().withUsername("user7").withPassword("password7").withRole(userRole).build(),
-				user().withUsername("user8").withPassword("password8").withRole(userRole).build(),
-				user().withUsername("user9").withPassword("password9").withRole(userRole).build(),
-				user().withUsername("user10").withPassword("password10").withRole(userRole).build(),
-				user().withUsername("user11").withPassword("password11").withRole(userRole).build(),
-				user().withUsername("user12").withPassword("password12").withRole(userRole).build(),
-				user().withUsername("user13").withPassword("password13").withRole(userRole).build(),
-				user().withUsername("user14").withPassword("password14").withRole(userRole).build(),
-				user().withUsername("user15").withPassword("password15").withRole(userRole).build()
-		);
 	}
 
 }

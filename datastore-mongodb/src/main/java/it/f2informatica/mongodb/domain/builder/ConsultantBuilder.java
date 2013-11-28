@@ -12,7 +12,7 @@ public class ConsultantBuilder {
 
 	private Consultant consultant = new Consultant();
 
-	public static ConsultantBuilder aConsultant() {
+	public static ConsultantBuilder consultant() {
 		return new ConsultantBuilder();
 	}
 

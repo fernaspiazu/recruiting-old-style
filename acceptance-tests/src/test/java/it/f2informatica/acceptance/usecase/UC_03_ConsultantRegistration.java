@@ -3,8 +3,11 @@ package it.f2informatica.acceptance.usecase;
 import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
 import it.f2informatica.acceptance.page.consultant.ConsultantRegistrationPage;
 import it.f2informatica.acceptance.page.consultant.ProfileRegistrationPage;
+import it.f2informatica.mongodb.domain.Consultant;
 import org.junit.After;
 import org.junit.Test;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 public class UC_03_ConsultantRegistration extends UseCaseTest {
 
@@ -29,7 +32,14 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		registrationFormPage.typeBirthCountry("Italy");
 		registrationFormPage.typePhoneNumber("0289223344");
 		registrationFormPage.typeMobileNumber("3401246559");
-		ProfileRegistrationPage profilePage = registrationFormPage.clickOnSaveAndContinueRegisteringProfile();
+		registrationFormPage.clickOnSaveAndContinueRegisteringProfile();
+		Consultant consultantRegistered = consultantRepository.findByFiscalCode("RSSMRA78H05A089N");
+		ProfileRegistrationPage profilePage = loadProfileRegistrationPage(consultantRegistered);
+		assertThat("Mario Rossi").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+	}
+
+	private ProfileRegistrationPage loadProfileRegistrationPage(Consultant consultantRegistered) {
+		return new ProfileRegistrationPage(driver, navigator.getBaseUrl(), consultantRegistered.getId());
 	}
 
 	private void login() {

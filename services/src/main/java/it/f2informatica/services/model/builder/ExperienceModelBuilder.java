@@ -8,7 +8,7 @@ public class ExperienceModelBuilder {
 
 	private ExperienceModel experience = new ExperienceModel();
 
-	public static ExperienceModelBuilder experience() {
+	public static ExperienceModelBuilder experienceModel() {
 		return new ExperienceModelBuilder();
 	}
 

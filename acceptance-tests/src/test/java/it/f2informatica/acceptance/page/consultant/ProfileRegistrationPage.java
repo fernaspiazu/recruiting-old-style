@@ -4,7 +4,13 @@ import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
 public class ProfileRegistrationPage extends Page {
-	public ProfileRegistrationPage(WebDriver driver, String baseUrl, String path) {
-		super(driver, baseUrl, path);
+	private static final String INPUT_CONSULTANT_FULLNAME_XPATH = "//input[@id='consultantFullName']";
+
+	public ProfileRegistrationPage(WebDriver driver, String baseUrl, String consultantId) {
+		super(driver, baseUrl, "/consultant/" + consultantId + "/register-profile");
+	}
+
+	public String consultantWichWillBeAddedProfile() {
+		return getValue(findElement(INPUT_CONSULTANT_FULLNAME_XPATH));
 	}
 }

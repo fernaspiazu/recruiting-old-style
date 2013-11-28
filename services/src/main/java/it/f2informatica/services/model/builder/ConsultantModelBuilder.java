@@ -12,7 +12,7 @@ public class ConsultantModelBuilder {
 
 	private ConsultantModel consultant = new ConsultantModel();
 
-	public static ConsultantModelBuilder aConsultant() {
+	public static ConsultantModelBuilder consultantModel() {
 		return new ConsultantModelBuilder();
 	}
 

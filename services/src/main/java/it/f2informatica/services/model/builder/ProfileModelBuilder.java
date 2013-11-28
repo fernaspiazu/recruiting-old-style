@@ -11,7 +11,7 @@ public class ProfileModelBuilder {
 
 	private ProfileModel profile = new ProfileModel();
 
-	public static ProfileModelBuilder profile() {
+	public static ProfileModelBuilder profileModel() {
 		return new ProfileModelBuilder();
 	}
 

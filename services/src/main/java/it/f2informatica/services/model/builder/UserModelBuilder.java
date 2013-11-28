@@ -50,6 +50,13 @@ public class UserModelBuilder {
 		return this;
 	}
 
+	public UserModelBuilder isNotRemovable(boolean isNotRemovable) {
+		if (isNotRemovable) {
+			return thatIsNotRemovable();
+		}
+		return thatIsRemovable();
+	}
+
 	public UserModelBuilder thatIsNotRemovable() {
 		this.user.setNotRemovable(true);
 		return this;

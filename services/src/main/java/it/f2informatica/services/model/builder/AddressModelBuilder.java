@@ -6,7 +6,7 @@ public class AddressModelBuilder {
 
 	private AddressModel address = new AddressModel();
 
-	public static AddressModelBuilder anAddress() {
+	public static AddressModelBuilder addressModel() {
 		return new AddressModelBuilder();
 	}
 

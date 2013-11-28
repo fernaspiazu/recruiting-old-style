@@ -6,7 +6,7 @@ public class EducationModelBuilder {
 
 	private EducationModel education = new EducationModel();
 
-	public static EducationModelBuilder education() {
+	public static EducationModelBuilder educationModel() {
 		return new EducationModelBuilder();
 	}
 

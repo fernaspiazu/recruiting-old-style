@@ -7,12 +7,14 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
+import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +41,10 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	@Autowired
 	private PasswordUpdater passwordUpdater;
 
+	@Autowired
+	@Qualifier("userToModelConverter")
+	private EntityToModelConverter<User, UserModel> userToModelConverter;
+
 	@Override
 	public AuthenticationResponse authenticationByUsername(String username) {
 		User user = userRepo.findByUsername(username);
@@ -60,29 +66,29 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
 	@Override
 	public UserModel findUserById(String userId) {
-		return userToUserModel().apply(userRepo.findOne(userId));
+		return userToModelConverter.convert(userRepo.findOne(userId));
 	}
 
 	@Override
 	public UserModel findByUsername(String username) {
-		return userToUserModel().apply(userRepo.findByUsername(username));
+		return userToModelConverter.convert(userRepo.findByUsername(username));
 	}
 
 	@Override
 	public UserModel findByUsernameAndPassword(String username, String password) {
-		return userToUserModel().apply(userRepo.findByUsernameAndPassword(username, password));
+		return userToModelConverter.convert(userRepo.findByUsernameAndPassword(username, password));
 	}
 
 	@Override
 	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
-		return new PageImpl<>(Lists.newArrayList(Iterables.transform(
-			userRepo.findAllExcludingUser(pageable, usernameToExclude), userToUserModel()
-		)));
+		return new PageImpl<>(Lists.newArrayList(
+			userToModelConverter.convertIterable(userRepo.findAllExcludingUser(pageable, usernameToExclude))
+		));
 	}
 
 	@Override
 	public Iterable<UserModel> findUsersByRoleName(String roleName) {
-		return Iterables.transform(userRepo.findByRoleName(roleName), userToUserModel());
+		return userToModelConverter.convertIterable(userRepo.findByRoleName(roleName));
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 			.withRole(roleRepo.findOne(userModel.getRole().getRoleId()))
 			.thatIsRemovable()
 			.build());
-		return userToUserModel().apply(newUser);
+		return userToModelConverter.convert(newUser);
 	}
 
 	@Override
@@ -121,29 +127,14 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 		return roleToRoleModel().apply(roleRepo.findByName(roleName));
 	}
 
-	private Function<User, UserModel> userToUserModel() {
-		return new Function<User, UserModel>() {
-			@Override
-			public UserModel apply(User user) {
-				UserModel model = new UserModel();
-				// After saving document "id" field can be of ObjectId type
-				model.setUserId(String.valueOf(user.getId()));
-				model.setUsername(user.getUsername());
-				model.setNotRemovable(user.isNotRemovable());
-				model.setRole(roleToRoleModel().apply(user.getRole()));
-				return model;
-			}
-		};
-	}
-
 	private Function<Role, RoleModel> roleToRoleModel() {
 		return new Function<Role, RoleModel>() {
 			@Override
 			public RoleModel apply(Role role) {
-				RoleModel model = new RoleModel();
-				model.setRoleId(role.getId());
-				model.setRoleName(role.getName());
-				return model;
+			RoleModel model = new RoleModel();
+			model.setRoleId(role.getId());
+			model.setRoleName(role.getName());
+			return model;
 			}
 		};
 	}
