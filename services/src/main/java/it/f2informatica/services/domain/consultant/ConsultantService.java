@@ -8,4 +8,9 @@ public interface ConsultantService {
 
 	Page<ConsultantModel> showAllConsultants(Pageable pageable);
 
+	ConsultantModel registerConsultantMasterData(ConsultantModel consultantModel);
+
+	ConsultantModel findConsultantById(String consultantId);
+
+	String generateConsultantNumber();
 }

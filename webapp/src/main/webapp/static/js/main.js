@@ -9,8 +9,6 @@ $(document).ready(function() {
 	mantainLocaleSelected();
 	evaluateSelectedLocale();
 	disableSelectElementsWithClassSelectReadOnly();
-	//validateRequiredInputFields();
-	//validateRequiredFieldsOnFormSubmit();
 });
 
 function evaluateContextRoot() {

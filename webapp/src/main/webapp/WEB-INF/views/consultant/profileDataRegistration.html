@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{consultant.management}">Consultant Management</title>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+</head>
+<body>
+<header th:substituteby="templates/header::header"></header>
+<div id="container">
+	<div th:substituteby="templates/navbar::navbar"></div>
+	<div id="content">
+		<form>
+			<h1>Profile</h1>
+			<table>
+				<tr>
+					<td>
+						Consultant No: <input type="text" id="consultantNo" th:value="${consultantNo}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Registered on: <input type="text" id="registrationDate" th:value="${{registrationDate}}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Consultant: <input type="text" id="consultantFullName" th:value="${consultantFullName}" readonly="readonly"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<footer th:substituteby="templates/footer::footer"></footer>
+</body>
+</html>

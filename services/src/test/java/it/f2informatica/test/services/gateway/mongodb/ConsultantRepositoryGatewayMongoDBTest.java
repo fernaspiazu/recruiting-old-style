@@ -6,7 +6,6 @@ import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.gateway.mongodb.ConsultantRepositoryGatewayMongoDB;
 import it.f2informatica.services.model.ConsultantModel;
-import it.f2informatica.services.model.builder.ConsultantModelBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Arrays;
 
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
-import static it.f2informatica.services.model.builder.ConsultantModelBuilder.*;
+import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -58,8 +57,18 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 				.build();
 		when(consultantRepository.save(any(Consultant.class))).thenReturn(new Consultant());
 		when(consultantToModelConverter.convert(any(Consultant.class))).thenReturn(registeredConsultant);
-		ConsultantModel consultantModel = consultantRepositoryGateway.savePersonalData(new ConsultantModel());
+		ConsultantModel consultantModel = consultantRepositoryGateway.saveMasterData(new ConsultantModel());
 		assertThat(consultantModel.getConsultantNo()).isEqualTo("20131152820f6f34bdf55624303fc4");
+	}
+
+	@Test
+	public void findConsultantByIdTest() {
+		Consultant consultant = consultant().withId("5298766a39ef39c7c280b7e5").withFirstName("Mario").build();
+		ConsultantModel model = consultantModel().withId(consultant.getId()).withFirstName(consultant.getFirstName()).build();
+		when(consultantRepository.findOne(consultant.getId())).thenReturn(consultant);
+		when(consultantToModelConverter.convert(consultant)).thenReturn(model);
+		ConsultantModel consultantModel = consultantRepositoryGateway.findConsultantById(consultant.getId());
+		assertThat(consultantModel.getFirstName()).isEqualTo(model.getFirstName());
 	}
 
 }

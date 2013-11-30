@@ -17,8 +17,8 @@
   <properties>
     <contextPath>recruiting</contextPath>
     <maven.war.version>2.3</maven.war.version>
-    <thymeleaf.version>2.0.18</thymeleaf.version>
-    <thymeleaf-testing.version>2.0.4</thymeleaf-testing.version>
+    <thymeleaf.version>2.1.1.RELEASE</thymeleaf.version>
+    <thymeleaf-testing.version>2.1.1.RELEASE</thymeleaf-testing.version>
     <jetty-maven-plugin.version>9.0.4.v20130625</jetty-maven-plugin.version>
   </properties>
 

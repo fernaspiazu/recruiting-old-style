@@ -5,6 +5,8 @@ import it.f2informatica.mongodb.domain.constants.MaritalStatus;
 import it.f2informatica.services.model.AddressModel;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ProfileModel;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.util.Date;
 
@@ -68,6 +70,10 @@ public class ConsultantModelBuilder {
 
 	public ConsultantModelBuilder withBirthDate(Date birthDate) {
 		consultant.setBirthDate(birthDate);
+		if (birthDate != null) {
+			Period periodFromBirthdayToday = new Period(new DateTime(birthDate), new DateTime());
+			consultant.setAge(periodFromBirthdayToday.getYears());
+		}
 		return this;
 	}
 

@@ -5,7 +5,6 @@
 	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
 	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
-	<script th:src="@{/static/js/validation.js}" src="../../../static/js/validation.js"></script>
 </head>
 <body>
 <header th:substituteby="templates/header::header"></header>
@@ -30,13 +29,21 @@
 					<td th:text="${consultant.firstName}">Mario</td>
 					<td th:text="${consultant.lastName}">Rossi</td>
 					<td th:text="${consultant.age}">30</td>
-					<td th:text="${consultant.skills}">Programmer, Manager, DBA</td>
-					<td th:text="${consultant.consultantId}">id_consultant</td>
+					<!--<td th:text="${consultant.skills}">Programmer, Manager, DBA</td>-->
+					<td th:text="${consultant.id}">id_consultant</td>
 				</tr>
 			</tbody>
 		</table>
+		<input type="button" id="newConsultantRegistration" value="Register new Consultant"/>
 	</div>
 </div>
 <footer th:substituteby="templates/footer::footer"></footer>
+<script th:inline="javascript">
+	$(function () {
+		$("#newConsultantRegistration").click(function () {
+			window.location = /*[[@{/consultant/create}]]*/ "./consultantMasterDataRegistration.html";
+		});
+	});
+</script>
 </body>
 </html>

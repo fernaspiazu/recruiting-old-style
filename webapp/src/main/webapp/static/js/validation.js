@@ -1,3 +1,7 @@
+/**
+ * Unused
+ */
+
 var selectorToValidate = "*[required], .required";
 
 function validateRequiredInputFields() {

@@ -49,7 +49,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public ConsultantModel savePersonalData(ConsultantModel consultantModel) {
+	public ConsultantModel saveMasterData(ConsultantModel consultantModel) {
 		Consultant consultant = consultant()
 			.withConsultantNo(consultantModel.getConsultantNo())
 			.withRegistrationDate(consultantModel.getRegistrationDate())
@@ -66,6 +66,12 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			.build();
 		Consultant consultantRegistered = consultantRepository.save(consultant);
 		return consultantToModelConverter.convert(consultantRegistered);
+	}
+
+	@Override
+	public ConsultantModel findConsultantById(String consultantId) {
+		Consultant consultant = consultantRepository.findOne(consultantId);
+		return consultantToModelConverter.convert(consultant);
 	}
 
 }

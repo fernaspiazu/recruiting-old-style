@@ -7,6 +7,10 @@ import it.f2informatica.mongodb.domain.Consultant;
 import org.junit.After;
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class UC_03_ConsultantRegistration extends UseCaseTest {
@@ -21,13 +25,14 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		login();
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
-		registrationFormPage.selectRegistrationDate();
+		//registrationFormPage.selectRegistrationDate();
+		assertThatRegistrationDateIsToday(registrationFormPage.registrationDate());
 		registrationFormPage.typeFirstName("Mario");
 		registrationFormPage.typeLastName("Rossi");
 		registrationFormPage.selectMaleGender();
 		registrationFormPage.typeEmail("mario.rossi@tiscali.it");
 		registrationFormPage.typeFiscalCode("RSSMRA78H05A089N");
-		registrationFormPage.selectBirthDate();
+		registrationFormPage.typeBirthDate("05-06-1978");
 		registrationFormPage.typeBirthCity("Agrigento");
 		registrationFormPage.typeBirthCountry("Italy");
 		registrationFormPage.typePhoneNumber("0289223344");
@@ -35,7 +40,13 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		registrationFormPage.clickOnSaveAndContinueRegisteringProfile();
 		Consultant consultantRegistered = consultantRepository.findByFiscalCode("RSSMRA78H05A089N");
 		ProfileRegistrationPage profilePage = loadProfileRegistrationPage(consultantRegistered);
-		assertThat("Mario Rossi").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+		assertThat("Rossi Mario").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+	}
+
+	private void assertThatRegistrationDateIsToday(String registrationDate) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(Calendar.getInstance().getTime());
+		assertThat(registrationDate).isEqualTo(today);
 	}
 
 	private ProfileRegistrationPage loadProfileRegistrationPage(Consultant consultantRegistered) {

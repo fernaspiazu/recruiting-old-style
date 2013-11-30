@@ -36,6 +36,8 @@ public class ConsultantModel implements Serializable {
 
 	private Date birthDate;
 
+	private int age;
+
 	private String birthCity;
 
 	private String birthCountry;
@@ -48,14 +50,18 @@ public class ConsultantModel implements Serializable {
 
 	private MaritalStatus maritalStatus;
 
-	private ProfileModel profile;
+	private ProfileModel profile = new ProfileModel();
 
-	private AddressModel residence;
+	private AddressModel residence = new AddressModel();
 
-	private AddressModel domicile;
+	private AddressModel domicile = new AddressModel();
 
 	private String curriculum; // TODO: GridFSFile
 
 	private String photo; // TODO: GridFSFile
+
+	public String getConsultantFullName() {
+		return lastName + " " + firstName;
+	}
 
 }

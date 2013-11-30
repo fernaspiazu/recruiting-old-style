@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
 @Import({
 		MongoDBApplicationContext.class,
 		ServicesApplicationContext.class,
-		WebApplicationContext.class
+		WebAppContext.class
 })
 @ImportResource({"classpath:spring-config/security-config.xml"})
 public class RootApplicationContext {

@@ -7,8 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.UUID;
+
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
+	private static final String YEAR_MONTH_MILLISECONDS_FORMAT = "yyyyMMSSS";
 
 	@Autowired
 	private ConsultantRepositoryGateway consultantRepositoryGateway;
@@ -16,6 +22,28 @@ public class ConsultantServiceImpl implements ConsultantService {
 	@Override
 	public Page<ConsultantModel> showAllConsultants(Pageable pageable) {
 		return consultantRepositoryGateway.findAllConsultants(pageable);
+	}
+
+	@Override
+	public ConsultantModel registerConsultantMasterData(ConsultantModel consultantModel) {
+		return consultantRepositoryGateway.saveMasterData(consultantModel);
+	}
+
+	@Override
+	public ConsultantModel findConsultantById(String consultantId) {
+		return consultantRepositoryGateway.findConsultantById(consultantId);
+	}
+
+	@Override
+	public String generateConsultantNumber() {
+		String uuid = UUID.randomUUID().toString();
+		String[] components = uuid.split("-");
+		return getTimePrefixFormat() + "-" + components[components.length - 1].toUpperCase();
+	}
+
+	private String getTimePrefixFormat() {
+		DateFormat dateFormat = new SimpleDateFormat(YEAR_MONTH_MILLISECONDS_FORMAT);
+		return dateFormat.format(Calendar.getInstance().getTime());
 	}
 
 }

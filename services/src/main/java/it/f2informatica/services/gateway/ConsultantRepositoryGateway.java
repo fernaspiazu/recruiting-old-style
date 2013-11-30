@@ -8,5 +8,7 @@ public interface ConsultantRepositoryGateway {
 
 	Page<ConsultantModel> findAllConsultants(Pageable pageable);
 
-	ConsultantModel savePersonalData(ConsultantModel consultantModel);
+	ConsultantModel saveMasterData(ConsultantModel consultantModel);
+
+	ConsultantModel findConsultantById(String consultantId);
 }

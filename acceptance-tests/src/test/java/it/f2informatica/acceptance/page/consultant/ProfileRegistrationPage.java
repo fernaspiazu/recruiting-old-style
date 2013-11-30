@@ -7,7 +7,7 @@ public class ProfileRegistrationPage extends Page {
 	private static final String INPUT_CONSULTANT_FULLNAME_XPATH = "//input[@id='consultantFullName']";
 
 	public ProfileRegistrationPage(WebDriver driver, String baseUrl, String consultantId) {
-		super(driver, baseUrl, "/consultant/" + consultantId + "/register-profile");
+		super(driver, baseUrl, "/consultant/profileDataRegistration/" + consultantId);
 	}
 
 	public String consultantWichWillBeAddedProfile() {

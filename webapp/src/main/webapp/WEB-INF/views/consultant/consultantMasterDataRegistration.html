@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{consultant.management}">Consultant Management</title>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+</head>
+<body>
+<header th:substituteby="templates/header::header"></header>
+<div id="container">
+	<div th:substituteby="templates/navbar::navbar"></div>
+	<div id="content">
+		<form action="./consultants.html" th:action="@{/consultant/registerMasterData}"
+					th:object="${consultantModel}" method="post">
+			<h1>Consultant Registration</h1>
+			<table>
+				<tr>
+					<td>
+						Consultant No. <input type="text" th:field="*{consultantNo}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Registration Date: <input type="text" th:field="*{registrationDate}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						First Name: <input type="text" th:field="*{firstName}" placeholder="First name"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Last Name: <input type="text" th:field="*{lastName}" placeholder="Last name"/>
+					</td>
+				</tr>
+				<!--<tr>
+					<td>
+						Gender:
+						<select id="gender" th:field="*{gender}">
+						  <option value="M">Male</option>
+							<option value="F">Female</option>
+						</select>
+					</td>
+				</tr>-->
+				<tr>
+					<td>
+						Email: <input type="text" th:field="*{email}" placeholder="alias@domain.com"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Fiscal code: <input type="text" th:field="*{fiscalCode}" placeholder="16 characters"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Birthdate: <input type="text" th:field="*{birthDate}" placeholder="day-month-year"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Birth city: <input type="text" th:field="*{birthCity}" placeholder="Birth city"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Birth country: <input type="text" th:field="*{birthCountry}" placeholder="Birth country"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Phone number: <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Mobile number: <input type="text" th:field="*{mobileNumber}" placeholder="Mobile number"/>
+					</td>
+				</tr>
+			</table>
+			<input type="submit" id="saveAndContinueProfile" value="Save and continue..."/>
+		</form>
+	</div>
+</div>
+<footer th:substituteby="templates/footer::footer"></footer>
+</body>
+</html>
