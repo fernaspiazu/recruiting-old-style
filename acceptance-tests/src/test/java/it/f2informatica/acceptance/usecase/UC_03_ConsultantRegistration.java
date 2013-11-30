@@ -25,7 +25,6 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		login();
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
-		//registrationFormPage.selectRegistrationDate();
 		assertThatRegistrationDateIsToday(registrationFormPage.registrationDate());
 		registrationFormPage.typeFirstName("Mario");
 		registrationFormPage.typeLastName("Rossi");

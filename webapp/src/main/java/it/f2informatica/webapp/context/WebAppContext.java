@@ -1,5 +1,6 @@
 package it.f2informatica.webapp.context;
 
+import it.f2informatica.webapp.converter.StringToGenderConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -129,11 +130,17 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public FormattingConversionService mvcConversionService() {
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
+		conversionService.addConverter(stringToGenderConverter());
 		conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
 		DateFormatterRegistrar registrar = new DateFormatterRegistrar();
 		registrar.setFormatter(new DateFormatter(GLOBAL_DATE_FORMAT));
 		registrar.registerFormatters(conversionService);
 		return conversionService;
+	}
+
+	@Bean
+	public StringToGenderConverter stringToGenderConverter() {
+		return new StringToGenderConverter();
 	}
 
 }
