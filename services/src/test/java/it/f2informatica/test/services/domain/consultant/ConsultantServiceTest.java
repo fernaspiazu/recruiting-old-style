@@ -84,7 +84,7 @@ public class ConsultantServiceTest {
 		}
 	}
 
-	@Test(timeout = 200)
+	@Test
 	public void testConsultantNumberFormat() {
 		String consultantNumber = consultantService.generateConsultantNumber();
 		assertThat(consultantNumber).hasSize(22);
