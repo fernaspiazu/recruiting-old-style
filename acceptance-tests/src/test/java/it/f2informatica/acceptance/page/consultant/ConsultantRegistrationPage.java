@@ -3,17 +3,9 @@ package it.f2informatica.acceptance.page.consultant;
 import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Calendar;
-
 public class ConsultantRegistrationPage extends Page {
-	private static final String SELECT_REGISTRATIONDATE_DAY_XPATH = "//select[@id='registrationdate_day']";
-	private static final String SELECT_REGISTRATIONDATE_MONTH_XPATH = "//select[@id='registrationdate_month']";
-	private static final String SELECT_REGISTRATIONDATE_YEAR_XPATH = "//select[@id='registrationdate_year']";
-	private static final String SELECT_BIRTHDATE_DAY_XPATH = "//select[@id='birthdate_day']";
-	private static final String SELECT_BIRTHDATE_MONTH_XPATH = "//select[@id='birthdate_month']";
-	private static final String SELECT_BIRTHDATE_YEAR_XPATH = "//select[@id='birthdate_year']";
-
 	private static final String INPUT_REGISTRATION_DATE_XPATH = "//input[@id='registrationDate']";
+	private static final String INPUT_CONSULTANT_NUMBER_XPATH = "//input[@id='consultantNo']";
 	private static final String INPUT_FIRSTNAME_XPATH = "//input[@id='firstName']";
 	private static final String INPUT_LASTNAME_XPATH = "//input[@id='lastName']";
 	private static final String SELECT_GENDER_XPATH = "//select[@id='gender']";
@@ -35,6 +27,10 @@ public class ConsultantRegistrationPage extends Page {
 		return getValue(findElement(INPUT_REGISTRATION_DATE_XPATH));
 	}
 
+	public String consultantNumber() {
+		return getValue(findElement(INPUT_CONSULTANT_NUMBER_XPATH));
+	}
+
 	public void typeFirstName(String firstName) {
 		clearAndSendKeys(findElement(INPUT_FIRSTNAME_XPATH), firstName);
 	}
@@ -44,7 +40,7 @@ public class ConsultantRegistrationPage extends Page {
 	}
 
 	public void selectMaleGender() {
-		selectByValue(findElement(SELECT_GENDER_XPATH), "M");
+		selectByValue(findElement(SELECT_GENDER_XPATH), "MALE");
 	}
 
 	public void typeEmail(String email) {
@@ -79,27 +75,4 @@ public class ConsultantRegistrationPage extends Page {
 		click(findElement(SAVE_AND_CONTINUE_PROFILE_PAGE_BUTTON));
 	}
 
-	public void selectRegistrationDate() {
-		selectByValue(findElement(SELECT_REGISTRATIONDATE_DAY_XPATH), currentDay());
-		selectByValue(findElement(SELECT_REGISTRATIONDATE_MONTH_XPATH), currentMonth());
-		selectByValue(findElement(SELECT_REGISTRATIONDATE_YEAR_XPATH), currentYear());
-	}
-
-	public void selectBirthDate() {
-		selectByValue(findElement(SELECT_BIRTHDATE_DAY_XPATH), String.valueOf(5));
-		selectByValue(findElement(SELECT_BIRTHDATE_MONTH_XPATH), String.valueOf(Calendar.JUNE));
-		selectByValue(findElement(SELECT_BIRTHDATE_YEAR_XPATH), String.valueOf(1978));
-	}
-
-	private String currentDay() {
-		return String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-	}
-
-	private String currentMonth() {
-		return String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
-	}
-
-	private String currentYear() {
-		return String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-	}
 }

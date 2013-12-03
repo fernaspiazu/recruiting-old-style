@@ -76,6 +76,7 @@ public class ConsultantServiceTest {
 		assertThat(result.getFirstName()).isEqualTo(consMock.getFirstName());
 	}
 
+	@Test
 	public void verifyThatTwoNumbersAreNotEqualEachOtherAfterTenRounds() {
 		for (int i=0; i<10; i++) {
 			String firstCodeGenerated = consultantService.generateConsultantNumber();

@@ -27,7 +27,7 @@
 				</tr>
 				<tr>
 					<td>
-						First Name: <input type="text" th:field="*{firstName}" placeholder="First name"/>
+						First Name: <input type="text" th:field="*{firstName}" placeholder="First name" autofocus=""/>
 					</td>
 				</tr>
 				<tr>
@@ -39,8 +39,8 @@
 					<td>
 						Gender:
 						<select id="gender" th:field="*{gender}">
-						  <option value="M">Male</option>
-							<option value="F">Female</option>
+						  <option value="MALE">Male</option>
+							<option value="FEMALE">Female</option>
 						</select>
 					</td>
 				</tr>

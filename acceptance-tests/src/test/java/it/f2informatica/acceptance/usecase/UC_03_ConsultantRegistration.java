@@ -26,6 +26,7 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
 		assertThatRegistrationDateIsToday(registrationFormPage.registrationDate());
+		assertThatConsultantNumberIsCorrect(registrationFormPage.consultantNumber());
 		registrationFormPage.typeFirstName("Mario");
 		registrationFormPage.typeLastName("Rossi");
 		registrationFormPage.selectMaleGender();
@@ -46,6 +47,11 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		String today = dateFormat.format(Calendar.getInstance().getTime());
 		assertThat(registrationDate).isEqualTo(today);
+	}
+
+	private void assertThatConsultantNumberIsCorrect(String consultantNo) {
+		assertThat(consultantNo).hasSize(22);
+		assertThat(consultantNo.split("-")).hasSize(2);
 	}
 
 	private ProfileRegistrationPage loadProfileRegistrationPage(Consultant consultantRegistered) {
