@@ -1,7 +1,7 @@
 package it.f2informatica.test.mongodb.builders;
 
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.domain.constants.LanguageProficiency;
+import it.f2informatica.datastore.constant.LanguageProficiency;
 
 public class LanguageDataBuilder {
 

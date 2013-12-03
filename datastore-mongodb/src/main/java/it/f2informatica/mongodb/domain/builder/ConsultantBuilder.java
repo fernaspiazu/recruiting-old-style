@@ -3,8 +3,8 @@ package it.f2informatica.mongodb.domain.builder;
 import it.f2informatica.mongodb.domain.Address;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.domain.constants.Gender;
-import it.f2informatica.mongodb.domain.constants.MaritalStatus;
+import it.f2informatica.datastore.constant.Gender;
+import it.f2informatica.datastore.constant.MaritalStatus;
 
 import java.util.Date;
 

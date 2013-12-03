@@ -1,9 +1,9 @@
 package it.f2informatica.test.mongodb.builders;
 
 import it.f2informatica.mongodb.domain.*;
-import it.f2informatica.mongodb.domain.constants.Gender;
-import it.f2informatica.mongodb.domain.constants.LanguageProficiency;
-import it.f2informatica.mongodb.domain.constants.MaritalStatus;
+import it.f2informatica.datastore.constant.Gender;
+import it.f2informatica.datastore.constant.LanguageProficiency;
+import it.f2informatica.datastore.constant.MaritalStatus;
 
 import java.util.Date;
 import java.util.GregorianCalendar;

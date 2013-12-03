@@ -1,17 +1,17 @@
 package it.f2informatica.services.model;
 
 import com.google.common.collect.Lists;
+import it.f2informatica.datastore.model.DataModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Data
 @EqualsAndHashCode
 @ToString
-public class ProfileModel implements Serializable {
+public class ProfileModel implements DataModel {
 
 	private List<ExperienceModel> experiences = Lists.newArrayList();
 

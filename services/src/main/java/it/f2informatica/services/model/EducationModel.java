@@ -1,15 +1,14 @@
 package it.f2informatica.services.model;
 
+import it.f2informatica.datastore.model.DataModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Data
 @EqualsAndHashCode
 @ToString
-public class EducationModel implements Serializable {
+public class EducationModel implements DataModel {
 
 	private String school;
 

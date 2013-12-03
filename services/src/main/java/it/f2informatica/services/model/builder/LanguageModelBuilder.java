@@ -1,6 +1,6 @@
 package it.f2informatica.services.model.builder;
 
-import it.f2informatica.mongodb.domain.constants.LanguageProficiency;
+import it.f2informatica.datastore.constant.LanguageProficiency;
 import it.f2informatica.services.model.LanguageModel;
 
 public class LanguageModelBuilder {

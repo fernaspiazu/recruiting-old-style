@@ -5,7 +5,7 @@ import com.mongodb.CommandResult;
 import com.mongodb.WriteResult;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.domain.constants.Authority;
+import it.f2informatica.datastore.constant.Authority;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import it.f2informatica.services.gateway.EntityToModelConverter;

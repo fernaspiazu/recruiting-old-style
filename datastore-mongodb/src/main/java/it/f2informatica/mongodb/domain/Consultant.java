@@ -1,7 +1,8 @@
 package it.f2informatica.mongodb.domain;
 
-import it.f2informatica.mongodb.domain.constants.Gender;
-import it.f2informatica.mongodb.domain.constants.MaritalStatus;
+import it.f2informatica.datastore.constant.Gender;
+import it.f2informatica.datastore.constant.MaritalStatus;
+import it.f2informatica.datastore.domain.MongoDBDocument;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +16,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Document
-public class Consultant extends Identifiable<String> {
+public class Consultant extends Identifiable<String> implements MongoDBDocument {
 
 	@Indexed(unique = true)
 	private String consultantNo;

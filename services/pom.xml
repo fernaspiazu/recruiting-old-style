@@ -25,6 +25,10 @@
   <dependencies>
     <dependency>
       <groupId>it.f2informatica</groupId>
+      <artifactId>datastore-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>it.f2informatica</groupId>
       <artifactId>datastore-mongodb</artifactId>
     </dependency>
     <dependency>

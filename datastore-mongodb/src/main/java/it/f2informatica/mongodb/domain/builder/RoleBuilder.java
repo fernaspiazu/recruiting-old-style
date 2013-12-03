@@ -1,7 +1,7 @@
 package it.f2informatica.mongodb.domain.builder;
 
 import it.f2informatica.mongodb.domain.Role;
-import it.f2informatica.mongodb.domain.constants.Authority;
+import it.f2informatica.datastore.constant.Authority;
 
 public class RoleBuilder {
 	private Role role = new Role();

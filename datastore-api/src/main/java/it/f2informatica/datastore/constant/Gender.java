@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.domain.constants;
+package it.f2informatica.datastore.constant;
 
 public enum Gender {
 

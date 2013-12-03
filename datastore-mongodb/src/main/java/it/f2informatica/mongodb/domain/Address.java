@@ -1,5 +1,6 @@
 package it.f2informatica.mongodb.domain;
 
+import it.f2informatica.datastore.domain.MongoDBDocument;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -7,7 +8,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Address {
+public class Address implements MongoDBDocument {
 
 	private String street;
 

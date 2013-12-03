@@ -1,7 +1,7 @@
 package it.f2informatica.services.model.builder;
 
-import it.f2informatica.mongodb.domain.constants.Gender;
-import it.f2informatica.mongodb.domain.constants.MaritalStatus;
+import it.f2informatica.datastore.constant.Gender;
+import it.f2informatica.datastore.constant.MaritalStatus;
 import it.f2informatica.services.model.AddressModel;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ProfileModel;

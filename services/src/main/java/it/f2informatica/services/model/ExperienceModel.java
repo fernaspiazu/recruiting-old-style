@@ -1,16 +1,16 @@
 package it.f2informatica.services.model;
 
+import it.f2informatica.datastore.model.DataModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @EqualsAndHashCode
 @ToString
-public class ExperienceModel implements Serializable {
+public class ExperienceModel implements DataModel {
 
 	private String companyName;
 

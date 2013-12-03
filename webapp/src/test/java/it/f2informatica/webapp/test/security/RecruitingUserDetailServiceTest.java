@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.mongodb.domain.constants.Authority;
+import it.f2informatica.datastore.constant.Authority;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import it.f2informatica.webapp.gateway.AuthenticationServiceGateway;
 import it.f2informatica.webapp.security.AuthorityService;
