@@ -20,11 +20,24 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		navigator.logOut();
 	}
 
+	private void login() {
+		navigator.goToLoginPage().login("admin", "admin");
+	}
+
 	@Test
 	public void registerNewConsultant() {
 		login();
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
+		ProfileRegistrationPage profilePage = consultantMasterDataRegistration(registrationFormPage);
+		consultantProfileDataRegistration(profilePage);
+	}
+
+	private void consultantProfileDataRegistration(ProfileRegistrationPage profilePage) {
+
+	}
+
+	private ProfileRegistrationPage consultantMasterDataRegistration(ConsultantRegistrationPage registrationFormPage) {
 		assertThatRegistrationDateIsToday(registrationFormPage.registrationDate());
 		assertThatConsultantNumberIsCorrect(registrationFormPage.consultantNumber());
 		registrationFormPage.typeFirstName("Mario");
@@ -41,6 +54,7 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		Consultant consultantRegistered = consultantRepository.findByFiscalCode("RSSMRA78H05A089N");
 		ProfileRegistrationPage profilePage = loadProfileRegistrationPage(consultantRegistered);
 		assertThat("Rossi Mario").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+		return profilePage;
 	}
 
 	private void assertThatRegistrationDateIsToday(String registrationDate) {
@@ -56,10 +70,6 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 
 	private ProfileRegistrationPage loadProfileRegistrationPage(Consultant consultantRegistered) {
 		return new ProfileRegistrationPage(driver, navigator.getBaseUrl(), consultantRegistered.getId());
-	}
-
-	private void login() {
-		navigator.goToLoginPage().login("admin", "admin");
 	}
 
 }

@@ -26,7 +26,7 @@ public class CreateNewUserPage extends Page {
 	}
 
 	public UserManagementPage clickOnSaveUserButton() {
-		submit(findElement(SAVE_USER_BUTTON_XPATH));
+		click(findElement(SAVE_USER_BUTTON_XPATH));
 		return new UserManagementPage(driver, baseUrl);
 	}
 }

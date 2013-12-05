@@ -10,4 +10,8 @@ public class WebDriverFacade {
 		return new HtmlUnitDriverFactory();
 	}
 
+	public static WebDriverFactory getPhantomJSDriverFactory() {
+		return new PhantomJSDriverFactory();
+	}
+
 }

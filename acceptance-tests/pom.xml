@@ -18,7 +18,8 @@
     <deployable.name>recruiting</deployable.name>
     <deployable.path>${basedir}/../webapp/target/${deployable.name}.war</deployable.path>
     <deployable.url>http://localhost:8082/${deployable.name}</deployable.url>
-    <selenium.version>2.37.1</selenium.version>
+    <selenium.version>2.33.0</selenium.version>
+    <phantomjsdriver.version>1.0.4</phantomjsdriver.version>
   </properties>
 
   <build>
@@ -65,6 +66,21 @@
           </deployables>
         </configuration>
       </plugin>
+      <!--<plugin>
+        <groupId>com.github.klieber</groupId>
+        <artifactId>phantomjs-maven-plugin</artifactId>
+        <version>0.1</version>
+        <configuration>
+          <version>1.9.2</version>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>install</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>failsafe-maven-plugin</artifactId>
@@ -103,6 +119,13 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>${selenium.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.detro.ghostdriver</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>${phantomjsdriver.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

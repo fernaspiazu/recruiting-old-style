@@ -16,7 +16,7 @@ public class UserEditPage extends Page {
 	}
 
 	public UserManagementPage clickOnUpdateUserButton() {
-		submit(findElement(UPDATE_USER_BUTTON_XPATH));
+		click(findElement(UPDATE_USER_BUTTON_XPATH));
 		return new UserManagementPage(driver, baseUrl);
 	}
 }

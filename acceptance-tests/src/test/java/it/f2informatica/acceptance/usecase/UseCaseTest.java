@@ -45,6 +45,7 @@ public abstract class UseCaseTest {
 	protected ConsultantRepository consultantRepository;
 
 	public UseCaseTest() {
+		//this.driverFactory = WebDriverFacade.getPhantomJSDriverFactory();
 		this.driverFactory = WebDriverFacade.getHtmlUnitDriverFactory();
 	}
 

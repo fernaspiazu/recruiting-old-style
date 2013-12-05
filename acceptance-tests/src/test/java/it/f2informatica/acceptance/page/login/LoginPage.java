@@ -34,7 +34,7 @@ public class LoginPage extends Page {
 	}
 
 	public LoginPage clickOnLoginButtonExpectingFailure() {
-		submit(findElement(LOGIN_BUTTON_XPATH));
+		click(findElement(LOGIN_BUTTON_XPATH));
 		driver.get(baseUrl + "/login_failed");
 		return new LoginPage(driver, baseUrl);
 	}
