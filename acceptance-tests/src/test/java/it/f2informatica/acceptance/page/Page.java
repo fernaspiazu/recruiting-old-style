@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class Page {
 
 	protected WebDriver driver;
@@ -40,6 +42,10 @@ public class Page {
 		return element.findElement(By.xpath(xpath));
 	}
 
+	protected List<WebElement> findElements(String xpath) {
+		return driver.findElements(By.xpath(xpath));
+	}
+
 	protected String getValue(WebElement element) {
 		return element.getAttribute("value");
 	}
@@ -57,8 +63,8 @@ public class Page {
 		element.sendKeys(input);
 	}
 
-	protected void select(WebElement element, String value) {
-		new Select(element).selectByVisibleText(value);
+	protected void select(WebElement element, String text) {
+		new Select(element).selectByVisibleText(text);
 	}
 
 	protected void selectByValue(WebElement element, String value) {

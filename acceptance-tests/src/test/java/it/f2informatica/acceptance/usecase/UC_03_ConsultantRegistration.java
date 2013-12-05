@@ -34,7 +34,20 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 	}
 
 	private void consultantProfileDataRegistration(ProfileRegistrationPage profilePage) {
-
+		assertThat(profilePage.isExperienceSectionPresent()).isTrue();
+		profilePage.addNewExperience();
+		assertThat(profilePage.isNewExperienceFormPresent()).isTrue();
+		assertThat(profilePage.isAddNewExperienceButtonDisabled()).isTrue();
+		profilePage.typeCompanyName("IBM");
+		profilePage.typeFunction("Business Analyst");
+		profilePage.typeLocation("London");
+		profilePage.selectPeriodFromApril();
+		profilePage.typePeriofFromYear("2010");
+		profilePage.selectPeriodToDecember();
+		profilePage.typePeriodToYear("2012");
+		profilePage.typeDescription("This is a fake description");
+		profilePage.saveExperience();
+		assertThat(profilePage.experiencesNumber()).isEqualTo(1);
 	}
 
 	private ProfileRegistrationPage consultantMasterDataRegistration(ConsultantRegistrationPage registrationFormPage) {
