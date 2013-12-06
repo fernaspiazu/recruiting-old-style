@@ -3,7 +3,7 @@ package it.f2informatica.mongodb.repositories.impl;
 import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.repositories.customrepositories.UserRepositoryCustom;
+import it.f2informatica.mongodb.repositories.customrepositories.AdditionalUserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Repository
-public class UserRepositoryImpl implements UserRepositoryCustom {
+public class UserRepositoryImpl implements AdditionalUserRepository {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;

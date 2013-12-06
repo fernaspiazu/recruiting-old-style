@@ -22,7 +22,7 @@ public class Experience implements MongoDBDocument {
 
 	private Date periodTo;
 
-	private boolean isCurrent;
+	private boolean current;
 
 	private String description;
 

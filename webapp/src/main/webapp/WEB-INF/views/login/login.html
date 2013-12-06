@@ -2,12 +2,12 @@
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title th:text="#{login.login}">Login Page</title>
-	<link href="../../../static/css/login.css" th:href="@{/static/css/login.css}" rel="stylesheet"/>
-	<script src="../../../static/js/lib/jquery-1.10.2.min.js" th:src="@{/static/js/lib/jquery-1.10.2.min.js}"></script>
-	<script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+	<link th:href="@{/static/css/login.css}" href="../../../static/css/login.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
-<form id="loginForm" action="#" th:action="@{/processLogin}" method="post">
+<form id="loginForm" action="#" th:action="@{/processLogin}" method="post" enctype="application/x-www-form-urlencoded">
 	<h1 id="loginHeader" th:text="#{login.login}">Login</h1>
 	<div th:if="${hasErrors}" id="login-error-msg">
 		Login Failure

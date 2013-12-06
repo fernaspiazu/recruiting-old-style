@@ -21,17 +21,13 @@ public class Page {
 		this.baseUrl = baseUrl;
 		this.path = path;
 		this.url = baseUrl + path;
-		System.out.println("----------------- Loading URL: [" + this.url + "]");
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		//System.out.println("----------------- Loading URL: [" + this.url + "]");
+		WebDriverWait wait = new WebDriverWait(this.driver, 30);
 		wait.until(new HasPageBeenLoaded(url));
 	}
 
 	protected void click(WebElement element) {
 		element.click();
-	}
-
-	protected void submit(WebElement element) {
-		element.submit();
 	}
 
 	protected WebElement findElement(String xpath) {

@@ -22,7 +22,7 @@ public class ExperienceModel implements DataModel {
 
 	private Date periodTo;
 
-	private boolean isCurrent;
+	private boolean current;
 
 	private String description;
 

@@ -21,15 +21,11 @@ public class UserDetailsPage extends Page {
 
 	public UserEditPage clickOnEditUserButton() {
 		click(findElement(EDIT_USER_BUTTON_XPATH));
-		String editUserPath = "/user/editUser/" + userId;
-		driver.get(baseUrl + editUserPath);
-		return new UserEditPage(driver, baseUrl, editUserPath);
+		return new UserEditPage(driver, baseUrl, this.userId);
 	}
 
 	public UserManagementPage clickOnDeleteUserButton() {
 		click(findElement(DELETE_USER_BUTTON_XPATH));
-		String deleteUserPath = "/user/deleteUser/" + userId;
-		driver.get(baseUrl + deleteUserPath);
 		return new UserManagementPage(driver, baseUrl);
 	}
 }

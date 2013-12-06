@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
+import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.format.number.NumberFormatAnnotationFormatterFactory;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
@@ -29,7 +30,6 @@ import java.util.List;
 @ComponentScan(basePackages = {
 		"it.f2informatica.webapp.controller",
 		"it.f2informatica.webapp.gateway",
-		"it.f2informatica.webapp.i18n",
 		"it.f2informatica.webapp.validator"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
@@ -122,18 +122,24 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 
 	private String[] basenames() {
 		return new String[] {
-			"/WEB-INF/i18n/global"
+			"/WEB-INF/i18n/global",
+			"/WEB-INF/i18n/months"
 		};
 	}
 
 	@Bean
 	public FormattingConversionService mvcConversionService() {
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
-		conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
+		addFormattersForFieldAnnotation(conversionService);
 		DateFormatterRegistrar registrar = new DateFormatterRegistrar();
 		registrar.setFormatter(new DateFormatter(GLOBAL_DATE_FORMAT));
 		registrar.registerFormatters(conversionService);
 		return conversionService;
+	}
+
+	private void addFormattersForFieldAnnotation(DefaultFormattingConversionService conversionService) {
+		conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
+		conversionService.addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
 	}
 
 }

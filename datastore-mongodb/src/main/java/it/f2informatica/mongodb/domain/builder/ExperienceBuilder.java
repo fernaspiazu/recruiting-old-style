@@ -24,7 +24,7 @@ public class ExperienceBuilder {
 
 	public ExperienceBuilder toPeriod(Date periodTo) {
 		this.experience.setPeriodTo(periodTo);
-		this.experience.setCurrent(false);
+		this.experience.setCurrent(periodTo == null);
 		return this;
 	}
 
@@ -38,7 +38,6 @@ public class ExperienceBuilder {
 
 	public ExperienceBuilder thisIsTheCurrentJob() {
 		this.experience.setPeriodTo(null);
-		this.experience.setCurrent(true);
 		return this;
 	}
 

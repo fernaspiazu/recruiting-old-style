@@ -19,7 +19,7 @@ public class UC_01_PerformLogin extends UseCaseTest {
 		LoginPage loginPage = navigator.goToLoginPage();
 		loginPage.typeUsername("admin");
 		loginPage.typePassword("admin");
-		HomePage homePage = loginPage.clickOnLoginButton();
+		HomePage homePage = loginPage.clickOnLoginSuccessButton();
 		assertThat("admin").isEqualTo(homePage.getUserLoggedIn());
 	}
 
@@ -28,8 +28,8 @@ public class UC_01_PerformLogin extends UseCaseTest {
 		LoginPage loginPage = navigator.goToLoginPage();
 		loginPage.typeUsername("unknown_user");
 		loginPage.typePassword("unknown_password");
-		LoginPage loginPageAfterLoginFailure = loginPage.clickOnLoginButtonExpectingFailure();
-		assertThat(loginPageAfterLoginFailure.isLoginErrorMessagePresent()).isTrue();
+		LoginPage failedLoginPage = loginPage.clickOnLoginFailureButton();
+		assertThat(failedLoginPage.isLoginErrorMessagePresent()).isTrue();
 	}
 
 }

@@ -18,7 +18,7 @@
     <deployable.name>recruiting</deployable.name>
     <deployable.path>${basedir}/../webapp/target/${deployable.name}.war</deployable.path>
     <deployable.url>http://localhost:8082/${deployable.name}</deployable.url>
-    <selenium.version>2.33.0</selenium.version>
+    <selenium.version>2.34.0</selenium.version>
     <phantomjsdriver.version>1.0.4</phantomjsdriver.version>
   </properties>
 

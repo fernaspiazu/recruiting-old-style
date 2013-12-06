@@ -7,8 +7,8 @@ public class UserEditPage extends Page {
 	private static final String USERNAME_INPUT_XPATH = "//input[@id='username']";
 	protected static final String UPDATE_USER_BUTTON_XPATH = "//input[@id='updateUser']";
 
-	public UserEditPage(WebDriver driver, String baseUrl, String path) {
-		super(driver, baseUrl, path);
+	public UserEditPage(WebDriver driver, String baseUrl, String userId) {
+		super(driver, baseUrl, "/user/editUser/"+userId);
 	}
 
 	public void typeNewUsername(String username) {

@@ -9,10 +9,22 @@ import java.util.List;
 
 public class ProfileBuilder {
 
-	private Profile profile = new Profile();
+	private Profile profile;
+
+	public ProfileBuilder() {
+		this.profile = new Profile();
+	}
+
+	public ProfileBuilder(Profile profile) {
+		this.profile = profile;
+	}
 
 	public static ProfileBuilder profile() {
 		return new ProfileBuilder();
+	}
+
+	public static ProfileBuilder usingThis(Profile profile) {
+		return new ProfileBuilder(profile);
 	}
 
 	public ProfileBuilder withExperienceIn(ExperienceBuilder experience) {

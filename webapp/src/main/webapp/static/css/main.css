@@ -192,3 +192,7 @@ form table {
 .error-block {
 	color: red;
 }
+
+.invisible {
+	display: none;
+}

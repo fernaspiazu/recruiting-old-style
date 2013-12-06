@@ -4,28 +4,28 @@ import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
 public class ProfileRegistrationPage extends Page {
-	private static final String CONSULTANT_FULLNAME_INPUT_XPATH = "//input[@id='consultantFullName']";
+	private static final String CONSULTANT_FULLNAME_SPAN_XPATH = "//span[@id='consultantFullName']";
 	private static final String EXPERIENCE_SECTION_DIV_XPATH = "//div[@id='experienceSection']";
-	private static final String ADD_NEW_EXPERIENCE_DIV_XPATH = "//div[@id='addExperienceButton']";
+	private static final String ADD_NEW_EXPERIENCE_BUTTON_XPATH = "//button[@id='addNewExperience']";
 	private static final String ADD_EXPERIENCE_FORM_XPATH = "//form[@name='addExperienceForm']";
 	private static final String COMPANY_NAME_INPUT_XPATH = "//input[@id='companyName']";
 	private static final String FUNCTION_INPUT_XPATH = "//input[@id='function']";
 	private static final String COMPANY_LOCATION_INPUT_XPATH = "//input[@id='location']";
 	private static final String MONTH_PERIOD_FROM_SELECT_XPATH = "//select[@name='monthPeriodFrom']";
-	private static final String YEAR_PERIOD_FROM_INPUT_XPATH = "//input[@id='yearPeriodFrom']";
+	private static final String YEAR_PERIOD_FROM_INPUT_XPATH = "//input[@name='yearPeriodFrom']";
 	private static final String MONTH_PERIOD_TO_SELECT_XPATH = "//select[@name='monthPeriodTo']";
-	private static final String YEAR_PERIOD_TO_INPUT_XPATH = "//input[@id='yearPeriodTo']";
+	private static final String YEAR_PERIOD_TO_INPUT_XPATH = "//input[@name='yearPeriodTo']";
 	private static final String DESCRIPTION_TEXTAREA_XPATH = "//textarea[@id='description']";
 	private static final String SAVE_EXPERIENCE_BUTTON_XPATH = "//input[@id='saveExperience']";
 
-	private static final String EXPERIENCES_PRESENT_DIV_XPATH = "//div[@id='experience-*']";
+	private static final String EXPERIENCES_PRESENT_DIV_XPATH = "//div[@id='experiences']/*";
 
 	public ProfileRegistrationPage(WebDriver driver, String baseUrl, String consultantId) {
 		super(driver, baseUrl, "/consultant/profileDataRegistration/" + consultantId);
 	}
 
 	public String consultantWichWillBeAddedProfile() {
-		return getValue(findElement(CONSULTANT_FULLNAME_INPUT_XPATH));
+		return findElement(CONSULTANT_FULLNAME_SPAN_XPATH).getText();
 	}
 
 	public boolean isExperienceSectionPresent() {
@@ -33,7 +33,7 @@ public class ProfileRegistrationPage extends Page {
 	}
 
 	public void addNewExperience() {
-		click(findElement(ADD_NEW_EXPERIENCE_DIV_XPATH));
+		click(findElement(ADD_NEW_EXPERIENCE_BUTTON_XPATH));
 	}
 
 	public boolean isNewExperienceFormPresent() {
@@ -41,7 +41,7 @@ public class ProfileRegistrationPage extends Page {
 	}
 
 	public boolean isAddNewExperienceButtonDisabled() {
-		return !findElement(ADD_NEW_EXPERIENCE_DIV_XPATH).isEnabled();
+		return !findElement(ADD_NEW_EXPERIENCE_BUTTON_XPATH).isEnabled();
 	}
 
 	public void typeCompanyName(String companyName) {
@@ -57,7 +57,7 @@ public class ProfileRegistrationPage extends Page {
 	}
 
 	public void selectPeriodFromApril() {
-		selectByValue(findElement(MONTH_PERIOD_FROM_SELECT_XPATH), "4");
+		selectByValue(findElement(MONTH_PERIOD_FROM_SELECT_XPATH), "3");
 	}
 
 	public void typePeriofFromYear(String year) {
@@ -65,7 +65,7 @@ public class ProfileRegistrationPage extends Page {
 	}
 
 	public void selectPeriodToDecember() {
-		selectByValue(findElement(MONTH_PERIOD_TO_SELECT_XPATH), "12");
+		selectByValue(findElement(MONTH_PERIOD_TO_SELECT_XPATH), "11");
 	}
 
 	public void typePeriodToYear(String year) {

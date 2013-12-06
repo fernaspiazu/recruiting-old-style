@@ -32,9 +32,4 @@ public class UserManagementPage extends Page {
 		return usernames.toArray(new String[usernames.size()]);
 	}
 
-	public UserDetailsPage goToUserDetails(String userId) {
-		String path = "/user/findUser/" + userId;
-		driver.get(baseUrl + path);
-		return new UserDetailsPage(driver, baseUrl, userId);
-	}
 }

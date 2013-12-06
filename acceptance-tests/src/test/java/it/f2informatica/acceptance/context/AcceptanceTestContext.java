@@ -1,6 +1,7 @@
 package it.f2informatica.acceptance.context;
 
 import it.f2informatica.mongodb.context.MongoDBApplicationContext;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Configuration
-@Import({MongoDBApplicationContext.class})
+@Import({MongoDBApplicationContext.class, WebDriverSpringContext.class})
 @ComponentScan(basePackages = {"it.f2informatica.mongodb.repositories"})
 public class AcceptanceTestContext {
 
@@ -22,18 +23,44 @@ public class AcceptanceTestContext {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
+	@Autowired
+	private WebDriver phantomjsDriver;
+
 	@PostConstruct
 	public void init() {
-		System.out.println(
-				"\n==========>> MongoDB host[" + getHost() + "]; " +
-				"port[" + getPort() + "]; " +
-				"database[" + getDatabaseName() + "]\n");
+		printDBInitInformation();
 	}
 
 	@PreDestroy
 	public void dropDatabase() {
-		System.out.println("==========>> Dropping DB[" + getDatabaseName() + "]\n");
+		printDBInfoToDestroy();
+		dropAcceptanceDatabase();
+		quitDriver();
+	}
+
+	private void dropAcceptanceDatabase() {
 		mongoTemplate.getDb().dropDatabase();
+	}
+
+	private void quitDriver() {
+		phantomjsDriver.close();
+		phantomjsDriver.quit();
+	}
+
+	private void printDBInitInformation() {
+		System.out.println(
+			"\n================== "
+			+ "MongoDB host[" + getHost() + "]; "
+			+ "port[" + getPort() + "]; "
+			+ "database[" + getDatabaseName() + "] "
+			+ "==================\n");
+	}
+
+	private void printDBInfoToDestroy() {
+		System.out.println(
+			"================== "
+			+ "Dropping DB[" + getDatabaseName() + "] "
+			+ "==================\n");
 	}
 
 	private String getHost() {

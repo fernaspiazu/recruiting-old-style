@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.MessageSource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,6 +27,9 @@ public class ConsultantControllerTest {
 
 	@Mock
 	private ConsultantServiceGateway consultantServiceGateway;
+
+	@Mock
+	private MessageSource messageSource;
 
 	@InjectMocks
 	private ConsultantController consultantController;

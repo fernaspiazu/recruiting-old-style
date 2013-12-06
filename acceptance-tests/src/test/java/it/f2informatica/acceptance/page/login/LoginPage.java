@@ -4,20 +4,14 @@ import it.f2informatica.acceptance.page.HomePage;
 import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage extends Page {
+public abstract class LoginPage extends Page {
 	private static final String USERNAME_INPUT_XPATH = "//input[@name='username']";
 	private static final String PASSWORD_INPUT_XPATH = "//input[@name='password']";
 	private static final String LOGIN_BUTTON_XPATH = "//input[@id='submit']";
 	private static final String LOGIN_ERROR_MSG_XPATH = "//div[@id='login-error-msg']";
 
-	public LoginPage(WebDriver driver, String baseUrl) {
-		super(driver, baseUrl, "/");
-	}
-
-	public void login(String username, String password) {
-		typeUsername(username);
-		typePassword(password);
-		clickOnLoginButton();
+	public LoginPage(WebDriver driver, String baseUrl, String path) {
+		super(driver, baseUrl, path);
 	}
 
 	public void typeUsername(String username) {
@@ -28,15 +22,21 @@ public class LoginPage extends Page {
 		clearAndSendKeys(findElement(PASSWORD_INPUT_XPATH), password);
 	}
 
-	public HomePage clickOnLoginButton() {
+	/**
+	 * Must load the home page when login is successful
+	 */
+	public HomePage clickOnLoginSuccessButton() {
 		click(findElement(LOGIN_BUTTON_XPATH));
 		return new HomePage(driver, baseUrl);
 	}
 
-	public LoginPage clickOnLoginButtonExpectingFailure() {
+	/**
+	 * Must load the login page showing the message which
+	 * cause the login failure
+	 */
+	public LoginPage clickOnLoginFailureButton() {
 		click(findElement(LOGIN_BUTTON_XPATH));
-		driver.get(baseUrl + "/login_failed");
-		return new LoginPage(driver, baseUrl);
+		return new FailLoginPage(driver, baseUrl);
 	}
 
 

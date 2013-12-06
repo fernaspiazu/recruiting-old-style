@@ -3,8 +3,10 @@ package it.f2informatica.acceptance.usecase;
 import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
 import it.f2informatica.acceptance.page.consultant.ConsultantRegistrationPage;
 import it.f2informatica.acceptance.page.consultant.ProfileRegistrationPage;
+import it.f2informatica.acceptance.page.login.LoginPage;
 import it.f2informatica.mongodb.domain.Consultant;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -15,44 +17,31 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class UC_03_ConsultantRegistration extends UseCaseTest {
 
+	@Before
+	public void login() {
+		LoginPage loginPage = navigator.goToLoginPage();
+		loginPage.typeUsername("admin");
+		loginPage.typePassword("admin");
+		loginPage.clickOnLoginSuccessButton();
+	}
+
 	@After
 	public void logout() {
 		navigator.logOut();
 	}
 
-	private void login() {
-		navigator.goToLoginPage().login("admin", "admin");
-	}
-
 	@Test
 	public void registerNewConsultant() {
-		login();
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
 		ProfileRegistrationPage profilePage = consultantMasterDataRegistration(registrationFormPage);
 		consultantProfileDataRegistration(profilePage);
 	}
 
-	private void consultantProfileDataRegistration(ProfileRegistrationPage profilePage) {
-		assertThat(profilePage.isExperienceSectionPresent()).isTrue();
-		profilePage.addNewExperience();
-		assertThat(profilePage.isNewExperienceFormPresent()).isTrue();
-		assertThat(profilePage.isAddNewExperienceButtonDisabled()).isTrue();
-		profilePage.typeCompanyName("IBM");
-		profilePage.typeFunction("Business Analyst");
-		profilePage.typeLocation("London");
-		profilePage.selectPeriodFromApril();
-		profilePage.typePeriofFromYear("2010");
-		profilePage.selectPeriodToDecember();
-		profilePage.typePeriodToYear("2012");
-		profilePage.typeDescription("This is a fake description");
-		profilePage.saveExperience();
-		assertThat(profilePage.experiencesNumber()).isEqualTo(1);
-	}
-
 	private ProfileRegistrationPage consultantMasterDataRegistration(ConsultantRegistrationPage registrationFormPage) {
-		assertThatRegistrationDateIsToday(registrationFormPage.registrationDate());
-		assertThatConsultantNumberIsCorrect(registrationFormPage.consultantNumber());
+		final String consultantNo = registrationFormPage.consultantNumber();
+		isConsultantNumberCorrect(consultantNo);
+		isRegistrationDateToday(registrationFormPage.registrationDate());
 		registrationFormPage.typeFirstName("Mario");
 		registrationFormPage.typeLastName("Rossi");
 		registrationFormPage.selectMaleGender();
@@ -64,25 +53,58 @@ public class UC_03_ConsultantRegistration extends UseCaseTest {
 		registrationFormPage.typePhoneNumber("0289223344");
 		registrationFormPage.typeMobileNumber("3401246559");
 		registrationFormPage.clickOnSaveAndContinueRegisteringProfile();
-		Consultant consultantRegistered = consultantRepository.findByFiscalCode("RSSMRA78H05A089N");
-		ProfileRegistrationPage profilePage = loadProfileRegistrationPage(consultantRegistered);
-		assertThat("Rossi Mario").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+		ProfileRegistrationPage profilePage = loadProfileRegistrationPage(consultantNo);
+		checkThatConsultantHasBeenRegistered(profilePage);
 		return profilePage;
 	}
 
-	private void assertThatRegistrationDateIsToday(String registrationDate) {
+	private void isRegistrationDateToday(String registrationDate) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		String today = dateFormat.format(Calendar.getInstance().getTime());
 		assertThat(registrationDate).isEqualTo(today);
 	}
 
-	private void assertThatConsultantNumberIsCorrect(String consultantNo) {
+	private void isConsultantNumberCorrect(String consultantNo) {
 		assertThat(consultantNo).hasSize(22);
 		assertThat(consultantNo.split("-")).hasSize(2);
 	}
 
-	private ProfileRegistrationPage loadProfileRegistrationPage(Consultant consultantRegistered) {
-		return new ProfileRegistrationPage(driver, navigator.getBaseUrl(), consultantRegistered.getId());
+	private ProfileRegistrationPage loadProfileRegistrationPage(String consultantNo) {
+		Consultant consultant = consultantRepository.findByConsultantNo(consultantNo);
+		return new ProfileRegistrationPage(driver, navigator.getBaseUrl(), consultant.getId());
+	}
+
+	private void checkThatConsultantHasBeenRegistered(ProfileRegistrationPage profilePage) {
+		assertThat("Rossi Mario").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
+	}
+
+	private void consultantProfileDataRegistration(ProfileRegistrationPage profilePage) {
+		isExperienceSectionPresent(profilePage);
+		profilePage.addNewExperience();
+		isNewExperienceFormPresentAfterClickAddNewExperienceButton(profilePage);
+		profilePage.typeCompanyName("IBM");
+		profilePage.typeFunction("Business Analyst");
+		profilePage.typeLocation("London");
+		profilePage.selectPeriodFromApril();
+		profilePage.typePeriofFromYear("2010");
+		profilePage.selectPeriodToDecember();
+		profilePage.typePeriodToYear("2012");
+		profilePage.typeDescription("This is a fake description");
+		profilePage.saveExperience();
+		checkHowManyExperiencesHaveBeenAdded(profilePage);
+	}
+
+	private void isExperienceSectionPresent(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.isExperienceSectionPresent()).isTrue();
+	}
+
+	private void isNewExperienceFormPresentAfterClickAddNewExperienceButton(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.isNewExperienceFormPresent()).isTrue();
+		assertThat(profilePage.isAddNewExperienceButtonDisabled()).isTrue();
+	}
+
+	private void checkHowManyExperiencesHaveBeenAdded(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.experiencesNumber()).isEqualTo(1);
 	}
 
 }
