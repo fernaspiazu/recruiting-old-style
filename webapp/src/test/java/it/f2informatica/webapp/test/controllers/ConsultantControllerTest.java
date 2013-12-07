@@ -2,21 +2,22 @@ package it.f2informatica.webapp.test.controllers;
 
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
+import it.f2informatica.webapp.controller.helper.MonthHelper;
+import it.f2informatica.webapp.controller.resolver.PeriodResolver;
 import it.f2informatica.webapp.gateway.ConsultantServiceGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.MessageSource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,7 +30,10 @@ public class ConsultantControllerTest {
 	private ConsultantServiceGateway consultantServiceGateway;
 
 	@Mock
-	private MessageSource messageSource;
+	private MonthHelper monthHelper;
+
+	@Mock
+	private PeriodResolver periodResolver;
 
 	@InjectMocks
 	private ConsultantController consultantController;

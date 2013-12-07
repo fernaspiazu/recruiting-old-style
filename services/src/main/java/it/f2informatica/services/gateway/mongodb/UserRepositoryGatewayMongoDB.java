@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -33,13 +34,10 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	private MongoTemplate mongoTemplate;
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepository userRepository;
 
 	@Autowired
-	private RoleRepository roleRepo;
-
-	@Autowired
-	private PasswordUpdater passwordUpdater;
+	private RoleRepository roleRepository;
 
 	@Autowired
 	@Qualifier("userToModelConverter")
@@ -47,7 +45,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
 	@Override
 	public AuthenticationResponse authenticationByUsername(String username) {
-		User user = userRepo.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 		authenticationResponse.setUsername(user.getUsername());
 		authenticationResponse.setPassword(user.getPassword());
@@ -57,84 +55,91 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
 	@Override
 	public boolean updatePassword(UpdatePasswordRequest request) {
-		return passwordUpdater.updatePassword(
-			request.getUserId(),
-			request.getCurrentPassword(),
-			request.getNewPassword(),
-			request.getPasswordConfirmed());
+		return arePasswordCompiledCorrectly(request)
+				&& userRepository.updatePassword(
+				request.getUserId(),
+				request.getCurrentPassword(),
+				request.getNewPassword(),
+				request.getPasswordConfirmed());
+	}
+
+	private boolean arePasswordCompiledCorrectly(UpdatePasswordRequest request) {
+		return StringUtils.hasText(request.getNewPassword())
+				&& StringUtils.hasText(request.getPasswordConfirmed())
+				&& request.getNewPassword().equals(request.getPasswordConfirmed());
 	}
 
 	@Override
 	public UserModel findUserById(String userId) {
-		return userToModelConverter.convert(userRepo.findOne(userId));
+		return userToModelConverter.convert(userRepository.findOne(userId));
 	}
 
 	@Override
 	public UserModel findByUsername(String username) {
-		return userToModelConverter.convert(userRepo.findByUsername(username));
+		return userToModelConverter.convert(userRepository.findByUsername(username));
 	}
 
 	@Override
 	public UserModel findByUsernameAndPassword(String username, String password) {
-		return userToModelConverter.convert(userRepo.findByUsernameAndPassword(username, password));
+		return userToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
 	}
 
 	@Override
 	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
 		return new PageImpl<>(Lists.newArrayList(
-			userToModelConverter.convertIterable(userRepo.findAllExcludingUser(pageable, usernameToExclude))
+				userToModelConverter.convertIterable(userRepository.findAllExcludingUser(pageable, usernameToExclude))
 		));
 	}
 
 	@Override
 	public Iterable<UserModel> findUsersByRoleName(String roleName) {
-		return userToModelConverter.convertIterable(userRepo.findByRoleName(roleName));
+		return userToModelConverter.convertIterable(userRepository.findByRoleName(roleName));
 	}
 
 	@Override
 	public UserModel saveUser(UserModel userModel) {
-		User newUser = userRepo.save(user()
-			.withUsername(userModel.getUsername())
-			.withPassword(userModel.getPassword())
-			.withRole(roleRepo.findOne(userModel.getRole().getRoleId()))
-			.thatIsRemovable()
-			.build());
+		User newUser = userRepository.save(user()
+				.withUsername(userModel.getUsername())
+				.withPassword(userModel.getPassword())
+				.withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
+				.thatIsRemovable()
+				.build());
 		return userToModelConverter.convert(newUser);
 	}
 
 	@Override
 	public boolean updateUser(UserModel userModel) {
 		return mongoTemplate.updateFirst(
-			query(where("id").is(userModel.getUserId())),
-			update("username", userModel.getUsername())
-				.set("role", roleRepo.findOne(userModel.getRole().getRoleId())),
-			User.class
+				query(where("id").is(userModel.getUserId())),
+				update("username", userModel.getUsername())
+						.set("role", roleRepository.findOne(userModel.getRole().getRoleId())),
+				User.class
 		).getLastError().ok();
 	}
 
 	@Override
 	public void deleteUser(String userId) {
-		userRepo.deleteRemovableUser(userId);
+		userRepository.deleteRemovableUser(userId);
 	}
 
 	@Override
 	public Iterable<RoleModel> loadRoles() {
-		return Iterables.transform(roleRepo.findAll(), roleToRoleModel());
+		return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
 	}
 
 	@Override
 	public RoleModel findRoleByName(String roleName) {
-		return roleToRoleModel().apply(roleRepo.findByName(roleName));
+		return roleToRoleModel().apply(roleRepository.findByName(roleName));
 	}
 
 	private Function<Role, RoleModel> roleToRoleModel() {
 		return new Function<Role, RoleModel>() {
 			@Override
 			public RoleModel apply(Role role) {
-			RoleModel model = new RoleModel();
-			model.setRoleId(role.getId());
-			model.setRoleName(role.getName());
-			return model;
+				RoleModel model = new RoleModel();
+				model.setRoleId(role.getId());
+				model.setRoleName(role.getName());
+				return model;
 			}
 		};
 	}

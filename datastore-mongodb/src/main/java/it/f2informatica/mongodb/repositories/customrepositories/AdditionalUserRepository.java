@@ -12,4 +12,6 @@ public interface AdditionalUserRepository {
 
 	void deleteRemovableUser(String userId);
 
+	boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd);
+
 }

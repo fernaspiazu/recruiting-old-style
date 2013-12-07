@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
 
 @Repository
 public class UserRepositoryImpl implements AdditionalUserRepository {
@@ -29,7 +30,7 @@ public class UserRepositoryImpl implements AdditionalUserRepository {
 		Query query = query(where("username").ne(username)).with(pageable);
 		List<User> users = mongoTemplate.find(query, User.class);
 		long count = users.size();
-		return new PageImpl<User>(users, pageable, count);
+		return new PageImpl<>(users, pageable, count);
 	}
 
 	@Override
@@ -44,9 +45,14 @@ public class UserRepositoryImpl implements AdditionalUserRepository {
 
 	@Override
 	public void deleteRemovableUser(String userId) {
-		mongoTemplate.remove(
-				query(where("id").is(userId)
-						.and("notRemovable").is(false)), User.class);
+		Query query = query(where("id").is(userId).and("notRemovable").is(false));
+		mongoTemplate.remove(query, User.class);
+	}
+
+	@Override
+	public boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd) {
+		Query query = query(where("id").is(userId).and("password").is(currentPwd));
+		return mongoTemplate.updateFirst(query, update("password", newPwd), User.class).getLastError().ok();
 	}
 
 }

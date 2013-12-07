@@ -33,6 +33,8 @@ import java.util.List;
 		"it.f2informatica.webapp.validator"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
+	public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
+
 	private static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 
 	@Override
@@ -70,7 +72,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public CookieLocaleResolver localeResolver() {
 		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		cookieLocaleResolver.setCookieName("CURRENT_LOCALE");
+		cookieLocaleResolver.setCookieName(CURRENT_LOCALE_COOKIE);
 		return cookieLocaleResolver;
 	}
 

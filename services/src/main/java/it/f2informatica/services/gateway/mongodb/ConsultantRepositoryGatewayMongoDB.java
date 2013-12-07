@@ -46,38 +46,38 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	public Page<ConsultantModel> findAllConsultants(Pageable pageable) {
 		Page<Consultant> consultantPage = consultantRepository.findAll(pageable);
 		return new PageImpl<>(Lists.newArrayList(Iterables.transform(consultantPage,
-				new Function<Consultant, ConsultantModel>() {
-					@Override
-					public ConsultantModel apply(Consultant consultant) {
-						return consultantModel()
-								.withId(consultant.getId())
-								.withConsultantNo(consultant.getConsultantNo())
-								.withRegistrationDate(consultant.getRegistrationDate())
-								.withFirstName(consultant.getFirstName())
-								.withLastName(consultant.getLastName())
-								.withBirthDate(consultant.getBirthDate())
-								.build();
-					}
+			new Function<Consultant, ConsultantModel>() {
+				@Override
+				public ConsultantModel apply(Consultant consultant) {
+					return consultantModel()
+						.withId(consultant.getId())
+						.withConsultantNo(consultant.getConsultantNo())
+						.withRegistrationDate(consultant.getRegistrationDate())
+						.withFirstName(consultant.getFirstName())
+						.withLastName(consultant.getLastName())
+						.withBirthDate(consultant.getBirthDate())
+						.build();
 				}
+			}
 		)));
 	}
 
 	@Override
 	public ConsultantModel saveMasterData(ConsultantModel consultantModel) {
 		Consultant consultant = consultant()
-				.withConsultantNo(consultantModel.getConsultantNo())
-				.withRegistrationDate(consultantModel.getRegistrationDate())
-				.withFirstName(consultantModel.getFirstName())
-				.withLastName(consultantModel.getLastName())
-				.withGender(consultantModel.getGender())
-				.withEmail(consultantModel.getEmail())
-				.withFiscalCode(consultantModel.getFiscalCode())
-				.withBirthDate(consultantModel.getBirthDate())
-				.withBirthCity(consultantModel.getBirthCity())
-				.withBirthCountry(consultantModel.getBirthCountry())
-				.withPhoneNumber(consultantModel.getPhoneNumber())
-				.withMobileNo(consultantModel.getMobileNumber())
-				.build();
+			.withConsultantNo(consultantModel.getConsultantNo())
+			.withRegistrationDate(consultantModel.getRegistrationDate())
+			.withFirstName(consultantModel.getFirstName())
+			.withLastName(consultantModel.getLastName())
+			.withGender(consultantModel.getGender())
+			.withEmail(consultantModel.getEmail())
+			.withFiscalCode(consultantModel.getFiscalCode())
+			.withBirthDate(consultantModel.getBirthDate())
+			.withBirthCity(consultantModel.getBirthCity())
+			.withBirthCountry(consultantModel.getBirthCountry())
+			.withPhoneNumber(consultantModel.getPhoneNumber())
+			.withMobileNo(consultantModel.getMobileNumber())
+			.build();
 		Consultant consultantRegistered = consultantRepository.save(consultant);
 		return consultantToModelConverter.convert(consultantRegistered);
 	}
@@ -91,21 +91,22 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Override
 	public boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId) {
 		Experience experience = ExperienceBuilder.experience()
-				.inCompany(experienceModel.getCompanyName())
-				.inFunctionOf(experienceModel.getFunction())
-				.locatedAt(experienceModel.getLocation())
-				.fromPeriod(experienceModel.getPeriodFrom())
-				.toPeriod(experienceModel.getPeriodTo())
-				.isThisTheCurrentJob(experienceModel.isCurrent())
-				.withDescription(experienceModel.getDescription())
-				.build();
+			.inCompany(experienceModel.getCompanyName())
+			.inFunctionOf(experienceModel.getFunction())
+			.locatedAt(experienceModel.getLocation())
+			.fromPeriod(experienceModel.getPeriodFrom())
+			.toPeriod(experienceModel.getPeriodTo())
+			.isThisTheCurrentJob(experienceModel.isCurrent())
+			.withDescription(experienceModel.getDescription())
+			.build();
 		return consultantRepository.addExperience(experience, consultantId);
 	}
 
 	@Override
 	public List<ExperienceModel> findExperiencesByConsultantId(String consultantId) {
 		Profile profile = consultantRepository.findOne(consultantId).getProfile();
-		return (profile != null) ? experienceToModelConverter.convertList(profile.getExperiences())
+		return (profile != null)
+				? experienceToModelConverter.convertList(profile.getExperiences())
 				: Lists.<ExperienceModel>newArrayList();
 	}
 
