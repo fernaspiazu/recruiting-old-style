@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.repositories.customrepositories;
+package it.f2informatica.mongodb.repositories.custom;
 
 import it.f2informatica.mongodb.domain.User;
 import org.springframework.data.domain.Page;

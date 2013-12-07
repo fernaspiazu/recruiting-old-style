@@ -3,7 +3,7 @@ package it.f2informatica.mongodb.repositories.impl;
 import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.repositories.customrepositories.AdditionalUserRepository;
+import it.f2informatica.mongodb.repositories.custom.AdditionalUserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -3,7 +3,7 @@ package it.f2informatica.mongodb.repositories.impl;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.repositories.customrepositories.AdditionalConsultantRepository;
+import it.f2informatica.mongodb.repositories.custom.AdditionalConsultantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
