@@ -42,37 +42,33 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h1 th:text="#{user.users}">Users</h1>
-			<table id="user-list" class="bordered">
+			<h2 th:text="#{user.users}">Users</h2>
+			<a th:href="@{/user/createNewUser}" th:text="#{user.newuser}" href="createNewUser.html">New User</a>
+			<table id="user-list" class="data-table">
 				<thead>
-				<tr>
-					<th th:text="#{user.username}">Username</th>
-					<th th:text="#{user.password}">Password</th>
-					<th></th>
-					<th></th>
-				</tr>
+					<tr>
+						<th th:text="#{user.username}">Username</th>
+						<th th:text="#{user.authorization}">Authorization</th>
+						<th class="column-link"></th>
+						<th class="column-link"></th>
+					</tr>
 				</thead>
 				<tbody>
-				<tr th:each="user : ${users}">
-					<td th:text="${user.username}">Some username</td>
-					<td th:text="${user.role.roleName}">Some Role</td>
-					<td class="cell-text-align-center">
-						<a th:href="@{/user/findUser/}+${user.userId}"
-							 href="userDetails.html" th:text="#{user.details}">
-							Details
-						</a>
-					</td>
-					<td class="cell-text-align-center">
-						<a th:href="@{/user/changePassword/}+${user.userId}" href="changePasswordForm.html"
-							 th:unless="${user.notRemovable}" th:text="#{user.changePassword}">
-							Change Password
-						</a>
-					</td>
-				</tr>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.username}">Fake User</td>
+						<td th:text="${user.role.roleName}">Administrator</td>
+						<td class="cell-link">
+							<a th:href="@{/user/findUser/}+${user.userId}" th:text="#{user.details}"
+								 class="link-ico details-ico" href="userDetails.html" title="Details"></a>
+						</td>
+						<td class="cell-link">
+							<a th:href="@{/user/changePassword/}+${user.userId}" th:text="#{user.changePassword}"
+								 th:unless="${user.notRemovable}" class="link-ico chgpwd-ico" href="changePasswordForm.html"
+								 title="Change password"></a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-			<a th:href="@{/user/createNewUser}" href="createNewUser.html"
-				 th:text="#{user.newuser}">New User</a>
 		</div>
 	</div>
 </div>

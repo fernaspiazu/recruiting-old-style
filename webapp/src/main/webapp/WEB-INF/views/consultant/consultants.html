@@ -42,25 +42,23 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h1 th:text="#{consultant.consultants}">Consultants</h1>
-			<table class="bordered">
+			<h2 th:text="#{consultant.consultants}">Consultants</h2>
+			<table class="data-table">
 				<thead>
 				<tr>
 					<th>Consultant Number</th>
-					<th>First Name</th>
 					<th>Last Name</th>
+					<th>First Name</th>
 					<th>Age</th>
-					<th>Skills</th>
 					<th></th>
 				</tr>
 				</thead>
 				<tbody>
 				<tr th:each="consultant : ${consultants}">
 					<td th:text="${consultant.consultantNo}">1234567890</td>
-					<td th:text="${consultant.firstName}">Mario</td>
 					<td th:text="${consultant.lastName}">Rossi</td>
+					<td th:text="${consultant.firstName}">Mario</td>
 					<td th:text="${consultant.age}">30</td>
-					<!--<td th:text="${consultant.skills}">Programmer, Manager, DBA</td>-->
 					<td th:text="${consultant.id}">id_consultant</td>
 				</tr>
 				</tbody>

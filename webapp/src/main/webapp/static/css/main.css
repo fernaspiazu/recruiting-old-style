@@ -18,6 +18,7 @@ body, button, input, label, select, td, textarea {
 
 #global-container {
 	position: absolute;
+	display: block;
 	width: 100%;
 	height: 100%;
 	min-height: 100%;
@@ -28,7 +29,7 @@ body, button, input, label, select, td, textarea {
 
 .header {
 	background-clip: padding-box;
-	background-color: #e5e5e5;
+	background-color: #eee;
 	border-bottom: 1px solid rgba(0, 0, 0, .3);
 	width: 100%;
 	display: inline-flex;
@@ -66,6 +67,18 @@ body, button, input, label, select, td, textarea {
 	padding: 10px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	border-bottom: 1px solid #aaa;
+	line-height: 20px;
+	min-height: 20px;
+	padding-bottom: 5px;
+	vertical-align: bottom;
+	display: block;
+	font-weight: bold;
+}
+h1 {font-size: 20px;}
+h2 {font-size: 16px;}
+
 /* ==================== FORM ELEMENTS ======================= */
 input[type='text'], input[type='password'] {
 	border: 1px solid #a9a9a9;
@@ -85,4 +98,23 @@ select {
 	outline: none;
 }
 select:focus {border-color: #2f5bb7;}
+
+/* ==================== TABLE ELEMENTS ====================== */
+.data-table {
+	display: table;
+	border-collapse: collapse;
+	border-spacing: 5px;
+	table-layout: fixed;
+}
+.data-table, .data-table th, .data-table td {
+	border: 1px solid #ccc;
+}
+.data-table th {background: #eee; min-width: 100px; padding: 10px;}
+.data-table th.column-link {min-width: 30px !important; width: 40px;}
+.data-table td {padding: 5px 8px 5px 8px;}
+
+td.cell-link {text-align: center;}
+.link-ico {display: inline-block; width: 20px; height: 20px;}
+.details-ico {background: url("../images/details-icon.png") no-repeat; background-size: 20px;}
+.chgpwd-ico {background: url("../images/password-icon.png") no-repeat; background-size: 20px;}
 /* ========================================================== */
