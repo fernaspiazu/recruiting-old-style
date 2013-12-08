@@ -1,5 +1,12 @@
 @CHARSET "UTF-8";
 
+body {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	display: block;
+}
+
 body, button, input, label, select, td, textarea {
 	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
 	font-size: 11px;
