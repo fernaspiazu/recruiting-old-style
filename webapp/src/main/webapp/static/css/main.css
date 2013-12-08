@@ -11,11 +11,9 @@ html, body {
 #global-container {
 	position: absolute;
 	width: 100%;
-	height: 99%;
-	min-height: 95%;
+	height: 100%;
+	min-height: 100%;
 	top: 0;
-	bottom: 0;
-	right: 0;
 	left: 0;
 	overflow-x: hidden;
 }
@@ -39,8 +37,8 @@ html, body {
 #container {
 	display: inline-flex;
 	width: 100%;
-	height: 90%;
-	border-bottom: 1px solid rgba(0, 0, 0, .3);
+	height: 100%;
+	/*border-bottom: 1px solid rgba(0, 0, 0, .3);*/
 }
 
 .navbar {
@@ -57,6 +55,7 @@ html, body {
 
 #content {
 	width: 85%;
+	padding: 10px;
 }
 
 /* ==================== FORM ELEMENTS ======================= */
