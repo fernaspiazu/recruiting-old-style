@@ -43,17 +43,24 @@
 		</div>
 		<div id="content">
 			<h2 th:text="#{user.users}">Users</h2>
-			<a th:href="@{/user/createNewUser}" th:text="#{user.newuser}" href="createNewUser.html">New User</a>
-			<table id="user-list" class="data-table">
-				<thead>
+			<div class="hor-navmenu-block">
+				<ul class="hor-navmenu">
+					<li>
+						<a th:href="@{/user/createNewUser}" th:text="#{user.newuser}" href="createNewUser.html">Create new User</a>
+					</li>
+				</ul>
+			</div>
+			<div class="data-table-container">
+				<table id="user-list" class="data-table">
+					<thead>
 					<tr>
 						<th th:text="#{user.username}">Username</th>
 						<th th:text="#{user.authorization}">Authorization</th>
 						<th class="column-link"></th>
 						<th class="column-link"></th>
 					</tr>
-				</thead>
-				<tbody>
+					</thead>
+					<tbody>
 					<tr th:each="user : ${users}">
 						<td th:text="${user.username}">Fake User</td>
 						<td th:text="${user.role.roleName}">Administrator</td>
@@ -67,8 +74,9 @@
 								 title="Change password"></a>
 						</td>
 					</tr>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

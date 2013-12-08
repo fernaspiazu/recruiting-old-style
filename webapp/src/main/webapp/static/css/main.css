@@ -79,6 +79,45 @@ h1, h2, h3, h4, h5, h6 {
 h1 {font-size: 20px;}
 h2 {font-size: 16px;}
 
+.hor-navmenu-block {
+	width: 100%;
+	height: 40px;
+}
+.hor-navmenu {
+	border: 1px solid #133783;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 30px;
+	list-style-type: none;
+	background: #3b5998;
+	float: left;
+}
+.hor-navmenu li {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	float: left;
+	height: 100%;
+}
+.hor-navmenu a:link, .hor-navmenu a:visited {
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	color: #d8dfea;
+	padding: 8px 10px 8px 10px;
+	float: left;
+	width: auto;
+	height: inherit;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.hor-navmenu a:hover, .hor-navmenu a:focus {
+	color: #fff;
+	background: #526da4;
+}
+
 /* ==================== FORM ELEMENTS ======================= */
 input[type='text'], input[type='password'] {
 	border: 1px solid #a9a9a9;
@@ -100,6 +139,7 @@ select {
 select:focus {border-color: #2f5bb7;}
 
 /* ==================== TABLE ELEMENTS ====================== */
+.data-table-container {width: 100%;}
 .data-table {
 	display: table;
 	border-collapse: collapse;
