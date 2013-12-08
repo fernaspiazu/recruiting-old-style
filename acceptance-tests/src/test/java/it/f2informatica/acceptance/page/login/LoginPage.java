@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 public abstract class LoginPage extends Page {
 	private static final String USERNAME_INPUT_XPATH = "//input[@name='username']";
 	private static final String PASSWORD_INPUT_XPATH = "//input[@name='password']";
-	private static final String LOGIN_BUTTON_XPATH = "//input[@id='submit']";
+	private static final String LOGIN_BUTTON_XPATH = "//input[@id='loginButton']";
 	private static final String LOGIN_ERROR_MSG_XPATH = "//div[@id='login-error-msg']";
 
 	public LoginPage(WebDriver driver, String baseUrl, String path) {

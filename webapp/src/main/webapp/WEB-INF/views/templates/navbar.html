@@ -8,21 +8,12 @@
 </head>
 <body>
 <div th:fragment="navbar" class="navbar">
-	<div>
-		<a th:text="#{home.home}" th:href="@{/home}" href="../homePage.html">Home</a>
-	</div>
-	<div>
-		<a th:text="#{user.usermanagement}"
-			 th:href="@{/user/loadUsers}"
-			 href="../user/users.html">User Management</a>
-	</div>
-	<div>
-		<a th:text="#{consultant.consultants}"
-			 th:href="@{/consultant}"
-			 href="../consultant/consultants.html">Consultants</a>
-	</div>
-	<div>TODO</div>
-	<div>TODO</div>
+	<div id="nav-f2inf-box-space"></div>
+	<ul id="nav">
+		<li><a th:text="#{home.home}" th:href="@{/home}" href="../homePage.html">Home</a></li>
+		<li><a th:text="#{user.usermanagement}" th:href="@{/user/loadUsers}" href="../user/users.html">User Management</a></li>
+		<li><a th:text="#{consultant.consultants}" th:href="@{/consultant}" href="../consultant/consultants.html">Consultants</a></li>
+	</ul>
 </div>
 </body>
 </html>

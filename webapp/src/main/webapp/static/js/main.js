@@ -5,7 +5,6 @@
 var contextRoot = evaluateContextRoot();
 
 $(document).ready(function() {
-	logout();
 	mantainLocaleSelected();
 	evaluateSelectedLocale();
 	disableSelectElementsWithClassSelectReadOnly();
@@ -17,12 +16,6 @@ function evaluateContextRoot() {
 	rootUrl = rootUrl + "/" + location.pathname.split("/")[1];
 	console.log("Final root URL > " + rootUrl);
 	return rootUrl;
-}
-
-function logout() {
-	$("#logout").click(function() {
-		location.href = contextRoot + "/logout";
-	});
 }
 
 function disableSelectElementsWithClassSelectReadOnly() {

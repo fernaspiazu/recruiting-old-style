@@ -7,81 +7,113 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
-<header th:substituteby="templates/header::header"></header>
-<div id="container">
-	<div th:substituteby="templates/navbar::navbar"></div>
-	<div id="content">
-		<form action="./consultants.html" th:action="@{/consultant/registerMasterData}"
-					th:object="${consultantModel}" method="post">
-			<h1>Consultant Registration</h1>
-			<table>
-				<tr>
-					<td>
-						Consultant No. <input type="text" th:field="*{consultantNo}" readonly="readonly"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Registration Date: <input type="text" th:field="*{registrationDate}" readonly="readonly"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						First Name: <input type="text" th:field="*{firstName}" placeholder="First name" autofocus=""/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Last Name: <input type="text" th:field="*{lastName}" placeholder="Last name"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Gender:
-						<select id="gender" th:field="*{gender}">
-						  <option value="MALE">Male</option>
-							<option value="FEMALE">Female</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Email: <input type="text" th:field="*{email}" placeholder="alias@domain.com"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Fiscal code: <input type="text" th:field="*{fiscalCode}" placeholder="16 characters"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Birthdate: <input type="text" th:field="*{birthDate}" placeholder="day-month-year"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Birth city: <input type="text" th:field="*{birthCity}" placeholder="Birth city"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Birth country: <input type="text" th:field="*{birthCountry}" placeholder="Birth country"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Phone number: <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Mobile number: <input type="text" th:field="*{mobileNumber}" placeholder="Mobile number"/>
-					</td>
-				</tr>
-			</table>
-			<input type="submit" id="saveAndContinueProfile" value="Save and continue..."/>
-		</form>
+<div id="global-container">
+	<header th:substituteby="templates/header::header" class="header">
+		<div class="f2inf-header-box-space"></div>
+		<div class="header-floating-content">
+			<div id="select-language-box">
+				<label for="select-language">Select language</label>
+				<select id="select-language">
+					<option value="en">English</option>
+					<option value="it">Italian</option>
+				</select>
+			</div>
+			<div id="userInSession">
+				<img title="User in session" src="../../../static/images/user-icon.png"/>
+				<span id="userLoggedIn">Username</span>
+			</div>
+			<div id="logoutLink">
+				<img id="logout" title="Logout" src="../../../static/images/logout-icon.png"/>
+			</div>
+		</div>
+		<script th:inline="javascript">
+			$("#logoutLink").click(function() {
+				window.location = "../login/login.html";
+			});
+		</script>
+	</header>
+	<div id="container">
+		<div th:substituteby="templates/navbar::navbar" class="navbar">
+			<div id="nav-f2inf-box-space"></div>
+			<ul id="nav">
+				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
+				<li><a href="../user/users.html">User Management</a></li>
+				<li><a href="../consultant/consultants.html">Consultants</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<form action="profileDataRegistration.html" th:action="@{/consultant/registerMasterData}"
+						th:object="${consultantModel}" method="post">
+				<h1>Consultant Registration</h1>
+				<table>
+					<tr>
+						<td>
+							Consultant No. <input type="text" th:field="*{consultantNo}" readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Registration Date: <input type="text" th:field="*{registrationDate}" readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							First Name: <input type="text" th:field="*{firstName}" placeholder="First name" autofocus=""/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Last Name: <input type="text" th:field="*{lastName}" placeholder="Last name"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Gender:
+							<select id="gender" th:field="*{gender}">
+								<option value="MALE">Male</option>
+								<option value="FEMALE">Female</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Email: <input type="text" th:field="*{email}" placeholder="alias@domain.com"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Fiscal code: <input type="text" th:field="*{fiscalCode}" placeholder="16 characters"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Birthdate: <input type="text" th:field="*{birthDate}" placeholder="day-month-year"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Birth city: <input type="text" th:field="*{birthCity}" placeholder="Birth city"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Birth country: <input type="text" th:field="*{birthCountry}" placeholder="Birth country"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Phone number: <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Mobile number: <input type="text" th:field="*{mobileNumber}" placeholder="Mobile number"/>
+						</td>
+					</tr>
+				</table>
+				<input type="submit" id="saveAndContinueProfile" value="Save and continue..."/>
+			</form>
+		</div>
 	</div>
 </div>
 <footer th:substituteby="templates/footer::footer"></footer>

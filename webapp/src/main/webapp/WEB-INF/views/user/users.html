@@ -7,41 +7,73 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
-<header th:substituteby="templates/header::header"></header>
-<div id="container">
-	<div th:substituteby="templates/navbar::navbar"></div>
-	<div id="content">
-		<h1 th:text="#{user.users}">Users</h1>
-		<table id="user-list" class="bordered">
-			<thead>
-			<tr>
-				<th th:text="#{user.username}">Username</th>
-				<th th:text="#{user.password}">Password</th>
-				<th></th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr th:each="user : ${users}">
-				<td th:text="${user.username}">Some username</td>
-				<td th:text="${user.role.roleName}">Some Role</td>
-				<td class="cell-text-align-center">
-					<a th:href="@{/user/findUser/}+${user.userId}"
-						 href="userForm.html" th:text="#{user.details}">
-						Details
-					</a>
-				</td>
-				<td class="cell-text-align-center">
-					<a th:href="@{/user/changePassword/}+${user.userId}" href="userForm.html"
-						 th:unless="${user.notRemovable}" th:text="#{user.changePassword}">
-						Change Password
-					</a>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-		<a th:href="@{/user/createNewUser}" href="userForm.html"
-				th:text="#{user.newuser}">New User</a>
+<div id="global-container">
+	<header th:substituteby="templates/header::header" class="header">
+		<div class="f2inf-header-box-space"></div>
+		<div class="header-floating-content">
+			<div id="select-language-box">
+				<label for="select-language">Select language</label>
+				<select id="select-language">
+					<option value="en">English</option>
+					<option value="it">Italian</option>
+				</select>
+			</div>
+			<div id="userInSession">
+				<img title="User in session" src="../../../static/images/user-icon.png"/>
+				<span id="userLoggedIn">Username</span>
+			</div>
+			<div id="logoutLink">
+				<img id="logout" title="Logout" src="../../../static/images/logout-icon.png"/>
+			</div>
+		</div>
+		<script th:inline="javascript">
+			$("#logoutLink").click(function() {
+				window.location = "../login/login.html";
+			});
+		</script>
+	</header>
+	<div id="container">
+		<div th:substituteby="templates/navbar::navbar" class="navbar">
+			<div id="nav-f2inf-box-space"></div>
+			<ul id="nav">
+				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
+				<li><a href="../user/users.html">User Management</a></li>
+				<li><a href="../consultant/consultants.html">Consultants</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<h1 th:text="#{user.users}">Users</h1>
+			<table id="user-list" class="bordered">
+				<thead>
+				<tr>
+					<th th:text="#{user.username}">Username</th>
+					<th th:text="#{user.password}">Password</th>
+					<th></th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.username}">Some username</td>
+					<td th:text="${user.role.roleName}">Some Role</td>
+					<td class="cell-text-align-center">
+						<a th:href="@{/user/findUser/}+${user.userId}"
+							 href="userDetails.html" th:text="#{user.details}">
+							Details
+						</a>
+					</td>
+					<td class="cell-text-align-center">
+						<a th:href="@{/user/changePassword/}+${user.userId}" href="changePasswordForm.html"
+							 th:unless="${user.notRemovable}" th:text="#{user.changePassword}">
+							Change Password
+						</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<a th:href="@{/user/createNewUser}" href="createNewUser.html"
+				 th:text="#{user.newuser}">New User</a>
+		</div>
 	</div>
 </div>
 <footer th:substituteby="templates/footer::footer"></footer>

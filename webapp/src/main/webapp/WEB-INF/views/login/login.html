@@ -7,21 +7,34 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
-<form id="loginForm" action="#" th:action="@{/processLogin}" method="post" enctype="application/x-www-form-urlencoded">
-	<h1 id="loginHeader" th:text="#{login.login}">Login</h1>
-	<div th:if="${hasErrors}" id="login-error-msg">
-		Login Failure
+<div id="container">
+	<div class="login-input-header">
+		<div class="login-input-form-container">
+			<form id="loginForm" method="post"
+						action="../homePage.html" th:action="@{/processLogin}"
+						enctype="application/x-www-form-urlencoded">
+				<div id="login-error-msg" th:if="${hasErrors}">
+					Bad Credentials
+				</div>
+				<input type="text" id="usernameId" name="username"
+							 th:placeholder="#{login.username}" placeholder="Username" autofocus=""/>
+				<input type="password" id="passwordId" name="password"
+							 th:placeholder="#{login.password}" placeholder="Password"/>
+				<input id="loginButton" type="submit" th:value="#{login.login}" value="Login"/>
+			</form>
+		</div>
 	</div>
-	<fieldset id="inputs">
-		<input type="text" id="usernameId" name="username"
-					 th:placeholder="#{login.username}" placeholder="Username"
-					 autofocus=""/>
-		<input type="password" id="passwordId" name="password"
-					 th:placeholder="#{login.password}" placeholder="Password"/>
-	</fieldset>
-	<fieldset id="actions">
-		<input id="submit" type="submit" th:value="#{login.login}" value="Login"/>
-	</fieldset>
-</form>
+	<div class="f2informatica-area"></div>
+</div>
+<script type="text/javascript">
+	var loginErrMsg = $("#login-error-msg");
+	if (loginErrMsg.length) {
+		var formPosition = loginErrMsg.parent().position();
+		loginErrMsg.css({
+			"top" : formPosition.top - 3,
+			"left" : formPosition.left - loginErrMsg.width() - 40
+		});
+	}
+</script>
 </body>
 </html>

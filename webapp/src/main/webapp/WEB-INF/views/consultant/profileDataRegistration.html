@@ -7,61 +7,92 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
-<header th:substituteby="templates/header::header"></header>
-<div id="container">
-	<div th:substituteby="templates/navbar::navbar"></div>
-	<div id="content">
-		<h1>Profile</h1>
-		<div id="consultantShortDetails">
-			<input type="hidden" id="consultantId" th:value="${session.consultantId}"/>
-			Consultant name: <span id="consultantFullName" th:text="${consultantFullName}">Mario Rossi</span>
-			Consultant number: <span id="consultantNo" th:text="${consultantNo}">1234567890</span>
-			Registered: <span id="registrationDate" th:text="${{registrationDate}}">01-01-1990</span>
-		</div>
-
-		<div id="experienceSection">
-			<button id="addNewExperience">
-				Add new work experience
-			</button>
-			<div id="newExperienceSection" class="invisible">
-				<form name="addExperienceForm" th:object="${experienceModel}" method="post"
-							th:action="@{/consultant/profileDataRegistration/saveExperience}" action="#">
-					Company name*: <input type="text" th:field="*{companyName}"/><br/>
-					Function*: <input type="text" th:field="*{function}"/><br/>
-					Location: <input type="text" th:field="*{location}"/><br/>
-					Period*<br/>
-					<select id="monthPeriodFrom" name="monthPeriodFrom">
-						<option>Select</option>
-						<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
-					</select>
-					<input type="text" name="yearPeriodFrom" maxlength="4"/>
-					<span>-</span>
-					<select id="monthPeriodTo" name="monthPeriodTo">
-						<option>Select</option>
-						<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
-					</select>
-					<input type="text" name="yearPeriodTo" maxlength="4"/>
-					<br/>
-					<input type="checkbox" th:field="*{current}"/>I'm working here actually<br/>
-					Descrizione<br/>
-					<textarea th:field="*{description}" rows="6" cols="60" placeholder="Description"></textarea><br/>
-					<br/>
-					<input type="submit" id="saveExperience" value="Save"/>
-				</form>
+<div id="global-container">
+	<header th:substituteby="templates/header::header" class="header">
+		<div class="f2inf-header-box-space"></div>
+		<div class="header-floating-content">
+			<div id="select-language-box">
+				<label for="select-language">Select language</label>
+				<select id="select-language">
+					<option value="en">English</option>
+					<option value="it">Italian</option>
+				</select>
 			</div>
-			<div id="experiences">
-				<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}">
-					Company name: <span th:text="${exp.companyName}">Some company name</span>
-					Function: <span th:text="${exp.function}">Some function</span>
-					Company location: <span th:text="${exp.location}">Some location</span>
-					Period: <span th:inline="text">[[${{exp.periodFrom}}]] - [[${{exp.periodTo}}]]</span>
-					<p th:text="${exp.description}">
-						Description
-					</p>
+			<div id="userInSession">
+				<img title="User in session" src="../../../static/images/user-icon.png"/>
+				<span id="userLoggedIn">Username</span>
+			</div>
+			<div id="logoutLink">
+				<img id="logout" title="Logout" src="../../../static/images/logout-icon.png"/>
+			</div>
+		</div>
+		<script th:inline="javascript">
+			$("#logoutLink").click(function() {
+				window.location = "../login/login.html";
+			});
+		</script>
+	</header>
+	<div id="container">
+		<div th:substituteby="templates/navbar::navbar" class="navbar">
+			<div id="nav-f2inf-box-space"></div>
+			<ul id="nav">
+				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
+				<li><a href="../user/users.html">User Management</a></li>
+				<li><a href="../consultant/consultants.html">Consultants</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<h1>Profile</h1>
+			<div id="consultantShortDetails">
+				<input type="hidden" id="consultantId" th:value="${session.consultantId}"/>
+				Consultant name: <span id="consultantFullName" th:text="${consultantFullName}">Mario Rossi</span>
+				Consultant number: <span id="consultantNo" th:text="${consultantNo}">1234567890</span>
+				Registered: <span id="registrationDate" th:text="${{registrationDate}}">01-01-1990</span>
+			</div>
+
+			<div id="experienceSection">
+				<button id="addNewExperience">
+					Add new work experience
+				</button>
+				<div id="newExperienceSection" class="invisible">
+					<form name="addExperienceForm" th:object="${experienceModel}" method="post"
+								th:action="@{/consultant/profileDataRegistration/saveExperience}" action="#">
+						Company name*: <input type="text" th:field="*{companyName}"/><br/>
+						Function*: <input type="text" th:field="*{function}"/><br/>
+						Location: <input type="text" th:field="*{location}"/><br/>
+						Period*<br/>
+						<select id="monthPeriodFrom" name="monthPeriodFrom">
+							<option>Select</option>
+							<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
+						</select>
+						<input type="text" name="yearPeriodFrom" maxlength="4"/>
+						<span>-</span>
+						<select id="monthPeriodTo" name="monthPeriodTo">
+							<option>Select</option>
+							<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
+						</select>
+						<input type="text" name="yearPeriodTo" maxlength="4"/>
+						<br/>
+						<input type="checkbox" th:field="*{current}"/>I'm working here actually<br/>
+						Descrizione<br/>
+						<textarea th:field="*{description}" rows="6" cols="60" placeholder="Description"></textarea><br/>
+						<br/>
+						<input type="submit" id="saveExperience" value="Save"/>
+					</form>
+				</div>
+				<div id="experiences">
+					<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}">
+						Company name: <span th:text="${exp.companyName}">Some company name</span>
+						Function: <span th:text="${exp.function}">Some function</span>
+						Company location: <span th:text="${exp.location}">Some location</span>
+						Period: <span th:inline="text">[[${{exp.periodFrom}}]] - [[${{exp.periodTo}}]]</span>
+						<p th:text="${exp.description}">
+							Description
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 <footer th:substituteby="templates/footer::footer"></footer>

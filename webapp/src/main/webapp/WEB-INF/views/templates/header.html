@@ -8,28 +8,30 @@
 </head>
 <body>
 <header class="header" th:fragment="header" role="banner">
-	<div id="logoutLink" class="float-right">
-		<img id="logout" th:title="#{login.logout}" title="Logout"
-				 th:src="@{/static/images/logout-icon.png}"
-				 src="../../../static/images/logout-icon.png"/>
+	<div class="f2inf-header-box-space"></div>
+	<div class="header-floating-content">
+		<div id="select-language-box">
+			<label for="select-language" th:text="#{header.selectlanguage}">Select language</label>
+			<select id="select-language">
+				<option value="en" th:text="#{header.english}">English</option>
+				<option value="it" th:text="#{header.italian}">Italian</option>
+			</select>
+		</div>
+		<div id="userInSession">
+			<img th:title="#{header.userInSession}" th:src="@{/static/images/user-icon.png}"
+					 title="User in session" src="../../../static/images/user-icon.png"/>
+			<span id="userLoggedIn" th:text="${session.user.username}">Username</span>
+		</div>
+		<div id="logoutLink">
+			<img id="logout" th:title="#{login.logout}" th:src="@{/static/images/logout-icon.png}"
+					 title="Logout" src="../../../static/images/logout-icon.png"/>
+		</div>
 	</div>
-	<div id="userInSession" class="float-right">
-		<img th:title="#{header.userInSession}" title="User in session"
-				 th:src="@{/static/images/user-icon.png}"
-				 src="../../../static/images/user-icon.png"/>
-		<span id="userLoggedIn" th:text="${session.user.username}">Username</span>
-	</div>
-	<div class="float-right">
-		<label for="select-language"
-					 th:text="#{header.selectlanguage}">
-			Select language
-		</label>
-		<select id="select-language">
-			<option value="en" th:text="#{header.english}">English</option>
-			<option value="it" th:text="#{header.italian}">Italian</option>
-		</select>
-	</div>
-	<div class="clear-both"></div>
+	<script th:inline="javascript">
+		$("#logoutLink").click(function() {
+			window.location = /*[[@{/logout}]]*/ "../login/login.html";
+		});
+	</script>
 </header>
 </body>
 </html>

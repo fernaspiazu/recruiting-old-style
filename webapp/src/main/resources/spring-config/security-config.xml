@@ -6,8 +6,8 @@
 
   <http create-session="ifRequired" use-expressions="true">
     <intercept-url pattern="/login*" access="permitAll"/>
+    <intercept-url pattern="/static/**" access="isAnonymous() or isAuthenticated()"/>
     <intercept-url pattern="/**" access="isAuthenticated()"/>
-    <intercept-url pattern="/static/**" access="permitAll"/>
     <intercept-url pattern="/js/resolvei18nCode*" access="permitAll"/>
 
     <form-login login-page="/login" login-processing-url="/processLogin"

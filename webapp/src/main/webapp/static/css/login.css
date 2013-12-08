@@ -1,222 +1,113 @@
 @CHARSET "UTF-8";
 
-
 html, body {
-	height: 100%;
+	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+	font-size: 11px;
 }
 
-body {
-	background: #D9DEE2;
-	background-image: -moz-linear-gradient(center top, #EBEEF2, #D9DEE2);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ebeef2), to(#d9dee2));
-	background-image: -webkit-linear-gradient(top, #ebeef2, #d9dee2);
-	background-image: -ms-linear-gradient(top, #ebeef2, #d9dee2);
-	background-image: -o-linear-gradient(top, #ebeef2, #d9dee2);
-	background-image: linear-gradient(top, #ebeef2, #d9dee2);
-	font: 12px 'Lucida Sans Unicode','Trebuchet MS',Arial,Helvetica;
-	margin: 0;
-}
-
-#loginForm {
-	background-color: #fff;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
-	background-image: -webkit-linear-gradient(top, #fff, #eee);
-	background-image: -moz-linear-gradient(top, #fff, #eee);
-	background-image: -ms-linear-gradient(top, #fff, #eee);
-	background-image: -o-linear-gradient(top, #fff, #eee);
-	background-image: linear-gradient(top, #fff, #eee);
-	height: 240px;
-	width: 400px;
-	margin: -150px 0 0 -230px;
-	padding: 30px;
+#container {
 	position: absolute;
-	top: 40%;
-	left: 50%;
-	z-index: 0;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	-webkit-box-shadow:
-		0 0 2px rgba(0, 0, 0, 0.2),
-		0 1px 1px rgba(0, 0, 0, .2),
-		0 3px 0 #fff,
-		0 4px 0 rgba(0, 0, 0, .2),
-		0 6px 0 #fff,
-		0 7px 0 rgba(0, 0, 0, .2);
-	-moz-box-shadow:
-		0 0 2px rgba(0, 0, 0, 0.2),
-		1px 1px   0 rgba(0,   0,   0,   .1),
-		3px 3px   0 rgba(255, 255, 255, 1),
-		4px 4px   0 rgba(0,   0,   0,   .1),
-		6px 6px   0 rgba(255, 255, 255, 1),
-		7px 7px   0 rgba(0,   0,   0,   .1);
-	box-shadow:
-		0 0 2px rgba(0, 0, 0, 0.2),
-		0 1px 1px rgba(0, 0, 0, .2),
-		0 3px 0 #fff,
-		0 4px 0 rgba(0, 0, 0, .2),
-		0 6px 0 #fff,
-		0 7px 0 rgba(0, 0, 0, .2);
-}
-
-#loginForm:before {
-	content: '';
-	position: absolute;
-	z-index: -1;
-	border: 1px dashed #ccc;
-	top: 5px;
-	bottom: 5px;
-	left: 5px;
-	right: 5px;
-	-moz-box-shadow: 0 0 0 1px #fff;
-	-webkit-box-shadow: 0 0 0 1px #fff;
-	box-shadow: 0 0 0 1px #fff;
-}
-
-h1 {
-	color: #666666;
-	font: 26px/1 Verdana,Helvetica;
-	letter-spacing: 4px;
-	margin: 0 0 30px;
-	position: relative;
-	text-align: center;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 0 rgba(0, 0, 0, 0.5);
-	text-transform: uppercase;
-}
-
-h1:after, h1:before {
-	background-color: #777777;
-	content: "";
-	height: 1px;
-	position: absolute;
-	top: 15px;
-	width: 120px;
-}
-
-h1:after {
-	background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
-	background-image: -webkit-linear-gradient(left, #777, #fff);
-	background-image: -moz-linear-gradient(left, #777, #fff);
-	background-image: -ms-linear-gradient(left, #777, #fff);
-	background-image: -o-linear-gradient(left, #777, #fff);
-	background-image: linear-gradient(left, #777, #fff);
+	min-height: 95%;
+	height: 99%;
+	bottom: 0;
+	top: 0;
 	right: 0;
-}
-
-h1:before {
-	background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
-	background-image: -webkit-linear-gradient(right, #777, #fff);
-	background-image: -moz-linear-gradient(right, #777, #fff);
-	background-image: -ms-linear-gradient(right, #777, #fff);
-	background-image: -o-linear-gradient(right, #777, #fff);
-	background-image: linear-gradient(right, #777, #fff);
 	left: 0;
+	overflow: hidden;
 }
 
-fieldset {
-	border: 0 none;
-	margin: 0;
-	padding: 0;
-}
-
-#inputs input {
-	background: url("../images/login-sprite.png") no-repeat scroll 0 0 #F1F1F1;
-	padding: 15px 15px 15px 30px;
-	margin: 0 0 10px 0;
-	width: 353px; /* 353 + 2 + 45 = 400 */
-	border: 1px solid #ccc;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	-moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-	-webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-	box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-}
-
-#usernameId {
-	background-position: 5px -2px !important;
-}
-
-#passwordId {
-	background-position: 5px -52px !important;
-}
-
-#inputs input:focus {
-	background-color: #fff;
-	border-color: #e8c291;
-	outline: none;
-	-moz-box-shadow: 0 0 0 1px #e8c291 inset;
-	-webkit-box-shadow: 0 0 0 1px #e8c291 inset;
-	box-shadow: 0 0 0 1px #e8c291 inset;
-}
-
-#actions {
-	margin: 25px 0 0;
-}
-
-#submit {
-	background-color: #ffb94b;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-	background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
-	background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
-	background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
-	background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
-	background-image: linear-gradient(top, #fddb6f, #ffb94b);
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-	-moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-	-webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #d69e31 #e3a037 #d5982d #e3a037;
-	float: left;
-	height: 35px;
-	padding: 0;
-	width: 120px;
-	cursor: pointer;
-	font: bold 15px Arial, Helvetica;
-	color: #8f5a0a;
-}
-
-#submit:hover, #submit:focus {
-	background-color: #fddb6f;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
-	background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
-	background-image: -moz-linear-gradient(top, #ffb94b, #fddb6f);
-	background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
-	background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
-	background-image: linear-gradient(top, #ffb94b, #fddb6f);
-}
-
-#submit:active {
-	outline: none;
-	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-}
-
-#submit::-moz-focus-inner {
-	border: medium none;
-}
-
-#actions a {
-	color: #3151A2;
-	float: right;
-	line-height: 35px;
-	margin-left: 10px;
-}
-
-#back {
-	color: #999999;
+.login-input-header {
+	border-bottom: 1px solid #6f5387;
 	display: block;
-	position: relative;
-	text-align: center;
-	top: 60px;
+	height: 40px;
+	min-width: 980px;
 }
 
-.error-block {
-	color: red;
+.login-input-header + .f2informatica-area {
+	height: 94%;
+	border: 0 solid;
+	background: url("../images/f2informatica.png") no-repeat fixed top;
+}
+
+.login-input-header > .login-input-form-container {
+	float: right;
+	height: 100%;
+	margin-right: 50px;
+}
+
+.login-input-form-container > form {
+	display: inline-flex;
+}
+
+form > * {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+input[type='text'], input[type='password'] {
+	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+	border: 1px solid #a9a9a9;
+	background: white;
+	font-size: 11px;
+	margin-right: 4px;
+	padding: 2px 6px 2px 6px;
+	width: 150px;
+	height: 18px;
+	outline: none;
+}
+
+input[type='text']:focus, input[type='password']:focus {
+	border-color: #2f5bb7;
+}
+
+input[type='button'], input[type='submit'], button {
+	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+	font-size: 11px;
+	border: 1px solid #a9a9a9;;
+	outline: none;
+}
+
+input[type='button']:hover, input[type='submit']:hover, button:hover {
+	cursor: pointer;
+}
+
+#login-error-msg {
+	border: 1px solid #dd3c10;
+	padding: 7px 15px 7px 15px;
+	background: #ffebe8;
+	font-size: 11px;
+	text-align: center;
+	position: absolute;
+}
+
+#login-error-msg:before {
+	position: absolute;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-left: 5px solid #ffebe8;
+	border-bottom: 5px solid transparent;
+	border-left-color: rgba(221, 60, 16, 0.8);
+	font-size: 0;
+	line-height: 0;
+	right: -6px;
+	top: 9px;
+	content: '';
+	display: inline-block;
+}
+
+#login-error-msg:after {
+	position: absolute;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-top: 4px solid transparent;
+	border-left: 4px solid #ffebe8;
+	border-bottom: 4px solid transparent;
+	font-size: 0;
+	line-height: 0;
+	right: -4px;
+	top: 10px;
+	content: '';
 }
