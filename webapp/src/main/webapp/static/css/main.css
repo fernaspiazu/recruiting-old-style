@@ -63,14 +63,52 @@ hr {
 
 .navbar {
 	border-right: 1px solid #ccc;
+	display: block;
+	margin: 0;
+	padding: 0;
 	width: 15%;
+	height: 100%;
+	position: relative;
 }
-#nav {margin: 0 0 0 10px; padding: 0; list-style-type: none; float: left; width: 95%;}
-#nav li {margin: 0;}
-#nav li a {display: inline-block; width: 95%;}
-#nav a:link, #nav a:visited {color: #333; padding: 5px 0 5px 10px; text-decoration: none;}
-#nav a:hover, #nav a:focus {background: #f2f2f2;}
-#nav a.nav-item-selected {font-weight: bold; background: #d8dfea;}
+#nav {
+	margin: 0;
+	padding: 0 0 0 10px;
+	list-style-type: none;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+#nav li {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	min-height: 25px;
+	height: 25px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+#nav a:link, #nav a:visited {
+	display: block;
+	color: #333;
+	text-decoration: none;
+	vertical-align: bottom;
+	margin: 0;
+	padding: 6px 0 0 10px;
+	width: 100%;
+	height: inherit;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+#nav a:hover, #nav a:focus {
+	background: #f2f2f2;
+}
+#nav a.nav-item-selected {
+	font-weight: bold;
+	background: #d8dfea;
+}
 #nav-f2inf-box-space {height: 60px;}
 
 #content {
