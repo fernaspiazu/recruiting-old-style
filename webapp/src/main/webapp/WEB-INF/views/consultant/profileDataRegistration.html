@@ -12,8 +12,9 @@
 		<div class="f2inf-header-box-space"></div>
 		<div class="header-floating-content">
 			<div id="select-language-box">
-				<label for="select-language">Select language</label>
-				<select id="select-language">
+				<label for="select-language"
+					style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
+				<select id="select-language" style="width: 68px;">
 					<option value="en">English</option>
 					<option value="it">Italian</option>
 				</select>
@@ -95,7 +96,6 @@
 		</div>
 	</div>
 </div>
-<footer th:substituteby="templates/footer::footer"></footer>
 <script th:inline="javascript">
 	$("#addNewExperience").click(function() {
 		$("#newExperienceSection").removeClass("invisible");

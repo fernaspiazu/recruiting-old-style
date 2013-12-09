@@ -12,8 +12,9 @@
 		<div class="f2inf-header-box-space"></div>
 		<div class="header-floating-content">
 			<div id="select-language-box">
-				<label for="select-language">Select language</label>
-				<select id="select-language">
+				<label for="select-language"
+					style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
+				<select id="select-language" style="width: 68px;">
 					<option value="en">English</option>
 					<option value="it">Italian</option>
 				</select>
@@ -65,13 +66,13 @@
 						<td th:text="${user.username}">Fake User</td>
 						<td th:text="${user.role.roleName}">Administrator</td>
 						<td class="cell-link">
-							<a th:href="@{/user/findUser/}+${user.userId}" th:text="#{user.details}"
+							<a th:href="@{/user/findUser/}+${user.userId}" th:title="#{user.details}"
 								 class="link-ico details-ico" href="userDetails.html" title="Details"></a>
 						</td>
 						<td class="cell-link">
-							<a th:href="@{/user/changePassword/}+${user.userId}" th:text="#{user.changePassword}"
+							<a th:href="@{/user/changePassword/}+${user.userId}" th:title="#{user.changePassword}"
 								 th:unless="${user.notRemovable}" class="link-ico chgpwd-ico" href="changePasswordForm.html"
-								 title="Change password"></a>
+								 title="Update password"></a>
 						</td>
 					</tr>
 					</tbody>
@@ -80,6 +81,5 @@
 		</div>
 	</div>
 </div>
-<footer th:substituteby="templates/footer::footer"></footer>
 </body>
 </html>

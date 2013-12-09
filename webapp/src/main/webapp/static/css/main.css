@@ -15,6 +15,17 @@ body, button, input, label, select, td, textarea {
 
 .invisible {display: none;}
 .float-right {float: right;}
+.float-left {float: left;}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: #333;
+	background-image: -webkit-linear-gradient(left, #ccc, #666, #ccc);
+	background-image:    -moz-linear-gradient(left, #ccc, #666, #ccc);
+	background-image:     -ms-linear-gradient(left, #ccc, #666, #ccc);
+	background-image:      -o-linear-gradient(left, #ccc, #666, #ccc);
+}
 
 #global-container {
 	position: absolute;
@@ -79,10 +90,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {font-size: 20px;}
 h2 {font-size: 16px;}
 
-.hor-navmenu-block {
-	width: 100%;
-	height: 40px;
-}
+.hor-navmenu-block {width: 100%; height: 40px;}
 .hor-navmenu {
 	border: 1px solid #133783;
 	margin: 0;
@@ -93,13 +101,7 @@ h2 {font-size: 16px;}
 	background: #3b5998;
 	float: left;
 }
-.hor-navmenu li {
-	display: inline;
-	padding: 0;
-	margin: 0;
-	float: left;
-	height: 100%;
-}
+.hor-navmenu li {display: inline; padding: 0; margin: 0; float: left; height: 100%;}
 .hor-navmenu a:link, .hor-navmenu a:visited {
 	text-decoration: none;
 	text-align: center;
@@ -113,30 +115,70 @@ h2 {font-size: 16px;}
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.hor-navmenu a:hover, .hor-navmenu a:focus {
-	color: #fff;
-	background: #526da4;
-}
+.hor-navmenu a:hover, .hor-navmenu a:focus {color: #fff; background: #526da4;}
 
 /* ==================== FORM ELEMENTS ======================= */
+form {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: #333 2px 2px 5px;
+	-moz-box-shadow: #333 2px 2px 5px;
+	-webkit-box-shadow: #333 2px 2px 5px;
+	padding: 20px 10px 10px 10px;
+	min-width: 450px;
+	width: 450px;
+}
+.form-container {width: 100%}
+.form-row {padding: 0 0 7px 0; text-align: left;}
+
+label {
+	cursor: pointer;
+	color: #666;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.form-label {display: block; float: left; padding: 3px 0; width: 100px;}
+.label-required {background: url("../images/red_asterisk.png") no-repeat right top; background-size: 11px;}
+
 input[type='text'], input[type='password'] {
 	border: 1px solid #a9a9a9;
 	background: white;
 	margin-right: 4px;
 	padding: 2px 6px 2px 6px;
-	width: 150px;
-	height: 18px;
+	width: 185px;
+	height: 25px;
 	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 input[type='text']:focus, input[type='password']:focus {border-color: #2f5bb7;}
 
 select {
 	border: 1px solid #a9a9a9;
 	background: white;
+	margin: 0 4px 0 0;
 	padding: 2px 2px 3px 6px;
+	height: 25px;
+	width: 185px;
 	outline: none;
 }
 select:focus {border-color: #2f5bb7;}
+
+input[type='button'], input[type='submit'], input[type='reset'], button {
+	margin: 0;
+	min-width: 80px;
+	min-height: 30px;
+	font-weight: bolder;
+	color: #444;
+	cursor: pointer;
+}
+.form-buttons {
+	display: block;
+	padding-left: 100px;
+}
 
 /* ==================== TABLE ELEMENTS ====================== */
 .data-table-container {width: 100%;}
@@ -146,9 +188,7 @@ select:focus {border-color: #2f5bb7;}
 	border-spacing: 5px;
 	table-layout: fixed;
 }
-.data-table, .data-table th, .data-table td {
-	border: 1px solid #ccc;
-}
+.data-table, .data-table th, .data-table td {border: 1px solid #ccc;}
 .data-table th {background: #eee; min-width: 100px; padding: 10px;}
 .data-table th.column-link {min-width: 30px !important; width: 40px;}
 .data-table td {padding: 5px 8px 5px 8px;}
