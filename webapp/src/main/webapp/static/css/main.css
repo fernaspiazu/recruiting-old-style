@@ -174,7 +174,6 @@ input[type='text']:focus, input[type='password']:focus {border-color: #2f5bb7;}
 	position: absolute;
 	pointer-events: none;
 }
-
 .field-error:after {
 	border-color: rgba(213, 154, 145, 0);
 	border-right-color: #ffebe8;
