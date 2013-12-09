@@ -156,40 +156,6 @@ input[type='text'], input[type='password'] {
 }
 input[type='text']:focus, input[type='password']:focus {border-color: #2f5bb7;}
 
-.field-error {
-	position: absolute;
-	background: #ffebe8;
-	border: 1px solid #cc0000;
-	padding: 5px 15px 5px 10px;
-	text-align: center;
-	margin-left: 4px;
-}
-.field-error:after, .field-error:before {
-	right: 100%;
-	top: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-.field-error:after {
-	border-color: rgba(213, 154, 145, 0);
-	border-right-color: #ffebe8;
-	border-width: 5px;
-	margin-top: -5px;
-}
-.field-error:before {
-	border-color: rgba(204, 0, 0, 0);
-	border-right-color: #cc0000;
-	border-width: 6px;
-	margin-top: -6px;
-}
-
-
-
-
 select {
 	border: 1px solid #a9a9a9;
 	background: white;
@@ -231,4 +197,37 @@ td.cell-link {text-align: center;}
 .link-ico {display: inline-block; width: 20px; height: 20px;}
 .details-ico {background: url("../images/details-icon.png") no-repeat; background-size: 20px;}
 .chgpwd-ico {background: url("../images/password-icon.png") no-repeat; background-size: 20px;}
-/* ========================================================== */
+.edit-ico {background: url("../images/edit-icon.png") no-repeat; background-size: 20px;}
+.trash-ico {background: url("../images/trash-icon.png") no-repeat; background-size: 20px;}
+
+/* ==================== FIELD ERRORS ====================== */
+.field-error {
+	position: absolute;
+	background: #ffebe8;
+	border: 1px solid #cc0000;
+	padding: 5px 15px 5px 10px;
+	text-align: center;
+	margin-left: 4px;
+}
+.field-error:after, .field-error:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.field-error:after {
+	border-color: rgba(213, 154, 145, 0);
+	border-right-color: #ffebe8;
+	border-width: 5px;
+	margin-top: -5px;
+}
+.field-error:before {
+	border-color: rgba(204, 0, 0, 0);
+	border-right-color: #cc0000;
+	border-width: 6px;
+	margin-top: -6px;
+}

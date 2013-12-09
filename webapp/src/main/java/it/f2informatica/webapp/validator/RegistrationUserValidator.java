@@ -17,7 +17,7 @@ public class RegistrationUserValidator extends GlobalValidator {
 		UserModel userModel = (UserModel) target;
 		checkEmptyString("username", userModel.getUsername(), errors);
 		checkEmptyString("password", userModel.getPassword(), errors);
-		checkNotNull("role", userModel.getRole(), errors);
+		checkSelectValue("role", userModel.getRole().getRoleId(), errors);
 	}
 
 }

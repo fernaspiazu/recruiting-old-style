@@ -19,13 +19,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
-import static org.springframework.data.mongodb.core.query.Update.update;
 
 @Service
 public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
@@ -99,22 +99,33 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	@Override
 	public UserModel saveUser(UserModel userModel) {
 		User newUser = userRepository.save(user()
-				.withUsername(userModel.getUsername())
-				.withPassword(userModel.getPassword())
-				.withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
-				.thatIsRemovable()
-				.build());
+			.withUsername(userModel.getUsername())
+			.withPassword(userModel.getPassword())
+			.withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
+			.withLastName(userModel.getLastName())
+			.withFirstName(userModel.getFirstName())
+			.withEmail(userModel.getEmail())
+			.thatIsRemovable()
+			.build());
 		return userToModelConverter.convert(newUser);
 	}
 
 	@Override
 	public boolean updateUser(UserModel userModel) {
 		return mongoTemplate.updateFirst(
-				query(where("id").is(userModel.getUserId())),
-				update("username", userModel.getUsername())
-						.set("role", roleRepository.findOne(userModel.getRole().getRoleId())),
-				User.class
+			query(where("id").is(userModel.getUserId())),
+			fieldsToUpdate(userModel),
+			User.class
 		).getLastError().ok();
+	}
+
+	public Update fieldsToUpdate(UserModel userModel) {
+		return new Update()
+			.set("username", userModel.getUsername())
+			.set("role", roleRepository.findOne(userModel.getRole().getRoleId()))
+			.set("lastName", userModel.getLastName())
+			.set("firstName", userModel.getFirstName())
+			.set("email", userModel.getEmail());
 	}
 
 	@Override

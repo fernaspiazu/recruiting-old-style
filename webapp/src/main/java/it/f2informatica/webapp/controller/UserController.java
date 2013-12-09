@@ -5,6 +5,7 @@ import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
+import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,11 @@ public class UserController {
 	@Autowired
 	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
 
+	@Autowired
+	private RegistrationUserValidator userValidator;
+
 	@ModelAttribute("roles")
-	public Iterable<RoleModel> roles() {
+	public Iterable<RoleModel> loadRoles() {
 		return userServiceGateway.loadRoles();
 	}
 
@@ -50,14 +54,9 @@ public class UserController {
 		return "user/createNewUser";
 	}
 
-	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
-	public String editUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.prepareUpdatingUserModel(userId));
-		return "user/userEdit";
-	}
-
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userModel") @Valid UserModel userModel, BindingResult bindingResult) {
+	public String saveUser(@ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult) {
+		userValidator.validate(userModel, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "user/createNewUser";
 		}
@@ -65,8 +64,18 @@ public class UserController {
 		return "redirect:/user/loadUsers";
 	}
 
+	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
+	public String editUser(@PathVariable String userId, ModelMap modelMap) {
+		modelMap.addAttribute("userModel", userServiceGateway.findUserById(userId));
+		return "user/userEdit";
+	}
+
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("userModel") UserModel userModel) {
+	public String updateUser(@ModelAttribute("userModel") @Valid UserModel userModel, BindingResult bindingResult) {
+		userValidator.validate(userModel, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return "user/userEdit";
+		}
 		userServiceGateway.updateUser(userModel);
 		return "redirect:/user/loadUsers";
 	}

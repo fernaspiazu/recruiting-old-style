@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:text="#{user.edituser}">User Edit</title>
+	<title th:text="#{user.edituser}">User Modification</title>
 	<link href="../../../static/css/main.css" th:href="@{/static/css/main.css}" rel="stylesheet"/>
 	<script src="../../../static/js/lib/jquery-1.10.2.min.js" th:src="@{/static/js/lib/jquery-1.10.2.min.js}"></script>
 	<script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
@@ -13,7 +13,7 @@
 		<div class="header-floating-content">
 			<div id="select-language-box">
 				<label for="select-language"
-							 style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
+					style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
 				<select id="select-language" style="width: 68px;">
 					<option value="en">English</option>
 					<option value="it">Italian</option>
@@ -43,30 +43,42 @@
 			</ul>
 		</div>
 		<div id="content">
-			<form action="users.html" th:object="${userModel}" th:action="@{/user/updateUser}" method="post">
-				<h1 th:text="#{user.edituser}">Edit User</h1>
-				<input type="hidden" th:field="*{userId}"/>
-				<table>
-					<tr>
-						<td>
-							<input type="text" th:field="*{username}" th:placeholder="#{user.username}"
-										 placeholder="Username" autofocus=""/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="roleId" th:text="#{user.selectrole}">Select Role:</label><br/>
-							<select id="roleId" th:field="*{role.roleId}">
-								<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">
-									Role in Wireframe
-								</option>
-							</select>
-						</td>
-					</tr>
-				</table>
-				<input type="submit" id="updateUser" th:value="#{user.updateuser}" value="Update User"/>
-				<input type="button" id="goToUsers" th:value="#{global.back}" value="Back"/>
-			</form>
+			<h2 th:text="#{user.edituser}">User Modification</h2>
+			<div class="form-container">
+				<form th:action="@{/user/updateUser}" th:object="${userModel}" method="post" action="users.html">
+					<input type="hidden" th:field="*{userId}"/>
+					<div class="form-row">
+						<label for="username" th:text="#{user.username}" class="form-label label-required">Username</label>
+						<input type="text" id="username" th:field="*{username}" autofocus="" value="mario_r"/>
+						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="field-error">Username is Mandatory</span>
+					</div>
+					<div class="form-row">
+						<label for="roleId" th:text="#{user.selectrole}" class="form-label label-required">Select Role</label>
+						<select id="roleId" th:field="*{role.roleId}">
+							<option value="0">Role</option>
+							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">Role in Wireframe</option>
+						</select>
+						<span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="field-error">Please select a Role</span>
+					</div>
+					<hr/>
+					<div class="form-row">
+						<label for="lastName" class="form-label">Last Name</label>
+						<input type="text" id="lastName" th:field="*{lastName}" value="Rossi"/>
+					</div>
+					<div class="form-row">
+						<label for="firstName" class="form-label">First Name</label>
+						<input type="text" id="firstName" th:field="*{firstName}" value="Mario"/>
+					</div>
+					<div class="form-row">
+						<label for="email" class="form-label">E-mail</label>
+						<input type="text" id="email" th:field="*{email}" value="mario.rossi@libero.it"/>
+					</div>
+					<div class="form-row form-buttons">
+						<input type="submit" id="updateUser" th:value="#{user.updateuser}" value="Update User"/>
+						<input type="button" id="goToUsers" th:value="#{global.back}" value="Back"/>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

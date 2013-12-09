@@ -44,7 +44,6 @@
 		</div>
 		<div id="content">
 			<h2 th:text="#{user.newuser}">User Registration</h2>
-
 			<div class="form-container">
 				<form th:action="@{/user/saveUser}" th:object="${userModel}" method="post" action="users.html">
 					<div class="form-row">
@@ -67,12 +66,12 @@
 					</div>
 					<hr/>
 					<div class="form-row">
-						<label for="firstName" class="form-label">First Name</label>
-						<input type="text" id="firstName" th:field="*{firstName}"/>
-					</div>
-					<div class="form-row">
 						<label for="lastName" class="form-label">Last Name</label>
 						<input type="text" id="lastName" th:field="*{lastName}"/>
+					</div>
+					<div class="form-row">
+						<label for="firstName" class="form-label">First Name</label>
+						<input type="text" id="firstName" th:field="*{firstName}"/>
 					</div>
 					<div class="form-row">
 						<label for="email" class="form-label">E-mail</label>
@@ -84,7 +83,6 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 	</div>
 </div>

@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public abstract class GlobalValidator implements Validator {
-
+	protected static final String ZERO = "0";
 	protected static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
 	protected static final String DEFAULT_ERROR_CODE = "global.err.default";
@@ -40,6 +40,17 @@ public abstract class GlobalValidator implements Validator {
 	protected void checkStringNumberFormat(String field, String target, Object[] errorArgs, Errors errors) {
 		if (!NumberUtils.isNumber(target)) {
 			showErrorMessage(field, NUMBER_FORMAT_ERROR_CODE, errorArgs, errors);
+		}
+	}
+
+	protected void checkSelectValue(String field, String target, Errors errors) {
+		checkEmptyString(field, target, errors);
+		checkSelectValue(field, target, EMPTY_OBJECT_ARRAY, errors);
+	}
+
+	protected void checkSelectValue(String field, String target, Object[] errorArgs, Errors errors) {
+		if (ZERO.equals(target)) {
+			showErrorMessage(field, EMPTY_FIELD_ERROR_CODE, errorArgs, errors);
 		}
 	}
 

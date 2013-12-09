@@ -34,7 +34,6 @@ import java.util.List;
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
 	public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
-
 	private static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 
 	@Override

@@ -52,14 +52,4 @@ public class UserServiceGateway {
 		return userModel().build();
 	}
 
-	public UserModel prepareUpdatingUserModel(String userId) {
-		UserModel userModel = userService.findUserById(userId);
-		RoleModel role = userService.findRoleByName(userModel.getRole().getRoleName());
-		return userModel()
-				.withId(userModel.getUserId())
-				.withUsername(userModel.getUsername())
-				.withRole(role)
-				.build();
-	}
-
 }

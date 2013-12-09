@@ -57,22 +57,34 @@
 					<tr>
 						<th th:text="#{user.username}">Username</th>
 						<th th:text="#{user.authorization}">Authorization</th>
+						<th>Last Name</th>
+						<th>First Name</th>
+						<th>Email Address</th>
+						<th class="column-link"></th>
 						<th class="column-link"></th>
 						<th class="column-link"></th>
 					</tr>
 					</thead>
 					<tbody>
 					<tr th:each="user : ${users}">
-						<td th:text="${user.username}">Fake User</td>
+						<td th:text="${user.username}">mario_r</td>
 						<td th:text="${user.role.roleName}">Administrator</td>
+						<td th:text="${user.lastName}">Rossi</td>
+						<td th:text="${user.firstName}">Mario</td>
+						<td th:text="${user.email}">mario.rossi@libero.it</td>
 						<td class="cell-link">
-							<a th:href="@{/user/findUser/}+${user.userId}" th:title="#{user.details}"
-								 class="link-ico details-ico" href="userDetails.html" title="Details"></a>
+							<a th:href="@{/user/editUser/}+${user.userId}" th:title="#{user.edituser}"
+								 class="link-ico edit-ico" href="userEdit.html" title="Edit"></a>
 						</td>
 						<td class="cell-link">
 							<a th:href="@{/user/changePassword/}+${user.userId}" th:title="#{user.changePassword}"
 								 th:unless="${user.notRemovable}" class="link-ico chgpwd-ico" href="changePasswordForm.html"
 								 title="Update password"></a>
+						</td>
+						<td class="cell-link">
+							<a th:href="@{/user/deleteUser/}+${user.userId}" th:title="#{user.deleteuser}"
+								 th:unless="${user.notRemovable}" class="link-ico trash-ico" href="users.html"
+								 title="Delete"></a>
 						</td>
 					</tr>
 					</tbody>

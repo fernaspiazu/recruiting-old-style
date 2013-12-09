@@ -93,14 +93,6 @@ public class UserServiceGatewayTest {
 		assertThat(userServiceGateway.prepareNewUserModel().isNotRemovable()).isFalse();
 	}
 
-	@Test
-	public void prepareUserToUpdate() {
-		when(userService.findUserById("12345")).thenReturn(createUserModel());
-		when(userService.findRoleByName("Administrator")).thenReturn(createRoleModel("Administrator"));
-		UserModel userModel = userServiceGateway.prepareUpdatingUserModel("12345");
-		assertThat(userModel.getRole().getRoleId()).isEqualTo("555");
-	}
-
 	private UserModel createUserModel() {
 		UserModel userModel = new UserModel();
 		userModel.setUserId("1234567890");
