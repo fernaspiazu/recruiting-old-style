@@ -6,7 +6,6 @@ import it.f2informatica.webapp.controller.helper.MonthHelper;
 import it.f2informatica.webapp.controller.resolver.PeriodResolver;
 import it.f2informatica.webapp.gateway.ConsultantServiceGateway;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,12 +31,6 @@ public class ConsultantController {
 	@Autowired
 	private ConsultantServiceGateway consultantServiceGateway;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String consultantManagementPage(ModelMap modelMap, Pageable pageable) {
-		modelMap.addAttribute("consultants", consultantServiceGateway.showAllConsultants(pageable));
-		return "consultant/consultants";
-	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String consultantRegistrationPage(ModelMap modelMap) {
 		modelMap.addAttribute("consultantModel", consultantServiceGateway.prepareForNewConsultantModel());
@@ -46,8 +39,7 @@ public class ConsultantController {
 
 	@RequestMapping(value = "/registerMasterData", method = RequestMethod.POST)
 	public String registerConsultantMasterData(
-			@ModelAttribute("consultantModel") ConsultantModel consultantModel,
-			BindingResult bindingResult) {
+			@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult bindingResult) {
 		ConsultantModel consReg = consultantServiceGateway.registerConsultantMasterData(consultantModel);
 		return "redirect:/consultant/profileDataRegistration/" + consReg.getId();
 	}

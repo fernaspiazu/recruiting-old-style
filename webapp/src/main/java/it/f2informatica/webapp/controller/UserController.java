@@ -7,7 +7,6 @@ import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
 import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -34,12 +33,6 @@ public class UserController {
 	@ModelAttribute("roles")
 	public Iterable<RoleModel> loadRoles() {
 		return userServiceGateway.loadRoles();
-	}
-
-	@RequestMapping(value = "/loadUsers", method = RequestMethod.GET)
-	public String loadUsers(ModelMap modelMap, Pageable pageable) {
-		modelMap.addAttribute("users", userServiceGateway.findAllUsers(pageable));
-		return "user/users";
 	}
 
 	@RequestMapping(value = "/findUser/{userId}", method = RequestMethod.GET)
