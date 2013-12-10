@@ -35,7 +35,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <compiler.version>3.1</compiler.version>
     <jvm.version>1.7</jvm.version>
-    <spring.version>3.2.3.RELEASE</spring.version>
+    <spring.version>3.2.5.RELEASE</spring.version>
     <spring.security.version>3.1.4.RELEASE</spring.security.version>
     <guava.version>15.0</guava.version>
     <junit.version>4.9</junit.version>

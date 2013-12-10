@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -35,48 +33,40 @@ public class UserController {
 		return userServiceGateway.loadRoles();
 	}
 
-	@RequestMapping(value = "/findUser/{userId}", method = RequestMethod.GET)
-	public String findUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.findUserById(userId));
-		return "user/userDetails";
-	}
-
-	@RequestMapping(value = "/createNewUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String createNewUser(ModelMap modelMap) {
 		modelMap.addAttribute("userModel", userServiceGateway.prepareNewUserModel());
 		return "user/createNewUser";
 	}
 
-	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult) {
-		userValidator.validate(userModel, bindingResult);
-		if (bindingResult.hasErrors()) {
+		if (hasUserModelErrors(userModel, bindingResult)) {
 			return "user/createNewUser";
 		}
 		userServiceGateway.saveUser(userModel);
-		return "redirect:/user/loadUsers";
+		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
 	public String editUser(@PathVariable String userId, ModelMap modelMap) {
 		modelMap.addAttribute("userModel", userServiceGateway.findUserById(userId));
 		return "user/userEdit";
 	}
 
-	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("userModel") @Valid UserModel userModel, BindingResult bindingResult) {
-		userValidator.validate(userModel, bindingResult);
-		if (bindingResult.hasErrors()) {
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String updateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult) {
+		if (hasUserModelErrors(userModel, bindingResult)) {
 			return "user/userEdit";
 		}
 		userServiceGateway.updateUser(userModel);
-		return "redirect:/user/loadUsers";
+		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "/deleteUser/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable String userId) {
 		userServiceGateway.deleteUser(userId);
-		return "redirect:/user/loadUsers";
+		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.GET)
@@ -88,7 +78,12 @@ public class UserController {
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
 		passwordUpdaterServiceGateway.updatePassword(request);
-		return "redirect:/user/loadUsers";
+		return "redirect:/user";
+	}
+
+	private boolean hasUserModelErrors(UserModel userModel, BindingResult bindingResult) {
+		userValidator.validate(userModel, bindingResult);
+		return bindingResult.hasErrors();
 	}
 
 }

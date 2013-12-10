@@ -2,7 +2,7 @@
 <menu xmlns="http://www.f2informatica.it/schema/menu">
 
   <menuComposite label="User Management" url="#">
-    <menuItem label="Show Users" url="/user/loadUsers">
+    <menuItem label="Show Users" url="/user">
       <authorities>
         <authority name="ROLE_ADMIN"/>
       </authorities>

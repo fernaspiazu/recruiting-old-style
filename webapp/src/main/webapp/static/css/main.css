@@ -46,7 +46,7 @@ hr {
 	display: inline-flex;
 	padding: 5px 0 5px 0;
 }
-.f2inf-header-box-space {width: 78%;}
+.f2inf-header-box-space {width: 80%;}
 .header-floating-content {position: relative; display: inline-flex;}
 #userInSession {display: inline-flex; margin: 0 10px; padding-top: 3px;}
 #userInSession img {height: 17px; width: 17px; position: relative;}

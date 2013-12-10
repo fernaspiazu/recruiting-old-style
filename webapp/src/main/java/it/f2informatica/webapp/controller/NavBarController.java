@@ -9,8 +9,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class NavBarController {
+	public static final String NAVBAR_ITEM_ACTIVE = "navbarItemActive";
 
 	@Autowired
 	private UserServiceGateway userServiceGateway;
@@ -19,19 +22,22 @@ public class NavBarController {
 	private ConsultantServiceGateway consultantServiceGateway;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homePage(ModelMap modelMap) {
+	public String homePage(HttpServletRequest request) {
+		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 0);
 		return "homePage";
 	}
 
-	@RequestMapping(value = "/user/loadUsers", method = RequestMethod.GET)
-	public String userManagementPage(ModelMap modelMap, Pageable pageable) {
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String userManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
 		modelMap.addAttribute("users", userServiceGateway.findAllUsers(pageable));
+		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 1);
 		return "user/users";
 	}
 
 	@RequestMapping(value = "/consultant", method = RequestMethod.GET)
-	public String consultantManagementPage(ModelMap modelMap, Pageable pageable) {
+	public String consultantManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
 		modelMap.addAttribute("consultants", consultantServiceGateway.showAllConsultants(pageable));
+		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		return "consultant/consultants";
 	}
 

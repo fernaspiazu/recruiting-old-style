@@ -10,9 +10,21 @@
 <div th:fragment="navbar" class="navbar">
 	<div id="nav-f2inf-box-space"></div>
 	<ul id="nav">
-		<li><a th:text="#{home.home}" th:href="@{/home}" href="../homePage.html">Home</a></li>
-		<li><a th:text="#{user.usermanagement}" th:href="@{/user/loadUsers}" href="../user/users.html">User Management</a></li>
-		<li><a th:text="#{consultant.consultants}" th:href="@{/consultant}" href="../consultant/consultants.html">Consultants</a></li>
+		<li>
+			<a th:text="#{home.home}" th:href="@{/home}"
+				 th:class="(${session.navbarItemActive} == 0) ? 'nav-item-selected' : ''"
+				 href="../homePage.html">Home</a>
+		</li>
+		<li>
+			<a th:text="#{user.usermanagement}" th:href="@{/user}"
+				 th:class="(${session.navbarItemActive} == 1) ? 'nav-item-selected' : ''"
+				 href="../user/users.html">User Management</a>
+		</li>
+		<li>
+			<a th:text="#{consultant.consultants}" th:href="@{/consultant}"
+				 th:class="(${session.navbarItemActive} == 2) ? 'nav-item-selected' : ''"
+				 href="../consultant/consultants.html">Consultants</a>
+		</li>
 	</ul>
 </div>
 </body>

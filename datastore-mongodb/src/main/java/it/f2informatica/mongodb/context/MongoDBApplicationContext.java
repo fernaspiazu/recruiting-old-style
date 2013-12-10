@@ -40,7 +40,7 @@ public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 		Mongo mongo = new Mongo(host, Integer.parseInt(defaultPort));
 		mongo.getMongoOptions().setConnectionsPerHost(8);
 		mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
-		mongo.getMongoOptions().setConnectTimeout(1000);
+		mongo.getMongoOptions().setConnectTimeout(5000);
 		mongo.getMongoOptions().setMaxWaitTime(1500);
 		mongo.getMongoOptions().setAutoConnectRetry(true);
 		mongo.getMongoOptions().setSocketKeepAlive(true);

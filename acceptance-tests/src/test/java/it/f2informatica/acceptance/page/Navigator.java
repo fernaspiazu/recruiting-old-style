@@ -4,7 +4,7 @@ import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
 import it.f2informatica.acceptance.page.consultant.ProfileRegistrationPage;
 import it.f2informatica.acceptance.page.login.DefaultLoginPage;
 import it.f2informatica.acceptance.page.login.LoginPage;
-import it.f2informatica.acceptance.page.user.UserDetailsPage;
+import it.f2informatica.acceptance.page.user.UserEditPage;
 import it.f2informatica.acceptance.page.user.UserManagementPage;
 import org.openqa.selenium.WebDriver;
 
@@ -50,14 +50,8 @@ public class Navigator {
 	}
 
 	public UserManagementPage goToUserManagementPage() {
-		driver.get(baseUrl + "/user/loadUsers");
+		driver.get(baseUrl + "/user");
 		return new UserManagementPage(driver, baseUrl);
-	}
-
-	public UserDetailsPage goToUserDetailsPage(String userId) {
-		String path = "/user/findUser/" + userId;
-		driver.get(baseUrl + path);
-		return new UserDetailsPage(driver, baseUrl, userId);
 	}
 
 	public ConsultantManagementPage goToConsultantManagementPage() {

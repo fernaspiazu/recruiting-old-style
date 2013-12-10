@@ -30,6 +30,7 @@ import java.util.List;
 @ComponentScan(basePackages = {
 		"it.f2informatica.webapp.controller",
 		"it.f2informatica.webapp.gateway",
+		"it.f2informatica.webapp.utils",
 		"it.f2informatica.webapp.validator"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
@@ -123,8 +124,8 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 
 	private String[] basenames() {
 		return new String[] {
-			"/WEB-INF/i18n/global",
-			"/WEB-INF/i18n/months"
+				"/WEB-INF/i18n/global",
+				"/WEB-INF/i18n/months"
 		};
 	}
 

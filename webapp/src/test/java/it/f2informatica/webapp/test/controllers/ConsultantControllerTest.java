@@ -49,14 +49,6 @@ public class ConsultantControllerTest {
 	}
 
 	@Test
-	public void goToConsultantManagementPage() throws Exception {
-		mockMvc.perform(get("/consultant").param("page", "1").param("size", "10"))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(view().name("consultant/consultants"));
-	}
-
-	@Test
 	public void consultantRegistrationPage() throws Exception {
 		mockMvc.perform(get("/consultant/create"))
 				.andExpect(status().isOk())

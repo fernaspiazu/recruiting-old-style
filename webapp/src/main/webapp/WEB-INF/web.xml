@@ -13,7 +13,7 @@
   </listener>
 
   <listener>
-    <listener-class>it.f2informatica.webapp.listener.SessionLocalesAggregatorListener</listener-class>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
   
   <context-param>

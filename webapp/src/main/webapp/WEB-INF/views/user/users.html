@@ -47,7 +47,7 @@
 			<div class="hor-navmenu-block">
 				<ul class="hor-navmenu">
 					<li>
-						<a th:href="@{/user/createNewUser}" th:text="#{user.newuser}" href="createNewUser.html">Create new User</a>
+						<a th:href="@{/user/new}" th:text="#{user.newuser}" href="createNewUser.html">Create new User</a>
 					</li>
 				</ul>
 			</div>
@@ -73,7 +73,7 @@
 						<td th:text="${user.firstName}">Mario</td>
 						<td th:text="${user.email}">mario.rossi@libero.it</td>
 						<td class="cell-link">
-							<a th:href="@{/user/editUser/}+${user.userId}" th:title="#{user.edituser}"
+							<a th:href="@{/user/edit/}+${user.userId}" th:title="#{user.edituser}"
 								 class="link-ico edit-ico" href="userEdit.html" title="Edit"></a>
 						</td>
 						<td class="cell-link">
@@ -82,7 +82,7 @@
 								 title="Update password"></a>
 						</td>
 						<td class="cell-link">
-							<a th:href="@{/user/deleteUser/}+${user.userId}" th:title="#{user.deleteuser}"
+							<a th:href="@{/user/delete/}+${user.userId}" th:title="#{user.deleteuser}"
 								 th:unless="${user.notRemovable}" class="link-ico trash-ico" href="users.html"
 								 title="Delete"></a>
 						</td>
