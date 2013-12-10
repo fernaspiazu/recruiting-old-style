@@ -5,21 +5,18 @@ import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
 public abstract class LoginPage extends Page {
-	private static final String USERNAME_INPUT_XPATH = "//input[@name='username']";
-	private static final String PASSWORD_INPUT_XPATH = "//input[@name='password']";
 	private static final String LOGIN_BUTTON_XPATH = "//input[@id='loginButton']";
-	private static final String LOGIN_ERROR_MSG_XPATH = "//div[@id='login-error-msg']";
 
 	public LoginPage(WebDriver driver, String baseUrl, String path) {
 		super(driver, baseUrl, path);
 	}
 
 	public void typeUsername(String username) {
-		clearAndSendKeys(findElement(USERNAME_INPUT_XPATH), username);
+		clearAndSendKeys(findElement("//input[@name='username']"), username);
 	}
 
 	public void typePassword(String password) {
-		clearAndSendKeys(findElement(PASSWORD_INPUT_XPATH), password);
+		clearAndSendKeys(findElement("//input[@name='password']"), password);
 	}
 
 	/**
@@ -41,7 +38,7 @@ public abstract class LoginPage extends Page {
 
 
 	public boolean isLoginErrorMessagePresent() {
-		return findElement(LOGIN_ERROR_MSG_XPATH).isDisplayed();
+		return findElement("//div[@id='login-error-msg']").isDisplayed();
 	}
 
 }

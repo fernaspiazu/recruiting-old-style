@@ -3,7 +3,6 @@ package it.f2informatica.acceptance.usecase;
 import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
 import it.f2informatica.acceptance.page.consultant.ConsultantRegistrationPage;
 import it.f2informatica.acceptance.page.consultant.ProfileRegistrationPage;
-import it.f2informatica.acceptance.page.login.LoginPage;
 import it.f2informatica.mongodb.domain.Consultant;
 import org.junit.After;
 import org.junit.Before;
@@ -15,19 +14,16 @@ import java.util.Calendar;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class UC_03_ConsultantRegistration extends UseCaseTest {
+public class UC_04_ConsultantRegistration extends UseCaseTest {
 
 	@Before
-	public void login() {
-		LoginPage loginPage = navigator.goToLoginPage();
-		loginPage.typeUsername("admin");
-		loginPage.typePassword("admin");
-		loginPage.clickOnLoginSuccessButton();
+	public void init() {
+		login();
 	}
 
 	@After
-	public void logout() {
-		navigator.logOut();
+	public void teardown() {
+		logout();
 	}
 
 	@Test

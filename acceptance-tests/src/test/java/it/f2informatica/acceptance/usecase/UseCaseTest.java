@@ -2,6 +2,7 @@ package it.f2informatica.acceptance.usecase;
 
 import it.f2informatica.acceptance.context.AcceptanceTestContext;
 import it.f2informatica.acceptance.page.Navigator;
+import it.f2informatica.acceptance.page.login.LoginPage;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
@@ -38,6 +39,17 @@ public abstract class UseCaseTest {
 	public void initializeDriver() throws Exception {
 		navigator = new Navigator();
 		navigator.setDriver(driver);
+	}
+
+	protected void login() {
+		LoginPage loginPage = navigator.goToLoginPage();
+		loginPage.typeUsername("admin");
+		loginPage.typePassword("admin");
+		loginPage.clickOnLoginSuccessButton();
+	}
+
+	protected void logout() {
+		navigator.logOut();
 	}
 
 }

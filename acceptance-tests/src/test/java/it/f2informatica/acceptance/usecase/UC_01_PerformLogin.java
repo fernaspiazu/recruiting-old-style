@@ -10,8 +10,8 @@ import static org.fest.assertions.Assertions.assertThat;
 public class UC_01_PerformLogin extends UseCaseTest {
 
 	@After
-	public void logout() {
-		navigator.logOut();
+	public void teardown() {
+		logout();
 	}
 
 	@Test

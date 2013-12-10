@@ -1,6 +1,5 @@
 package it.f2informatica.acceptance.usecase;
 
-import it.f2informatica.acceptance.page.login.LoginPage;
 import it.f2informatica.acceptance.page.user.CreateNewUserPage;
 import it.f2informatica.acceptance.page.user.UserEditPage;
 import it.f2informatica.acceptance.page.user.UserManagementPage;
@@ -13,16 +12,13 @@ import static org.fest.assertions.Assertions.assertThat;
 public class UC_02_UserManagement extends UseCaseTest {
 
 	@Before
-	public void login() {
-		LoginPage loginPage = navigator.goToLoginPage();
-		loginPage.typeUsername("admin");
-		loginPage.typePassword("admin");
-		loginPage.clickOnLoginSuccessButton();
+	public void init() {
+		login();
 	}
 
 	@After
-	public void logout() {
-		navigator.logOut();
+	public void teardown() {
+		logout();
 	}
 
 	@Test

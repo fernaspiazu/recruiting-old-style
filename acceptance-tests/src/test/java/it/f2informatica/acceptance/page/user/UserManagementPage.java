@@ -10,24 +10,31 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class UserManagementPage extends Page {
-	private static final String CREATE_USER_LINK_XPATH = "//a[contains(@href, '/user/new')]";
-	private static final String USERS_TABLE_USERNAME_COLUMN_XPATH = "//table[@id='user-list']//tr/td[1]";
 
 	public UserManagementPage(WebDriver driver, String baseUrl) {
 		super(driver, baseUrl, "/user");
 	}
 
 	public CreateNewUserPage createNewUser() {
-		click(findElement(CREATE_USER_LINK_XPATH));
+		String createNewUserXpath = "//a[contains(@href, '/user/new')]";
+		click(findElement(createNewUserXpath));
 		return new CreateNewUserPage(driver, baseUrl);
 	}
 
 	public UserEditPage editUserWithUsername(String username) {
-		String editUserLinkXpath = "//table[@id='user-list']//tr[td='"+username+"']/td[6]/a[contains(@href, '/user/edit')]";
+		String editUserLinkXpath = buildXPathFromUserTable(username, "/user/edit", 6);
 		WebElement editUserLink = findElement(editUserLinkXpath);
 		String userId = resolveUserIdFromHrefAttribute(editUserLink);
 		click(editUserLink);
 		return new UserEditPage(driver, baseUrl, userId);
+	}
+
+	public ChangePasswordPage updatePasswordWithUsername(String username) {
+		String chgPwdLinkXpath = buildXPathFromUserTable(username, "/user/changePassword", 7);
+		WebElement chgPwdLink = findElement(chgPwdLinkXpath);
+		String userId = resolveUserIdFromHrefAttribute(chgPwdLink);
+		click(chgPwdLink);
+		return new ChangePasswordPage(driver, baseUrl, userId);
 	}
 
 	private String resolveUserIdFromHrefAttribute(WebElement editUserLink) {
@@ -36,14 +43,19 @@ public class UserManagementPage extends Page {
 	}
 
 	public UserManagementPage deleteUserWithUsername(String username) {
-		String deleteUserLinkXpath = "//table[@id='user-list']//tr[td='"+username+"']/td[8]/a[contains(@href, '/user/delete')]";
+		String deleteUserLinkXpath = buildXPathFromUserTable(username, "/user/delete", 8);
 		WebElement deleteUserLink = findElement(deleteUserLinkXpath);
 		click(deleteUserLink);
 		return new UserManagementPage(driver, baseUrl);
 	}
 
+	private String buildXPathFromUserTable(String username, String url, int column) {
+		return "//table[@id='user-list']//tr[td='"+username+"']/td["+column+"]/a[contains(@href, '"+url+"')]";
+	}
+
 	public String[] usernames() {
-		List<WebElement> usernameColumn = findElements(USERS_TABLE_USERNAME_COLUMN_XPATH);
+		String xpath = "//table[@id='user-list']//tr/td[1]";
+		List<WebElement> usernameColumn = findElements(xpath);
 		List<String> usernameList = Lists.newArrayList(Iterables.transform(usernameColumn,
 			new Function<WebElement, String>() {
 				@Override
