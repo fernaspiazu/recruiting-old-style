@@ -125,6 +125,8 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	private String[] basenames() {
 		return new String[] {
 				"/WEB-INF/i18n/global",
+				"/WEB-INF/i18n/user",
+				"/WEB-INF/i18n/consultant",
 				"/WEB-INF/i18n/months"
 		};
 	}

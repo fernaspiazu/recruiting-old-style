@@ -39,11 +39,19 @@
 			<ul id="nav">
 				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
 				<li><a href="../user/users.html">User Management</a></li>
-				<li><a href="../consultant/consultants.html">Consultants</a></li>
+				<li><a href="../consultant/consultants.html">Consultant Management</a></li>
 			</ul>
 		</div>
 		<div id="content">
 			<h2 th:text="#{consultant.consultants}">Consultants</h2>
+			<div class="hor-navmenu-block">
+				<ul class="hor-navmenu">
+					<li>
+						<a th:href="@{/consultant/create}" th:text="#{user.newuser}"
+							 href="masterDataRegistration.html">Register new Consultant</a>
+					</li>
+				</ul>
+			</div>
 			<table class="data-table">
 				<thead>
 				<tr>
@@ -64,16 +72,8 @@
 				</tr>
 				</tbody>
 			</table>
-			<input type="button" id="newConsultantRegistration" value="Register new Consultant"/>
 		</div>
 	</div>
 </div>
-<script th:inline="javascript">
-	$(function () {
-		$("#newConsultantRegistration").click(function () {
-			window.location = /*[[@{/consultant/create}]]*/ "consultantMasterDataRegistration.html";
-		});
-	});
-</script>
 </body>
 </html>

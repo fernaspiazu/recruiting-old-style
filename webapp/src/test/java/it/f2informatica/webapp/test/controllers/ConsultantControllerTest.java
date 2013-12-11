@@ -52,7 +52,7 @@ public class ConsultantControllerTest {
 	public void consultantRegistrationPage() throws Exception {
 		mockMvc.perform(get("/consultant/create"))
 				.andExpect(status().isOk())
-				.andExpect(view().name("consultant/consultantMasterDataRegistration"));
+				.andExpect(view().name("consultant/masterDataRegistration"));
 	}
 
 	@Test

@@ -34,7 +34,7 @@ public class ConsultantController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String consultantRegistrationPage(ModelMap modelMap) {
 		modelMap.addAttribute("consultantModel", consultantServiceGateway.prepareForNewConsultantModel());
-		return "consultant/consultantMasterDataRegistration";
+		return "consultant/masterDataRegistration";
 	}
 
 	@RequestMapping(value = "/registerMasterData", method = RequestMethod.POST)
