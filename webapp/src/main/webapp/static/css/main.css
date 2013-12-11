@@ -269,3 +269,23 @@ td.cell-link {text-align: center;}
 	border-width: 6px;
 	margin-top: -6px;
 }
+
+
+.data-list-container {
+	border-bottom: 1px solid #ccc;
+	margin: 0;
+	padding: 10px;
+	width: 60%;
+}
+
+.data-list-container h3 {
+	border: 0;
+	padding: 0;
+	margin-bottom: 5px;
+}
+
+.data-list-container-mindetails {
+	width: 100%;
+	padding: 2px;
+	color: #999;
+}

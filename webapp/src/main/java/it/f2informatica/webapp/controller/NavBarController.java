@@ -4,7 +4,9 @@ import it.f2informatica.services.domain.consultant.ConsultantService;
 import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +43,12 @@ public class NavBarController {
 
 	@RequestMapping(value = "/consultant", method = RequestMethod.GET)
 	public String consultantManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
-		modelMap.addAttribute("consultants", consultantService.showAllConsultants(pageable));
+		Pageable customPageableRequest = new PageRequest(
+				pageable.getPageNumber(),
+				pageable.getPageSize(),
+				Sort.Direction.ASC,
+				"lastName", "firstName");
+		modelMap.addAttribute("consultants", consultantService.showAllConsultants(customPageableRequest));
 		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		return "consultant/consultants";
 	}

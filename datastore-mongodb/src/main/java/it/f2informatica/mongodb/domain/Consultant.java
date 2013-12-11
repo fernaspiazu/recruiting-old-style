@@ -28,8 +28,10 @@ public class Consultant extends Identifiable<String> implements MongoDBDocument 
 
 	private String email;
 
+	@Indexed(direction = IndexDirection.ASCENDING)
 	private String firstName;
 
+	@Indexed(direction = IndexDirection.ASCENDING)
 	private String lastName;
 
 	private Gender gender;
