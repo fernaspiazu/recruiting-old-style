@@ -1,7 +1,8 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.webapp.gateway.ConsultantServiceGateway;
-import it.f2informatica.webapp.gateway.UserServiceGateway;
+import it.f2informatica.services.domain.consultant.ConsultantService;
+import it.f2informatica.services.domain.user.UserService;
+import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,13 @@ public class NavBarController {
 	public static final String NAVBAR_ITEM_ACTIVE = "navbarItemActive";
 
 	@Autowired
-	private UserServiceGateway userServiceGateway;
+	private SecurityAccessor securityAccessor;
 
 	@Autowired
-	private ConsultantServiceGateway consultantServiceGateway;
+	private UserService userService;
+
+	@Autowired
+	private ConsultantService consultantService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(HttpServletRequest request) {
@@ -29,14 +33,15 @@ public class NavBarController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String userManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
-		modelMap.addAttribute("users", userServiceGateway.findAllUsers(pageable));
+		String currentUser = securityAccessor.getCurrentUsername();
+		modelMap.addAttribute("users", userService.findAllExcludingCurrentUser(pageable, currentUser));
 		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 1);
 		return "user/users";
 	}
 
 	@RequestMapping(value = "/consultant", method = RequestMethod.GET)
 	public String consultantManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
-		modelMap.addAttribute("consultants", consultantServiceGateway.showAllConsultants(pageable));
+		modelMap.addAttribute("consultants", consultantService.showAllConsultants(pageable));
 		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		return "consultant/consultants";
 	}

@@ -16,4 +16,11 @@ public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
 		return userRepositoryGateway.updatePassword(request);
 	}
 
+	@Override
+	public UpdatePasswordRequest prepareUpdatePasswordRequest(String userId) {
+		UpdatePasswordRequest request = new UpdatePasswordRequest();
+		request.setUserId(userId);
+		return request;
+	}
+
 }

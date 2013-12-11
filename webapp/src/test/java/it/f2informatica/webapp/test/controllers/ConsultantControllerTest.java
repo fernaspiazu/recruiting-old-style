@@ -1,10 +1,10 @@
 package it.f2informatica.webapp.test.controllers;
 
+import it.f2informatica.services.domain.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.controller.helper.MonthHelper;
 import it.f2informatica.webapp.controller.resolver.PeriodResolver;
-import it.f2informatica.webapp.gateway.ConsultantServiceGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,13 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ConsultantControllerTest {
 
 	@Mock
-	private ConsultantServiceGateway consultantServiceGateway;
-
-	@Mock
 	private MonthHelper monthHelper;
 
 	@Mock
 	private PeriodResolver periodResolver;
+
+	@Mock
+	private ConsultantService consultantService;
 
 	@InjectMocks
 	private ConsultantController consultantController;
@@ -62,7 +62,7 @@ public class ConsultantControllerTest {
 				.withFirstName("Mario")
 				.withLastName("Rossi")
 				.build();
-		when(consultantServiceGateway.registerConsultantMasterData(any(ConsultantModel.class))).thenReturn(consMock);
+		when(consultantService.registerConsultantMasterData(any(ConsultantModel.class))).thenReturn(consMock);
 		mockMvc.perform(post("/consultant/registerMasterData"))
 				.andDo(print())
 				.andExpect(status().isFound())
@@ -76,7 +76,7 @@ public class ConsultantControllerTest {
 				.withFirstName("Mario")
 				.withLastName("Rossi")
 				.build();
-		when(consultantServiceGateway.findConsultantById(consMock.getId())).thenReturn(consMock);
+		when(consultantService.findConsultantById(consMock.getId())).thenReturn(consMock);
 		mockMvc.perform(get("/consultant/profileDataRegistration/5298766a39ef39c7c280b7e5"))
 				.andDo(print())
 				.andExpect(status().isOk())

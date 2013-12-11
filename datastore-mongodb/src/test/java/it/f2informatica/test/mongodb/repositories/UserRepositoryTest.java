@@ -53,20 +53,11 @@ public class UserRepositoryTest extends DatastoreUtils {
 	}
 
 	private User saveSimpleUser(Role role) {
-		return userRepository.save(
-				user()
-						.withRole(role)
-						.build()
-		);
+		return userRepository.save(user().withRole(role).build());
 	}
 
 	private Role saveRoleUser() {
-		return roleRepository.save(
-				role()
-						.withId("52820f4634bdf55624303fbf")
-						.withAuthorization("USER")
-						.build()
-		);
+		return roleRepository.save(role().withId("52820f4634bdf55624303fbf").withAuthorization("USER").build());
 	}
 
 	private Role saveRoleAdmin() {
@@ -75,31 +66,31 @@ public class UserRepositoryTest extends DatastoreUtils {
 
 	private User saveNotRemovableUser(Role role) {
 		return userRepository.save(
-				user()
-						.withId("52820f5b34bdf55624303fc0")
-						.withUsername("super_user")
-						.withPassword("super_user")
-						.withFirstName("Barack")
-						.withLastName("Obama")
-						.withEmail("king_of_war@hell.com")
-						.withRole(role)
-						.thatIsNotRemovable()
-						.build()
+			user()
+				.withId("52820f5b34bdf55624303fc0")
+				.withUsername("super_user")
+				.withPassword("super_user")
+				.withFirstName("Barack")
+				.withLastName("Obama")
+				.withEmail("king_of_war@hell.com")
+				.withRole(role)
+				.thatIsNotRemovable()
+				.build()
 		);
 	}
 
 	private User saveHughJackmanUser(Role role) {
 		return userRepository.save(
-				user()
-						.withId("52820f5b34bdf55624303fc1")
-						.withUsername("hughjackman")
-						.withPassword("wolverine")
-						.withFirstName("Hugh")
-						.withLastName("Jackman")
-						.withEmail("hughjackman@marvel.com")
-						.withRole(role)
-						.thatIsRemovable()
-						.build()
+			user()
+				.withId("52820f5b34bdf55624303fc1")
+				.withUsername("hughjackman")
+				.withPassword("wolverine")
+				.withFirstName("Hugh")
+				.withLastName("Jackman")
+				.withEmail("hughjackman@marvel.com")
+				.withRole(role)
+				.thatIsRemovable()
+				.build()
 		);
 	}
 
@@ -120,7 +111,7 @@ public class UserRepositoryTest extends DatastoreUtils {
 
 	private void findAllExceptCurrentUser(User hughJackmanUser) {
 		Page<User> users = userRepository.findAllExcludingUser(new PageRequest(0, 10), "super_user");
-		assertThat(users).hasSize(2).contains(hughJackmanUser);
+		assertThat(users).hasSize(3).contains(hughJackmanUser);
 	}
 
 	@SuppressWarnings("ConstantConditions")

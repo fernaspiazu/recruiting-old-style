@@ -6,4 +6,5 @@ public interface PasswordUpdaterService {
 
 	boolean updatePassword(UpdatePasswordRequest request);
 
+	UpdatePasswordRequest prepareUpdatePasswordRequest(String userId);
 }

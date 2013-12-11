@@ -2,8 +2,8 @@ package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Authority;
+import it.f2informatica.services.domain.authentication.AuthenticationService;
 import it.f2informatica.services.responses.AuthenticationResponse;
-import it.f2informatica.webapp.gateway.AuthenticationServiceGateway;
 import it.f2informatica.webapp.security.AuthorityService;
 import it.f2informatica.webapp.security.RecruitingUserDetailService;
 import org.junit.Before;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class RecruitingUserDetailServiceTest {
 
 	@Mock
-	private AuthenticationServiceGateway loginServiceGateway;
+	private AuthenticationService authenticationService;
 
 	@Mock
 	private AuthorityService authorityService;
@@ -35,10 +35,10 @@ public class RecruitingUserDetailServiceTest {
 	@Before
 	public void setUp() {
 		UserDetailsService userDetailsService = new RecruitingUserDetailService();
-		((RecruitingUserDetailService) userDetailsService).setLoginServiceGateway(loginServiceGateway);
+		((RecruitingUserDetailService) userDetailsService).setAuthenticationService(authenticationService);
 		((RecruitingUserDetailService) userDetailsService).setAuthorityService(authorityService);
 
-		when(loginServiceGateway.processLogin("username1")).thenReturn(createResponse());
+		when(authenticationService.processLogin("username1")).thenReturn(createResponse());
 		when(authorityService.createAuthorities("role_admin")).thenReturn(getGrantedAuthorities());
 		userAuthenticated = userDetailsService.loadUserByUsername("username1");
 	}

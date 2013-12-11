@@ -1,8 +1,8 @@
 package it.f2informatica.webapp.test.controllers;
 
+import it.f2informatica.services.domain.user.PasswordUpdaterService;
+import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.webapp.controller.UserController;
-import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
-import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,10 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
 	@Mock
-	private UserServiceGateway userServiceGateway;
+	private UserService userService;
 
 	@Mock
-	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
+	private PasswordUpdaterService passwordUpdaterService;
 
 	@Mock
 	private RegistrationUserValidator registrationUserValidator;

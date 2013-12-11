@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface ConsultantService {
 
+	ConsultantModel buildNewConsultantModel();
+
+	ExperienceModel buildNewExperienceModel();
+
 	Page<ConsultantModel> showAllConsultants(Pageable pageable);
 
 	ConsultantModel registerConsultantMasterData(ConsultantModel consultantModel);
@@ -20,4 +24,5 @@ public interface ConsultantService {
 	boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
 	List<ExperienceModel> findExperiences(String consultantId);
+
 }

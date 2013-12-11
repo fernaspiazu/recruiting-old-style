@@ -1,13 +1,14 @@
 package it.f2informatica.webapp.test.security;
 
 import it.f2informatica.mongodb.domain.User;
+import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class CustomAuthenticationSuccessHandlerTest {
 
 	@Mock
-	private UserServiceGateway userServiceGateway;
+	private UserService userService;
 
 	@Mock
 	private HttpSession session;
@@ -40,15 +41,14 @@ public class CustomAuthenticationSuccessHandlerTest {
 	@Mock
 	private Authentication authentication;
 
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	@InjectMocks
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
 
 	@Before
 	public void setUp() {
-		customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
 		when(authentication.getName()).thenReturn("username");
 		when(request.getSession(true)).thenReturn(session);
-		when(userServiceGateway.getAuthenticatedUser("username")).thenReturn(createUser());
-		customAuthenticationSuccessHandler.setUserServiceGateway(userServiceGateway);
+		when(userService.findByUsername("username")).thenReturn(createUser());
 	}
 
 	@Test

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import static it.f2informatica.services.model.builder.UserModelBuilder.userModel;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -62,6 +64,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public RoleModel findRoleByName(String roleName) {
 		return userRepositoryGateway.findRoleByName(roleName);
+	}
+
+	@Override
+	public UserModel buildEmptyUserModel() {
+		return userModel().build();
 	}
 
 }

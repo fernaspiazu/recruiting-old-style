@@ -1,10 +1,10 @@
 package it.f2informatica.webapp.controller;
 
+import it.f2informatica.services.domain.user.PasswordUpdaterService;
+import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
-import it.f2informatica.webapp.gateway.PasswordUpdaterServiceGateway;
-import it.f2informatica.webapp.gateway.UserServiceGateway;
 import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,22 +20,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
 	@Autowired
-	private UserServiceGateway userServiceGateway;
+	private UserService userService;
 
 	@Autowired
-	private PasswordUpdaterServiceGateway passwordUpdaterServiceGateway;
+	private PasswordUpdaterService passwordUpdaterService;
 
 	@Autowired
 	private RegistrationUserValidator userValidator;
 
 	@ModelAttribute("roles")
 	public Iterable<RoleModel> loadRoles() {
-		return userServiceGateway.loadRoles();
+		return userService.loadRoles();
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String createNewUser(ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.prepareNewUserModel());
+		modelMap.addAttribute("userModel", userService.buildEmptyUserModel());
 		return "user/createNewUser";
 	}
 
@@ -44,13 +44,13 @@ public class UserController {
 		if (hasUserModelErrors(userModel, bindingResult)) {
 			return "user/createNewUser";
 		}
-		userServiceGateway.saveUser(userModel);
+		userService.saveUser(userModel);
 		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
 	public String editUser(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("userModel", userServiceGateway.findUserById(userId));
+		modelMap.addAttribute("userModel", userService.findUserById(userId));
 		return "user/userEdit";
 	}
 
@@ -59,25 +59,25 @@ public class UserController {
 		if (hasUserModelErrors(userModel, bindingResult)) {
 			return "user/userEdit";
 		}
-		userServiceGateway.updateUser(userModel);
+		userService.updateUser(userModel);
 		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable String userId) {
-		userServiceGateway.deleteUser(userId);
+		userService.deleteUser(userId);
 		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.GET)
 	public String changePasswordForm(@PathVariable String userId, ModelMap modelMap) {
-		modelMap.addAttribute("changePasswordModel", passwordUpdaterServiceGateway.prepareUpdatePasswordRequest(userId));
+		modelMap.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordRequest(userId));
 		return "user/changePasswordForm";
 	}
 
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
-		passwordUpdaterServiceGateway.updatePassword(request);
+		passwordUpdaterService.updatePassword(request);
 		return "redirect:/user";
 	}
 

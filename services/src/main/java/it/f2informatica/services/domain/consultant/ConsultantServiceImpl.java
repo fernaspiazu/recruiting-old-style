@@ -14,12 +14,28 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
+import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
+
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
 	private static final String YEAR_MONTH_MILLISECONDS_FORMAT = "yyyyMMSSS";
 
 	@Autowired
 	private ConsultantRepositoryGateway consultantRepositoryGateway;
+
+	@Override
+	public ConsultantModel buildNewConsultantModel() {
+		return consultantModel()
+			.withConsultantNo(generateConsultantNumber())
+			.withRegistrationDate(Calendar.getInstance().getTime())
+			.build();
+	}
+
+	@Override
+	public ExperienceModel buildNewExperienceModel() {
+		return experienceModel().build();
+	}
 
 	@Override
 	public Page<ConsultantModel> showAllConsultants(Pageable pageable) {

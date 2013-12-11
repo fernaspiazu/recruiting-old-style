@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
 @PropertySource("classpath:mongodb.properties")
 public class MongoDBApplicationContext extends AbstractMongoConfiguration {
-	private static final String ACCEPTANCE_DATABASE = System.getProperty("mongodb.database.name");
+	private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 
 	@Value("${mongodb.host}")
 	private String host;
@@ -31,20 +31,20 @@ public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 
 	@Override
 	protected String getDatabaseName() {
-		return StringUtils.hasText(ACCEPTANCE_DATABASE) ? ACCEPTANCE_DATABASE : database;
+		return StringUtils.hasText(OTHER_DATABASE) ? OTHER_DATABASE : database;
 	}
 
 	@Bean
 	@Override
 	public Mongo mongo() throws UnknownHostException {
 		Mongo mongo = new Mongo(host, Integer.parseInt(defaultPort));
-		mongo.getMongoOptions().setConnectionsPerHost(8);
+		mongo.getMongoOptions().setConnectionsPerHost(10);
 		mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
 		mongo.getMongoOptions().setConnectTimeout(5000);
-		mongo.getMongoOptions().setMaxWaitTime(1500);
+		mongo.getMongoOptions().setMaxWaitTime(3000);
 		mongo.getMongoOptions().setAutoConnectRetry(true);
 		mongo.getMongoOptions().setSocketKeepAlive(true);
-		mongo.getMongoOptions().setSocketTimeout(1500);
+		mongo.getMongoOptions().setSocketTimeout(3000);
 		return mongo;
 	}
 

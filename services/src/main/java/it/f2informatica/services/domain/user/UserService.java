@@ -27,4 +27,5 @@ public interface UserService {
 
 	RoleModel findRoleByName(String roleName);
 
+	UserModel buildEmptyUserModel();
 }
