@@ -54,18 +54,23 @@
 			</div>
 			<div th:each="cons : ${consultants}" th:id="${#ids.seq('consultant-')}" class="data-list-container">
 				<header>
-					<h3 th:text="|${cons.lastName} ${cons.firstName} (${cons.age} #{global.yearsold})|">
+					<h3 th:text="|${cons.lastName}&nbsp;${cons.firstName}&nbsp;(${cons.age}&nbsp;#{global.yearsold})|">
 						Rossi Mario (30 years old)
 					</h3>
 				</header>
 				<div class="data-list-container-mindetails">
-					<span th:text="|#{consultant.consultantno}: ${cons.consultantNo}|">
-						Consultant No. 201311529-C5A707AD0713
-					</span>
-					<span> | </span>
-					<span th:text="|#{consultant.registrationdate}: ${{cons.registrationDate}}|">
-						Registration date: 01-01-2013
-					</span>
+					<div class="float-left">
+						<span th:text="|#{consultant.consultantno}: ${cons.consultantNo}|">
+							Consultant No. 201311529-C5A707AD0713
+						</span>
+						<span>&nbsp;|&nbsp;</span>
+						<span th:text="|#{consultant.registrationdate}: ${{cons.registrationDate}}|">
+							Registration date: 01-01-2013
+						</span>
+					</div>
+					<div class="float-right data-list-container-mindetails-links">
+						<a class="link-ico details-ico"></a>
+					</div>
 				</div>
 			</div>
 		</div>

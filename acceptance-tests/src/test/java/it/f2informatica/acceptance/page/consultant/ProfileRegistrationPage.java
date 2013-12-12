@@ -21,7 +21,7 @@ public class ProfileRegistrationPage extends Page {
 	private static final String EXPERIENCES_PRESENT_DIV_XPATH = "//div[@id='experiences']/*";
 
 	public ProfileRegistrationPage(WebDriver driver, String baseUrl, String consultantId) {
-		super(driver, baseUrl, "/consultant/profileDataRegistration/" + consultantId);
+		super(driver, baseUrl, "/consultant/profile/" + consultantId);
 	}
 
 	public String consultantWichWillBeAddedProfile() {

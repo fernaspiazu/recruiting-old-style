@@ -5,6 +5,7 @@ import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.webapp.controller.helper.MonthHelper;
 import it.f2informatica.webapp.controller.resolver.PeriodResolver;
+import it.f2informatica.webapp.validator.ConsultantMasterDataValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,27 +32,39 @@ public class ConsultantController {
 	@Autowired
 	private ConsultantService consultantService;
 
+	@Autowired
+	private ConsultantMasterDataValidator consultantMasterDataValidator;
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String consultantRegistrationPage(ModelMap modelMap) {
 		modelMap.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
 		return "consultant/masterDataRegistration";
 	}
 
-	@RequestMapping(value = "/registerMasterData", method = RequestMethod.POST)
+	@RequestMapping(value = "/registerMasterData", method = {RequestMethod.POST, RequestMethod.GET})
 	public String registerConsultantMasterData(
-			@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult bindingResult) {
+				@ModelAttribute("consultantModel") ConsultantModel consultantModel,
+				BindingResult bindingResult, ModelMap modelMap) {
+		if (hasConsultantModelErrors(consultantModel, bindingResult)) {
+			return "consultant/masterDataRegistration";
+		}
 		ConsultantModel consReg = consultantService.registerConsultantMasterData(consultantModel);
-		return "redirect:/consultant/profileDataRegistration/" + consReg.getId();
+		return "redirect:/consultant/profile/" + consReg.getId();
 	}
 
-	@RequestMapping(value = "/profileDataRegistration/{consultantId}", method = RequestMethod.GET)
-	public String profileRegistrationPage(
-			@PathVariable String consultantId,
-			HttpServletRequest request, ModelMap modelMap) {
+	private boolean hasConsultantModelErrors(ConsultantModel consultantModel, BindingResult bindingResult) {
+		consultantMasterDataValidator.validate(consultantModel, bindingResult);
+		return bindingResult.hasErrors();
+	}
+
+	@RequestMapping(value = "/profile/{consultantId}", method = RequestMethod.GET)
+	public String profileRegistrationPage(@PathVariable String consultantId,
+				HttpServletRequest request, ModelMap modelMap) {
 		ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
 		addConsultantIdInSession(request, consultantModel);
 		modelMap.addAttribute("months", monthHelper.getMonths(request));
 		modelMap.addAttribute("consultantNo", consultantModel.getConsultantNo());
+		modelMap.addAttribute("consultantAge", consultantModel.getAge());
 		modelMap.addAttribute("registrationDate", consultantModel.getRegistrationDate());
 		modelMap.addAttribute("consultantFullName", consultantModel.getConsultantFullName());
 		modelMap.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
@@ -59,15 +72,14 @@ public class ConsultantController {
 		return "consultant/profileDataRegistration";
 	}
 
-	@RequestMapping(value = "/profileDataRegistration/saveExperience", method = RequestMethod.POST)
-	public String saveExperience(
-			@ModelAttribute("experienceModel") ExperienceModel experienceModel,
+	@RequestMapping(value = "/profile/saveExperience", method = RequestMethod.POST)
+	public String saveExperience(@ModelAttribute("experienceModel") ExperienceModel experienceModel,
 			BindingResult bindingResult, HttpServletRequest request) {
 		experienceModel.setPeriodFrom(resolveExperiencePeriodFrom(request));
 		experienceModel.setPeriodTo(resolveExperiencePeriodTo(request));
 		String consultantId = getConsultantIdFromSession(request);
 		consultantService.saveConsultantExperience(experienceModel, consultantId);
-		return "redirect:/consultant/profileDataRegistration/" + consultantId;
+		return "redirect:/consultant/profile/" + consultantId;
 	}
 
 	private Date resolveExperiencePeriodFrom(HttpServletRequest request) {

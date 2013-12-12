@@ -62,7 +62,7 @@ hr {
 }
 
 .navbar {
-	border-right: 1px solid #ccc;
+	border: 0;
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -112,6 +112,7 @@ hr {
 #nav-f2inf-box-space {height: 60px;}
 
 #content {
+	border-left: 1px solid #ccc;
 	width: 85%;
 	padding: 10px;
 }
@@ -180,6 +181,7 @@ label {
 .form-label {display: block; float: left; padding: 3px 0; width: 150px;}
 .label-required {background: url("../images/red_asterisk.png") no-repeat right top; background-size: 11px;}
 
+input[type='checkbox'] {border: 1px solid #a9a9a9; background: white; outline: none;}
 input[type='text'], input[type='password'], input[type='email'] {
 	border: 1px solid #a9a9a9;
 	background: white;
@@ -192,7 +194,8 @@ input[type='text'], input[type='password'], input[type='email'] {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-input[type='text']:focus, input[type='password']:focus, input[type='email'] {border-color: #2f5bb7;}
+input[type='text']:focus, input[type='password']:focus,
+input[type='email'], input[type='checkbox'] {border-color: #2f5bb7;}
 
 select {
 	border: 1px solid #a9a9a9;
@@ -217,6 +220,9 @@ input[type='button'], input[type='submit'], input[type='reset'], button {
 	display: block;
 	padding-left: 150px;
 }
+
+.label-checkbox {display: inline-flex;}
+.label-checkbox label {margin-top: 2px;}
 
 /* ==================== TABLE ELEMENTS ====================== */
 .data-table-container {width: 100%;}
@@ -271,21 +277,54 @@ td.cell-link {text-align: center;}
 }
 
 
-.data-list-container {
+/* ==================== OTHER ====================== */
+.data-list-container, #experienceSection {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
 	padding: 10px;
 	width: 60%;
 }
+#experienceSection {border: 0;}
+.data-list-container h3 {border: 0; padding: 0; margin-bottom: 5px;}
+.data-list-container-mindetails {width: 100%; height: 15px; padding: 2px; color: #999;}
+.data-list-container-mindetails-links a {padding: 0 10px;}
 
-.data-list-container h3 {
-	border: 0;
-	padding: 0;
-	margin-bottom: 5px;
+a.add-new-button:link, a.add-new-button:visited {
+	background: #3B5998;
+	border: 1px solid #133783;
+	display: block;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #D8DFEA;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 5px;
+	text-decoration: none;
+	text-align: center;
+}
+a.add-new-button:hover, a.add-new-button:focus {
+	color: #fff; background: #526da4;
+}
+a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
+	background: #eee;
+	border: 1px dashed rgba(0, 0, 0, 0.3);
+	display: block;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #666;
+	cursor: default;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 5px;
+	text-decoration: none;
+	text-align: center;
 }
 
-.data-list-container-mindetails {
-	width: 100%;
-	padding: 2px;
-	color: #999;
+
+/* =================== CUSTOM STYLES BY ELEMENT ID ==================== */
+#newExperienceSection {
+	margin-top: 10px;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
 }

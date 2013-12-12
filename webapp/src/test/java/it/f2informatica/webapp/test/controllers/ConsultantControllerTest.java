@@ -5,6 +5,7 @@ import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.controller.helper.MonthHelper;
 import it.f2informatica.webapp.controller.resolver.PeriodResolver;
+import it.f2informatica.webapp.validator.ConsultantMasterDataValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,9 @@ public class ConsultantControllerTest {
 
 	@Mock
 	private ConsultantService consultantService;
+
+	@Mock
+	private ConsultantMasterDataValidator consultantMasterDataValidator;
 
 	@InjectMocks
 	private ConsultantController consultantController;
@@ -66,7 +70,7 @@ public class ConsultantControllerTest {
 		mockMvc.perform(post("/consultant/registerMasterData"))
 				.andDo(print())
 				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/consultant/profileDataRegistration/"+consMock.getId()));
+				.andExpect(redirectedUrl("/consultant/profile/"+consMock.getId()));
 	}
 
 	@Test
@@ -77,7 +81,7 @@ public class ConsultantControllerTest {
 				.withLastName("Rossi")
 				.build();
 		when(consultantService.findConsultantById(consMock.getId())).thenReturn(consMock);
-		mockMvc.perform(get("/consultant/profileDataRegistration/5298766a39ef39c7c280b7e5"))
+		mockMvc.perform(get("/consultant/profile/5298766a39ef39c7c280b7e5"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(model().attribute("consultantFullName", "Rossi Mario"))
