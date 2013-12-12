@@ -43,7 +43,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h2 th:text="#{consultant.registration}">Consultant Registration</h2>
+			<h2 class="header-underlined" th:text="#{consultant.registration}">Consultant Registration</h2>
 			<div class="form-container">
 				<form th:action="@{/consultant/registerMasterData}" th:object="${consultantModel}"
 							method="post" action="profileDataRegistration.html">

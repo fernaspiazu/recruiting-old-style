@@ -21,7 +21,7 @@ public interface ConsultantService {
 
 	String generateConsultantNumber();
 
-	boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
 	List<ExperienceModel> findExperiences(String consultantId);
 

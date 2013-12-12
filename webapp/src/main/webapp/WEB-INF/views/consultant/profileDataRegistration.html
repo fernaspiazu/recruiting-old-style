@@ -47,7 +47,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h2>Profile</h2>
+			<h2 class="header-underlined">Profile</h2>
 			<input type="hidden" id="consultantId" th:value="${session.consultantId}"/>
 			<div class="data-list-container">
 				<header>
@@ -69,7 +69,7 @@
 			</div>
 			<div id="experienceSection">
 				<a id="addNewExperience" href="javascript:void(0);" class="add-new-button">
-					<span>Add new work experience</span>
+					<span th:text="experience.add">Add new work experience</span>
 				</a>
 				<script th:inline="javascript">
 					$("#addNewExperience").click(function() {
@@ -140,19 +140,29 @@
 						</form>
 					</div>
 				</div>
-
-				<!--<div id="experiences">
-					<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}">
-						Company name: <span th:text="${exp.companyName}">Some company name</span>
-						Function: <span th:text="${exp.function}">Some function</span>
-						Company location: <span th:text="${exp.location}">Some location</span>
-						Period: <span th:inline="text">[[${{exp.periodFrom}}]] - [[${{exp.periodTo}}]]</span>
-						<p th:text="${exp.description}">
-							Description
+				<div id="experiences" class="detail-list-view">
+					<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
+						<header>
+							<h3 th:text="${exp.function}">Software Architect</h3>
+							<span th:text="${exp.companyName}">Microsoft</span>
+						</header>
+						<div class="detail-list-view-item-span">
+							<span th:text="${exp.periodFromStr}">march 2012</span>
+							<span>&#8722;</span>
+							<span th:text="(${exp.current} ? #{experience.present} : ${exp.periodToStr})">october 2013</span>
+							<span>(1 year 8 months)</span>
+							<span>| Milan</span>
+						</div>
+						<p class="description-text-box" th:text="${exp.description}">
+							Web/Enterprise Application development as Sales Solution and Order management.
+							I had to develop particularly back-end components and domain model using Hibernate,
+							JPA and some Spring modules as support. I've also participated in the Business layer
+							development and Front-end layer building.
+							Besides, has been adopted SCRUM approach as Agile methodology and Continuous
+							Integration in order to release a stable version per sprint.
 						</p>
 					</div>
-				</div>-->
-
+				</div>
 			</div>
 		</div>
 	</div>

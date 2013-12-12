@@ -89,7 +89,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+	public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
 		Experience experience = ExperienceBuilder.experience()
 			.inCompany(experienceModel.getCompanyName())
 			.inFunctionOf(experienceModel.getFunction())

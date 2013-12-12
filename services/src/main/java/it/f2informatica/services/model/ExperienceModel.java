@@ -11,6 +11,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @ToString
 public class ExperienceModel implements DataModel {
+	private static final long serialVersionUID = 7350451606929379410L;
 
 	private String companyName;
 
@@ -20,7 +21,11 @@ public class ExperienceModel implements DataModel {
 
 	private Date periodFrom;
 
+	private String periodFromStr;
+
 	private Date periodTo;
+
+	private String periodToStr;
 
 	private boolean current;
 

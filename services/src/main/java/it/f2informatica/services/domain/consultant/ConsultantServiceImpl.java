@@ -65,8 +65,8 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
-	public boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-		return consultantRepositoryGateway.saveConsultantExperience(experienceModel, consultantId);
+	public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+		return consultantRepositoryGateway.addConsultantExperience(experienceModel, consultantId);
 	}
 
 	@Override

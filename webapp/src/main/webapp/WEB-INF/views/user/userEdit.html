@@ -43,7 +43,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h2 th:text="#{user.edituser}">User Modification</h2>
+			<h2 th:text="#{user.edituser}" class="header-underlined">User Modification</h2>
 			<div class="form-container">
 				<form th:action="@{/user/update}" th:object="${userModel}" method="post" action="users.html">
 					<input type="hidden" th:field="*{userId}"/>

@@ -16,6 +16,8 @@ body, button, input, label, select, td, textarea {
 .invisible {display: none;}
 .float-right {float: right;}
 .float-left {float: left;}
+.header-underlined {border-bottom: 1px solid #aaa;}
+.description-text-box {text-align: justify; line-height: 17px; font-size: 12px;}
 
 hr {
 	border: 0;
@@ -118,7 +120,6 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	border-bottom: 1px solid #aaa;
 	line-height: 20px;
 	min-height: 20px;
 	padding-bottom: 5px;
@@ -245,36 +246,10 @@ td.cell-link {text-align: center;}
 .trash-ico {background: url("../images/trash-icon.png") no-repeat; background-size: 20px;}
 
 /* ==================== FIELD ERRORS ====================== */
-.field-error {
-	position: absolute;
-	background: #ffebe8;
-	border: 1px solid #cc0000;
-	padding: 5px 15px 5px 10px;
-	text-align: center;
-	margin-left: 4px;
-}
-.field-error:after, .field-error:before {
-	right: 100%;
-	top: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-.field-error:after {
-	border-color: rgba(213, 154, 145, 0);
-	border-right-color: #ffebe8;
-	border-width: 5px;
-	margin-top: -5px;
-}
-.field-error:before {
-	border-color: rgba(204, 0, 0, 0);
-	border-right-color: #cc0000;
-	border-width: 6px;
-	margin-top: -6px;
-}
+.field-error {position: absolute; background: #ffebe8; border: 1px solid #cc0000; padding: 5px 15px 5px 10px; text-align: center; margin-left: 4px;}
+.field-error:after, .field-error:before {right: 100%; top: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none;}
+.field-error:after {border-color: rgba(213, 154, 145, 0); border-right-color: #ffebe8; border-width: 5px; margin-top: -5px;}
+.field-error:before {border-color: rgba(204, 0, 0, 0); border-right-color: #cc0000; border-width: 6px; margin-top: -6px;}
 
 
 /* ==================== OTHER ====================== */
@@ -302,9 +277,7 @@ a.add-new-button:link, a.add-new-button:visited {
 	text-decoration: none;
 	text-align: center;
 }
-a.add-new-button:hover, a.add-new-button:focus {
-	color: #fff; background: #526da4;
-}
+a.add-new-button:hover, a.add-new-button:focus {color: #fff; background: #526da4;}
 a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	background: #eee;
 	border: 1px dashed rgba(0, 0, 0, 0.3);
@@ -320,11 +293,31 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	text-align: center;
 }
 
+.detail-list-view {
+	border-bottom: 1px solid #ccc;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin-top: 20px;
+}
+.detail-list-view .detail-list-view-item {
+	margin: 5px 5px 20px 5px;
+}
+.detail-list-view-item header h3 {
+	display: inline-block;
+	margin: 0;
+	padding-bottom: 0;
+	width: 100%;
+}
+.detail-list-view-item header span {
+	display: block;
+	font-size: 14px;
+}
+.detail-list-view-item-span {
+	display: block;
+	color: #999;
+	margin-top: 3px;
+}
 
 /* =================== CUSTOM STYLES BY ELEMENT ID ==================== */
-#newExperienceSection {
-	margin-top: 10px;
-	width: 500px;
-	margin-left: auto;
-	margin-right: auto;
-}
+#newExperienceSection {margin-top: 10px; width: 500px; margin-left: auto; margin-right: auto;}

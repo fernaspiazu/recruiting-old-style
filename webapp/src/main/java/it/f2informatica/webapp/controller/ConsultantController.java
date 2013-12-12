@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/consultant")
@@ -68,8 +69,17 @@ public class ConsultantController {
 		modelMap.addAttribute("registrationDate", consultantModel.getRegistrationDate());
 		modelMap.addAttribute("consultantFullName", consultantModel.getConsultantFullName());
 		modelMap.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
-		modelMap.addAttribute("experienceList", consultantService.findExperiences(consultantId));
+		modelMap.addAttribute("experienceList", findExperiences(consultantId));
 		return "consultant/profileDataRegistration";
+	}
+
+	private List<ExperienceModel> findExperiences(String consultantId) {
+		List<ExperienceModel> experiences = consultantService.findExperiences(consultantId);
+		for (ExperienceModel experience : experiences) {
+			experience.setPeriodFromStr(periodResolver.periodToString(experience.getPeriodFrom()));
+			experience.setPeriodToStr(periodResolver.periodToString(experience.getPeriodTo()));
+		}
+		return experiences;
 	}
 
 	@RequestMapping(value = "/profile/saveExperience", method = RequestMethod.POST)
@@ -78,7 +88,7 @@ public class ConsultantController {
 		experienceModel.setPeriodFrom(resolveExperiencePeriodFrom(request));
 		experienceModel.setPeriodTo(resolveExperiencePeriodTo(request));
 		String consultantId = getConsultantIdFromSession(request);
-		consultantService.saveConsultantExperience(experienceModel, consultantId);
+		consultantService.addConsultantExperience(experienceModel, consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
 	}
 

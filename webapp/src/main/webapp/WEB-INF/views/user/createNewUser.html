@@ -43,7 +43,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h2 th:text="#{user.newuser}">User Registration</h2>
+			<h2 th:text="#{user.newuser}" class="header-underlined">User Registration</h2>
 			<div class="form-container">
 				<form th:action="@{/user/save}" th:object="${userModel}" method="post" action="users.html">
 					<div class="form-row">

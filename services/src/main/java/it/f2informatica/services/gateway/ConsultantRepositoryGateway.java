@@ -15,7 +15,7 @@ public interface ConsultantRepositoryGateway {
 
 	ConsultantModel findConsultantById(String consultantId);
 
-	boolean saveConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
 	List<ExperienceModel> findExperiencesByConsultantId(String consultantId);
 }
