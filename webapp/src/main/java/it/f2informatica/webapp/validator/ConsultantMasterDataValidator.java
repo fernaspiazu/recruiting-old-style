@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.validator;
 
 import it.f2informatica.services.model.ConsultantModel;
-import it.f2informatica.webapp.utils.CurrentHttpRequestUtils;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import it.f2informatica.webapp.utils.ShortDateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class ConsultantMasterDataValidator extends GlobalValidator {
 	private ShortDateFormatter shortDateFormatter;
 
 	@Autowired
-	private CurrentHttpRequestUtils currentHttpRequestUtils;
+	private CurrentHttpServletRequest currentHttpServletRequest;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -40,7 +40,7 @@ public class ConsultantMasterDataValidator extends GlobalValidator {
 	}
 
 	private void checkBirthDate(Errors errors) {
-		String birthDateParam = currentHttpRequestUtils.currentHttpServletRequest().getParameter("birthDate");
+		String birthDateParam = currentHttpServletRequest.currentHttpServletRequest().getParameter("birthDate");
 		if (StringUtils.hasText(birthDateParam)) {
 			try {
 				shortDateFormatter.parse(birthDateParam);

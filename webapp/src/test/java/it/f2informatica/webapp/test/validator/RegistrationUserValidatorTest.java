@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.validator;
 
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.webapp.utils.CurrentHttpRequestUtils;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class RegistrationUserValidatorTest {
 
 	@Mock
-	private CurrentHttpRequestUtils currentHttpRequestUtils;
+	private CurrentHttpServletRequest currentHttpServletRequest;
 
 	@InjectMocks
 	private RegistrationUserValidator registrationUserValidator = new RegistrationUserValidator();
@@ -37,7 +37,7 @@ public class RegistrationUserValidatorTest {
 	@Test
 	public void validationTest() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		when(currentHttpRequestUtils.currentHttpServletRequest()).thenReturn(request);
+		when(currentHttpServletRequest.currentHttpServletRequest()).thenReturn(request);
 		when(request.getRequestURI()).thenReturn("/user/save");
 
 		UserModel userModel = userModel()

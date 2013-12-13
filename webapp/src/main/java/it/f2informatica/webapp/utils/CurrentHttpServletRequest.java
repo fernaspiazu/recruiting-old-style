@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 @Component
-public class CurrentHttpRequestUtils {
+public class CurrentHttpServletRequest {
 
 	public Cookie getCookie(String cookieName) {
 		return WebUtils.getCookie(currentHttpServletRequest(), cookieName);

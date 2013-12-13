@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.validator;
 
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.webapp.utils.CurrentHttpRequestUtils;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationUserValidator extends GlobalValidator {
 
 	@Autowired
-	private CurrentHttpRequestUtils currentHttpRequestUtils;
+	private CurrentHttpServletRequest currentHttpServletRequest;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -30,7 +30,7 @@ public class RegistrationUserValidator extends GlobalValidator {
 	}
 
 	private boolean mustPasswordBeChecked() {
-		HttpServletRequest request = currentHttpRequestUtils.currentHttpServletRequest();
+		HttpServletRequest request = currentHttpServletRequest.currentHttpServletRequest();
 		return request.getRequestURI().contains("/save");
 	}
 

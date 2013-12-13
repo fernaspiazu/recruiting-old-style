@@ -109,6 +109,11 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 		templateResolver.setPrefix("/WEB-INF/views/");
 		templateResolver.setSuffix(".html");
 		templateResolver.setTemplateMode("HTML5");
+		// Uncomment these lines in order to use
+		// cache when resolving templates.
+		templateResolver.setCacheable(false);
+		templateResolver.setCacheTTLMs(0L);
+		// -------------------------------------
 		return templateResolver;
 	}
 

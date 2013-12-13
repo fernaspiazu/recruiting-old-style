@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title th:text="#{consultant.management}">Consultant Management</title>
-	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
-	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
-	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
-	<style type="text/css">
-		.exp-period > input {width: 50px !important;}
-		.exp-period > select {width: 75px !important;}
-	</style>
+<head th:substituteby="fragments/head::head (#{profile.profile})">
+	<title>Profile</title>
+	<link href="../../../static/css/main.css" rel="stylesheet"/>
+	<script src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script src="../../../static/js/main.js"></script>
 </head>
 <body>
+<style type="text/css">
+	.exp-period > input {width: 50px !important;}
+	.exp-period > select {width: 75px !important;}
+</style>
 <div id="global-container">
-	<header th:substituteby="templates/header::header" class="header">
+	<header th:substituteby="fragments/header::header" class="header">
 		<div class="f2inf-header-box-space"></div>
 		<div class="header-floating-content">
 			<div id="select-language-box">
@@ -38,7 +38,7 @@
 		</script>
 	</header>
 	<div id="container">
-		<div th:substituteby="templates/navbar::navbar" class="navbar">
+		<div th:substituteby="fragments/navbar::navbar" class="navbar">
 			<div id="nav-f2inf-box-space"></div>
 			<ul id="nav">
 				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
@@ -69,7 +69,7 @@
 			</div>
 			<div id="experienceSection">
 				<a id="addNewExperience" href="javascript:void(0);" class="add-new-button">
-					<span th:text="experience.add">Add new work experience</span>
+					<span th:text="#{experience.add}">Add new work experience</span>
 				</a>
 				<script th:inline="javascript">
 					$("#addNewExperience").click(function() {

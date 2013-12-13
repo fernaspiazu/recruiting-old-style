@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.controller.resolver;
 
 import it.f2informatica.webapp.context.WebAppContext;
-import it.f2informatica.webapp.utils.CurrentHttpRequestUtils;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import org.apache.commons.lang3.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Locale;
 public class PeriodResolver {
 
 	@Autowired
-	private CurrentHttpRequestUtils currentHttpRequest;
+	private CurrentHttpServletRequest currentHttpServletRequest;
 
 	public Date resolveDateByMonthAndYear(String month, String year) {
 		try {
@@ -39,10 +39,10 @@ public class PeriodResolver {
 	}
 
 	private Locale getHttpRequestLocale() {
-		Cookie cookie = currentHttpRequest.getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
+		Cookie cookie = currentHttpServletRequest.getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
 		return (cookie != null)
 				? LocaleUtils.toLocale(cookie.getValue())
-				: currentHttpRequest.getRequestLocale();
+				: currentHttpServletRequest.getRequestLocale();
 	}
 
 }
