@@ -2,6 +2,7 @@ package it.f2informatica.services.domain.consultant;
 
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.model.LanguageModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,4 +26,9 @@ public interface ConsultantService {
 
 	List<ExperienceModel> findExperiences(String consultantId);
 
+	LanguageModel buildNewLanguageModel();
+
+	boolean addLanguage(LanguageModel languageModel, String consultantId);
+
+	boolean addSkills(String[] skills, String consultantId);
 }

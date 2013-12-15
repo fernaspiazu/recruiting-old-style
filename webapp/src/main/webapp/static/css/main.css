@@ -1,10 +1,12 @@
 @CHARSET "UTF-8";
 
-body {
+* {
 	margin: 0;
 	padding: 0;
+}
+
+body {
 	text-align: left;
-	display: block;
 }
 
 body, button, input, label, select, td, textarea {
@@ -16,12 +18,13 @@ body, button, input, label, select, td, textarea {
 .invisible {display: none;}
 .float-right {float: right;}
 .float-left {float: left;}
-.header-underlined {border-bottom: 1px solid #aaa;}
+.header-underlined {border-bottom: 1px solid #aaa; margin-bottom: 20px;}
 .description-text-box {text-align: justify; line-height: 17px; font-size: 12px;}
 
 hr {
 	border: 0;
 	height: 1px;
+	margin: 10px 0;
 	background: #333;
 	background-image: -webkit-linear-gradient(left, #ccc, #666, #ccc);
 	background-image:    -moz-linear-gradient(left, #ccc, #666, #ccc);
@@ -31,46 +34,67 @@ hr {
 
 #global-container {
 	position: absolute;
-	display: block;
-	width: 100%;
-	height: 100%;
-	min-height: 100%;
 	top: 0;
 	left: 0;
-	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	/*overflow: hidden;*/
 }
 
 .header {
+	position: relative;
+	top: 0;
+	left: 0;
 	background-clip: padding-box;
 	background-color: #eee;
 	border-bottom: 1px solid rgba(0, 0, 0, .3);
 	width: 100%;
-	display: inline-flex;
-	padding: 5px 0 5px 0;
+	height: 40px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
-.f2inf-header-box-space {width: 80%;}
-.header-floating-content {position: relative; display: inline-flex;}
-#userInSession {display: inline-flex; margin: 0 10px; padding-top: 3px;}
-#userInSession img {height: 17px; width: 17px; position: relative;}
-#userInSession #userLoggedIn {position: relative; padding: 2px 0 2px 2px;}
-#logoutLink {height: 17px; width: 17px; position: relative; padding-top: 4px; cursor: pointer;}
+.header-floating-content {
+	position: relative;
+	display: inline-block;
+	float: right;
+	top: 0;
+	right: 0;
+	padding: 8px;
+	height: 100%;
+	/*width: 280px;*/
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.header-floating-content div {float: left; padding-right: 10px;}
+.header-floating-content select {width: 90px;}
+#userInSession {padding-top: 4px;}
+#userInSession img {height: 17px; width: 17px;}
+#userInSession span {display: inline-block;}
 #logoutLink img {height: 17px; width: 17px;}
+#logoutLink {height: 17px; width: 17px; padding-top: 4px; cursor: pointer;}
+
 
 #container {
-	display: inline-flex;
+	position: absolute;
 	width: 100%;
 	height: 100%;
-	/*border-bottom: 1px solid rgba(0, 0, 0, .3);*/
+	top: 40px;
+	left: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 
 .navbar {
-	border: 0;
-	display: block;
-	margin: 0;
-	padding: 0;
+	position: absolute;
+	/*float: left;*/
 	width: 15%;
 	height: 100%;
-	position: relative;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 #nav {
 	margin: 0;
@@ -115,8 +139,15 @@ hr {
 
 #content {
 	border-left: 1px solid #ccc;
+	position: absolute;
+	padding: 20px;
 	width: 85%;
-	padding: 10px;
+	height: 100%;
+	left: 15%;
+	/*float: right;*/
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -210,7 +241,7 @@ select {
 select:focus {border-color: #2f5bb7;}
 
 input[type='button'], input[type='submit'], input[type='reset'], button {
-	margin: 0;
+	padding: 1px 6px;
 	min-width: 80px;
 	min-height: 30px;
 	font-weight: bolder;
@@ -253,13 +284,15 @@ td.cell-link {text-align: center;}
 
 
 /* ==================== OTHER ====================== */
-.data-list-container, #experienceSection {
+.data-list-container, .data-section {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
 	padding: 10px;
 	width: 60%;
 }
-#experienceSection {border: 0;}
+.data-section {border: 0;}
+
+#newExperienceForm, #newLanguageForm {margin-top: 10px; width: 500px; margin-left: auto; margin-right: auto;}
 .data-list-container h3 {border: 0; padding: 0; margin-bottom: 5px;}
 .data-list-container-mindetails {width: 100%; height: 15px; padding: 2px; color: #999;}
 .data-list-container-mindetails-links a {padding: 0 10px;}
@@ -268,8 +301,8 @@ a.add-new-button:link, a.add-new-button:visited {
 	background: #3B5998;
 	border: 1px solid #133783;
 	display: block;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	margin: 10px 50px;
+	padding: 15px 0;
 	color: #D8DFEA;
 	font-size: 12px;
 	font-weight: bold;
@@ -282,8 +315,8 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	background: #eee;
 	border: 1px dashed rgba(0, 0, 0, 0.3);
 	display: block;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	margin: 10px 50px;
+	padding: 15px 0;
 	color: #666;
 	cursor: default;
 	font-size: 12px;
@@ -319,5 +352,47 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	margin-top: 3px;
 }
 
-/* =================== CUSTOM STYLES BY ELEMENT ID ==================== */
-#newExperienceSection {margin-top: 10px; width: 500px; margin-left: auto; margin-right: auto;}
+.list-ul-details {
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.list-ul-details li {
+	display: inline-block;
+	padding-bottom: 10px;
+	width: 30%;
+}
+.list-ul-details h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.skill-added {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 3px 0 3px 10px;
+	margin-top: 8px;
+	margin-right: 10px;
+	border-radius: 4px;
+	background-color: #eee;
+	cursor: default;
+}
+
+.skill-added span {
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 7px;
+	vertical-align: top;
+	height: 15px;
+}
+
+.x-remove {
+	font-size: 19px !important;
+	cursor: pointer;
+}
+.x-remove:hover {
+	color: #0073b2;
+}

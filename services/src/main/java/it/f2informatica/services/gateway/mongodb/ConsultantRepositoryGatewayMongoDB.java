@@ -5,19 +5,21 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
+import it.f2informatica.mongodb.domain.Language;
 import it.f2informatica.mongodb.domain.Profile;
 import it.f2informatica.mongodb.domain.builder.ExperienceBuilder;
+import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.model.LanguageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +29,6 @@ import static it.f2informatica.services.model.builder.ConsultantModelBuilder.con
 
 @Service
 public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryGateway {
-
-	@Autowired
-	private MongoTemplate mongoTemplate;
 
 	@Autowired
 	private ConsultantRepository consultantRepository;
@@ -108,6 +107,18 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 		return (profile != null)
 				? experienceToModelConverter.convertList(profile.getExperiences())
 				: Lists.<ExperienceModel>newArrayList();
+	}
+
+	@Override
+	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
+		Language language = LanguageBuilder.language(languageModel.getLanguage())
+				.withProficiency(languageModel.getProficiency()).build();
+		return consultantRepository.addLanguage(language, consultantId);
+	}
+
+	@Override
+	public boolean addSkills(String[] skills, String consultantId) {
+		return consultantRepository.addSkills(skills, consultantId);
 	}
 
 }

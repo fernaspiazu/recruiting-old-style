@@ -3,6 +3,7 @@ package it.f2informatica.services.domain.consultant;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.model.LanguageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
+import static it.f2informatica.services.model.builder.LanguageModelBuilder.*;
 
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
@@ -35,6 +37,11 @@ public class ConsultantServiceImpl implements ConsultantService {
 	@Override
 	public ExperienceModel buildNewExperienceModel() {
 		return experienceModel().build();
+	}
+
+	@Override
+	public LanguageModel buildNewLanguageModel() {
+		return languageModel().build();
 	}
 
 	@Override
@@ -72,6 +79,16 @@ public class ConsultantServiceImpl implements ConsultantService {
 	@Override
 	public List<ExperienceModel> findExperiences(String consultantId) {
 		return consultantRepositoryGateway.findExperiencesByConsultantId(consultantId);
+	}
+
+	@Override
+	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
+		return consultantRepositoryGateway.addLanguage(languageModel, consultantId);
+	}
+
+	@Override
+	public boolean addSkills(String[] skills, String consultantId) {
+		return consultantRepositoryGateway.addSkills(skills, consultantId);
 	}
 
 }

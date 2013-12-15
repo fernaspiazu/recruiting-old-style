@@ -27,6 +27,10 @@ public class LanguageModelBuilder {
 		return new LanguageModelBuilder("French");
 	}
 
+	public static LanguageModelBuilder languageModel() {
+		return new LanguageModelBuilder(null);
+	}
+
 	public static LanguageModelBuilder languageModel(String language) {
 		return new LanguageModelBuilder(language);
 	}

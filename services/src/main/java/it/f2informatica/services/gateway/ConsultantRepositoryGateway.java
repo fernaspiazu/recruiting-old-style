@@ -2,6 +2,7 @@ package it.f2informatica.services.gateway;
 
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.model.LanguageModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,8 @@ public interface ConsultantRepositoryGateway {
 	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
 	List<ExperienceModel> findExperiencesByConsultantId(String consultantId);
+
+	boolean addLanguage(LanguageModel languageModel, String consultantId);
+
+	boolean addSkills(String[] skills, String consultantId);
 }

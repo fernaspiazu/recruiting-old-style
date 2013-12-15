@@ -13,12 +13,11 @@
 </style>
 <div id="global-container">
 	<header th:substituteby="fragments/header::header" class="header">
-		<div class="f2inf-header-box-space"></div>
 		<div class="header-floating-content">
 			<div id="select-language-box">
 				<label for="select-language"
 					style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
-				<select id="select-language" style="width: 68px;">
+				<select id="select-language">
 					<option value="en">English</option>
 					<option value="it">Italian</option>
 				</select>
@@ -67,20 +66,21 @@
 					</div>
 				</div>
 			</div>
-			<div id="experienceSection">
+			<div id="experienceSection" class="data-section">
+				<h2 th:text="#{experience.title}">Experience</h2>
 				<a id="addNewExperience" href="javascript:void(0);" class="add-new-button">
 					<span th:text="#{experience.add}">Add new work experience</span>
 				</a>
 				<script th:inline="javascript">
 					$("#addNewExperience").click(function() {
 						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
-						$("#newExperienceSection").removeClass("invisible");
+						$("#newExperienceForm").removeClass("invisible");
 						$("#companyName").focus();
 					});
 				</script>
-				<div id="newExperienceSection" class="invisible" style="position: relative;">
+				<div id="newExperienceForm" class="invisible" style="position: relative;">
 					<div class="form-container">
-						<form th:action="@{/consultant/profile/saveExperience}" th:object="${experienceModel}"
+						<form th:action="@{/consultant/profile/addExperience}" th:object="${experienceModel}"
 									method="post" action="profileDataRegistration.html">
 							<div class="form-row">
 								<label for="companyName" th:text="#{experience.companyname}" class="form-label label-required">Company name</label>
@@ -135,7 +135,14 @@
 								<textarea id="experienceDescription" th:field="*{description}" rows="6" cols="60" placeholder="Description"></textarea>
 							</div>
 							<div class="form-row">
-								<input type="submit" id="saveExperience" value="Save"/>
+								<input type="submit" id="saveExperience" th:value="#{global.save}" value="Save"/>
+								<input type="button" id="cancelAddingExperience" th:value="#{global.cancel}" value="Cancel"/>
+								<script type="text/javascript">
+									$("#cancelAddingExperience").click(function() {
+										$("#newExperienceForm").addClass("invisible");
+										$("#addNewExperience").removeClass("add-new-button-disabled").addClass("add-new-button");
+									});
+								</script>
 							</div>
 						</form>
 					</div>
@@ -161,6 +168,153 @@
 							Besides, has been adopted SCRUM approach as Agile methodology and Continuous
 							Integration in order to release a stable version per sprint.
 						</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="languagesSection" class="data-section">
+				<h2 th:text="#{language.title}">Languages</h2>
+				<a id="addNewLanguage" href="javascript:void(0);" class="add-new-button">
+					<span th:text="#{language.add}">Add new language</span>
+				</a>
+				<script th:inline="javascript">
+					$("#addNewLanguage").click(function() {
+						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
+						$("#newLanguageForm").removeClass("invisible");
+						$("#language").focus();
+					});
+				</script>
+				<div id="newLanguageForm" class="invisible" style="position: relative;">
+					<div class="form-container">
+						<form th:action="@{/consultant/profile/addLanguage}" th:object="${languageModel}"
+									method="post" action="profileDataRegistration.html">
+							<div class="form-row">
+								<label for="language" th:text="#{language.language}" class="form-label">Language</label>
+								<input type="text" id="language" th:field="*{language}"/>
+							</div>
+							<div class="form-row">
+								<label for="knowledge" th:text="#{language.knowledge}" class="form-label">Knowledge</label>
+								<select id="knowledge" th:field="*{proficiency}">
+									<option value="ELEMENTARY" th:text="#{language.elementary}">Elementary</option>
+									<option value="LIMITED_WORKING" th:text="#{language.limited_working}">Limited working</option>
+									<option value="PROFESSIONAL_WORKING" th:text="#{language.professional_working}">Professional working</option>
+									<option value="FULL_PROFESSIONAL" th:text="#{language.full_professional}">Full professional</option>
+									<option value="NATIVE_OR_BILINGUAL" th:text="#{language.native}">Native</option>
+								</select>
+							</div>
+							<div class="form-row">
+								<input type="submit" id="addLanguage" th:value="#{global.add}" value="Add"/>
+								<input type="button" id="cancelAddingLanguage" th:value="#{global.cancel}" value="Cancel"/>
+								<script type="text/javascript">
+									$("#cancelAddingLanguage").click(function() {
+										$("#newLanguageForm").addClass("invisible");
+										$("#addNewLanguage").removeClass("add-new-button-disabled").addClass("add-new-button");
+									});
+								</script>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="languages" class="detail-list-view">
+					<ul class="list-ul-details">
+						<li th:each="lang : ${languageList}">
+							<h3 th:text="${lang.language}">English</h3>
+							<div class="detail-list-view-item-span">
+								<span th:text="${lang.proficiency}">Elementary</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="skillsSection" class="data-section">
+				<h2 th:text="#{skill.title}">Skills and experiences</h2>
+				<a id="addNewSkill" href="javascript:void(0);" class="add-new-button">
+					<span th:text="#{skill.add}">Add new skill</span>
+				</a>
+				<script type="text/javascript" th:inline="javascript">
+					/*<![CDATA[*/
+					$("#addNewSkill").click(function() {
+						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
+						$("#newSkillForm").removeClass("invisible");
+						/*[+ var skillList = [[${skillList}]] +]*/
+						/*[- */ var skillList = ["Java", "Maven", ".NET"]; /* -]*/
+						for (var i = 0; i < skillList.length; i++) {
+							var skillValue = skillList[i];
+							/*[+
+							 var skill = '<div class="skill-added">' +
+							 '<span>' + skillValue + '</span>' +
+							 '<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+							 '<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+							 '</div>';
+							 +]*/
+							/*[- */
+							var skill = '<div class="skill-added">' +
+									'<span>' + skillValue + '</span>' +
+									'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+									'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+									'</div>';
+							/* -]*/
+							$("#skillsAdded").append(skill);
+						}
+						$("#skills").addClass("invisible");
+						$("#skillValue").focus();
+					});
+					/*]]>*/
+				</script>
+				<div id="newSkillForm" class="invisible" style="position: relative;">
+					<div class="form-container">
+						<form th:action="@{/consultant/profile/addSkills}" method="post"
+									action="profileDataRegistration.html">
+							<div class="form-row">
+								<input type="text" id="skillValue" style="width: 70%;"/>
+								<input type="button" id="addSkill" th:value="#{global.add}" value="Add"/>
+								<div id="skillsAdded"></div>
+								<script type="text/javascript" th:inline="javascript">
+									/*<![CDATA[*/
+									$("#addSkill").click(function() {
+										var skillValue = $("#skillValue").val();
+										/*[+
+										var skill = '<div class="skill-added">' +
+												'<span>' + skillValue + '</span>' +
+												'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+												'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+												'</div>';
+										+]*/
+										/*[- */
+										var skill = '<div class="skill-added">' +
+												'<span>' + skillValue + '</span>' +
+												'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+												'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+												'</div>';
+										/* -]*/
+										$("#skillValue").val("").focus();
+										$("#skillsAdded").append(skill);
+									});
+									function removeSkill(removeSpan) {
+										$(removeSpan).parent().remove();
+									}
+									/*]]>*/
+								</script>
+							</div>
+							<div class="form-row">
+								<input type="submit" id="saveSkills" th:value="#{global.save}" value="Save"/>
+								<input type="button" id="cancelAddingSkill" th:value="#{global.cancel}" value="Cancel"/>
+								<script type="text/javascript">
+									$("#cancelAddingSkill").click(function() {
+										$("#newSkillForm").addClass("invisible");
+										$("#addNewSkill").removeClass("add-new-button-disabled").addClass("add-new-button");
+										$("#skillsAdded").children().remove();
+										$("#skills").removeClass("invisible");
+									});
+								</script>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="skills" class="detail-list-view" style="padding-bottom: 15px;">
+					<div th:each="skill : ${skillList}" class="skill-added">
+						<span th:text="${skill}">DB Administrator</span>
 					</div>
 				</div>
 			</div>
