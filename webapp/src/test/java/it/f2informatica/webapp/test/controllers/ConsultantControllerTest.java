@@ -4,7 +4,7 @@ import it.f2informatica.services.domain.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.controller.helper.MonthHelper;
-import it.f2informatica.webapp.controller.resolver.PeriodResolver;
+import it.f2informatica.webapp.controller.helper.PeriodResolver;
 import it.f2informatica.webapp.validator.ConsultantMasterDataValidator;
 import org.junit.Before;
 import org.junit.Test;

@@ -36,6 +36,7 @@ import java.util.List;
 public class WebAppContext extends WebMvcConfigurerAdapter {
 	public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 	public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
+	public static final String LANGUAGE = "siteLanguage";
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -65,7 +66,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("siteLanguage");
+		localeChangeInterceptor.setParamName(LANGUAGE);
 		return localeChangeInterceptor;
 	}
 

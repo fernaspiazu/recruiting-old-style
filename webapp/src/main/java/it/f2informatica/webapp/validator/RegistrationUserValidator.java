@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.validator;
 
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
+import it.f2informatica.webapp.controller.helper.CurrentHttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.validator;
 
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
+import it.f2informatica.webapp.controller.helper.CurrentHttpServletRequest;
 import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.junit.Before;
 import org.junit.Test;

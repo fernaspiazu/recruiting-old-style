@@ -9,24 +9,20 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/consultant/profile")
+@SessionAttributes({"consultantId"})
 public class ProfileController extends AbstractConsultantController {
 
 	@RequestMapping(value = "/{consultantId}", method = RequestMethod.GET)
 	public String profileRegistrationPage(
-			@PathVariable String consultantId,
-			HttpServletRequest request,
-			ModelMap model) {
+			@PathVariable("consultantId") String consultantId, ModelMap model) {
 
 		ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
-		addConsultantIdInSession(request.getSession(), consultantModel.getId());
-		model.addAttribute("months", monthHelper.getMonths(request));
+		model.addAttribute("consultantId", consultantModel.getId());
+		model.addAttribute("months", monthHelper.getMonths());
 		model.addAttribute("consultantNo", consultantModel.getConsultantNo());
 		model.addAttribute("consultantAge", consultantModel.getAge());
 		model.addAttribute("registrationDate", consultantModel.getRegistrationDate());
@@ -62,46 +58,37 @@ public class ProfileController extends AbstractConsultantController {
 		return skills.toArray(new String[skills.size()]);
 	}
 
-	@RequestMapping(value = "/addExperience", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/addExperience", method = RequestMethod.POST)
 	public String saveExperience(
 			@ModelAttribute("experienceModel") ExperienceModel experienceModel,
-			BindingResult bindingResult,
-			HttpServletRequest request) {
+			@ModelAttribute("consultantId") String consultantId,
+			@RequestParam("monthPeriodFrom") String monthPeriodFrom,
+			@RequestParam("yearPeriodFrom") String yearPeriodFrom,
+			@RequestParam("monthPeriodTo") String monthPeriodTo,
+			@RequestParam("yearPeriodTo") String yearPeriodTo,
+			BindingResult bindingResult) {
 
-		experienceModel.setPeriodFrom(resolveExperiencePeriodFrom(request));
-		experienceModel.setPeriodTo(resolveExperiencePeriodTo(request));
-		String consultantId = getConsultantIdFromSession(request.getSession());
+		experienceModel.setPeriodFrom(periodResolver.resolveDateByMonthAndYear(monthPeriodFrom, yearPeriodFrom));
+		experienceModel.setPeriodTo(periodResolver.resolveDateByMonthAndYear(monthPeriodTo, yearPeriodTo));
 		consultantService.addConsultantExperience(experienceModel, consultantId);
 
 		return "redirect:/consultant/profile/" + consultantId;
 	}
 
-	private Date resolveExperiencePeriodFrom(HttpServletRequest request) {
-		String monthPeriodFrom = request.getParameter("monthPeriodFrom");
-		String yearPeriodFrom = request.getParameter("yearPeriodFrom");
-		return periodResolver.resolveDateByMonthAndYear(monthPeriodFrom, yearPeriodFrom);
-	}
-
-	private Date resolveExperiencePeriodTo(HttpServletRequest request) {
-		String monthPeriodTo = request.getParameter("monthPeriodTo");
-		String yearPeriodTo = request.getParameter("yearPeriodTo");
-		return periodResolver.resolveDateByMonthAndYear(monthPeriodTo, yearPeriodTo);
-	}
-
-	@RequestMapping(value = "/addLanguage", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/addLanguage", method = RequestMethod.POST)
 	public String addLanguage(
 			@ModelAttribute("languageModel") LanguageModel languageModel,
-			BindingResult bindingResult, HttpSession session) {
+			@ModelAttribute("consultantId") String consultantId,
+			BindingResult bindingResult) {
 
-		String consultantId = getConsultantIdFromSession(session);
 		consultantService.addLanguage(languageModel, consultantId);
-
 		return "redirect:/consultant/profile/" + consultantId;
 	}
 
-	@RequestMapping(value = "/addSkills", method = {RequestMethod.POST, RequestMethod.GET})
-	public String addSkills(@RequestParam("skill") String[] skills, HttpSession session) {
-		String consultantId = getConsultantIdFromSession(session);
+	@RequestMapping(value = "/addSkills", method = RequestMethod.POST)
+	public String addSkills(
+			@RequestParam("skill") String[] skills,
+			@ModelAttribute("consultantId") String consultantId) {
 		consultantService.addSkills(skills, consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
 	}

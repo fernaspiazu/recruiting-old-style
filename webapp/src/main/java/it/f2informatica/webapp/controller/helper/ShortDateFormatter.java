@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.utils;
+package it.f2informatica.webapp.controller.helper;
 
 import it.f2informatica.webapp.context.WebAppContext;
 import org.springframework.stereotype.Component;
