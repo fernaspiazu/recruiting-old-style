@@ -14,7 +14,7 @@ function evaluateContextRoot() {
 	var rootUrl = location.protocol;
 	rootUrl = rootUrl + "//" + location.host;
 	rootUrl = rootUrl + "/" + location.pathname.split("/")[1];
-	console.log("Final root URL > " + rootUrl);
+	//console.log("Final root URL > " + rootUrl);
 	return rootUrl;
 }
 
@@ -60,5 +60,21 @@ function readCookie(name) {
 
 function getCurrentNavigatorLanguage() {
 	return navigator.userLanguage ? navigator.userLanguage : navigator.language;
+}
 
+function ajaxRequest(url, jsonParameters, method, successCallback) {
+	$.ajax({
+		"url" : contextRoot + url,
+		"data" : jsonParameters,
+		"type" : method,
+		"success" : successCallback,
+		"statusCode" : {
+			"500" : function() {
+				alert("Server Error");
+			},
+			"404" : function() {
+				alert("Resource not found");
+			}
+		}
+	});
 }

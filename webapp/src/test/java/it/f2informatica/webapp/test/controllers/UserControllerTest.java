@@ -3,7 +3,6 @@ package it.f2informatica.webapp.test.controllers;
 import it.f2informatica.services.domain.user.PasswordUpdaterService;
 import it.f2informatica.services.domain.user.UserService;
 import it.f2informatica.webapp.controller.UserController;
-import it.f2informatica.webapp.validator.RegistrationUserValidator;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -29,9 +28,6 @@ public class UserControllerTest {
 	@Mock
 	private PasswordUpdaterService passwordUpdaterService;
 
-	@Mock
-	private RegistrationUserValidator registrationUserValidator;
-
 	@InjectMocks
 	private UserController userController;
 
@@ -41,7 +37,6 @@ public class UserControllerTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(userController)
-				.setValidator(new RegistrationUserValidator())
 				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
 				.build();
 	}
