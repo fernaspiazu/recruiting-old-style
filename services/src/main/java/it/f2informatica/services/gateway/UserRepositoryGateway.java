@@ -33,4 +33,5 @@ public interface UserRepositoryGateway {
 
 	RoleModel findRoleByName(String roleName);
 
+	boolean isCurrentPasswordValid(String userId, String currentPwd);
 }

@@ -6,6 +6,8 @@ var errors = [];
 
 $(document).ready(function() {
 	validateUserCreation();
+	validateUserEdit();
+	validateChangePassword();
 });
 
 function validateUserCreation() {
@@ -17,6 +19,56 @@ function validateUserCreation() {
 		}
 		return false;
 	});
+}
+
+function validateUserEdit() {
+	$("#editUserForm").submit(function() {
+		errors = [];
+		validateRequiredFields(this);
+		if (isEmpty(errors)) {
+			this.submit();
+		}
+		return false;
+	});
+}
+
+function validateChangePassword() {
+	$("#changePasswordForm").submit(function() {
+		errors = [];
+		validateRequiredFields(this);
+		if (isEmpty(errors)) {
+			validateCurrentPassword(this);
+			validateNewPassword(this);
+		}
+		if (isEmpty(errors)) {
+			this.submit();
+		}
+		return false;
+	});
+}
+
+function validateCurrentPassword(form) {
+	var url = "/user/verifyCurrentPassword";
+	var parameters = {
+		"userId" : $(form).find("#userId").val(),
+		"currentPwd" : $(form).find("#currentPassword").val()
+	};
+	var method = "POST";
+	var successCallback = function(isCurrentPasswordValid) {
+		if (!eval(isCurrentPasswordValid)) {
+			attachFieldErrorMessage($(form).find("#currentPassword"), "user.err.currentpwd");
+		}
+	};
+	ajaxRequest(url, parameters, method, successCallback);
+}
+
+function validateNewPassword(form) {
+	var newPassword = $(form).find("#newPassword").val();
+	var passwordConfirmed = $(form).find("#passwordConfirmed").val();
+	if (newPassword != passwordConfirmed) {
+		attachFieldErrorMessage($(form).find("#passwordConfirmed"), "user.err.confirmedpwd");
+		errors.push("error on -> " + $($(form).find("#passwordConfirmed")).attr("id"));
+	}
 }
 
 function validateRequiredFields(form) {
@@ -32,7 +84,7 @@ function validateRequiredFields(form) {
 
 function validateRequiredInputField(input) {
 	if (isEmpty($(input).val())) {
-		attachRequiredFieldErrorMessage(input);
+		attachFieldErrorMessage(input, "global.err.field.empty");
 	} else {
 		removeErrorMessageIfExists(input);
 	}
@@ -40,16 +92,16 @@ function validateRequiredInputField(input) {
 
 function validateRequiredSelectField(select) {
 	if ($(select).val() === "0") {
-		attachRequiredFieldErrorMessage(select);
+		attachFieldErrorMessage(select, "global.err.field.empty");
 	} else {
 		removeErrorMessageIfExists(select);
 	}
 }
 
-function attachRequiredFieldErrorMessage(element) {
+function attachFieldErrorMessage(element, code) {
 	removeErrorMessageIfExists(element);
 	var url = "/js/resolvei18nCode";
-	var parameters = {"code" : "global.err.field.empty"};
+	var parameters = {"code" : code};
 	var method = "POST";
 	var successCallback = function(response) {
 		$(element).after(buildMessageError(response));

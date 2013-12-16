@@ -8,10 +8,7 @@ import it.f2informatica.services.requests.UpdatePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
@@ -68,6 +65,15 @@ public class UserController {
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
 		passwordUpdaterService.updatePassword(request);
 		return "redirect:/user";
+	}
+
+	@RequestMapping(value = "/verifyCurrentPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public String isCurrentPasswordValid(
+			@RequestParam("userId") String userId,
+			@RequestParam("currentPwd") String currentPwd) {
+
+		return String.valueOf(passwordUpdaterService.isCurrentPasswordValid(userId, currentPwd));
 	}
 
 }

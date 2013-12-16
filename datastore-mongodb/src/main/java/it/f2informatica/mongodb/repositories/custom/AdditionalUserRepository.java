@@ -14,4 +14,5 @@ public interface AdditionalUserRepository {
 
 	boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd);
 
+	boolean isCurrentPasswordValid(String userId, String currentPwd);
 }

@@ -23,4 +23,9 @@ public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
 		return request;
 	}
 
+	@Override
+	public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+		return userRepositoryGateway.isCurrentPasswordValid(userId, currentPwd);
+	}
+
 }

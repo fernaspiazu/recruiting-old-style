@@ -50,6 +50,13 @@ public class UserRepositoryImpl implements AdditionalUserRepository {
 	}
 
 	@Override
+	public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+		Query query = query(where("id").is(userId).and("password").is(currentPwd));
+		User user = mongoTemplate.findOne(query, User.class);
+		return user != null;
+	}
+
+	@Override
 	public boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd) {
 		Query query = query(where("id").is(userId).and("password").is(currentPwd));
 		return mongoTemplate.updateFirst(query, update("password", newPwd), User.class).getLastError().ok();

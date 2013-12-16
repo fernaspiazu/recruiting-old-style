@@ -143,6 +143,11 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 		return roleToRoleModel().apply(roleRepository.findByName(roleName));
 	}
 
+	@Override
+	public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+		return userRepository.isCurrentPasswordValid(userId, currentPwd);
+	}
+
 	private Function<Role, RoleModel> roleToRoleModel() {
 		return new Function<Role, RoleModel>() {
 			@Override
