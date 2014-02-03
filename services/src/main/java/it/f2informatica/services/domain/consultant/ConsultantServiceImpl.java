@@ -82,8 +82,18 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
+	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
+		return consultantRepositoryGateway.findMinimalExperiences(consultantId);
+	}
+
+	@Override
 	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
 		return consultantRepositoryGateway.addLanguage(languageModel, consultantId);
+	}
+
+	@Override
+	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
+		return consultantRepositoryGateway.addLanguages(languageModelArray, consultantId);
 	}
 
 	@Override

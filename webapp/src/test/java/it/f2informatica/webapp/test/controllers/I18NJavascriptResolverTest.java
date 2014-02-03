@@ -1,6 +1,7 @@
 package it.f2informatica.webapp.test.controllers;
 
 import it.f2informatica.webapp.controller.I18NJavascriptResolverController;
+import it.f2informatica.webapp.controller.helper.CurrentHttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,6 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.Locale;
 
@@ -26,7 +26,7 @@ public class I18NJavascriptResolverTest {
 	private MessageSource messageSource = messageSource();
 
 	@Mock
-	private LocaleResolver localeResolver;
+	private CurrentHttpServletRequest currentHttpRequest;
 
 	@InjectMocks
 	private I18NJavascriptResolverController i18NJavascriptResolverController;

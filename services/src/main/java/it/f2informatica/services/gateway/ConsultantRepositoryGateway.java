@@ -22,5 +22,9 @@ public interface ConsultantRepositoryGateway {
 
 	boolean addLanguage(LanguageModel languageModel, String consultantId);
 
+	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
+
 	boolean addSkills(String[] skills, String consultantId);
+
+	List<ExperienceModel> findMinimalExperiences(String consultantId);
 }

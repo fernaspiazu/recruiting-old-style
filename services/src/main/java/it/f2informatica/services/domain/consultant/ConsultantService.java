@@ -26,9 +26,13 @@ public interface ConsultantService {
 
 	List<ExperienceModel> findExperiences(String consultantId);
 
+	List<ExperienceModel> findMinimalExperiences(String consultantId);
+
 	LanguageModel buildNewLanguageModel();
 
 	boolean addLanguage(LanguageModel languageModel, String consultantId);
+
+	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
 }

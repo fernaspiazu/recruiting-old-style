@@ -15,4 +15,6 @@ public class LanguageModel implements DataModel {
 
 	private LanguageProficiency proficiency;
 
+	private String knowledge;
+
 }

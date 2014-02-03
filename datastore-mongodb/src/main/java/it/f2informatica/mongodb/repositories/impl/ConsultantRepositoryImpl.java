@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import java.util.List;
+
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 public class ConsultantRepositoryImpl implements AdditionalConsultantRepository {
@@ -42,6 +44,13 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 	public boolean addLanguage(Language language, String consultantId) {
 		Query query = new Query(where(ID).is(consultantId));
 		Update update = new Update().addToSet(LANGUAGES, language);
+		return updateConsultant(query, update).getLastError().ok();
+	}
+
+	@Override
+	public boolean addLanguages(List<Language> languages, String consultantId) {
+		Query query = new Query(where(ID).is(consultantId));
+		Update update = new Update().addToSet(LANGUAGES, languages);
 		return updateConsultant(query, update).getLastError().ok();
 	}
 

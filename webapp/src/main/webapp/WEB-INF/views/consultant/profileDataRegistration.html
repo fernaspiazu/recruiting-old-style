@@ -67,258 +67,246 @@
 					</div>
 				</div>
 			</div>
-			<div id="experienceSection" class="data-section">
-				<h2 th:text="#{experience.title}">Experience</h2>
-				<a id="addNewExperience" href="javascript:void(0);" class="add-new-button">
-					<span th:text="#{experience.add}">Add new work experience</span>
-				</a>
-				<script th:inline="javascript">
-					$("#addNewExperience").click(function() {
-						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
-						$("#newExperienceForm").removeClass("invisible");
-						$("#companyName").focus();
-					});
-				</script>
-				<div id="newExperienceForm" class="invisible" style="position: relative;">
-					<div class="form-container">
-						<form th:action="@{/consultant/profile/addExperience}" th:object="${experienceModel}"
-									method="post" action="profileDataRegistration.html">
-							<div class="form-row">
-								<label for="companyName" th:text="#{experience.companyname}" class="form-label label-required">Company name</label>
-								<input type="text" id="companyName" th:field="*{companyName}"/>
+
+			<div id="profile-section">
+				<div class="mini-experience-box">
+					<div class="mini-box-with-see-all">
+						<h2 th:text="#{experience.title}">Experiences</h2>
+						<a href="#">See all</a>
+					</div>
+					<div id="experiences" class="detail-list-view">
+						<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
+							<header>
+								<h3 th:text="${exp.function}">Software Architect</h3>
+								<span th:text="${exp.companyName}">Microsoft</span>
+							</header>
+							<div class="detail-list-view-item-span">
+								<span th:text="${exp.periodFromStr}">march 2012</span>
+								<span>&#8722;</span>
+								<span th:text="(${exp.current} ? #{experience.present} : ${exp.periodToStr})">october 2013</span>
+								<span>(1 year 8 months)</span>
+								<span>| Milan</span>
 							</div>
-							<div class="form-row">
-								<label for="function" th:text="#{experience.function}" class="form-label label-required">Function</label>
-								<input type="text" id="function" th:field="*{function}"/>
-							</div>
-							<div class="form-row">
-								<label for="location" th:text="#{experience.location}" class="form-label">Location</label>
-								<input type="text" id="location" th:field="*{location}"/>
-							</div>
-							<div class="form-row">
-								<label for="monthPeriodFrom" th:text="#{experience.period}" class="form-label label-required">Period</label>
-								<!-- CSS class 'exp-period' is defined at the top -->
-								<div class="exp-period">
-									<select id="monthPeriodFrom" name="monthPeriodFrom">
-										<option value="0">Select</option>
-										<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
-									</select>
-									<input type="text" name="yearPeriodFrom" maxlength="4"/>
-									<span>&nbsp;-&nbsp;</span>
-									<span id="experienceToday" th:text="#{experience.present}" class="invisible">Present</span>
-									<select id="monthPeriodTo" name="monthPeriodTo">
-										<option value="0">Select</option>
-										<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">Month</option>
-									</select>
-									<input type="text" id="yearPeriodTo" name="yearPeriodTo" maxlength="4"/>
+							<p class="description-text-box" th:text="${exp.description}">
+								Web/Enterprise Application development as Sales Solution and Order managemen...
+							</p>
+						</div>
+					</div>
+					<br/>
+					<input type="button" value="Add new Experience"/>
+				</div>
+
+
+
+
+				<div class="mini-language-box">
+					<div class="mini-box-with-see-all">
+						<h2 th:text="#{language.title}">Languages</h2>
+						<a id="addNewLanguage" class="link-ico add-ico" href="#" title="Add"></a>
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+							$("#addNewLanguage").click(function() {
+								$(this).removeClass("link-ico").removeClass("add-ico").addClass("invisible");
+								$("#languages").addClass("invisible");
+								$("#newLanguageForm").removeClass("invisible");
+								/*[+ var languageList = [[${languageList}]] +]*/
+								/*[- */
+									var languageList = [
+										{"language":"Spanish", "proficiency":"ELEMENTARY"},
+										{"language":"Italian", "proficiency":"FULL_PROFESSIONAL"},
+										{"language":"English", "proficiency":"NATIVE_OR_BILINGUAL"}
+									];
+								/* -]*/
+								for (var i=0; i<languageList.length; i++) {
+									var language = buildLanguageTextBox(languageList[i].language);
+									/*[- */ var knowledge = buildKnowledgeSelectBox(languageList[i].proficiency); /* -]*/
+									/*[+ var knowledge = buildKnowledgeSelectBox(languageList[i].knowledge); +]*/
+									var removeLanguage = '<span class="x-remove" onclick="removeLang(this);">&#735;</span>';
+									$("#languagesAdded").append('<div class="form-row">' + language + knowledge + removeLanguage + '</div>');
+								}
+								buildEmptyLanguage();
+							});
+
+							function addLang() {
+								var newLang = buildLanguageTextBox($("#addLanguage").parent().find("input").val());
+								var newKnowledge = buildKnowledgeSelectBox($("#addLanguage").parent().find("select").val());
+								var removeLanguage = '<span class="x-remove" onclick="removeLang(this);">&#735;</span>';
+								$("#addLanguage").parent().remove();
+								$("#languagesAdded").append('<div class="form-row">' + newLang + newKnowledge + removeLanguage + '</div>');
+								buildEmptyLanguage();
+							}
+
+							function removeLang(removeSpan) {
+								$(removeSpan).parent().remove();
+							}
+
+							function buildLanguageTextBox(language) {
+								return '<label for="language">Language</label>' +
+										'<input type="text" name="language" value="' + language + '"/>';
+							}
+
+							function buildKnowledgeSelectBox(proficiency) {
+								var elementarySelected = (proficiency == 'ELEMENTARY') ? ' selected="selected"' : '';
+								var limitedWorkingSelected = (proficiency == 'LIMITED_WORKING') ? ' selected="selected"' : '';
+								var professionalWorkingSelected = (proficiency == 'PROFESSIONAL_WORKING') ? ' selected="selected"' : '';
+								var fullProfessionalSelected = (proficiency == 'FULL_PROFESSIONAL') ? ' selected="selected"' : '';
+								var nativeSelected = (proficiency == 'NATIVE_OR_BILINGUAL') ? ' selected="selected"' : '';
+								return '<label>Knowledge</label>' +
+										'<select name="proficiency">' +
+										'<option value="ELEMENTARY"' + elementarySelected + '>Elementary</option>' +
+										'<option value="LIMITED_WORKING"' + limitedWorkingSelected + '>Limited working</option>' +
+										'<option value="PROFESSIONAL_WORKING"' + professionalWorkingSelected + '>Professional working</option>' +
+										'<option value="FULL_PROFESSIONAL"' + fullProfessionalSelected + '>Full professional</option>' +
+										'<option value="NATIVE_OR_BILINGUAL"' + nativeSelected + '>Native</option>' +
+										'</select>';
+							}
+
+							function buildEmptyLanguage() {
+								var emptyLang = '<label for="language">Language</label><input type="text" name="language">';
+								var emptyKnowledge = '<label>Knowledge</label>' +
+										'<select name="proficiency">' +
+										'<option value="ELEMENTARY">Elementary</option>' +
+										'<option value="LIMITED_WORKING">Limited working</option>' +
+										'<option value="PROFESSIONAL_WORKING">Professional working</option>' +
+										'<option value="FULL_PROFESSIONAL">Full professional</option>' +
+										'<option value="NATIVE_OR_BILINGUAL">Native</option>' +
+										'</select>';
+								$("#languagesAdded").append('<div class="form-row">' + emptyLang + emptyKnowledge +
+										'<input type="button" id="addLanguage" onclick="addLang();" value="Add"/></div>');
+							}
+							/*]]>*/
+						</script>
+					</div>
+					<div id="languages" class="detail-list-view">
+						<ul class="list-ul-details">
+							<li th:each="lang : ${languageList}">
+								<h3 th:text="${lang.language}">English</h3>
+								<div class="detail-list-view-item-span">
+									<span th:text="${lang.proficiency}">Elementary</span>
 								</div>
-							</div>
-							<div class="form-row">
-								<label class="form-label"></label>
-								<div class="label-checkbox">
-									<input type="checkbox" id="thisIsCurrentJob" th:field="*{current}"/>
-									<label for="thisIsCurrentJob" th:text="#{experience.current}">Currently I'm working here</label>
+							</li>
+						</ul>
+					</div>
+
+					<div id="newLanguageForm" class="invisible" style="position: relative;">
+						<div class="form-container">
+							<form th:action="@{/consultant/profile/addLanguage}" th:object="${languageModel}"
+										method="post" action="profileDataRegistration.html">
+								<div id="languagesAdded"></div>
+								<div class="form-row">
+									<input type="submit" id="saveLanguages" th:value="#{global.save}" value="Save"/>
+									<input type="button" id="cancelAddingLanguage" th:value="#{global.cancel}" value="Cancel"/>
 									<script type="text/javascript">
-										$("#thisIsCurrentJob").click(function() {
-											if ($(this).is(":checked")) {
-												$("#monthPeriodTo, #yearPeriodTo").hide();
-												$("#experienceToday").show();
-											} else {
-												$("#experienceToday").hide();
-												$("#monthPeriodTo, #yearPeriodTo").show();
-											}
+										$("#cancelAddingLanguage").click(function() {
+											$("#addNewLanguage").addClass("link-ico").addClass("add-ico").removeClass("invisible");
+											$("#languages").removeClass("invisible");
+											$("#languagesAdded").children().remove();
+											$("#newLanguageForm").addClass("invisible");
 										});
 									</script>
 								</div>
-							</div>
-							<div class="form-row">
-								<label for="experienceDescription" th:text="#{experience.description}" class="form-label">Description</label>
-								<textarea id="experienceDescription" th:field="*{description}" rows="6" cols="60" placeholder="Description"></textarea>
-							</div>
-							<div class="form-row">
-								<input type="submit" id="saveExperience" th:value="#{global.save}" value="Save"/>
-								<input type="button" id="cancelAddingExperience" th:value="#{global.cancel}" value="Cancel"/>
-								<script type="text/javascript">
-									$("#cancelAddingExperience").click(function() {
-										$("#newExperienceForm").addClass("invisible");
-										$("#addNewExperience").removeClass("add-new-button-disabled").addClass("add-new-button");
-									});
-								</script>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div id="experiences" class="detail-list-view">
-					<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
-						<header>
-							<h3 th:text="${exp.function}">Software Architect</h3>
-							<span th:text="${exp.companyName}">Microsoft</span>
-						</header>
-						<div class="detail-list-view-item-span">
-							<span th:text="${exp.periodFromStr}">march 2012</span>
-							<span>&#8722;</span>
-							<span th:text="(${exp.current} ? #{experience.present} : ${exp.periodToStr})">october 2013</span>
-							<span>(1 year 8 months)</span>
-							<span>| Milan</span>
+							</form>
 						</div>
-						<p class="description-text-box" th:text="${exp.description}">
-							Web/Enterprise Application development as Sales Solution and Order management.
-							I had to develop particularly back-end components and domain model using Hibernate,
-							JPA and some Spring modules as support. I've also participated in the Business layer
-							development and Front-end layer building.
-							Besides, has been adopted SCRUM approach as Agile methodology and Continuous
-							Integration in order to release a stable version per sprint.
-						</p>
+					</div>
+				</div>
+
+
+
+
+				<div class="mini-skill-box">
+					<div class="mini-box-with-see-all">
+						<h2 th:text="#{skill.title}">Skills</h2>
+						<a id="addNewSkill" class="link-ico add-ico" href="#" title="Add"></a>
+					</div>
+					<div id="skills" class="detail-list-view" style="padding-bottom: 15px;">
+						<div th:each="skill : ${skillList}" class="skill-added">
+							<span th:text="${skill}">DB Administrator</span>
+						</div>
+					</div>
+					<script type="text/javascript" th:inline="javascript">
+						/*<![CDATA[*/
+						$("#addNewSkill").click(function() {
+							$("#skills").addClass("invisible");
+							$(this).removeClass("link-ico").removeClass("add-ico").addClass("invisible");
+							$("#newSkillForm").removeClass("invisible");
+							/*[+ var skillList = [[${skillList}]] +]*/
+							/*[- */ var skillList = ["Java", "Maven", ".NET"]; /* -]*/
+							for (var i = 0; i < skillList.length; i++) {
+								var skillValue = skillList[i];
+								/*[+
+								 var skill = '<div class="skill-added">' +
+								 '<span>' + skillValue + '</span>' +
+								 '<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+								 '<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+								 '</div>';
+								 +]*/
+								/*[- */
+								var skill = '<div class="skill-added">' +
+										'<span>' + skillValue + '</span>' +
+										'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+										'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+										'</div>';
+								/* -]*/
+								$("#skillsAdded").append(skill);
+							}
+							$("#skills").addClass("invisible");
+							$("#skillValue").focus();
+						});
+						/*]]>*/
+					</script>
+					<div id="newSkillForm" class="invisible" style="position: relative;">
+						<div class="form-container">
+							<form th:action="@{/consultant/profile/addSkills}" method="post"
+										action="profileDataRegistration.html">
+								<div class="form-row">
+									<input type="text" id="skillValue" style="width: 70%;"/>
+									<input type="button" id="addSkill" th:value="#{global.add}" value="Add"/>
+									<div id="skillsAdded"></div>
+									<script type="text/javascript" th:inline="javascript">
+										/*<![CDATA[*/
+										$("#addSkill").click(function() {
+											var skillValue = $("#skillValue").val();
+											/*[+
+											 var skill = '<div class="skill-added">' +
+											 '<span>' + skillValue + '</span>' +
+											 '<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+											 '<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+											 '</div>';
+											 +]*/
+											/*[- */
+											var skill = '<div class="skill-added">' +
+													'<span>' + skillValue + '</span>' +
+													'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
+													'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
+													'</div>';
+											/* -]*/
+											$("#skillValue").val("").focus();
+											$("#skillsAdded").append(skill);
+										});
+										function removeSkill(removeSpan) {
+											$(removeSpan).parent().remove();
+										}
+										/*]]>*/
+									</script>
+								</div>
+								<div class="form-row">
+									<input type="submit" id="saveSkills" th:value="#{global.save}" value="Save"/>
+									<input type="button" id="cancelAddingSkill" th:value="#{global.cancel}" value="Cancel"/>
+									<script type="text/javascript">
+										$("#cancelAddingSkill").click(function() {
+											$("#newSkillForm").addClass("invisible");
+											$("#addNewSkill").addClass("link-ico").addClass("add-ico").removeClass("invisible");
+											$("#skillsAdded").children().remove();
+											$("#skills").removeClass("invisible");
+										});
+									</script>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<div id="languagesSection" class="data-section">
-				<h2 th:text="#{language.title}">Languages</h2>
-				<a id="addNewLanguage" href="javascript:void(0);" class="add-new-button">
-					<span th:text="#{language.add}">Add new language</span>
-				</a>
-				<script th:inline="javascript">
-					$("#addNewLanguage").click(function() {
-						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
-						$("#newLanguageForm").removeClass("invisible");
-						$("#language").focus();
-					});
-				</script>
-				<div id="newLanguageForm" class="invisible" style="position: relative;">
-					<div class="form-container">
-						<form th:action="@{/consultant/profile/addLanguage}" th:object="${languageModel}"
-									method="post" action="profileDataRegistration.html">
-							<div class="form-row">
-								<label for="language" th:text="#{language.language}" class="form-label">Language</label>
-								<input type="text" id="language" th:field="*{language}"/>
-							</div>
-							<div class="form-row">
-								<label for="knowledge" th:text="#{language.knowledge}" class="form-label">Knowledge</label>
-								<select id="knowledge" th:field="*{proficiency}">
-									<option value="ELEMENTARY" th:text="#{language.elementary}">Elementary</option>
-									<option value="LIMITED_WORKING" th:text="#{language.limited_working}">Limited working</option>
-									<option value="PROFESSIONAL_WORKING" th:text="#{language.professional_working}">Professional working</option>
-									<option value="FULL_PROFESSIONAL" th:text="#{language.full_professional}">Full professional</option>
-									<option value="NATIVE_OR_BILINGUAL" th:text="#{language.native}">Native</option>
-								</select>
-							</div>
-							<div class="form-row">
-								<input type="submit" id="addLanguage" th:value="#{global.add}" value="Add"/>
-								<input type="button" id="cancelAddingLanguage" th:value="#{global.cancel}" value="Cancel"/>
-								<script type="text/javascript">
-									$("#cancelAddingLanguage").click(function() {
-										$("#newLanguageForm").addClass("invisible");
-										$("#addNewLanguage").removeClass("add-new-button-disabled").addClass("add-new-button");
-									});
-								</script>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div id="languages" class="detail-list-view">
-					<ul class="list-ul-details">
-						<li th:each="lang : ${languageList}">
-							<h3 th:text="${lang.language}">English</h3>
-							<div class="detail-list-view-item-span">
-								<span th:text="${lang.proficiency}">Elementary</span>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div id="skillsSection" class="data-section">
-				<h2 th:text="#{skill.title}">Skills and experiences</h2>
-				<a id="addNewSkill" href="javascript:void(0);" class="add-new-button">
-					<span th:text="#{skill.add}">Add new skill</span>
-				</a>
-				<script type="text/javascript" th:inline="javascript">
-					/*<![CDATA[*/
-					$("#addNewSkill").click(function() {
-						$(this).removeClass("add-new-button").addClass("add-new-button-disabled");
-						$("#newSkillForm").removeClass("invisible");
-						/*[+ var skillList = [[${skillList}]] +]*/
-						/*[- */ var skillList = ["Java", "Maven", ".NET"]; /* -]*/
-						for (var i = 0; i < skillList.length; i++) {
-							var skillValue = skillList[i];
-							/*[+
-							 var skill = '<div class="skill-added">' +
-							 '<span>' + skillValue + '</span>' +
-							 '<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
-							 '<input type="hidden" name="skill" value="' + skillValue + '"/>' +
-							 '</div>';
-							 +]*/
-							/*[- */
-							var skill = '<div class="skill-added">' +
-									'<span>' + skillValue + '</span>' +
-									'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
-									'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
-									'</div>';
-							/* -]*/
-							$("#skillsAdded").append(skill);
-						}
-						$("#skills").addClass("invisible");
-						$("#skillValue").focus();
-					});
-					/*]]>*/
-				</script>
-				<div id="newSkillForm" class="invisible" style="position: relative;">
-					<div class="form-container">
-						<form th:action="@{/consultant/profile/addSkills}" method="post"
-									action="profileDataRegistration.html">
-							<div class="form-row">
-								<input type="text" id="skillValue" style="width: 70%;"/>
-								<input type="button" id="addSkill" th:value="#{global.add}" value="Add"/>
-								<div id="skillsAdded"></div>
-								<script type="text/javascript" th:inline="javascript">
-									/*<![CDATA[*/
-									$("#addSkill").click(function() {
-										var skillValue = $("#skillValue").val();
-										/*[+
-										var skill = '<div class="skill-added">' +
-												'<span>' + skillValue + '</span>' +
-												'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
-												'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
-												'</div>';
-										+]*/
-										/*[- */
-										var skill = '<div class="skill-added">' +
-												'<span>' + skillValue + '</span>' +
-												'<span class="x-remove" onclick="removeSkill(this);">&#735;</span>' +
-												'<input type="hidden" name="skill" value="' + skillValue + '"/>' +
-												'</div>';
-										/* -]*/
-										$("#skillValue").val("").focus();
-										$("#skillsAdded").append(skill);
-									});
-									function removeSkill(removeSpan) {
-										$(removeSpan).parent().remove();
-									}
-									/*]]>*/
-								</script>
-							</div>
-							<div class="form-row">
-								<input type="submit" id="saveSkills" th:value="#{global.save}" value="Save"/>
-								<input type="button" id="cancelAddingSkill" th:value="#{global.cancel}" value="Cancel"/>
-								<script type="text/javascript">
-									$("#cancelAddingSkill").click(function() {
-										$("#newSkillForm").addClass("invisible");
-										$("#addNewSkill").removeClass("add-new-button-disabled").addClass("add-new-button");
-										$("#skillsAdded").children().remove();
-										$("#skills").removeClass("invisible");
-									});
-								</script>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div id="skills" class="detail-list-view" style="padding-bottom: 15px;">
-					<div th:each="skill : ${skillList}" class="skill-added">
-						<span th:text="${skill}">DB Administrator</span>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

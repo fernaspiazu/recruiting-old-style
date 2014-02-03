@@ -110,10 +110,26 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
+	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
+		return findExperiencesByConsultantId(consultantId).subList(0, 3);
+	}
+
+	@Override
 	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
 		Language language = LanguageBuilder.language(languageModel.getLanguage())
 				.withProficiency(languageModel.getProficiency()).build();
 		return consultantRepository.addLanguage(language, consultantId);
+	}
+
+	@Override
+	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
+		List<Language> languages = Lists.newArrayList();
+		for (LanguageModel languageModel : languageModelArray) {
+			Language language = LanguageBuilder.language(languageModel.getLanguage())
+					.withProficiency(languageModel.getProficiency()).build();
+			languages.add(language);
+		}
+		return consultantRepository.addLanguages(languages, consultantId);
 	}
 
 	@Override

@@ -35,8 +35,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <compiler.version>3.1</compiler.version>
     <jvm.version>1.7</jvm.version>
-    <spring.version>4.0.0.RELEASE</spring.version>
-    <spring.security.version>3.1.4.RELEASE</spring.security.version>
+    <spring.version>4.0.1.RELEASE</spring.version>
+    <spring.security.version>3.2.0.RELEASE</spring.security.version>
     <guava.version>15.0</guava.version>
     <junit.version>4.9</junit.version>
     <fest.version>1.4</fest.version>
@@ -57,16 +57,6 @@
     <gson.version>2.2.4</gson.version>
   </properties>
 
-  <!--<reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>${cobertura.version}</version>
-      </plugin>
-    </plugins>
-  </reporting>-->
-
   <build>
     <pluginManagement>
       <plugins>
@@ -79,11 +69,6 @@
             <target>${jvm.version}</target>
           </configuration>
         </plugin>
-        <!--<plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>cobertura-maven-plugin</artifactId>
-          <version>${cobertura.version}</version>
-        </plugin>-->
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
           <artifactId>cargo-maven2-plugin</artifactId>

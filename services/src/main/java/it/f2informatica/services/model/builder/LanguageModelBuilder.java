@@ -37,6 +37,7 @@ public class LanguageModelBuilder {
 
 	public LanguageModelBuilder withProficiency(LanguageProficiency proficiency) {
 		lang.setProficiency(proficiency);
+		lang.setKnowledge(proficiency.toString());
 		return this;
 	}
 

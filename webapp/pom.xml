@@ -17,8 +17,8 @@
   <properties>
     <contextPath>recruiting</contextPath>
     <maven.war.version>2.3</maven.war.version>
-    <thymeleaf.version>2.1.1.RELEASE</thymeleaf.version>
-    <thymeleaf-testing.version>2.1.1.RELEASE</thymeleaf-testing.version>
+    <thymeleaf.version>2.1.2.RELEASE</thymeleaf.version>
+    <thymeleaf-testing.version>2.1.2.RELEASE</thymeleaf-testing.version>
     <jetty-maven-plugin.version>9.0.4.v20130625</jetty-maven-plugin.version>
   </properties>
 
@@ -123,7 +123,7 @@
     </dependency>
     <dependency>
       <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf-spring3</artifactId>
+      <artifactId>thymeleaf-spring4</artifactId>
       <version>${thymeleaf.version}</version>
     </dependency>
     <dependency>

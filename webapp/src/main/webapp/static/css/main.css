@@ -275,6 +275,7 @@ td.cell-link {text-align: center;}
 .chgpwd-ico {background: url("../images/password-icon.png") no-repeat; background-size: 20px;}
 .edit-ico {background: url("../images/edit-icon.png") no-repeat; background-size: 20px;}
 .trash-ico {background: url("../images/trash-icon.png") no-repeat; background-size: 20px;}
+.add-ico {background: url("../images/add-icon.png") no-repeat; background-size: 20px;}
 
 /* ==================== FIELD ERRORS ====================== */
 .field-error {position: absolute; background: #ffebe8; border: 1px solid #cc0000; padding: 5px 15px 5px 10px; text-align: center; margin-left: 4px;}
@@ -326,12 +327,24 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	text-align: center;
 }
 
+.edit-link:link, .edit-link:visited {
+	color: #333333;
+	float: right;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px;
+	text-decoration: none;
+}
+.edit-link:hover, .edit-link:focus {
+	color: #666;
+}
+
 .detail-list-view {
 	border-bottom: 1px solid #ccc;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .detail-list-view .detail-list-view-item {
 	margin: 5px 5px 20px 5px;
@@ -361,7 +374,7 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 .list-ul-details li {
 	display: inline-block;
 	padding-bottom: 10px;
-	width: 30%;
+	width: 45%;
 }
 .list-ul-details h3 {
 	margin: 0;
@@ -396,3 +409,32 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 .x-remove:hover {
 	color: #0073b2;
 }
+
+/*------------------------------------------------*/
+#profile-section {
+	/*border: 1px solid;*/
+	margin-top: 10px;
+	height: 450px;
+}
+
+.mini-experience-box, .mini-language-box, .mini-skill-box {
+	width: 300px;
+	padding: 10px;
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+	border: 1px solid #D8DFEA;
+}
+
+.mini-box-with-see-all {height: 25px;}
+.mini-box-with-see-all h2 {float: left;}
+.mini-box-with-see-all a {float: right;}
+
+.mini-skill-box #newSkillForm form {
+	min-width: 100px !important;
+	width: inherit !important;
+}
+
+#newLanguageForm form, #newSkillForm form {background-color: #f5f5f5;}
+#newLanguageForm form input[type='text'], #newLanguageForm form select {width: 100px;}
+#newLanguageForm form label {margin-right: 10px;}

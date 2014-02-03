@@ -37,12 +37,20 @@ public class ProfileController extends AbstractConsultantController {
 	}
 
 	private List<ExperienceModel> findExperiences(String consultantId) {
-		List<ExperienceModel> experiences = consultantService.findExperiences(consultantId);
+		List<ExperienceModel> experiences = consultantService.findMinimalExperiences(consultantId);
 		for (ExperienceModel experience : experiences) {
+			reduceExperienceDescriptionToHundredCharacters(experience);
 			experience.setPeriodFromStr(periodResolver.periodToString(experience.getPeriodFrom()));
 			experience.setPeriodToStr(periodResolver.periodToString(experience.getPeriodTo()));
 		}
 		return experiences;
+	}
+
+	private void reduceExperienceDescriptionToHundredCharacters(ExperienceModel experience) {
+		String description = experience.getDescription();
+		if (description.length() >= 100) {
+			experience.setDescription(description.substring(0, 96).concat("..."));
+		}
 	}
 
 	private List<LanguageModel> findLanguages(ConsultantModel consultantModel) {
@@ -77,11 +85,11 @@ public class ProfileController extends AbstractConsultantController {
 
 	@RequestMapping(value = "/addLanguage", method = RequestMethod.POST)
 	public String addLanguage(
-			@ModelAttribute("languageModel") LanguageModel languageModel,
+			@ModelAttribute("languageModel") LanguageModel[] languageModel,
 			@ModelAttribute("consultantId") String consultantId,
 			BindingResult bindingResult) {
 
-		consultantService.addLanguage(languageModel, consultantId);
+		consultantService.addLanguages(languageModel, consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
 	}
 
