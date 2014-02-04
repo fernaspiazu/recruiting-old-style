@@ -1,15 +1,19 @@
 package it.f2informatica.webapp.controller;
 
 import com.google.common.collect.Lists;
+import it.f2informatica.datastore.constant.LanguageProficiency;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static it.f2informatica.services.model.builder.LanguageModelBuilder.languageModel;
 
 @Controller
 @RequestMapping("/consultant/profile")
@@ -85,12 +89,30 @@ public class ProfileController extends AbstractConsultantController {
 
 	@RequestMapping(value = "/addLanguage", method = RequestMethod.POST)
 	public String addLanguage(
-			@ModelAttribute("languageModel") LanguageModel[] languageModel,
+			@RequestParam("language") String[] languages,
+			@RequestParam("proficiency") String[] proficiencies,
 			@ModelAttribute("consultantId") String consultantId,
 			BindingResult bindingResult) {
 
-		consultantService.addLanguages(languageModel, consultantId);
+		List<LanguageModel> languagesModel = Lists.newArrayList();
+		for (int i = 0; i < languages.length; i++) {
+			if (StringUtils.isEmpty(languages[i].trim())) {
+				continue;
+			}
+			languagesModel.add(languageModel(languages[i])
+					.withProficiency(resolveProficiency(proficiencies[i])).build());
+		}
+		consultantService.addLanguages(languagesModel.toArray(new LanguageModel[languagesModel.size()]), consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
+	}
+
+	private LanguageProficiency resolveProficiency(String proficiency) {
+		for (LanguageProficiency languageProficiency : LanguageProficiency.values()) {
+			if (proficiency.equals(languageProficiency.toString())) {
+				return languageProficiency;
+			}
+		}
+		return LanguageProficiency.ELEMENTARY;
 	}
 
 	@RequestMapping(value = "/addSkills", method = RequestMethod.POST)

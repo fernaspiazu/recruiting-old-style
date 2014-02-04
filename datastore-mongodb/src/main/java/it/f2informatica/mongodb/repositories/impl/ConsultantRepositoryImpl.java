@@ -50,7 +50,7 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 	@Override
 	public boolean addLanguages(List<Language> languages, String consultantId) {
 		Query query = new Query(where(ID).is(consultantId));
-		Update update = new Update().addToSet(LANGUAGES, languages);
+		Update update = new Update().set(LANGUAGES, languages);
 		return updateConsultant(query, update).getLastError().ok();
 	}
 
