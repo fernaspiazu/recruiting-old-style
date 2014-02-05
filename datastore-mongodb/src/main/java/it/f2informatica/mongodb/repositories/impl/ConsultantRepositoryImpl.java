@@ -61,6 +61,13 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 		return updateConsultant(query, update).getLastError().ok();
 	}
 
+	@Override
+	public List<Experience> findLimitedExperiences(String consultantId) {
+		throw new RuntimeException("Method not Implemented");
+//		Query query = new Query(where(ID).is(consultantId)).limit(3);
+//		return mongoTemplate.find(query, Experience.class);
+	}
+
 	private WriteResult updateConsultant(Query query, Update update) {
 		return mongoTemplate.updateFirst(query, update, Consultant.class);
 	}

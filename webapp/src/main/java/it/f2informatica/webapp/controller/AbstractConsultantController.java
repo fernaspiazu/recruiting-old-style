@@ -1,6 +1,7 @@
 package it.f2informatica.webapp.controller;
 
 import it.f2informatica.services.domain.consultant.ConsultantService;
+import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.webapp.controller.helper.MonthHelper;
 import it.f2informatica.webapp.controller.helper.PeriodResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,10 @@ public abstract class AbstractConsultantController {
 
 	@Autowired
 	protected ConsultantService consultantService;
+
+	protected void formatExperiencePeriods(ExperienceModel experience) {
+		experience.setPeriodFromStr(periodResolver.periodToString(experience.getPeriodFrom()));
+		experience.setPeriodToStr(periodResolver.periodToString(experience.getPeriodTo()));
+	}
 
 }

@@ -17,4 +17,6 @@ public interface AdditionalConsultantRepository {
 	boolean addLanguages(List<Language> languages, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
+
+	List<Experience> findLimitedExperiences(String consultantId);
 }

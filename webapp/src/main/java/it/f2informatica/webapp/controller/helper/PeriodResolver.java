@@ -25,7 +25,7 @@ public class PeriodResolver {
 	private Date _resolveDateByMonthAndYear(String month, String year) {
 		int yearInt = Integer.parseInt(year);
 		int monthInt = Integer.parseInt(month);
-		return new GregorianCalendar(yearInt, monthInt, 1).getTime();
+		return new GregorianCalendar(yearInt, monthInt, 1, 0, 0, 0).getTime();
 	}
 
 	public String periodToString(Date date) {

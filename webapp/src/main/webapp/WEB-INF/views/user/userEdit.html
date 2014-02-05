@@ -55,7 +55,7 @@
 					<div class="form-row">
 						<label for="roleId" th:text="#{user.selectrole}" class="form-label label-required">Select Role</label>
 						<select id="roleId" th:field="*{role.roleId}" class="required">
-							<option value="0" th:text="#{user.selectrole}">Select Role</option>
+							<option value="-1" th:text="#{user.selectrole}">Select Role</option>
 							<option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}">Role in Wireframe</option>
 						</select>
 					</div>

@@ -8,6 +8,7 @@ $(document).ready(function() {
 	validateUserCreation();
 	validateUserEdit();
 	validateChangePassword();
+	validateExperience();
 });
 
 function validateUserCreation() {
@@ -45,6 +46,39 @@ function validateChangePassword() {
 		}
 		return false;
 	});
+}
+
+function validateExperience() {
+	$("#experienceForm").submit(function() {
+		errors = [];
+		validateRequiredFields(this);
+		if (isEmpty(errors)) {
+			validatePeriods(this);
+		}
+		if (isEmpty(errors)) {
+			this.submit();
+		}
+		return false;
+	});
+}
+
+function validatePeriods(form) {
+	var monthPeriodFrom = $(form).find("#monthPeriodFrom").val();
+	var yearPeriodFrom = $(form).find("#yearPeriodFrom").val();
+	var monthPeriodTo = $(form).find("#monthPeriodTo").val();
+	var yearPeriodTo = $(form).find("#yearPeriodTo").val();
+	var isCurrentJob = $(form).find("#thisIsCurrentJob").is(":checked");
+
+	var currentDate = new Date();
+	var periodFrom = new Date(yearPeriodFrom, monthPeriodFrom, 1, 0, 0, 0, 0);
+	if (!eval(isCurrentJob)) {
+		var periodTo = new Date(yearPeriodTo, monthPeriodTo, 1, 0, 0, 0, 0);
+		if (!(currentDate > periodFrom && periodFrom < periodTo)) {
+			attachFieldErrorMessage($(form).find("#yearPeriodTo"), "experience.err.invalidperiods");
+		}
+	} else if (currentDate < periodFrom) {
+		attachFieldErrorMessage($(form).find("#experienceToday"), "experience.err.invalidperiods");
+	}
 }
 
 function validateCurrentPassword(form) {
@@ -91,7 +125,7 @@ function validateRequiredInputField(input) {
 }
 
 function validateRequiredSelectField(select) {
-	if ($(select).val() === "0") {
+	if ($(select).val() === "-1") {
 		attachFieldErrorMessage(select, "global.err.field.empty");
 	} else {
 		removeErrorMessageIfExists(select);
@@ -111,7 +145,7 @@ function attachFieldErrorMessage(element, code) {
 }
 
 function removeErrorMessageIfExists(element) {
-	if ($(element).next().length) {
+	if ($(element).next().length && $(element).next().attr("class") === "field-error") {
 		$(element).next().remove();
 	}
 }
@@ -120,16 +154,8 @@ function buildMessageError(errorMsg) {
 	return '<span class="field-error">' + errorMsg + '</span>';
 }
 
-function isNotEmpty(value) {
-	return !isEmpty(value);
-}
-
 function isEmpty(value) {
 	return isNull(value) || value.length === 0 || value === "";
-}
-
-function isNotNull(value) {
-	return !isNull(value);
 }
 
 function isNull(value) {

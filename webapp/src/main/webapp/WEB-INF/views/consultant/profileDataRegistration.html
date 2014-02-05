@@ -8,10 +8,6 @@
 	<script src="../../../static/js/validator.js"></script>
 </head>
 <body>
-<style type="text/css">
-	.exp-period > input {width: 50px !important;}
-	.exp-period > select {width: 75px !important;}
-</style>
 <div id="global-container">
 	<header th:substituteby="fragments/header::header" class="header">
 		<div class="header-floating-content">
@@ -72,7 +68,8 @@
 				<div class="mini-experience-box">
 					<div class="mini-box-with-see-all">
 						<h2 th:text="#{experience.title}">Experiences</h2>
-						<a href="#">See all</a>
+						<a th:href="@{/consultant/profile/experiences/}+${session.consultantId}" th:text="#{global.seeall}"
+							 href="experiencesPage.html">See all</a>
 					</div>
 					<div id="experiences" class="detail-list-view">
 						<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
@@ -93,7 +90,12 @@
 						</div>
 					</div>
 					<br/>
-					<input type="button" value="Add new Experience"/>
+					<input type="button" id="addNewExperience" th:value="#{experience.add}" value="Add new job position"/>
+					<script th:inline="javascript">
+						$("#addNewExperience").click(function() {
+							window.location = /*[[@{/consultant/profile/experiences/new}]]*/ "experienceForm.html";
+						});
+					</script>
 				</div>
 
 
@@ -102,7 +104,7 @@
 				<div class="mini-language-box">
 					<div class="mini-box-with-see-all">
 						<h2 th:text="#{language.title}">Languages</h2>
-						<a id="addNewLanguage" class="link-ico add-ico" href="#" title="Add"></a>
+						<a id="addNewLanguage" class="link-ico add-ico cursor-pointer" th:title="#{global.add}" title="Add"></a>
 						<script th:inline="javascript">
 							/*<![CDATA[*/
 							$("#addNewLanguage").click(function() {
@@ -216,7 +218,7 @@
 				<div class="mini-skill-box">
 					<div class="mini-box-with-see-all">
 						<h2 th:text="#{skill.title}">Skills</h2>
-						<a id="addNewSkill" class="link-ico add-ico" href="#" title="Add"></a>
+						<a id="addNewSkill" class="link-ico add-ico cursor-pointer" th:title="#{global.add}" title="Add"></a>
 					</div>
 					<div id="skills" class="detail-list-view" style="padding-bottom: 15px;">
 						<div th:each="skill : ${skillList}" class="skill-added">

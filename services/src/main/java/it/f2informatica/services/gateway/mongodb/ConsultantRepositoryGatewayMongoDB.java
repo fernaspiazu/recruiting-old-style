@@ -111,7 +111,11 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 
 	@Override
 	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
-		return findExperiencesByConsultantId(consultantId).subList(0, 3);
+		List<ExperienceModel> experiences = findExperiencesByConsultantId(consultantId);
+		if (experiences.size() > 3) {
+			return experiences.subList(0, 3);
+		}
+		return experiences;
 	}
 
 	@Override
