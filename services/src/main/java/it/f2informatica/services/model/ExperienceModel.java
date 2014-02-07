@@ -13,6 +13,8 @@ import java.util.Date;
 public class ExperienceModel implements DataModel {
 	private static final long serialVersionUID = 7350451606929379410L;
 
+	private String id;
+
 	private String companyName;
 
 	private String function;

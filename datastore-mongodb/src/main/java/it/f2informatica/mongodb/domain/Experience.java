@@ -12,6 +12,8 @@ import java.util.Date;
 @ToString
 public class Experience implements MongoDBDocument {
 
+	private String id;
+
 	private String companyName;
 
 	private String function;

@@ -12,6 +12,11 @@ public class ExperienceModelBuilder {
 		return new ExperienceModelBuilder();
 	}
 
+	public ExperienceModelBuilder withId(String id) {
+		this.experience.setId(id);
+		return this;
+	}
+
 	public ExperienceModelBuilder inCompany(String companyName) {
 		this.experience.setCompanyName(companyName);
 		return this;

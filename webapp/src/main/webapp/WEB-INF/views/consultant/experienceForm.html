@@ -48,11 +48,12 @@
 			</ul>
 		</div>
 		<div id="content">
-			<h2 th:text="#{experiences.title}" class="header-underlined">Experiences</h2>
+			<h2 th:text="#{experience.edit}" class="header-underlined">Experiences</h2>
 			<div class="form-container">
-				<form id="experienceForm" th:action="@{/consultant/profile/experiences/save}" th:object="${experienceModel}"
-							method="post" action="profileDataRegistration.html">
+				<form id="experienceForm" th:action="${edit} ? @{/consultant/profile/experiences/update} : @{/consultant/profile/experiences/save}"
+							th:object="${experienceModel}" method="post" action="profileDataRegistration.html">
 					<input type="hidden" id="consultantId" th:value="${session.consultantId}"/>
+					<input type="hidden" name="isEdit" th:value="${edit}"/>
 					<div class="form-row">
 						<label for="companyName" th:text="#{experience.companyname}" class="form-label label-required">Company name</label>
 						<input type="text" id="companyName" th:field="*{companyName}" class="required" autofocus=""/>
@@ -89,6 +90,24 @@
 								}
 							});
 						</script>
+						<script th:inline="javascript" th:if="${edit}">
+							var monthPeriodFrom = /*[[${monthPeriodFrom}]]*/ "Month";
+							var yearPeriodFrom = /*[[${yearPeriodFrom}]]*/ "2011";
+							var monthPeriodTo = /*[[${monthPeriodTo}]]*/ "11";
+							var yearPeriodTo = /*[[${yearPeriodTo}]]*/ "2012";
+							var isCurrent = /*[[${experienceModel.current}]]*/ true;
+							$("#monthPeriodFrom").val(monthPeriodFrom);
+							$("#yearPeriodFrom").val(yearPeriodFrom);
+							if (isCurrent) {
+								$("#monthPeriodTo, #yearPeriodTo").hide();
+								$("#experienceToday").show().css({"margin-right" : 5});
+							} else {
+								$("#experienceToday").hide();
+								$("#monthPeriodTo, #yearPeriodTo").show();
+								$("#monthPeriodTo").val(monthPeriodTo);
+								$("#yearPeriodTo").val(yearPeriodTo);
+							}
+						</script>
 					</div>
 					<div class="form-row">
 						<label class="form-label"></label>
@@ -114,11 +133,21 @@
 											rows="6" cols="60" placeholder="Description"></textarea>
 					</div>
 					<div class="form-row">
-						<input type="submit" id="saveExperience" th:value="#{global.save}" value="Save"/>
+						<input type="submit" id="saveExperience" th:value="${edit} ? #{global.update} : #{global.save}" value="Save"/>
+						<input type="button" id="deleteExperience" th:value="#{global.delete}" value="Delete" th:if="${edit}"/>
 						<input type="button" id="cancelAddingExperience" th:value="#{global.cancel}" value="Cancel"/>
 						<script th:inline="javascript">
+							var edit = /*[[${edit}]]*/ false;
 							$("#cancelAddingExperience").click(function() {
-								window.location = /*[[@{/consultant/profile/}+${session.consultantId}]]*/ "profileDataRegistration.html";
+								if (edit) {
+									window.location = /*[[@{/consultant/profile/experiences/}+${session.consultantId}]]*/ "profileDataRegistration.html";
+								} else {
+									window.location = /*[[@{/consultant/profile/}+${session.consultantId}]]*/ "profileDataRegistration.html";
+								}
+							});
+
+							$("#deleteExperience").click(function() {
+								window.location = /*[[@{/consultant/profile/experiences/delete/}+${experienceModel.id}]]*/ "profileDataRegistration.html";
 							});
 						</script>
 					</div>

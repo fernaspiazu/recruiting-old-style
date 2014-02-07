@@ -77,6 +77,16 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
+	public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+		return consultantRepositoryGateway.updateConsultantExperience(experienceModel, consultantId);
+	}
+
+	@Override
+	public ExperienceModel findExperience(String consultantId, String experienceId) {
+		return consultantRepositoryGateway.findExperienceByConsultantIdAndExperienceId(consultantId, experienceId);
+	}
+
+	@Override
 	public List<ExperienceModel> findExperiences(String consultantId) {
 		return consultantRepositoryGateway.findExperiencesByConsultantId(consultantId);
 	}

@@ -23,8 +23,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
+import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.*;
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
 @Service
@@ -89,7 +91,8 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 
 	@Override
 	public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-		Experience experience = ExperienceBuilder.experience()
+		Experience experience = experience()
+			.withId(UUID.randomUUID().toString())
 			.inCompany(experienceModel.getCompanyName())
 			.inFunctionOf(experienceModel.getFunction())
 			.locatedAt(experienceModel.getLocation())
@@ -99,6 +102,21 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			.withDescription(experienceModel.getDescription())
 			.build();
 		return consultantRepository.addExperience(experience, consultantId);
+	}
+
+	@Override
+	public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+		Experience experience = experience()
+				.withId(experienceModel.getId())
+				.inCompany(experienceModel.getCompanyName())
+				.inFunctionOf(experienceModel.getFunction())
+				.locatedAt(experienceModel.getLocation())
+				.fromPeriod(experienceModel.getPeriodFrom())
+				.toPeriod(experienceModel.getPeriodTo())
+				.isThisTheCurrentJob(experienceModel.isCurrent())
+				.withDescription(experienceModel.getDescription())
+				.build();
+		return consultantRepository.updateExperience(experience, consultantId);
 	}
 
 	@Override
@@ -116,6 +134,12 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			return experiences.subList(0, 3);
 		}
 		return experiences;
+	}
+
+	@Override
+	public ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId) {
+		Experience experience = consultantRepository.findExperience(consultantId, experienceId);
+		return experienceToModelConverter.convert(experience);
 	}
 
 	@Override

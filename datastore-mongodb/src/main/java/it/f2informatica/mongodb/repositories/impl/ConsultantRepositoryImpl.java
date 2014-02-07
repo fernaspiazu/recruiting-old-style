@@ -8,11 +8,15 @@ import it.f2informatica.mongodb.domain.Profile;
 import it.f2informatica.mongodb.repositories.custom.AdditionalConsultantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.aggregation.TypedAggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 public class ConsultantRepositoryImpl implements AdditionalConsultantRepository {
@@ -41,6 +45,11 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 	}
 
 	@Override
+	public boolean updateExperience(Experience experience, String consultantId) {
+		return false;
+	}
+
+	@Override
 	public boolean addLanguage(Language language, String consultantId) {
 		Query query = new Query(where(ID).is(consultantId));
 		Update update = new Update().addToSet(LANGUAGES, language);
@@ -61,15 +70,20 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 		return updateConsultant(query, update).getLastError().ok();
 	}
 
-	@Override
-	public List<Experience> findLimitedExperiences(String consultantId) {
-		throw new RuntimeException("Method not Implemented");
-//		Query query = new Query(where(ID).is(consultantId)).limit(3);
-//		return mongoTemplate.find(query, Experience.class);
-	}
-
 	private WriteResult updateConsultant(Query query, Update update) {
 		return mongoTemplate.updateFirst(query, update, Consultant.class);
+	}
+
+	@Override
+	public Experience findExperience(String consultantId, String experienceId) {
+		Aggregation aggregation = newAggregation(
+				match(where("id").is(consultantId)),
+				group("profile.experiences"),
+				unwind(previousOperation()),
+				match(where(previousOperation() + "." + Fields.UNDERSCORE_ID).is(experienceId))
+		);
+		AggregationResults<Experience> aggregationResults = mongoTemplate.aggregate(aggregation, Consultant.class, Experience.class);
+		return aggregationResults.getUniqueMappedResult();
 	}
 
 }

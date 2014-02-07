@@ -12,11 +12,13 @@ public interface AdditionalConsultantRepository {
 
 	boolean addExperience(Experience experience, String consultantId);
 
+	boolean updateExperience(Experience experience, String consultantId);
+
 	boolean addLanguage(Language language, String consultantId);
 
 	boolean addLanguages(List<Language> languages, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
 
-	List<Experience> findLimitedExperiences(String consultantId);
+	Experience findExperience(String consultantId, String experienceId);
 }

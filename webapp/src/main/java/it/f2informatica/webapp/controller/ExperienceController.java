@@ -3,8 +3,10 @@ package it.f2informatica.webapp.controller;
 import it.f2informatica.services.model.ExperienceModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,43 +36,64 @@ public class ExperienceController extends AbstractConsultantController {
 		return "consultant/experienceForm";
 	}
 
-	@RequestMapping(value = "/save",method = RequestMethod.POST)
+	@RequestMapping(value = {"/save", "/update"},method = RequestMethod.POST)
 	public String saveExperience(
 			@ModelAttribute("experienceModel") ExperienceModel experienceModel,
 			@ModelAttribute("consultantId") String consultantId,
 			@RequestParam("monthPeriodFrom") String monthPeriodFrom,
 			@RequestParam("yearPeriodFrom") String yearPeriodFrom,
 			@RequestParam("monthPeriodTo") String monthPeriodTo,
-			@RequestParam("yearPeriodTo") String yearPeriodTo) {
+			@RequestParam("yearPeriodTo") String yearPeriodTo,
+			@RequestParam("isEdit") String isEdit) {
 
+		boolean edit = StringUtils.hasText(isEdit) && Boolean.parseBoolean(isEdit);
 		boolean isNotCurrentJob = !experienceModel.isCurrent();
 
 		experienceModel.setPeriodFrom(periodResolver.resolveDateByMonthAndYear(monthPeriodFrom, yearPeriodFrom));
 		if (isNotCurrentJob) {
 			experienceModel.setPeriodTo(periodResolver.resolveDateByMonthAndYear(monthPeriodTo, yearPeriodTo));
 		}
-		consultantService.addConsultantExperience(experienceModel, consultantId);
 
-		return "redirect:/consultant/profile/" + consultantId;
+		if (edit) {
+			consultantService.updateConsultantExperience(experienceModel, consultantId);
+			return "redirect:/consultant/profile/experiences/" + consultantId;
+		} else {
+			consultantService.addConsultantExperience(experienceModel, consultantId);
+			return "redirect:/consultant/profile/" + consultantId;
+		}
 	}
 
-	@RequestMapping(value = "/verifyExperiencePeriods", method = RequestMethod.POST)
-	@ResponseBody
-	public String areExperiencePeriodsValid(
-			@RequestParam("monthPeriodFrom") String monthPeriodFrom,
-			@RequestParam("yearPeriodFrom") String yearPeriodFrom,
-			@RequestParam("monthPeriodTo") String monthPeriodTo,
-			@RequestParam("yearPeriodTo") String yearPeriodTo,
-			@RequestParam("isCurrentJob") String isCurrentJob) {
+	@RequestMapping(value = "/edit/{consultantId}/{expId}", method = RequestMethod.GET)
+	public String editExperience(
+			@PathVariable("consultantId") String consultantId,
+			@PathVariable("expId") String experienceId,
+			ModelMap model) {
 
-		Date currentDate = new Date();
-		Date periodFrom = periodResolver.resolveDateByMonthAndYear(monthPeriodFrom, yearPeriodFrom);
-		if (!Boolean.parseBoolean(isCurrentJob)) {
-			Date periodTo = periodResolver.resolveDateByMonthAndYear(monthPeriodTo, yearPeriodTo);
-			return String.valueOf(currentDate.after(periodFrom) && periodFrom.before(periodTo));
-		} else {
-			return String.valueOf(currentDate.after(periodFrom));
+		ExperienceModel experienceModel = consultantService.findExperience(consultantId, experienceId);
+		model.addAttribute("edit", true);
+		model.addAttribute("months", monthHelper.getMonths());
+		model.addAttribute("monthPeriodFrom", getExperienceMonth(experienceModel.getPeriodFrom()));
+		model.addAttribute("yearPeriodFrom", getExperienceYear(experienceModel.getPeriodFrom()));
+		if (experienceModel.getPeriodTo() != null && !experienceModel.isCurrent()) {
+			model.addAttribute("monthPeriodTo", getExperienceMonth(experienceModel.getPeriodFrom()));
+			model.addAttribute("yearPeriodTo", getExperienceYear(experienceModel.getPeriodFrom()));
 		}
+		model.addAttribute("experienceModel", experienceModel);
+		return "consultant/experienceForm";
+	}
+
+	private String getExperienceMonth(Date date) {
+		return String.valueOf(createCalendar(date).get(Calendar.MONTH));
+	}
+
+	private String getExperienceYear(Date date) {
+		return String.valueOf(createCalendar(date).get(Calendar.YEAR));
+	}
+
+	private Calendar createCalendar(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 public class ExperienceDataBuilder {
 
+	private String id = "0000000000";
 	private String companyName = "Accenture SPA";
 	private String function = "Functional Analyst";
 	private String location = "Torino";
@@ -17,6 +18,11 @@ public class ExperienceDataBuilder {
 
 	public static ExperienceDataBuilder experience() {
 		return new ExperienceDataBuilder();
+	}
+
+	public ExperienceDataBuilder withId(String id) {
+		this.id = id;
+		return this;
 	}
 
 	public ExperienceDataBuilder inCompany(String companyName) {
@@ -58,6 +64,7 @@ public class ExperienceDataBuilder {
 
 	public Experience build() {
 		Experience experience = new Experience();
+		experience.setId(id);
 		experience.setCompanyName(companyName);
 		experience.setFunction(function);
 		experience.setLocation(location);

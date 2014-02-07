@@ -13,6 +13,7 @@ public class MongoDBExperienceToExperienceModel
 	public ExperienceModel convert(Experience experience) {
 		return (experience == null) ? null :
 			experienceModel()
+				.withId(experience.getId())
 				.inCompany(experience.getCompanyName())
 				.inFunctionOf(experience.getFunction())
 				.locatedAt(experience.getLocation())

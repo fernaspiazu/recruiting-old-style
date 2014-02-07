@@ -18,6 +18,8 @@ public interface ConsultantRepositoryGateway {
 
 	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
+	boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+
 	List<ExperienceModel> findExperiencesByConsultantId(String consultantId);
 
 	boolean addLanguage(LanguageModel languageModel, String consultantId);
@@ -27,4 +29,6 @@ public interface ConsultantRepositoryGateway {
 	boolean addSkills(String[] skills, String consultantId);
 
 	List<ExperienceModel> findMinimalExperiences(String consultantId);
+
+	ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId);
 }

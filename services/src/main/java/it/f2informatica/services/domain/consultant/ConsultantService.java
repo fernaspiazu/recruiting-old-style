@@ -35,4 +35,8 @@ public interface ConsultantService {
 	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
+
+	ExperienceModel findExperience(String consultantId, String experienceId);
+
+	boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
 }

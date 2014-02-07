@@ -53,7 +53,8 @@
 						<header>
 							<div class="mini-box-with-see-all">
 								<h3 th:text="${exp.function}">Software Architect</h3>
-								<a id="editExperience" class="link-ico edit-ico" href="#" title="Edit"></a>
+								<a th:href="@{'/consultant/profile/experiences/edit/'+${session.consultantId}+'/'+${exp.id}}"
+									 id="editExperience" class="link-ico edit-ico" href="experienceForm.html?edit=true" title="Edit"></a>
 							</div>
 							<span th:text="${exp.companyName}">Microsoft</span>
 						</header>
