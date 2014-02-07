@@ -82,6 +82,11 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
+	public void removeExperience(String consultantId, String experienceId) {
+		consultantRepositoryGateway.removeExperience(consultantId, experienceId);
+	}
+
+	@Override
 	public ExperienceModel findExperience(String consultantId, String experienceId) {
 		return consultantRepositoryGateway.findExperienceByConsultantIdAndExperienceId(consultantId, experienceId);
 	}

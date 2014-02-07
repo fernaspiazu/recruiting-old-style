@@ -9,6 +9,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class AddressModel implements DataModel {
+	private static final long serialVersionUID = 8584553310786911492L;
 
 	private String street;
 

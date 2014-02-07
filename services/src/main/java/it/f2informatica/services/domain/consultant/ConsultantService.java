@@ -39,4 +39,6 @@ public interface ConsultantService {
 	ExperienceModel findExperience(String consultantId, String experienceId);
 
 	boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+
+	void removeExperience(String consultantId, String experienceId);
 }

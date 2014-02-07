@@ -2,13 +2,12 @@ package it.f2informatica.services.model.builder;
 
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.MaritalStatus;
-import it.f2informatica.services.model.AddressModel;
-import it.f2informatica.services.model.ConsultantModel;
-import it.f2informatica.services.model.ProfileModel;
+import it.f2informatica.services.model.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.util.Date;
+import java.util.List;
 
 public class ConsultantModelBuilder {
 
@@ -107,12 +106,60 @@ public class ConsultantModelBuilder {
 		return this;
 	}
 
-	public ConsultantModelBuilder withProfile(ProfileModelBuilder profile) {
-		return withProfile(profile.build());
+	public ConsultantModelBuilder withExperienceIn(ExperienceModelBuilder experience) {
+		return withExperienceIn(experience.build());
 	}
 
-	public ConsultantModelBuilder withProfile(ProfileModel profile) {
-		consultant.setProfile(profile);
+	public ConsultantModelBuilder withExperienceIn(ExperienceModel experience) {
+		consultant.getExperiences().add(experience);
+		return this;
+	}
+
+	public ConsultantModelBuilder withExperiencesIn(List<ExperienceModel> experiences) {
+		consultant.getExperiences().addAll(experiences);
+		return this;
+	}
+
+	public ConsultantModelBuilder withEducationIn(EducationModelBuilder education) {
+		return withEducationIn(education.build());
+	}
+
+	public ConsultantModelBuilder withEducationIn(EducationModel education) {
+		consultant.getEducationList().add(education);
+		return this;
+	}
+
+	public ConsultantModelBuilder withEducationIn(List<EducationModel> educations) {
+		consultant.getEducationList().addAll(educations);
+		return this;
+	}
+
+	public ConsultantModelBuilder withSkill(String skill) {
+		consultant.getSkills().add(skill);
+		return this;
+	}
+
+	public ConsultantModelBuilder withSkills(List<String> skills) {
+		consultant.getSkills().addAll(skills);
+		return this;
+	}
+
+	public ConsultantModelBuilder speaking(LanguageModelBuilder language) {
+		return speaking(language.build());
+	}
+
+	public ConsultantModelBuilder speaking(LanguageModel language) {
+		consultant.getLanguages().add(language);
+		return this;
+	}
+
+	public ConsultantModelBuilder speakingLanguages(List<LanguageModel> languages) {
+		consultant.getLanguages().addAll(languages);
+		return this;
+	}
+
+	public ConsultantModelBuilder withInterestsIn(String interestsIn) {
+		consultant.setInterests(interestsIn);
 		return this;
 	}
 

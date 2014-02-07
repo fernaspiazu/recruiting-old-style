@@ -75,8 +75,8 @@ public class ExperienceController extends AbstractConsultantController {
 		model.addAttribute("monthPeriodFrom", getExperienceMonth(experienceModel.getPeriodFrom()));
 		model.addAttribute("yearPeriodFrom", getExperienceYear(experienceModel.getPeriodFrom()));
 		if (experienceModel.getPeriodTo() != null && !experienceModel.isCurrent()) {
-			model.addAttribute("monthPeriodTo", getExperienceMonth(experienceModel.getPeriodFrom()));
-			model.addAttribute("yearPeriodTo", getExperienceYear(experienceModel.getPeriodFrom()));
+			model.addAttribute("monthPeriodTo", getExperienceMonth(experienceModel.getPeriodTo()));
+			model.addAttribute("yearPeriodTo", getExperienceYear(experienceModel.getPeriodTo()));
 		}
 		model.addAttribute("experienceModel", experienceModel);
 		return "consultant/experienceForm";
@@ -94,6 +94,15 @@ public class ExperienceController extends AbstractConsultantController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return calendar;
+	}
+
+	@RequestMapping(value = "/delete/{expId}", method = RequestMethod.GET)
+	public String removeExperience(
+					@PathVariable("expId") String experienceId,
+					@ModelAttribute("consultantId") String consultantId) {
+
+		consultantService.removeExperience(consultantId, experienceId);
+		return "redirect:/consultant/profile/experiences/" + consultantId;
 	}
 
 }

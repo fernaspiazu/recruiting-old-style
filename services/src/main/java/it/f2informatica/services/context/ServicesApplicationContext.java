@@ -23,7 +23,6 @@ public class ServicesApplicationContext {
 				mongoDBUserToModelConverter(),
 				mongoDBConsultantToModelConverter(),
 				mongoDBAddressToModelConverter(),
-				mongoDBProfileToModelConverter(),
 				mongoDBExperienceToModelConverter(),
 				mongoDBLanguageToModelConverter(),
 				mongoDBEducationToModelConverter()
@@ -44,11 +43,6 @@ public class ServicesApplicationContext {
 	@Bean(name = "addressToModelConverter", autowire = Autowire.BY_NAME)
 	public EntityToModelConverter mongoDBAddressToModelConverter() {
 		return new MongoDBAddressToAddressModelConverter();
-	}
-
-	@Bean(name = "profileToModelConverter", autowire = Autowire.BY_NAME)
-	public EntityToModelConverter mongoDBProfileToModelConverter() {
-		return new MongoDBProfileToProfileModelConverter();
 	}
 
 	@Bean(name = "experienceToModelConverter", autowire = Autowire.BY_NAME)

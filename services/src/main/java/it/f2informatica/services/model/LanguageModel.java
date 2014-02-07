@@ -10,6 +10,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class LanguageModel implements DataModel {
+	private static final long serialVersionUID = 5650873740412761162L;
 
 	private String language;
 

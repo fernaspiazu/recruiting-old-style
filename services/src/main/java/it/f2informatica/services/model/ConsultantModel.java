@@ -1,5 +1,6 @@
 package it.f2informatica.services.model;
 
+import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.MaritalStatus;
 import it.f2informatica.datastore.model.DataModel;
@@ -8,11 +9,13 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode
 @ToString
 public class ConsultantModel implements DataModel {
+	private static final long serialVersionUID = 4877550339644654489L;
 
 	private String id;
 
@@ -50,7 +53,15 @@ public class ConsultantModel implements DataModel {
 
 	private MaritalStatus maritalStatus;
 
-	private ProfileModel profile = new ProfileModel();
+	private List<ExperienceModel> experiences = Lists.newArrayList();
+
+	private List<EducationModel> educationList = Lists.newArrayList();
+
+	private List<LanguageModel> languages = Lists.newArrayList();
+
+	private List<String> skills = Lists.newArrayList();
+
+	private String interests;
 
 	private AddressModel residence = new AddressModel();
 

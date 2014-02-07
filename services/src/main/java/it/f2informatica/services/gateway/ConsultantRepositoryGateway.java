@@ -22,13 +22,15 @@ public interface ConsultantRepositoryGateway {
 
 	List<ExperienceModel> findExperiencesByConsultantId(String consultantId);
 
+	List<ExperienceModel> findMinimalExperiences(String consultantId);
+
+	ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId);
+
+	void removeExperience(String consultantId, String experienceId);
+
 	boolean addLanguage(LanguageModel languageModel, String consultantId);
 
 	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
-
-	List<ExperienceModel> findMinimalExperiences(String consultantId);
-
-	ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId);
 }

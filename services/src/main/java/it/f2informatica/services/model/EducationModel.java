@@ -9,6 +9,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class EducationModel implements DataModel {
+	private static final long serialVersionUID = 3982326514709392235L;
 
 	private String school;
 

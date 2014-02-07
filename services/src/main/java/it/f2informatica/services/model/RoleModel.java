@@ -9,6 +9,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class RoleModel implements DataModel {
+	private static final long serialVersionUID = 637344076604577987L;
 
 	private String roleId;
 

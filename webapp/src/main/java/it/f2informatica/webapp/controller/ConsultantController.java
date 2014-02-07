@@ -24,10 +24,7 @@ public class ConsultantController extends AbstractConsultantController {
 	}
 
 	@RequestMapping(value = "/registerMasterData", method = {RequestMethod.POST, RequestMethod.GET})
-	public String registerConsultantMasterData(
-			@ModelAttribute("consultantModel") ConsultantModel consultantModel,
-			BindingResult bindingResult) {
-
+	public String registerConsultantMasterData(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult bindingResult) {
 		if (hasConsultantModelErrors(consultantModel, bindingResult)) {
 			return "consultant/masterDataRegistration";
 		}

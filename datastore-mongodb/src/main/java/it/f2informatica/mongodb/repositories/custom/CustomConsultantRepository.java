@@ -2,13 +2,10 @@ package it.f2informatica.mongodb.repositories.custom;
 
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.domain.Profile;
 
 import java.util.List;
 
-public interface AdditionalConsultantRepository {
-
-	Profile findProfileByConsultantId(String consultantId);
+public interface CustomConsultantRepository {
 
 	boolean addExperience(Experience experience, String consultantId);
 
@@ -21,4 +18,6 @@ public interface AdditionalConsultantRepository {
 	boolean addSkills(String[] skills, String consultantId);
 
 	Experience findExperience(String consultantId, String experienceId);
+
+	boolean removeExperience(String consultantId, String experienceId);
 }

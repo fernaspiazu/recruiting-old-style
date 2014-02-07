@@ -4,8 +4,7 @@ import com.mongodb.WriteResult;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.repositories.custom.AdditionalConsultantRepository;
+import it.f2informatica.mongodb.repositories.custom.CustomConsultantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -19,23 +18,14 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.aggregation.TypedAggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
-public class ConsultantRepositoryImpl implements AdditionalConsultantRepository {
+public class ConsultantRepositoryImpl implements CustomConsultantRepository {
 	private static final String ID = "id";
-	private static final String PROFILE = "profile";
-	private static final String EXPERIENCES = "profile.experiences";
-	private static final String LANGUAGES = "profile.languages";
-	private static final String SKILLS = "profile.skills";
+	private static final String EXPERIENCES = "experiences";
+	private static final String LANGUAGES = "languages";
+	private static final String SKILLS = "skills";
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
-
-	@Override
-	public Profile findProfileByConsultantId(String consultantId) {
-		Query query = new Query(where(ID).is(consultantId));
-		query.fields().include(PROFILE);
-		Consultant consultant = mongoTemplate.findOne(query, Consultant.class);
-		return (consultant != null) ? consultant.getProfile() : null;
-	}
 
 	@Override
 	public boolean addExperience(Experience experience, String consultantId) {
@@ -46,7 +36,18 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 
 	@Override
 	public boolean updateExperience(Experience experience, String consultantId) {
-		return false;
+		Query query = new Query(where(ID).is(consultantId)
+			.and(EXPERIENCES + "." + Fields.UNDERSCORE_ID).is(experience.getId()));
+		Update update = new Update().set(EXPERIENCES + ".$", experience);
+		return updateConsultant(query, update).getLastError().ok();
+	}
+
+	@Override
+	public boolean removeExperience(String consultantId, String experienceId) {
+		Query query = new Query(where(ID).is(consultantId)
+			.and(EXPERIENCES + "." + Fields.UNDERSCORE_ID).is(experienceId));
+		Update update = new Update().pull(EXPERIENCES, findExperience(consultantId, experienceId));
+		return updateConsultant(query, update).getLastError().ok();
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class ConsultantRepositoryImpl implements AdditionalConsultantRepository 
 	public Experience findExperience(String consultantId, String experienceId) {
 		Aggregation aggregation = newAggregation(
 				match(where("id").is(consultantId)),
-				group("profile.experiences"),
+				group("experiences"),
 				unwind(previousOperation()),
 				match(where(previousOperation() + "." + Fields.UNDERSCORE_ID).is(experienceId))
 		);

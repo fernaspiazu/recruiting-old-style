@@ -20,9 +20,7 @@ import static it.f2informatica.services.model.builder.LanguageModelBuilder.langu
 public class ProfileController extends AbstractConsultantController {
 
 	@RequestMapping(value = "/{consultantId}", method = RequestMethod.GET)
-	public String profileRegistrationPage(
-			@PathVariable("consultantId") String consultantId, ModelMap model) {
-
+	public String profileRegistrationPage(@PathVariable("consultantId") String consultantId, ModelMap model) {
 		ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
 		model.addAttribute("consultantId", consultantModel.getId());
 		model.addAttribute("consultantNo", consultantModel.getConsultantNo());
@@ -30,10 +28,9 @@ public class ProfileController extends AbstractConsultantController {
 		model.addAttribute("registrationDate", consultantModel.getRegistrationDate());
 		model.addAttribute("consultantFullName", consultantModel.getConsultantFullName());
 		model.addAttribute("languageModel", consultantService.buildNewLanguageModel());
+		model.addAttribute("languageList", consultantModel.getLanguages());
 		model.addAttribute("experienceList", findMinimalExperiences(consultantId));
-		model.addAttribute("languageList", findLanguages(consultantModel));
 		model.addAttribute("skillList", findSkills(consultantModel));
-
 		return "consultant/profileDataRegistration";
 	}
 
@@ -53,30 +50,21 @@ public class ProfileController extends AbstractConsultantController {
 		}
 	}
 
-	private List<LanguageModel> findLanguages(ConsultantModel consultantModel) {
-		return (consultantModel.getProfile() != null)
-				? consultantModel.getProfile().getLanguages()
-				: Lists.<LanguageModel>newArrayList();
-	}
-
 	private String[] findSkills(ConsultantModel consultantModel) {
-		List<String> skills = (consultantModel.getProfile() != null)
-				? consultantModel.getProfile().getSkills()
-				: Lists.<String>newArrayList();
-		return skills.toArray(new String[skills.size()]);
+		List<String> skillList = consultantModel.getSkills();
+		return skillList.toArray(new String[skillList.size()]);
 	}
 
 	@RequestMapping(value = "/addLanguage", method = RequestMethod.POST)
 	public String addLanguage(
-			@RequestParam("language") String[] languages,
-			@RequestParam("proficiency") String[] proficiencies,
-			@ModelAttribute("consultantId") String consultantId) {
+					@RequestParam("language") String[] languages,
+					@RequestParam("proficiency") String[] proficiencies,
+					@ModelAttribute("consultantId") String consultantId) {
 
 		List<LanguageModel> languagesModel = Lists.newArrayList();
 		for (int i = 0; i < languages.length; i++) {
 			if (StringUtils.isEmpty(languages[i].trim())) continue;
-			languagesModel.add(languageModel(languages[i])
-					.withProficiency(resolveProficiency(proficiencies[i])).build());
+			languagesModel.add(languageModel(languages[i]).withProficiency(resolveProficiency(proficiencies[i])).build());
 		}
 		consultantService.addLanguages(languagesModel.toArray(new LanguageModel[languagesModel.size()]), consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
@@ -92,9 +80,7 @@ public class ProfileController extends AbstractConsultantController {
 	}
 
 	@RequestMapping(value = "/addSkills", method = RequestMethod.POST)
-	public String addSkills(
-			@RequestParam("skill") String[] skills,
-			@ModelAttribute("consultantId") String consultantId) {
+	public String addSkills(@RequestParam("skill") String[] skills, @ModelAttribute("consultantId") String consultantId) {
 		consultantService.addSkills(skills, consultantId);
 		return "redirect:/consultant/profile/" + consultantId;
 	}

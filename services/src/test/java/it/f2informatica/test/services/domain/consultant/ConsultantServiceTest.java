@@ -39,38 +39,38 @@ public class ConsultantServiceTest {
 
 	private Page<ConsultantModel> consultants() {
 		return new PageImpl<>(Arrays.asList(
-				consultantModel().withFirstName("consultant_1").withLastName("consultant_1").build(),
-				consultantModel().withFirstName("consultant_2").withLastName("consultant_2").build())
+			consultantModel().withFirstName("consultant_1").withLastName("consultant_1").build(),
+			consultantModel().withFirstName("consultant_2").withLastName("consultant_2").build())
 		);
 	}
 
 	@Test
 	public void assertFirstStepOnSavingConsultant() {
 		when(consultantRepositoryGateway.saveMasterData(any(ConsultantModel.class)))
-				.thenReturn(registeredConsultant());
+			.thenReturn(registeredConsultant());
 		ConsultantModel registeredConsultant = consultantService.registerConsultantMasterData(
-				consultantModel()
-						.withFirstName("Mario")
-						.withLastName("Rossi").build());
+			consultantModel()
+				.withFirstName("Mario")
+				.withLastName("Rossi").build());
 		assertThat(registeredConsultant.getConsultantNo()).isEqualTo("20131152820f6f34bdf55624303fc4");
 	}
 
 	private ConsultantModel registeredConsultant() {
 		return consultantModel()
-				.withId("52820f6f34bdf55624303fc2")
-				.withConsultantNo("20131152820f6f34bdf55624303fc4")
-				.withFirstName("Mario")
-				.withLastName("Rossi")
-				.build();
+			.withId("52820f6f34bdf55624303fc2")
+			.withConsultantNo("20131152820f6f34bdf55624303fc4")
+			.withFirstName("Mario")
+			.withLastName("Rossi")
+			.build();
 	}
 
 	@Test
 	public void findConsultantByIdTest() {
 		ConsultantModel consMock = consultantModel()
-				.withId("5298766a39ef39c7c280b7e5")
-				.withFirstName("Mario")
-				.withLastName("Rossi")
-				.build();
+			.withId("5298766a39ef39c7c280b7e5")
+			.withFirstName("Mario")
+			.withLastName("Rossi")
+			.build();
 		when(consultantRepositoryGateway.findConsultantById(consMock.getId())).thenReturn(consMock);
 		ConsultantModel result = consultantService.findConsultantById(consMock.getId());
 		assertThat(result.getFirstName()).isEqualTo(consMock.getFirstName());

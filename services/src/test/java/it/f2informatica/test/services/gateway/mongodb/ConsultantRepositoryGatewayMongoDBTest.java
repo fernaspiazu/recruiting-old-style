@@ -45,16 +45,16 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 
 	private Page<Consultant> consultants() {
 		return new PageImpl<>(Arrays.asList(
-				consultant().withFirstName("consultant_1").withLastName("consultant_1").build(),
-				consultant().withFirstName("consultant_2").withLastName("consultant_2").build()
+			consultant().withFirstName("consultant_1").withLastName("consultant_1").build(),
+			consultant().withFirstName("consultant_2").withLastName("consultant_2").build()
 		));
 	}
 
 	@Test
 	public void assertThatNoCrashWhenSavingNewConsultant() {
 		ConsultantModel registeredConsultant = consultantModel()
-				.withId("52820f6f34bdf55624303fc2").withConsultantNo("20131152820f6f34bdf55624303fc4")
-				.build();
+			.withId("52820f6f34bdf55624303fc2").withConsultantNo("20131152820f6f34bdf55624303fc4")
+			.build();
 		when(consultantRepository.save(any(Consultant.class))).thenReturn(new Consultant());
 		when(consultantToModelConverter.convert(any(Consultant.class))).thenReturn(registeredConsultant);
 		ConsultantModel consultantModel = consultantRepositoryGateway.saveMasterData(new ConsultantModel());

@@ -1,12 +1,11 @@
 package it.f2informatica.mongodb.domain.builder;
 
-import it.f2informatica.mongodb.domain.Address;
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.domain.Profile;
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.MaritalStatus;
+import it.f2informatica.mongodb.domain.*;
 
 import java.util.Date;
+import java.util.List;
 
 public class ConsultantBuilder {
 
@@ -96,12 +95,60 @@ public class ConsultantBuilder {
 		return this;
 	}
 
-	public ConsultantBuilder withProfile(ProfileBuilder profile) {
-		return withProfile(profile.build());
+	public ConsultantBuilder withExperienceIn(ExperienceBuilder experience) {
+		return withExperienceIn(experience.build());
 	}
 
-	public ConsultantBuilder withProfile(Profile profile) {
-		consultant.setProfile(profile);
+	public ConsultantBuilder withExperienceIn(Experience experience) {
+		consultant.getExperiences().add(experience);
+		return this;
+	}
+
+	public ConsultantBuilder withExperiencesIn(List<Experience> experiences) {
+		consultant.getExperiences().addAll(experiences);
+		return this;
+	}
+
+	public ConsultantBuilder withEducationIn(EducationBuilder training) {
+		return withEducationIn(training.build());
+	}
+
+	public ConsultantBuilder withEducationIn(Education education) {
+		consultant.getEducationList().add(education);
+		return this;
+	}
+
+	public ConsultantBuilder withEducationIn(List<Education> educations) {
+		consultant.getEducationList().addAll(educations);
+		return this;
+	}
+
+	public ConsultantBuilder withSkill(String skill) {
+		consultant.getSkills().add(skill);
+		return this;
+	}
+
+	public ConsultantBuilder withSkills(List<String> skills) {
+		consultant.getSkills().addAll(skills);
+		return this;
+	}
+
+	public ConsultantBuilder speaking(LanguageBuilder language) {
+		return speaking(language.build());
+	}
+
+	public ConsultantBuilder speaking(Language language) {
+		consultant.getLanguages().add(language);
+		return this;
+	}
+
+	public ConsultantBuilder speakingLanguages(List<Language> languages) {
+		consultant.getLanguages().addAll(languages);
+		return this;
+	}
+
+	public ConsultantBuilder withInterestsIn(String interestsIn) {
+		consultant.setInterests(interestsIn);
 		return this;
 	}
 

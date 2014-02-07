@@ -4,7 +4,7 @@ import it.f2informatica.mongodb.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface AdditionalUserRepository {
+public interface CustomUserRepository {
 
 	Page<User> findAllExcludingUser(Pageable pageable, String username);
 

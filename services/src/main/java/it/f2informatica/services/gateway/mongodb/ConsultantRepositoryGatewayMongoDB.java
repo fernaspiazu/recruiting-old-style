@@ -6,8 +6,6 @@ import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.domain.Profile;
-import it.f2informatica.mongodb.domain.builder.ExperienceBuilder;
 import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
@@ -107,24 +105,22 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Override
 	public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
 		Experience experience = experience()
-				.withId(experienceModel.getId())
-				.inCompany(experienceModel.getCompanyName())
-				.inFunctionOf(experienceModel.getFunction())
-				.locatedAt(experienceModel.getLocation())
-				.fromPeriod(experienceModel.getPeriodFrom())
-				.toPeriod(experienceModel.getPeriodTo())
-				.isThisTheCurrentJob(experienceModel.isCurrent())
-				.withDescription(experienceModel.getDescription())
-				.build();
+			.withId(experienceModel.getId())
+			.inCompany(experienceModel.getCompanyName())
+			.inFunctionOf(experienceModel.getFunction())
+			.locatedAt(experienceModel.getLocation())
+			.fromPeriod(experienceModel.getPeriodFrom())
+			.toPeriod(experienceModel.getPeriodTo())
+			.isThisTheCurrentJob(experienceModel.isCurrent())
+			.withDescription(experienceModel.getDescription())
+			.build();
 		return consultantRepository.updateExperience(experience, consultantId);
 	}
 
 	@Override
 	public List<ExperienceModel> findExperiencesByConsultantId(String consultantId) {
-		Profile profile = consultantRepository.findOne(consultantId).getProfile();
-		return (profile != null)
-				? experienceToModelConverter.convertList(profile.getExperiences())
-				: Lists.<ExperienceModel>newArrayList();
+		List<Experience> experiences = consultantRepository.findOne(consultantId).getExperiences();
+		return experienceToModelConverter.convertList(experiences);
 	}
 
 	@Override
@@ -143,9 +139,14 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
+	public void removeExperience(String consultantId, String experienceId) {
+		consultantRepository.removeExperience(consultantId, experienceId);
+	}
+
+	@Override
 	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
 		Language language = LanguageBuilder.language(languageModel.getLanguage())
-				.withProficiency(languageModel.getProficiency()).build();
+			.withProficiency(languageModel.getProficiency()).build();
 		return consultantRepository.addLanguage(language, consultantId);
 	}
 
@@ -154,7 +155,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 		List<Language> languages = Lists.newArrayList();
 		for (LanguageModel languageModel : languageModelArray) {
 			Language language = LanguageBuilder.language(languageModel.getLanguage())
-					.withProficiency(languageModel.getProficiency()).build();
+				.withProficiency(languageModel.getProficiency()).build();
 			languages.add(language);
 		}
 		return consultantRepository.addLanguages(languages, consultantId);

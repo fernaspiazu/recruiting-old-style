@@ -1,19 +1,20 @@
 package it.f2informatica.test.mongodb.builders;
 
-import it.f2informatica.mongodb.domain.*;
+import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.LanguageProficiency;
 import it.f2informatica.datastore.constant.MaritalStatus;
+import it.f2informatica.mongodb.domain.*;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static it.f2informatica.test.mongodb.builders.AddressDataBuilder.address;
+import static it.f2informatica.test.mongodb.builders.EducationDataBuilder.education;
 import static it.f2informatica.test.mongodb.builders.ExperienceDataBuilder.experience;
 import static it.f2informatica.test.mongodb.builders.LanguageDataBuilder.english;
 import static it.f2informatica.test.mongodb.builders.LanguageDataBuilder.italian;
-import static it.f2informatica.test.mongodb.builders.ProfileDataBuilder.profile;
-import static it.f2informatica.test.mongodb.builders.EducationDataBuilder.education;
 
 public class ConsultantDataBuilder {
 
@@ -33,7 +34,11 @@ public class ConsultantDataBuilder {
 	private String identityCardNo = "AO652R";
 	private String passportNo = "0653214555";
 	private MaritalStatus maritalStatus = MaritalStatus.SINGLE;
-	private Profile profile;
+	private List<Experience> experiences = Lists.newArrayList();
+	private List<Education> educationList = Lists.newArrayList();
+	private List<String> skills = Lists.newArrayList();
+	private List<Language> languages = Lists.newArrayList();
+	private String interests = "Programming, Swimming, Running";
 	private Address residence;
 	private Address domicile;
 	private String curriculum = "No CV";
@@ -123,12 +128,40 @@ public class ConsultantDataBuilder {
 		return this;
 	}
 
-	public ConsultantDataBuilder withProfile(ProfileDataBuilder profile) {
-		return withProfile(profile.build());
+	public ConsultantDataBuilder withExperienceIn(ExperienceDataBuilder experience) {
+		return withExperienceIn(experience.build());
 	}
 
-	public ConsultantDataBuilder withProfile(Profile profile) {
-		this.profile = profile;
+	public ConsultantDataBuilder withExperienceIn(Experience experience) {
+		this.experiences.add(experience);
+		return this;
+	}
+
+	public ConsultantDataBuilder withTrainingIn(EducationDataBuilder training) {
+		return withTrainingIn(training.build());
+	}
+
+	public ConsultantDataBuilder withTrainingIn(Education education) {
+		this.educationList.add(education);
+		return this;
+	}
+
+	public ConsultantDataBuilder withSkill(String skill) {
+		this.skills.add(skill);
+		return this;
+	}
+
+	public ConsultantDataBuilder speaking(LanguageDataBuilder language) {
+		return speaking(language.build());
+	}
+
+	public ConsultantDataBuilder speaking(Language language) {
+		this.languages.add(language);
+		return this;
+	}
+
+	public ConsultantDataBuilder withInterestsIn(String interestsIn) {
+		this.interests = interestsIn;
 		return this;
 	}
 
@@ -168,7 +201,11 @@ public class ConsultantDataBuilder {
 		consultant.setIdentityCardNo(identityCardNo);
 		consultant.setPassportNo(passportNo);
 		consultant.setMaritalStatus(maritalStatus);
-		consultant.setProfile(profile);
+		consultant.setExperiences(experiences);
+		consultant.setEducationList(educationList);
+		consultant.setSkills(skills);
+		consultant.setLanguages(languages);
+		consultant.setInterests(interests);
 		consultant.setResidence(residence);
 		consultant.setDomicile(domicile);
 		consultant.setCurriculum(curriculum);
@@ -177,24 +214,23 @@ public class ConsultantDataBuilder {
 	}
 
 	private ConsultantDataBuilder() {
-		profile = profile()
-				.withExperienceIn(experience().thisIsTheCurrentJob())
-				.withSkill("Functional methods")
-				.withSkill("Java Programming")
-				.withTrainingIn(education())
-				.withTrainingIn(education()
-						.inSchool("Harvard")
-						.startedInYear(2000)
-						.notYetFinished()
-						.withActivitiesIn("Sciences")
-						.withDegreeIn("Information Technology"))
-				.speaking(english()
-						.withProficiency(LanguageProficiency.PROFESSIONAL_WORKING))
-				.speaking(italian()
-						.withProficiency(LanguageProficiency.NATIVE_OR_BILINGUAL))
-				.withInterestsIn("Travels")
-				.build();
-
+		this
+			.withExperienceIn(experience().thisIsTheCurrentJob())
+			.withSkill("Functional methods")
+			.withSkill("Java Programming")
+			.withTrainingIn(education())
+			.withTrainingIn(education()
+					.inSchool("Harvard")
+					.startedInYear(2000)
+					.notYetFinished()
+					.withActivitiesIn("Sciences")
+					.withDegreeIn("Information Technology"))
+			.speaking(english()
+					.withProficiency(LanguageProficiency.PROFESSIONAL_WORKING))
+			.speaking(italian()
+					.withProficiency(LanguageProficiency.NATIVE_OR_BILINGUAL))
+			.withInterestsIn("Travels")
+			.build();
 		residence = address().build();
 		domicile = address().build();
 	}
