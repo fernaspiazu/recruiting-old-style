@@ -4,7 +4,7 @@ import it.f2informatica.acceptance.page.Page;
 import org.openqa.selenium.WebDriver;
 
 public class ProfileRegistrationPage extends Page {
-	private static final String CONSULTANT_FULLNAME_SPAN_XPATH = "//span[@id='consultantFullName']";
+	private static final String CONSULTANT_FULLNAME_H3_XPATH = "//h3[@id='consultantFullName']";
 	private static final String EXPERIENCE_SECTION_DIV_XPATH = "//div[@id='experienceSection']";
 	private static final String ADD_NEW_EXPERIENCE_BUTTON_XPATH = "//button[@id='addNewExperience']";
 	private static final String ADD_EXPERIENCE_FORM_XPATH = "//form[@name='addExperienceForm']";
@@ -25,7 +25,7 @@ public class ProfileRegistrationPage extends Page {
 	}
 
 	public String consultantWichWillBeAddedProfile() {
-		return findElement(CONSULTANT_FULLNAME_SPAN_XPATH).getText();
+		return findElement(CONSULTANT_FULLNAME_H3_XPATH).getText();
 	}
 
 	public boolean isExperienceSectionPresent() {

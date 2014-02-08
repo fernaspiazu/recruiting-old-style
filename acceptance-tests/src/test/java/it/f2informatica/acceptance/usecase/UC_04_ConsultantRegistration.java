@@ -31,7 +31,6 @@ public class UC_04_ConsultantRegistration extends UseCaseTest {
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
 		ProfileRegistrationPage profilePage = consultantMasterDataRegistration(registrationFormPage);
-		consultantProfileDataRegistration(profilePage);
 	}
 
 	private ProfileRegistrationPage consultantMasterDataRegistration(ConsultantRegistrationPage registrationFormPage) {
@@ -71,36 +70,7 @@ public class UC_04_ConsultantRegistration extends UseCaseTest {
 	}
 
 	private void checkThatConsultantHasBeenRegistered(ProfileRegistrationPage profilePage) {
-		assertThat("Rossi Mario").isEqualTo(profilePage.consultantWichWillBeAddedProfile());
-	}
-
-	private void consultantProfileDataRegistration(ProfileRegistrationPage profilePage) {
-		isExperienceSectionPresent(profilePage);
-		profilePage.addNewExperience();
-		isNewExperienceFormPresentAfterClickAddNewExperienceButton(profilePage);
-		profilePage.typeCompanyName("IBM");
-		profilePage.typeFunction("Business Analyst");
-		profilePage.typeLocation("London");
-		profilePage.selectPeriodFromApril();
-		profilePage.typePeriofFromYear("2010");
-		profilePage.selectPeriodToDecember();
-		profilePage.typePeriodToYear("2012");
-		profilePage.typeDescription("This is a fake description");
-		profilePage.saveExperience();
-		checkHowManyExperiencesHaveBeenAdded(profilePage);
-	}
-
-	private void isExperienceSectionPresent(ProfileRegistrationPage profilePage) {
-		assertThat(profilePage.isExperienceSectionPresent()).isTrue();
-	}
-
-	private void isNewExperienceFormPresentAfterClickAddNewExperienceButton(ProfileRegistrationPage profilePage) {
-		assertThat(profilePage.isNewExperienceFormPresent()).isTrue();
-		assertThat(profilePage.isAddNewExperienceButtonDisabled()).isTrue();
-	}
-
-	private void checkHowManyExperiencesHaveBeenAdded(ProfileRegistrationPage profilePage) {
-		assertThat(profilePage.experiencesNumber()).isEqualTo(1);
+		assertThat(profilePage.consultantWichWillBeAddedProfile()).contains("Rossi Mario");
 	}
 
 }
