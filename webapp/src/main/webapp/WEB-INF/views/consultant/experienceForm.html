@@ -54,6 +54,7 @@
 							th:object="${experienceModel}" method="post" action="profileDataRegistration.html">
 					<input type="hidden" id="consultantId" th:value="${session.consultantId}"/>
 					<input type="hidden" name="isEdit" th:value="${edit}"/>
+					<input type="hidden" th:field="*{id}" th:if="${edit}"/>
 					<div class="form-row">
 						<label for="companyName" th:text="#{experience.companyname}" class="form-label label-required">Company name</label>
 						<input type="text" id="companyName" th:field="*{companyName}" class="required" autofocus=""/>

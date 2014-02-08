@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
-import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.*;
+import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.experience;
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
 @Service
@@ -40,6 +40,12 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Autowired
 	@Qualifier("experienceToModelConverter")
 	private EntityToModelConverter<Experience, ExperienceModel> experienceToModelConverter;
+
+	@Override
+	public ConsultantModel findOneConsultant(String consultantId) {
+		Consultant consultant = consultantRepository.findOne(consultantId);
+		return consultantToModelConverter.convert(consultant);
+	}
 
 	@Override
 	public Page<ConsultantModel> findAllConsultants(Pageable pageable) {
@@ -82,13 +88,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public ConsultantModel findConsultantById(String consultantId) {
-		Consultant consultant = consultantRepository.findOne(consultantId);
-		return consultantToModelConverter.convert(consultant);
-	}
-
-	@Override
-	public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+	public boolean addExperience(ExperienceModel experienceModel, String consultantId) {
 		Experience experience = experience()
 			.withId(UUID.randomUUID().toString())
 			.inCompany(experienceModel.getCompanyName())
@@ -103,29 +103,32 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-		Experience experience = experience()
-			.withId(experienceModel.getId())
-			.inCompany(experienceModel.getCompanyName())
-			.inFunctionOf(experienceModel.getFunction())
-			.locatedAt(experienceModel.getLocation())
-			.fromPeriod(experienceModel.getPeriodFrom())
-			.toPeriod(experienceModel.getPeriodTo())
-			.isThisTheCurrentJob(experienceModel.isCurrent())
-			.withDescription(experienceModel.getDescription())
-			.build();
+	public boolean updateExperience(ExperienceModel experienceModel, String consultantId) {
+		Experience experience = consultantRepository.findExperience(consultantId, experienceModel.getId());
+		experience.setCompanyName(experienceModel.getCompanyName());
+		experience.setFunction(experienceModel.getFunction());
+		experience.setLocation(experienceModel.getLocation());
+		experience.setPeriodFrom(experienceModel.getPeriodFrom());
+		experience.setPeriodTo(experienceModel.getPeriodTo());
+		experience.setCurrent(experienceModel.isCurrent());
+		experience.setDescription(experienceModel.getDescription());
 		return consultantRepository.updateExperience(experience, consultantId);
 	}
 
 	@Override
-	public List<ExperienceModel> findExperiencesByConsultantId(String consultantId) {
-		List<Experience> experiences = consultantRepository.findOne(consultantId).getExperiences();
-		return experienceToModelConverter.convertList(experiences);
+	public void removeExperience(String consultantId, String experienceId) {
+		consultantRepository.removeExperience(consultantId, experienceId);
+	}
+
+	@Override
+	public ExperienceModel findOneExperience(String consultantId, String experienceId) {
+		Experience experience = consultantRepository.findExperience(consultantId, experienceId);
+		return experienceToModelConverter.convert(experience);
 	}
 
 	@Override
 	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
-		List<ExperienceModel> experiences = findExperiencesByConsultantId(consultantId);
+		List<ExperienceModel> experiences = findExperiences(consultantId);
 		if (experiences.size() > 3) {
 			return experiences.subList(0, 3);
 		}
@@ -133,14 +136,9 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId) {
-		Experience experience = consultantRepository.findExperience(consultantId, experienceId);
-		return experienceToModelConverter.convert(experience);
-	}
-
-	@Override
-	public void removeExperience(String consultantId, String experienceId) {
-		consultantRepository.removeExperience(consultantId, experienceId);
+	public List<ExperienceModel> findExperiences(String consultantId) {
+		List<Experience> experiences = consultantRepository.findOne(consultantId).getExperiences();
+		return experienceToModelConverter.convertList(experiences);
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public ConsultantModel findConsultantById(String consultantId) {
-		return consultantRepositoryGateway.findConsultantById(consultantId);
+		return consultantRepositoryGateway.findOneConsultant(consultantId);
 	}
 
 	@Override
@@ -73,12 +73,12 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-		return consultantRepositoryGateway.addConsultantExperience(experienceModel, consultantId);
+		return consultantRepositoryGateway.addExperience(experienceModel, consultantId);
 	}
 
 	@Override
 	public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-		return consultantRepositoryGateway.updateConsultantExperience(experienceModel, consultantId);
+		return consultantRepositoryGateway.updateExperience(experienceModel, consultantId);
 	}
 
 	@Override
@@ -88,12 +88,12 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public ExperienceModel findExperience(String consultantId, String experienceId) {
-		return consultantRepositoryGateway.findExperienceByConsultantIdAndExperienceId(consultantId, experienceId);
+		return consultantRepositoryGateway.findOneExperience(consultantId, experienceId);
 	}
 
 	@Override
 	public List<ExperienceModel> findExperiences(String consultantId) {
-		return consultantRepositoryGateway.findExperiencesByConsultantId(consultantId);
+		return consultantRepositoryGateway.findExperiences(consultantId);
 	}
 
 	@Override

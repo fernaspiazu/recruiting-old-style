@@ -71,7 +71,7 @@ public class ConsultantServiceTest {
 			.withFirstName("Mario")
 			.withLastName("Rossi")
 			.build();
-		when(consultantRepositoryGateway.findConsultantById(consMock.getId())).thenReturn(consMock);
+		when(consultantRepositoryGateway.findOneConsultant(consMock.getId())).thenReturn(consMock);
 		ConsultantModel result = consultantService.findConsultantById(consMock.getId());
 		assertThat(result.getFirstName()).isEqualTo(consMock.getFirstName());
 	}

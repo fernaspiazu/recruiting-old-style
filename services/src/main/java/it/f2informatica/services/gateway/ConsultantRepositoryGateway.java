@@ -10,23 +10,23 @@ import java.util.List;
 
 public interface ConsultantRepositoryGateway {
 
+	ConsultantModel findOneConsultant(String consultantId);
+
 	Page<ConsultantModel> findAllConsultants(Pageable pageable);
 
 	ConsultantModel saveMasterData(ConsultantModel consultantModel);
 
-	ConsultantModel findConsultantById(String consultantId);
+	boolean addExperience(ExperienceModel experienceModel, String consultantId);
 
-	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	boolean updateExperience(ExperienceModel experienceModel, String consultantId);
 
-	boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	void removeExperience(String consultantId, String experienceId);
 
-	List<ExperienceModel> findExperiencesByConsultantId(String consultantId);
+	ExperienceModel findOneExperience(String consultantId, String experienceId);
 
 	List<ExperienceModel> findMinimalExperiences(String consultantId);
 
-	ExperienceModel findExperienceByConsultantIdAndExperienceId(String consultantId, String experienceId);
-
-	void removeExperience(String consultantId, String experienceId);
+	List<ExperienceModel> findExperiences(String consultantId);
 
 	boolean addLanguage(LanguageModel languageModel, String consultantId);
 

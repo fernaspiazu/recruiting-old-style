@@ -37,7 +37,7 @@ public class ExperienceController extends AbstractConsultantController {
 	}
 
 	@RequestMapping(value = {"/save", "/update"},method = RequestMethod.POST)
-	public String saveExperience(
+	public String saveOrUpdateExperience(
 			@ModelAttribute("experienceModel") ExperienceModel experienceModel,
 			@ModelAttribute("consultantId") String consultantId,
 			@RequestParam("monthPeriodFrom") String monthPeriodFrom,

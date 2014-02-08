@@ -67,7 +67,7 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 		ConsultantModel model = consultantModel().withId(consultant.getId()).withFirstName(consultant.getFirstName()).build();
 		when(consultantRepository.findOne(consultant.getId())).thenReturn(consultant);
 		when(consultantToModelConverter.convert(consultant)).thenReturn(model);
-		ConsultantModel consultantModel = consultantRepositoryGateway.findConsultantById(consultant.getId());
+		ConsultantModel consultantModel = consultantRepositoryGateway.findOneConsultant(consultant.getId());
 		assertThat(consultantModel.getFirstName()).isEqualTo(model.getFirstName());
 	}
 
