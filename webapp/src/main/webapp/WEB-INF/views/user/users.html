@@ -67,6 +67,13 @@
 					</tr>
 					</thead>
 					<tbody>
+					<tr th:if="${#lists.isEmpty(users.content)}">
+						<td colspan="8">
+							<div class="empty-data-view">
+								<span th:text="#{global.emptylist}">No Results</span>
+							</div>
+						</td>
+					</tr>
 					<tr th:each="user : ${users}">
 						<td th:text="${user.username}">mario_r</td>
 						<td th:text="${user.role.roleName}">Administrator</td>

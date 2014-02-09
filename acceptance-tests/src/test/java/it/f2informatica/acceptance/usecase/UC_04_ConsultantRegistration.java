@@ -1,8 +1,6 @@
 package it.f2informatica.acceptance.usecase;
 
-import it.f2informatica.acceptance.page.consultant.ConsultantManagementPage;
-import it.f2informatica.acceptance.page.consultant.ConsultantRegistrationPage;
-import it.f2informatica.acceptance.page.consultant.ProfileRegistrationPage;
+import it.f2informatica.acceptance.page.consultant.*;
 import it.f2informatica.mongodb.domain.Consultant;
 import org.junit.After;
 import org.junit.Before;
@@ -31,6 +29,14 @@ public class UC_04_ConsultantRegistration extends UseCaseTest {
 		ConsultantManagementPage consultantManagementPage = navigator.goToConsultantManagementPage();
 		ConsultantRegistrationPage registrationFormPage = consultantManagementPage.consultantRegistrationForm();
 		ProfileRegistrationPage profilePage = consultantMasterDataRegistration(registrationFormPage);
+		verifyExperienceSection(profilePage);
+		verifyLanguageSection(profilePage);
+		verifySkillSection(profilePage);
+		ProfileRegistrationPage profilePageWithExperience = registerNewExperience(profilePage);
+		verifyFirstExperience(profilePageWithExperience);
+		ExperiencesPage experiencesPage = profilePageWithExperience.clickOnSeeAllLink();
+		ExperiencesPage experiencesPageWithCompanyUpdated = updateExperience(experiencesPage);
+		verifyExperienceUpdated(experiencesPageWithCompanyUpdated);
 	}
 
 	private ProfileRegistrationPage consultantMasterDataRegistration(ConsultantRegistrationPage registrationFormPage) {
@@ -71,6 +77,57 @@ public class UC_04_ConsultantRegistration extends UseCaseTest {
 
 	private void checkThatConsultantHasBeenRegistered(ProfileRegistrationPage profilePage) {
 		assertThat(profilePage.consultantWichWillBeAddedProfile()).contains("Rossi Mario");
+	}
+
+	private void verifyExperienceSection(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.isExperienceSectionPresent()).isTrue();
+	}
+
+	private void verifyLanguageSection(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.isLanguageSectionPresent()).isTrue();
+	}
+
+	private void verifySkillSection(ProfileRegistrationPage profilePage) {
+		assertThat(profilePage.isSkillSectionPresent()).isTrue();
+	}
+
+	private ProfileRegistrationPage registerNewExperience(ProfileRegistrationPage profilePage) {
+		profilePage.addNewExperience();
+		ExperienceFormPage experienceFormPage = new ExperienceCreationPage(driver, navigator.getBaseUrl());
+		experienceFormPage.typeCompanyName("RedHat");
+		experienceFormPage.typeFunction("Clojure Developer");
+		experienceFormPage.typeLocation("Miami");
+		experienceFormPage.selectPeriodFromApril();
+		experienceFormPage.typePeriofFromYear("2009");
+		experienceFormPage.selectPeriodToDecember();
+		experienceFormPage.typePeriodToYear("2010");
+		experienceFormPage.typeDescription("Description of this experience");
+		experienceFormPage.saveExperience();
+		return new ProfileRegistrationPage(driver, navigator.getBaseUrl(), experienceFormPage.getConsultantIdValue());
+	}
+
+	private void verifyFirstExperience(ProfileRegistrationPage profilePageWithExperience) {
+		assertThat(profilePageWithExperience.experiencesNumber()).isEqualTo(1);
+	}
+
+	private ExperiencesPage updateExperience(ExperiencesPage experiencesPage) {
+		final String parameters = experiencesPage.getConsultantIdValue() + "/" + experiencesPage.getExperienceIdValue();
+		experiencesPage.editExperience();
+		System.out.println(driver.getCurrentUrl());
+		ExperienceFormPage experienceEditPage = new ExperienceEditPage(driver, navigator.getBaseUrl(), parameters);
+		verifyData(experienceEditPage);
+		String[] urlSplitted = driver.getCurrentUrl().split("/");
+		experienceEditPage.typeCompanyName("Google Inc");
+		experienceEditPage.saveExperience();
+		return new ExperiencesPage(driver, navigator.getBaseUrl(), urlSplitted[urlSplitted.length - 2]);
+	}
+
+	private void verifyData(ExperienceFormPage experienceEditPage) {
+		assertThat(experienceEditPage.getCompanyName()).isEqualTo("RedHat");
+	}
+
+	private void verifyExperienceUpdated(ExperiencesPage experiencesPageWithCompanyUpdated) {
+		assertThat(experiencesPageWithCompanyUpdated.getCompanyNameFromFirstExperience()).isEqualTo("Google Inc");
 	}
 
 }

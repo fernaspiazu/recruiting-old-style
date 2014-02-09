@@ -65,13 +65,17 @@
 			</div>
 
 			<div id="profile-section">
+				<input type="hidden" id="consIdProfileRegPage" th:value="${session.consultantId}"/>
 				<div class="mini-experience-box">
 					<div class="mini-box-with-see-all">
 						<h2 th:text="#{experience.title}">Experiences</h2>
-						<a th:href="@{/consultant/profile/experiences/}+${session.consultantId}" th:text="#{global.seeall}"
+						<a id="see-all-link" th:href="@{/consultant/profile/experiences/}+${session.consultantId}" th:text="#{global.seeall}"
 							 href="experiencesPage.html">See all</a>
 					</div>
 					<div id="experiences" class="detail-list-view">
+						<div th:if="${#lists.isEmpty(experienceList)}" class="detail-list-view-item empty-details-view">
+							<span th:text="#{global.emptylist}">No Results</span>
+						</div>
 						<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
 							<header>
 								<h3 th:text="${exp.function}">Software Architect</h3>
@@ -180,6 +184,9 @@
 						</script>
 					</div>
 					<div id="languages" class="detail-list-view">
+						<div th:if="${#lists.isEmpty(languageList)}" class="detail-list-view-item empty-details-view">
+							<span th:text="#{global.emptylist}">No Results</span>
+						</div>
 						<ul class="list-ul-details">
 							<li th:each="lang : ${languageList}">
 								<h3 th:text="${lang.language}">English</h3>
@@ -221,6 +228,9 @@
 						<a id="addNewSkill" class="link-ico add-ico cursor-pointer" th:title="#{global.add}" title="Add"></a>
 					</div>
 					<div id="skills" class="detail-list-view" style="padding-bottom: 15px;">
+						<div th:if="${#lists.isEmpty(skillList)}" class="detail-list-view-item empty-details-view">
+							<span th:text="#{global.emptylist}">No Results</span>
+						</div>
 						<div th:each="skill : ${skillList}" class="skill-added">
 							<span th:text="${skill}">DB Administrator</span>
 						</div>

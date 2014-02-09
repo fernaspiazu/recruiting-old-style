@@ -270,6 +270,7 @@ input[type='button'], input[type='submit'], input[type='reset'], button {
 .data-table th {background: #eee; min-width: 100px; padding: 10px;}
 .data-table th.column-link {min-width: 30px !important; width: 40px;}
 .data-table td {padding: 5px 8px 5px 8px;}
+.data-table .empty-data-view {padding: 3px; text-align: center; font-weight: bold;}
 
 td.cell-link {text-align: center;}
 .link-ico {display: inline-block; width: 20px; height: 20px;}
@@ -367,6 +368,15 @@ a.add-new-button-disabled:link, a.add-new-button-disabled:visited {
 	display: block;
 	color: #999;
 	margin-top: 3px;
+}
+.empty-details-view {
+	border: 1px solid rgba(0, 0, 0, .3);
+	border-radius: 5px;
+	background-color: #eee;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 13px;
 }
 
 .list-ul-details {

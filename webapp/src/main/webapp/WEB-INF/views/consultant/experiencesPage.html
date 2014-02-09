@@ -49,14 +49,19 @@
 				<a id="experiencesToProfile" th:href="@{/consultant/profile/}+${session.consultantId}" th:title="#{global.back}"
 					 href="profileDataRegistration.html" class="link-ico back-ico" title="Back"></a>
 				<div id="experiences" class="detail-list-view">
+					<div th:if="${#lists.isEmpty(experienceList)}" class="detail-list-view-item empty-details-view">
+						<span th:text="#{experiences.empty}">No Experiences</span>
+					</div>
 					<div th:each="exp : ${experienceList}" th:id="${#ids.seq('experience')}" class="detail-list-view-item">
+						<input type="hidden" th:id="${#ids.seq('consultantId-')}" th:value="${session.consultantId}"/>
+						<input type="hidden" th:id="${#ids.seq('experienceId-')}" th:value="${exp.id}"/>
 						<header>
 							<div class="mini-box-with-see-all">
 								<h3 th:text="${exp.function}">Software Architect</h3>
 								<a th:href="@{'/consultant/profile/experiences/edit/'+${session.consultantId}+'/'+${exp.id}}"
-									 id="editExperience" class="link-ico edit-ico" href="experienceForm.html?edit=true" title="Edit"></a>
+									 class="link-ico edit-ico" href="experienceForm.html?edit=true" title="Edit"></a>
 							</div>
-							<span th:text="${exp.companyName}">Microsoft</span>
+							<span id="companyNameSpan" th:text="${exp.companyName}">Microsoft</span>
 						</header>
 						<div class="detail-list-view-item-span">
 							<span th:text="${exp.periodFromStr}">march 2012</span>
