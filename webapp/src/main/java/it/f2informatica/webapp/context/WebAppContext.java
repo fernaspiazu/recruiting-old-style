@@ -28,10 +28,10 @@ import java.util.List;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = {
-		"it.f2informatica.webapp.controller",
-		"it.f2informatica.webapp.gateway",
-		"it.f2informatica.webapp.utils",
-		"it.f2informatica.webapp.validator"
+	"it.f2informatica.webapp.controller",
+	"it.f2informatica.webapp.gateway",
+	"it.f2informatica.webapp.utils",
+	"it.f2informatica.webapp.validator"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
 	public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
@@ -130,10 +130,10 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 
 	private String[] basenames() {
 		return new String[] {
-				"/WEB-INF/i18n/global",
-				"/WEB-INF/i18n/user",
-				"/WEB-INF/i18n/consultant",
-				"/WEB-INF/i18n/months"
+			"/WEB-INF/i18n/global",
+			"/WEB-INF/i18n/user",
+			"/WEB-INF/i18n/consultant",
+			"/WEB-INF/i18n/months"
 		};
 	}
 

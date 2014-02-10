@@ -43,11 +43,9 @@ public class NavBarController {
 
 	@RequestMapping(value = "/consultant", method = RequestMethod.GET)
 	public String consultantManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
-		Pageable customPageableRequest = new PageRequest(
-				pageable.getPageNumber(),
-				pageable.getPageSize(),
-				Sort.Direction.ASC,
-				"lastName", "firstName");
+		Pageable customPageableRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.Direction.ASC, "lastName", "firstName");
+
 		modelMap.addAttribute("consultants", consultantService.showAllConsultants(customPageableRequest));
 		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		return "consultant/consultants";

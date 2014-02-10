@@ -11,8 +11,8 @@ import org.springframework.context.support.ConversionServiceFactoryBean;
 
 @Configuration
 @ComponentScan(basePackages = {
-		"it.f2informatica.services.domain",
-		"it.f2informatica.services.gateway"
+	"it.f2informatica.services.domain",
+	"it.f2informatica.services.gateway"
 })
 public class ServicesApplicationContext {
 
@@ -20,12 +20,12 @@ public class ServicesApplicationContext {
 	public ConversionServiceFactoryBean mongodbConversionService() {
 		ConversionServiceFactoryBean conversionServiceFactoryBean = new ConversionServiceFactoryBean();
 		conversionServiceFactoryBean.setConverters(Sets.newHashSet(
-				mongoDBUserToModelConverter(),
-				mongoDBConsultantToModelConverter(),
-				mongoDBAddressToModelConverter(),
-				mongoDBExperienceToModelConverter(),
-				mongoDBLanguageToModelConverter(),
-				mongoDBEducationToModelConverter()
+			mongoDBUserToModelConverter(),
+			mongoDBConsultantToModelConverter(),
+			mongoDBAddressToModelConverter(),
+			mongoDBExperienceToModelConverter(),
+			mongoDBLanguageToModelConverter(),
+			mongoDBEducationToModelConverter()
 		));
 		return conversionServiceFactoryBean;
 	}

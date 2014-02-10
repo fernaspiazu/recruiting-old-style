@@ -69,10 +69,7 @@ public class UserController {
 
 	@RequestMapping(value = "/verifyCurrentPassword", method = RequestMethod.POST)
 	@ResponseBody
-	public String isCurrentPasswordValid(
-			@RequestParam("userId") String userId,
-			@RequestParam("currentPwd") String currentPwd) {
-
+	public String isCurrentPasswordValid(@RequestParam("userId") String userId, @RequestParam("currentPwd") String currentPwd) {
 		return String.valueOf(passwordUpdaterService.isCurrentPasswordValid(userId, currentPwd));
 	}
 

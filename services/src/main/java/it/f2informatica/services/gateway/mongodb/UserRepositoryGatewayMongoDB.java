@@ -56,17 +56,17 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	@Override
 	public boolean updatePassword(UpdatePasswordRequest request) {
 		return arePasswordCompiledCorrectly(request)
-				&& userRepository.updatePassword(
-				request.getUserId(),
-				request.getCurrentPassword(),
-				request.getNewPassword(),
-				request.getPasswordConfirmed());
+			&& userRepository.updatePassword(
+			request.getUserId(),
+			request.getCurrentPassword(),
+			request.getNewPassword(),
+			request.getPasswordConfirmed());
 	}
 
 	private boolean arePasswordCompiledCorrectly(UpdatePasswordRequest request) {
 		return StringUtils.hasText(request.getNewPassword())
-				&& StringUtils.hasText(request.getPasswordConfirmed())
-				&& request.getNewPassword().equals(request.getPasswordConfirmed());
+			&& StringUtils.hasText(request.getPasswordConfirmed())
+			&& request.getNewPassword().equals(request.getPasswordConfirmed());
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	@Override
 	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
 		return new PageImpl<>(Lists.newArrayList(
-				userToModelConverter.convertIterable(userRepository.findAllExcludingUser(pageable, usernameToExclude))
+			userToModelConverter.convertIterable(userRepository.findAllExcludingUser(pageable, usernameToExclude))
 		));
 	}
 

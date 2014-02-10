@@ -28,8 +28,20 @@ public class ConsultantRepositoryImpl implements CustomConsultantRepository {
 	private MongoTemplate mongoTemplate;
 
 	@Override
+	public Experience findExperience(String consultantId, String experienceId) {
+		Aggregation aggregation = newAggregation(
+			match(where("id").is(consultantId)),
+			group("experiences"),
+			unwind(previousOperation()),
+			match(where(previousOperation() + "." + Fields.UNDERSCORE_ID).is(experienceId))
+		);
+		AggregationResults<Experience> aggregationResults = mongoTemplate.aggregate(aggregation, Consultant.class, Experience.class);
+		return aggregationResults.getUniqueMappedResult();
+	}
+
+	@Override
 	public boolean addExperience(Experience experience, String consultantId) {
-		Query query = new Query(where(ID).is(consultantId));
+		Query query = whereConsultantIdIs(consultantId);
 		Update update = new Update().addToSet(EXPERIENCES, experience);
 		return updateConsultant(query, update).getLastError().ok();
 	}
@@ -52,39 +64,28 @@ public class ConsultantRepositoryImpl implements CustomConsultantRepository {
 
 	@Override
 	public boolean addLanguage(Language language, String consultantId) {
-		Query query = new Query(where(ID).is(consultantId));
 		Update update = new Update().addToSet(LANGUAGES, language);
-		return updateConsultant(query, update).getLastError().ok();
+		return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
 	}
 
 	@Override
 	public boolean addLanguages(List<Language> languages, String consultantId) {
-		Query query = new Query(where(ID).is(consultantId));
 		Update update = new Update().set(LANGUAGES, languages);
-		return updateConsultant(query, update).getLastError().ok();
+		return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
 	}
 
 	@Override
 	public boolean addSkills(String[] skills, String consultantId) {
-		Query query = new Query(where(ID).is(consultantId));
 		Update update = new Update().set(SKILLS, skills);
-		return updateConsultant(query, update).getLastError().ok();
+		return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
+	}
+
+	private Query whereConsultantIdIs(String consultantId) {
+		return new Query(where(ID).is(consultantId));
 	}
 
 	private WriteResult updateConsultant(Query query, Update update) {
 		return mongoTemplate.updateFirst(query, update, Consultant.class);
-	}
-
-	@Override
-	public Experience findExperience(String consultantId, String experienceId) {
-		Aggregation aggregation = newAggregation(
-				match(where("id").is(consultantId)),
-				group("experiences"),
-				unwind(previousOperation()),
-				match(where(previousOperation() + "." + Fields.UNDERSCORE_ID).is(experienceId))
-		);
-		AggregationResults<Experience> aggregationResults = mongoTemplate.aggregate(aggregation, Consultant.class, Experience.class);
-		return aggregationResults.getUniqueMappedResult();
 	}
 
 }

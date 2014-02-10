@@ -13,9 +13,19 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+/**
+ * Class which represents the current Http Request performed.
+ */
 @Component
 public class CurrentHttpServletRequest {
 
+	/**
+	 * Returns the current locale associated to this request
+	 * if any has been selected, otherwise it will return the
+	 * default browser locale.
+	 *
+	 * @return the current locale
+	 */
 	public Locale getRequestLocale() {
 		String languageParam = currentHttpServletRequest().getParameter(WebAppContext.LANGUAGE);
 		if (StringUtils.hasText(languageParam)) {
@@ -23,24 +33,37 @@ public class CurrentHttpServletRequest {
 		} else {
 			Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
 			return (cookie != null)
-					? LocaleUtils.toLocale(cookie.getValue())
-					: currentHttpServletRequest().getLocale();
+				? LocaleUtils.toLocale(cookie.getValue())
+				: currentHttpServletRequest().getLocale();
 		}
 	}
 
+	/**
+	 * Gets the cookie associated to this request given
+	 * the cookie's name.
+	 *
+	 * @param cookieName name of cookie which wish be retrieved
+	 * @return Cookie belonging this request
+	 */
 	public Cookie getCookie(String cookieName) {
 		return WebUtils.getCookie(currentHttpServletRequest(), cookieName);
 	}
 
+	/**
+	 * Gets the current Http Request
+	 */
 	public HttpServletRequest currentHttpServletRequest() {
 		return currentServletRequestAttributes().getRequest();
 	}
 
+	/**
+	 * Gets servlet attributes
+	 */
 	public ServletRequestAttributes currentServletRequestAttributes() {
 		return (ServletRequestAttributes) currentRequestAttributes();
 	}
 
-	public RequestAttributes currentRequestAttributes() {
+	private RequestAttributes currentRequestAttributes() {
 		return RequestContextHolder.currentRequestAttributes();
 	}
 

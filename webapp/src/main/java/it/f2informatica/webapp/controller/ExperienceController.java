@@ -21,14 +21,6 @@ public class ExperienceController extends AbstractConsultantController {
 		return "consultant/experiencesPage";
 	}
 
-	private List<ExperienceModel> findExperiences(String consultantId) {
-		List<ExperienceModel> experiences = consultantService.findExperiences(consultantId);
-		for (ExperienceModel experience : experiences) {
-			formatExperiencePeriods(experience);
-		}
-		return experiences;
-	}
-
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String addNewExperience(ModelMap model) {
 		model.addAttribute("months", monthHelper.getMonths());
@@ -46,15 +38,11 @@ public class ExperienceController extends AbstractConsultantController {
 			@RequestParam("yearPeriodTo") String yearPeriodTo,
 			@RequestParam("isEdit") String isEdit) {
 
-		boolean edit = StringUtils.hasText(isEdit) && Boolean.parseBoolean(isEdit);
-		boolean isNotCurrentJob = !experienceModel.isCurrent();
-
 		experienceModel.setPeriodFrom(periodResolver.resolveDateByMonthAndYear(monthPeriodFrom, yearPeriodFrom));
-		if (isNotCurrentJob) {
+		if (!experienceModel.isCurrent()) {
 			experienceModel.setPeriodTo(periodResolver.resolveDateByMonthAndYear(monthPeriodTo, yearPeriodTo));
 		}
-
-		if (edit) {
+		if (isExperienceInEditForm(isEdit)) {
 			consultantService.updateConsultantExperience(experienceModel, consultantId);
 			return "redirect:/consultant/profile/experiences/" + consultantId;
 		} else {
@@ -63,11 +51,20 @@ public class ExperienceController extends AbstractConsultantController {
 		}
 	}
 
+	private boolean isExperienceInEditForm(String isEdit) {
+		return StringUtils.hasText(isEdit) && Boolean.parseBoolean(isEdit);
+	}
+
+	@RequestMapping(value = "/delete/{expId}", method = RequestMethod.GET)
+	public String removeExperience(@PathVariable("expId") String experienceId, @ModelAttribute("consultantId") String consultantId) {
+		consultantService.removeExperience(consultantId, experienceId);
+		return "redirect:/consultant/profile/experiences/" + consultantId;
+	}
+
 	@RequestMapping(value = "/edit/{consultantId}/{expId}", method = RequestMethod.GET)
-	public String editExperience(
+	public String editExperience(ModelMap model,
 			@PathVariable("consultantId") String consultantId,
-			@PathVariable("expId") String experienceId,
-			ModelMap model) {
+			@PathVariable("expId") String experienceId) {
 
 		ExperienceModel experienceModel = consultantService.findExperience(consultantId, experienceId);
 		model.addAttribute("edit", true);
@@ -94,15 +91,6 @@ public class ExperienceController extends AbstractConsultantController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return calendar;
-	}
-
-	@RequestMapping(value = "/delete/{expId}", method = RequestMethod.GET)
-	public String removeExperience(
-					@PathVariable("expId") String experienceId,
-					@ModelAttribute("consultantId") String consultantId) {
-
-		consultantService.removeExperience(consultantId, experienceId);
-		return "redirect:/consultant/profile/experiences/" + consultantId;
 	}
 
 }

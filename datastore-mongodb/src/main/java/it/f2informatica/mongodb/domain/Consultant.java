@@ -69,8 +69,8 @@ public class Consultant extends Identifiable<String> implements MongoDBDocument 
 
 	private Address domicile;
 
-	private String curriculum; // TODO: GridFSFile
+	private String curriculum; //TODO: GridFSFile
 
-	private String photo; // TODO: GridFSFile
+	private String photo; //TODO: GridFSFile
 
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CustomConsultantRepository {
 
+	Experience findExperience(String consultantId, String experienceId);
+
 	boolean addExperience(Experience experience, String consultantId);
 
 	boolean updateExperience(Experience experience, String consultantId);
@@ -16,8 +18,6 @@ public interface CustomConsultantRepository {
 	boolean addLanguages(List<Language> languages, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);
-
-	Experience findExperience(String consultantId, String experienceId);
 
 	boolean removeExperience(String consultantId, String experienceId);
 }

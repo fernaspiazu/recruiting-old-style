@@ -4,8 +4,7 @@ import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.repositories.custom.CustomConsultantRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ConsultantRepository
-		extends CustomConsultantRepository, PagingAndSortingRepository<Consultant, String> {
+public interface ConsultantRepository extends CustomConsultantRepository, PagingAndSortingRepository<Consultant, String> {
 
 	Consultant findByConsultantNo(String consultantNo);
 
