@@ -2,7 +2,7 @@ package it.f2informatica.services.context;
 
 import com.google.common.collect.Sets;
 import it.f2informatica.services.gateway.EntityToModelConverter;
-import it.f2informatica.services.gateway.mongodb.converter.*;
+import it.f2informatica.services.gateway.converter.*;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

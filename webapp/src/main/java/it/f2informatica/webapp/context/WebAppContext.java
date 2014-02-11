@@ -93,6 +93,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	public ThymeleafViewResolver thymeleafViewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setTemplateEngine(thymeleafTemplateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
 		viewResolver.setOrder(2);
 		return viewResolver;
 	}

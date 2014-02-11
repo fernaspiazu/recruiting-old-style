@@ -113,7 +113,6 @@ public class UC_04_ConsultantRegistration extends UseCaseTest {
 	private ExperiencesPage updateExperience(ExperiencesPage experiencesPage) {
 		final String parameters = experiencesPage.getConsultantIdValue() + "/" + experiencesPage.getExperienceIdValue();
 		experiencesPage.editExperience();
-		System.out.println(driver.getCurrentUrl());
 		ExperienceFormPage experienceEditPage = new ExperienceEditPage(driver, navigator.getBaseUrl(), parameters);
 		verifyData(experienceEditPage);
 		String[] urlSplitted = driver.getCurrentUrl().split("/");

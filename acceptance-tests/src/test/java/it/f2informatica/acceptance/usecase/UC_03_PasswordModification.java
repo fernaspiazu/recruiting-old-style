@@ -41,6 +41,7 @@ public class UC_03_PasswordModification extends UseCaseTest {
 		changePasswordPage.updatePassword();
 		logout();
 		LoginPage loginPage = navigator.goToLoginPage();
+		waitThirtySeconds();
 		loginPage.typeUsername("zoe.paterson");
 		loginPage.typePassword("new.password");
 		HomePage homePage = loginPage.clickOnLoginSuccessButton();

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -112,20 +113,16 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
 	@Override
 	public boolean updateUser(UserModel userModel) {
-		return mongoTemplate.updateFirst(
-			query(where("id").is(userModel.getUserId())),
-			fieldsToUpdate(userModel),
-			User.class
-		).getLastError().ok();
-	}
+		Query query = query(where("id").is(userModel.getUserId()));
 
-	public Update fieldsToUpdate(UserModel userModel) {
-		return new Update()
+		Update update = new Update()
 			.set("username", userModel.getUsername())
 			.set("role", roleRepository.findOne(userModel.getRole().getRoleId()))
 			.set("lastName", userModel.getLastName())
 			.set("firstName", userModel.getFirstName())
 			.set("email", userModel.getEmail());
+
+		return mongoTemplate.updateFirst(query, update, User.class).getLastError().ok();
 	}
 
 	@Override

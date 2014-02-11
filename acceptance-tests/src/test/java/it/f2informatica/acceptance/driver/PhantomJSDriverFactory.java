@@ -28,7 +28,6 @@ public class PhantomJSDriverFactory implements WebDriverFactory {
 	private DesiredCapabilities capabilities() {
 		DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
 		capabilities.setJavascriptEnabled(true);
-		capabilities.setCapability(CapabilityType.VERSION, "1.0.4");
 		capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 		capabilities.setCapability(CapabilityType.SUPPORTS_LOCATION_CONTEXT, true);
 		capabilities.setCapability(CapabilityType.PLATFORM, Platform.ANY);

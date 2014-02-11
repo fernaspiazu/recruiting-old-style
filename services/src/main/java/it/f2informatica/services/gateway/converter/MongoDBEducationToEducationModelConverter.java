@@ -1,4 +1,4 @@
-package it.f2informatica.services.gateway.mongodb.converter;
+package it.f2informatica.services.gateway.converter;
 
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.services.gateway.EntityToModelConverter;
