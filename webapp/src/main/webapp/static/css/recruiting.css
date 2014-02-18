@@ -1,0 +1,13 @@
+.navbar-recruiting {
+	padding-right: 40px;
+	border-radius: 0;
+}
+
+.f2informatica-area {
+	height: 600px;
+	background: url("../images/f2informatica.png") no-repeat fixed top;
+}
+
+.f2-alert {
+	width: 500px;
+}
