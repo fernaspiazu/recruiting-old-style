@@ -3,18 +3,18 @@ package it.f2informatica.services.model;
 import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.MaritalStatus;
-import it.f2informatica.datastore.model.DataModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @EqualsAndHashCode
 @ToString
-public class ConsultantModel implements DataModel {
+public class ConsultantModel implements Serializable {
 	private static final long serialVersionUID = 4877550339644654489L;
 
 	private String id;

@@ -1,6 +1,6 @@
 package it.f2informatica.acceptance.context;
 
-import it.f2informatica.mongodb.context.MongoDBApplicationContext;
+import it.f2informatica.mongodb.MongoDBApplicationContext;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

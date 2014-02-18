@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.services.domain.user.UserService;
+import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.model.UserModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.controllers;
 
 import it.f2informatica.webapp.controller.I18NJavascriptResolverController;
-import it.f2informatica.webapp.controller.helper.CurrentHttpServletRequest;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

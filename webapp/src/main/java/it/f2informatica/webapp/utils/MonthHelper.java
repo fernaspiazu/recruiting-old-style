@@ -1,15 +1,10 @@
-package it.f2informatica.webapp.controller.helper;
+package it.f2informatica.webapp.utils;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.webapp.context.WebAppContext;
-import org.apache.commons.lang3.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Component

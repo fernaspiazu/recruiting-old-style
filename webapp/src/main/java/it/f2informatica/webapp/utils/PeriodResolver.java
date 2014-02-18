@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.controller.helper;
+package it.f2informatica.webapp.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

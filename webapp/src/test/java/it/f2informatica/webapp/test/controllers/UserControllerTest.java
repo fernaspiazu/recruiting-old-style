@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.controllers;
 
-import it.f2informatica.services.domain.user.PasswordUpdaterService;
-import it.f2informatica.services.domain.user.UserService;
+import it.f2informatica.services.user.PasswordUpdaterService;
+import it.f2informatica.services.user.UserService;
 import it.f2informatica.webapp.controller.UserController;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -4,7 +4,7 @@ import com.mongodb.WriteResult;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.repositories.custom.CustomConsultantRepository;
+import it.f2informatica.mongodb.repositories.CustomConsultantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;

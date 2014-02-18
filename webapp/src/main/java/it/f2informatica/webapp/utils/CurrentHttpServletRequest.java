@@ -1,6 +1,6 @@
-package it.f2informatica.webapp.controller.helper;
+package it.f2informatica.webapp.utils;
 
-import it.f2informatica.webapp.context.WebAppContext;
+import it.f2informatica.webapp.WebAppContext;
 import org.apache.commons.lang3.LocaleUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

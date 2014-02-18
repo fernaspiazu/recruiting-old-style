@@ -1,7 +1,7 @@
 package it.f2informatica.test.services.domain.user;
 
-import it.f2informatica.services.domain.user.PasswordUpdaterService;
-import it.f2informatica.services.domain.user.PasswordUpdaterServiceImpl;
+import it.f2informatica.services.user.PasswordUpdaterService;
+import it.f2informatica.services.user.PasswordUpdaterServiceImpl;
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 import org.junit.Test;

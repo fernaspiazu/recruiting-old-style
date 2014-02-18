@@ -2,8 +2,8 @@ package it.f2informatica.test.services.domain.user;
 
 import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Authority;
-import it.f2informatica.services.domain.user.UserService;
-import it.f2informatica.services.domain.user.UserServiceImpl;
+import it.f2informatica.services.user.UserService;
+import it.f2informatica.services.user.UserServiceImpl;
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;

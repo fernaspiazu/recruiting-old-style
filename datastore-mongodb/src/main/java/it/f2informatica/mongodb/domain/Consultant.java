@@ -3,7 +3,6 @@ package it.f2informatica.mongodb.domain;
 import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.Gender;
 import it.f2informatica.datastore.constant.MaritalStatus;
-import it.f2informatica.datastore.domain.MongoDBDocument;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Document
-public class Consultant extends Identifiable<String> implements MongoDBDocument {
+public class Consultant extends Identifiable<String> {
 	private static final long serialVersionUID = 6643483509995605407L;
 
 	@Indexed(unique = true)

@@ -1,7 +1,7 @@
 package it.f2informatica.test.services.domain.consultant;
 
-import it.f2informatica.services.domain.consultant.ConsultantService;
-import it.f2informatica.services.domain.consultant.ConsultantServiceImpl;
+import it.f2informatica.services.consultant.ConsultantService;
+import it.f2informatica.services.consultant.ConsultantServiceImpl;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.model.ConsultantModel;
 import org.junit.Test;

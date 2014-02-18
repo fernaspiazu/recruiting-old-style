@@ -1,4 +1,4 @@
-package it.f2informatica.services.domain.consultant;
+package it.f2informatica.services.consultant;
 
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;

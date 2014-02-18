@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.context;
+package it.f2informatica.mongodb;
 
 import com.mongodb.Mongo;
 import org.springframework.beans.factory.annotation.Value;

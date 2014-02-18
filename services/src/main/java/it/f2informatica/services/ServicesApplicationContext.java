@@ -1,4 +1,4 @@
-package it.f2informatica.services.context;
+package it.f2informatica.services;
 
 import com.google.common.collect.Sets;
 import it.f2informatica.services.gateway.EntityToModelConverter;
@@ -10,10 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 
 @Configuration
-@ComponentScan(basePackages = {
-	"it.f2informatica.services.domain",
-	"it.f2informatica.services.gateway"
-})
+@ComponentScan(basePackages = {"it.f2informatica.services"})
 public class ServicesApplicationContext {
 
 	@Bean

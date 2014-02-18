@@ -1,4 +1,4 @@
-package it.f2informatica.services.domain.user;
+package it.f2informatica.services.user;
 
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 

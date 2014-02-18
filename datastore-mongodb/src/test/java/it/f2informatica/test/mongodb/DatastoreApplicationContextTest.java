@@ -1,6 +1,6 @@
 package it.f2informatica.test.mongodb;
 
-import it.f2informatica.mongodb.context.MongoDBApplicationContext;
+import it.f2informatica.mongodb.MongoDBApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

@@ -2,11 +2,11 @@ package it.f2informatica.webapp.controller;
 
 import com.google.common.collect.Lists;
 import it.f2informatica.datastore.constant.LanguageProficiency;
-import it.f2informatica.services.domain.consultant.ConsultantService;
+import it.f2informatica.services.consultant.ConsultantService;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
-import it.f2informatica.webapp.controller.helper.MonthHelper;
-import it.f2informatica.webapp.controller.helper.PeriodResolver;
+import it.f2informatica.webapp.utils.MonthHelper;
+import it.f2informatica.webapp.utils.PeriodResolver;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

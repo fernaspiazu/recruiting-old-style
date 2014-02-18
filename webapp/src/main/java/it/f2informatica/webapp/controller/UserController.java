@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.services.domain.user.PasswordUpdaterService;
-import it.f2informatica.services.domain.user.UserService;
+import it.f2informatica.services.user.PasswordUpdaterService;
+import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;

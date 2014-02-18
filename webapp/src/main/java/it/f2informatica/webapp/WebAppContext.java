@@ -1,4 +1,4 @@
-package it.f2informatica.webapp.context;
+package it.f2informatica.webapp;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -23,7 +23,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>it.f2informatica.webapp.context.RootApplicationContext</param-value>
+    <param-value>it.f2informatica.webapp.RootApplicationContext</param-value>
   </context-param>
 
   <servlet>
@@ -35,7 +35,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>it.f2informatica.webapp.context.RootApplicationContext</param-value>
+      <param-value>it.f2informatica.webapp.RootApplicationContext</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
     <!-- Since Servlet 3.x -->

@@ -1,4 +1,4 @@
-package it.f2informatica.services.domain.authentication;
+package it.f2informatica.services.authentication;
 
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.responses.AuthenticationResponse;
