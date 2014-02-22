@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:substituteby="fragments/head::head (#{user.users})">
+<head th:substituteby="fragments/head::head (#{user.usermanagement})">
 	<meta charset="UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>User Management</title>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/recruiting.css}" href="../../../static/css/recruiting.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/jquery.dataTables.css}" href="../../../static/css/jquery.dataTables.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
 	<script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
 	<script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
 </head>
 <body role="document">
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -47,99 +50,46 @@
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
-
-<!--<div id="global-container">
-	<header th:substituteby="fragments/header::header" class="header">
-		<div class="f2inf-header-box-space"></div>
-		<div class="header-floating-content">
-			<div id="select-language-box">
-				<label for="select-language"
-					style="color: #333; font-weight: lighter; vertical-align: inherit;">Select language</label>
-				<select id="select-language">
-					<option value="en">English</option>
-					<option value="it">Italian</option>
-				</select>
-			</div>
-			<div id="userInSession">
-				<img title="User in session" src="../../../static/images/user-icon.png"/>
-				<span id="userLoggedIn">Username</span>
-			</div>
-			<div id="logoutLink">
-				<img id="logout" title="Logout" src="../../../static/images/logout-icon.png"/>
-			</div>
-		</div>
-		<script th:inline="javascript">
-			$("#logoutLink").click(function() {
-				window.location = "../login/login.html";
-			});
-		</script>
-	</header>
-	<div id="container">
-		<div th:substituteby="fragments/navbar::navbar" class="navbar">
-			<div id="nav-f2inf-box-space"></div>
-			<ul id="nav">
-				<li><a href="../homePage.html" class="nav-item-selected">Home</a></li>
-				<li><a href="../user/users.html">User Management</a></li>
-				<li><a href="../consultant/consultants.html">Consultant Management</a></li>
-			</ul>
-		</div>
-		<div id="content">
-			<h2 th:text="#{user.users}" class="header-underlined">User Management</h2>
-			<div class="hor-navmenu-block">
-				<ul class="hor-navmenu">
-					<li>
-						<a th:href="@{/user/new}" th:text="#{user.newuser}" href="createNewUser.html">Create new User</a>
-					</li>
-				</ul>
-			</div>
-			<div class="data-table-container">
-				<table id="user-list" class="data-table">
-					<thead>
-					<tr>
-						<th th:text="#{user.username}">Username</th>
-						<th th:text="#{user.authorization}">Authorization</th>
-						<th>Last Name</th>
-						<th>First Name</th>
-						<th>Email Address</th>
-						<th class="column-link"></th>
-						<th class="column-link"></th>
-						<th class="column-link"></th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr th:if="${#lists.isEmpty(users.content)}">
-						<td colspan="8">
-							<div class="empty-data-view">
-								<span th:text="#{global.emptylist}">No Results</span>
-							</div>
-						</td>
-					</tr>
-					<tr th:each="user : ${users}">
-						<td th:text="${user.username}">mario_r</td>
-						<td th:text="${user.role.roleName}">Administrator</td>
-						<td th:text="${user.lastName}">Rossi</td>
-						<td th:text="${user.firstName}">Mario</td>
-						<td th:text="${user.email}">mario.rossi@libero.it</td>
-						<td class="cell-link">
-							<a th:href="@{/user/edit/}+${user.userId}" th:title="#{user.edituser}"
-								 class="link-ico edit-ico" href="userEdit.html" title="Edit"></a>
-						</td>
-						<td class="cell-link">
-							<a th:href="@{/user/changePassword/}+${user.userId}" th:title="#{user.changePassword}"
-								 th:unless="${user.notRemovable}" class="link-ico lock-ico" href="changePasswordForm.html"
-								 title="Update password"></a>
-						</td>
-						<td class="cell-link">
-							<a th:href="@{/user/delete/}+${user.userId}" th:title="#{user.deleteuser}"
-								 th:unless="${user.notRemovable}" class="link-ico trash-ico" href="users.html"
-								 title="Delete"></a>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
+<div class="container">
+	<div class="page-header">
+		<h1 th:text="#{user.usermanagement}">User Management</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-10">
+			<table class="table table-bordered table-hover default-datatable">
+				<thead>
+				<tr>
+					<th th:text="#{user.username}">Username</th>
+					<th th:text="#{user.authorization}">Authorization</th>
+					<th>Last Name</th>
+					<th>First Name</th>
+					<th>Email Address</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:if="${#lists.isEmpty(users.content)}">
+					<td colspan="8">
+						<div class="empty-data-view">
+							<span th:text="#{global.emptylist}">No Results</span>
+						</div>
+					</td>
+				</tr>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.username}">mario_r</td>
+					<td th:text="${user.role.roleName}">Administrator</td>
+					<td th:text="${user.lastName}">Rossi</td>
+					<td th:text="${user.firstName}">Mario</td>
+					<td th:text="${user.email}">mario.rossi@libero.it</td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
-</div>-->
+</div>
+<div id="footer" th:substituteby="fragments/footer::footer">
+	<div class="container">
+		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
+	</div>
+</div>
 </body>
 </html>

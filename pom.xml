@@ -37,7 +37,7 @@
     <jvm.version>1.7</jvm.version>
     <spring.version>4.0.1.RELEASE</spring.version>
     <spring.security.version>3.2.0.RELEASE</spring.security.version>
-    <guava.version>15.0</guava.version>
+    <guava.version>16.0.1</guava.version>
     <junit.version>4.9</junit.version>
     <fest.version>1.4</fest.version>
     <mockito.version>1.9.5</mockito.version>

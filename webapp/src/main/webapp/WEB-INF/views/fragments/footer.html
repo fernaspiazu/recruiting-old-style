@@ -1,3 +1,4 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,13 +6,61 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+
+	<script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
 </head>
 <body>
-<footer class="row show" th:fragment="footer" role="footer">
-	<div th:text="#{footer.footer}" class="panel-footer">
-		&copy; 2013 Footer
+<div id="footer" th:fragment="footer">
+	<div class="container">
+		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
 	</div>
-</footer>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			$(".default-datatable").dataTable({
+				"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+				"sPaginationType": "bootstrap",
+				"bLengthChange" : true,
+				"bInfo": true,
+				"oLanguage" : languageSettings()
+			}).parent().find("input[type='text']")
+					.addClass("form-control input-sm").css({"width" : 250});
+		});
+
+		function languageSettings() {
+			return {
+				"sEmptyTable" : /*[[#{table.emptyTable}]]*/   "No data available in table",
+				"sInfo" : /*[[#{table.info}]]*/ "Showing _START_ to _END_ of _TOTAL_ entries",
+				"sInfoEmpty" : /*[[#{table.infoEmpty}]]*/ "Showing 0 to 0 of 0 entries",
+				"sInfoFiltered" : /*[[#{table.infoFiltered}]]*/ "(filtered from _MAX_ total entries)",
+				"sInfoPostFix" : "",
+				"sInfoThousands" : /*[[#{table.thousands}]]*/ ",",
+				"sLengthMenu" : /*[[#{table.entriesShowed}]]*/ "Show _MENU_ entries",
+				"sLoadingRecords" : /*[[#{table.loading}]]*/ "Loading...",
+				"sProcessing" : /*[[#{table.processing}]]*/ "Processing...",
+				"sSearch" : /*[[#{table.search}]]*/ "Search:",
+				"sZeroRecords" : /*[[#{table.emptyFiltered}]]*/ "No matching records found",
+				"oPaginate": {
+					"sFirst" : /*[[#{table.first}]]*/ "First",
+					"sLast" : /*[[#{table.last}]]*/ "Last",
+					"sNext" : /*[[#{table.next}]]*/ "Next",
+					"sPrevious" : /*[[#{table.previous}]]*/ "Previous"
+				},
+				"oAria": {
+					"sSortAscending":  ": activate to sort column ascending",
+					"sSortDescending": ": activate to sort column descending"
+				}
+			};
+		}
+		/*]]>*/
+	</script>
+</div>
 </body>
 </html>
