@@ -6,13 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>User Management</title>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
 	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/jquery.dataTables.css}" href="../../../static/css/jquery.dataTables.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
 	<script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
 	<script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
 	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
 </head>
 <body role="document">
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -74,7 +75,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr th:each="user : ${users}">
+				<tr th:each="user : ${users}" class="rowlink">
 					<td th:text="${user.username}">mario_r</td>
 					<td th:text="${user.role.roleName}">Administrator</td>
 					<td th:text="${user.lastName}">Rossi</td>
@@ -83,8 +84,67 @@
 				</tr>
 				</tbody>
 			</table>
+			<hr/>
+			<div class="control-group pull-right">
+				<div class="controls">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static">New User</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="userFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">New User Creation</h4>
+					</div>
+					<div class="modal-body">
+						<form action="#" th:object="${userModel}" method="post" class="form-group" role="form">
+							<fieldset>
+								<div class="form-group">
+									<label for="username" class="mandatory">Username</label>
+									<input type="text" id="username" th:field="*{username}" class="form-control input-sm"/>
+								</div>
+								<div class="form-group">
+									<label for="password" class="mandatory">Password</label>
+									<input type="password" id="password" th:field="*{password}" class="form-control input-sm"/>
+								</div>
+								<div class="form-group">
+									<label for="role" class="mandatory">Select role</label>
+									<select class="form-control input-sm" id="role" th:field="*{role}">
+										<option value="">---</option>
+										<option th:each="r : ${roles}" th:value="${r.roleId}" th:text="${r.roleName}">Administrator</option>
+									</select>
+								</div>
+								<hr/>
+								<div class="form-group">
+									<label for="firstName" class="mandatory">First name</label>
+									<input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm"/>
+								</div>
+								<div class="form-group">
+									<label for="lastName" class="mandatory">Last name</label>
+									<input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm"/>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button id="deleteIP" type="submit" class="btn btn-success">Save</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		$("#userFormModal").on("shown.bs.modal", function(e) {
+			$("#username").focus();
+		});
+
+		$("#userFormModal").on("hidden.bs.modal", function(e) {
+			console.log("Delete all data");
+		});
+	</script>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">
 	<div class="container">

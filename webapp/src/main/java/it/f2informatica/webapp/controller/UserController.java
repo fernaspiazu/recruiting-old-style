@@ -20,11 +20,13 @@ public class UserController {
 	@Autowired
 	private PasswordUpdaterService passwordUpdaterService;
 
+	@Deprecated
 	@ModelAttribute("roles")
 	public Iterable<RoleModel> loadRoles() {
 		return userService.loadRoles();
 	}
 
+	@Deprecated
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String createNewUser(ModelMap model) {
 		model.addAttribute("userModel", userService.buildEmptyUserModel());
@@ -34,7 +36,7 @@ public class UserController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
 		userService.saveUser(userModel);
-		return "redirect:/user";
+		return "redirect:/users";
 	}
 
 	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
@@ -46,13 +48,13 @@ public class UserController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("userModel") UserModel userModel) {
 		userService.updateUser(userModel);
-		return "redirect:/user";
+		return "redirect:/users";
 	}
 
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable String userId) {
 		userService.deleteUser(userId);
-		return "redirect:/user";
+		return "redirect:/users";
 	}
 
 	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.GET)
@@ -64,7 +66,7 @@ public class UserController {
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
 		passwordUpdaterService.updatePassword(request);
-		return "redirect:/user";
+		return "redirect:/users";
 	}
 
 	@RequestMapping(value = "/verifyCurrentPassword", method = RequestMethod.POST)

@@ -36,66 +36,66 @@ public class UserControllerTest {
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders
-				.standaloneSetup(userController)
-				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-				.build();
+			.standaloneSetup(userController)
+			.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+			.build();
 	}
 
 	@Test
 	public void createNewUser() throws Exception {
 		mockMvc.perform(get("/user/new"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/createNewUser"));
+			.andExpect(status().isOk())
+			.andExpect(view().name("user/createNewUser"));
 	}
 
 	@Test
 	public void editUser() throws Exception {
 		mockMvc.perform(get("/user/edit/1234567890"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/userEdit"));
+			.andExpect(status().isOk())
+			.andExpect(view().name("user/userEdit"));
 	}
 
 	@Ignore
 	@Test
 	public void failingUserRegistration() throws Exception {
 		mockMvc.perform(post("/user/save"))
-				.andDo(print())
-				.andExpect(model().errorCount(3))
-				.andExpect(view().name("user/createNewUser"));
+			.andDo(print())
+			.andExpect(model().errorCount(3))
+			.andExpect(view().name("user/createNewUser"));
 	}
 
 	@Test
 	public void successfulUserRegistration() throws Exception {
 		mockMvc.perform(post("/user/save")
-					.param("username", "username")
-					.param("password", "password")
-					.param("role.roleId", "52602b9b92bede6f44752e35")
-					.param("role.roleName", "ADMIN"))
-				.andDo(print())
-				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/user"));
+			.param("username", "username")
+			.param("password", "password")
+			.param("role.roleId", "52602b9b92bede6f44752e35")
+			.param("role.roleName", "ADMIN"))
+			.andDo(print())
+			.andExpect(status().isFound())
+			.andExpect(redirectedUrl("/users"));
 	}
 
 	@Test
 	public void deleteUser() throws Exception {
 		mockMvc.perform(get("/user/delete/1234567890"))
-				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/user"));
+			.andExpect(status().isFound())
+			.andExpect(redirectedUrl("/users"));
 	}
 
 	@Test
 	public void changePasswordForm() throws Exception {
 		mockMvc.perform(get("/user/changePassword/1234567890"))
-				.andExpect(request().attribute("userId", "1234567890"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/changePasswordForm"));
+			.andExpect(request().attribute("userId", "1234567890"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("user/changePasswordForm"));
 	}
 
 	@Test
 	public void updatePassword() throws Exception {
 		mockMvc.perform(post("/user/updatePassword"))
-				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/user"));
+			.andExpect(status().isFound())
+			.andExpect(redirectedUrl("/users"));
 	}
 
 }

@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes({"navbarItemActive", "roles"})
 public class NavBarController {
 	public static final String NAVBAR_ITEM_ACTIVE = "navbarItemActive";
 
@@ -28,26 +28,26 @@ public class NavBarController {
 	private ConsultantService consultantService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homePage(HttpServletRequest request) {
-		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 0);
+	public String homePage(ModelMap model) {
+		model.addAttribute(NAVBAR_ITEM_ACTIVE, 0);
 		return "homePage";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String userManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public String userManagementPage(ModelMap modelMap, Pageable pageable) {
 		String currentUser = securityAccessor.getCurrentUsername();
+		modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 1);
+		modelMap.addAttribute("roles", userService.loadRoles());
 		modelMap.addAttribute("users", userService.findAllExcludingCurrentUser(pageable, currentUser));
-		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 1);
+		modelMap.addAttribute("userModel", userService.buildEmptyUserModel());
 		return "user/users";
 	}
 
 	@RequestMapping(value = "/consultant", method = RequestMethod.GET)
-	public String consultantManagementPage(ModelMap modelMap, Pageable pageable, HttpServletRequest request) {
-		Pageable customPageableRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(),
-				Sort.Direction.ASC, "lastName", "firstName");
-
+	public String consultantManagementPage(ModelMap modelMap, Pageable pageable) {
+		Pageable customPageableRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.ASC, "lastName", "firstName");
+		modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		modelMap.addAttribute("consultants", consultantService.showAllConsultants(customPageableRequest));
-		request.getSession().setAttribute(NAVBAR_ITEM_ACTIVE, 2);
 		return "consultant/consultants";
 	}
 
