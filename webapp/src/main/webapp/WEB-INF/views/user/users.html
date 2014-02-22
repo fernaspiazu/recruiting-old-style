@@ -61,20 +61,13 @@
 				<thead>
 				<tr>
 					<th th:text="#{user.username}">Username</th>
-					<th th:text="#{user.authorization}">Authorization</th>
-					<th>Last Name</th>
-					<th>First Name</th>
-					<th>Email Address</th>
+					<th th:text="#{user.role}">Role</th>
+					<th th:text="#{user.surename}">Surename</th>
+					<th th:text="#{user.name}">Name</th>
+					<th th:text="#{user.email}">Email</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:if="${#lists.isEmpty(users.content)}">
-					<td colspan="8">
-						<div class="empty-data-view">
-							<span th:text="#{global.emptylist}">No Results</span>
-						</div>
-					</td>
-				</tr>
 				<tr th:each="user : ${users}" class="rowlink">
 					<td th:text="${user.username}">mario_r</td>
 					<td th:text="${user.role.roleName}">Administrator</td>
@@ -87,7 +80,7 @@
 			<hr/>
 			<div class="control-group pull-right">
 				<div class="controls">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static">New User</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
 				</div>
 			</div>
 		</div>
@@ -96,41 +89,57 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">New User Creation</h4>
+						<h4 class="modal-title" id="myModalLabel" th:text="#{user.newuser}">New User Creation</h4>
 					</div>
 					<div class="modal-body">
-						<form action="#" th:object="${userModel}" method="post" class="form-group" role="form">
+						<form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post" class="form-horizontal" role="form">
 							<fieldset>
 								<div class="form-group">
-									<label for="username" class="mandatory">Username</label>
-									<input type="text" id="username" th:field="*{username}" class="form-control input-sm"/>
+									<label for="username" class="col-sm-2 control-label" th:text="#{user.username}">Username</label>
+									<div class="col-sm-10">
+										<input type="text" id="username" th:field="*{username}" class="form-control input-sm"/>
+									</div>
 								</div>
 								<div class="form-group">
-									<label for="password" class="mandatory">Password</label>
-									<input type="password" id="password" th:field="*{password}" class="form-control input-sm"/>
+									<label for="password" class="col-sm-2 control-label" th:text="#{user.password}">Password</label>
+									<div class="col-sm-10">
+										<input type="password" id="password" th:field="*{password}" class="form-control input-sm"/>
+									</div>
 								</div>
 								<div class="form-group">
-									<label for="role" class="mandatory">Select role</label>
-									<select class="form-control input-sm" id="role" th:field="*{role}">
-										<option value="">---</option>
-										<option th:each="r : ${roles}" th:value="${r.roleId}" th:text="${r.roleName}">Administrator</option>
-									</select>
+									<label for="role" class="col-sm-2 control-label" th:text="#{user.role}">Role</label>
+									<div class="col-sm-10">
+										<select class="form-control input-sm" id="role" th:field="*{role.roleId}">
+											<option value="">---</option>
+											<option th:each="r : ${roles}" th:value="${r.roleId}" th:text="${r.roleName}">Administrator</option>
+										</select>
+									</div>
 								</div>
 								<hr/>
 								<div class="form-group">
-									<label for="firstName" class="mandatory">First name</label>
-									<input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm"/>
+									<label for="firstName" class="col-sm-2 control-label" th:text="#{user.name}">Name</label>
+									<div class="col-sm-10">
+										<input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm"/>
+									</div>
 								</div>
 								<div class="form-group">
-									<label for="lastName" class="mandatory">Last name</label>
-									<input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm"/>
+									<label for="lastName" class="col-sm-2 control-label" th:text="#{user.surename}">Surename</label>
+									<div class="col-sm-10">
+										<input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="email" class="col-sm-2 control-label" th:text="#{user.email}">Email</label>
+									<div class="col-sm-10">
+										<input type="email" id="email" th:field="*{email}" class="form-control input-sm"/>
+									</div>
 								</div>
 							</fieldset>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
+								<button type="submit" class="btn btn-success" th:text="#{global.save}">Save</button>
+							</div>
 						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button id="deleteIP" type="submit" class="btn btn-success">Save</button>
 					</div>
 				</div>
 			</div>
@@ -142,7 +151,9 @@
 		});
 
 		$("#userFormModal").on("hidden.bs.modal", function(e) {
-			console.log("Delete all data");
+			$("#userModelForm").find("input, select").each(function(i, elem) {
+				$(elem).val("");
+			});
 		});
 	</script>
 </div>

@@ -25,13 +25,16 @@
 		/*<![CDATA[*/
 		$(document).ready(function() {
 			$(".default-datatable").dataTable({
-				"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
-				"sPaginationType": "bootstrap",
+				"iDisplayLength" : 10,
 				"bLengthChange" : true,
+				"sDom" : "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+				"sPaginationType": "bootstrap",
 				"bInfo": true,
 				"oLanguage" : languageSettings()
 			}).parent().find("input[type='text']")
 					.addClass("form-control input-sm").css({"width" : 250});
+
+			$(".default-datatable").parent().find("select").addClass("form-control input-sm");
 		});
 
 		function languageSettings() {

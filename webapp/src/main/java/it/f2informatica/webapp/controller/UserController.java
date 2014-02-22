@@ -8,6 +8,7 @@ import it.f2informatica.services.requests.UpdatePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -26,15 +27,8 @@ public class UserController {
 		return userService.loadRoles();
 	}
 
-	@Deprecated
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String createNewUser(ModelMap model) {
-		model.addAttribute("userModel", userService.buildEmptyUserModel());
-		return "user/createNewUser";
-	}
-
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
+	public String saveUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
 		userService.saveUser(userModel);
 		return "redirect:/users";
 	}
