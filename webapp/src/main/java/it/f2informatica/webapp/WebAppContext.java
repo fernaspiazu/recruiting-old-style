@@ -30,8 +30,7 @@ import java.util.List;
 @ComponentScan(basePackages = {
 	"it.f2informatica.webapp.controller",
 	"it.f2informatica.webapp.gateway",
-	"it.f2informatica.webapp.utils",
-	"it.f2informatica.webapp.validator"
+	"it.f2informatica.webapp.utils"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {
 	public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";

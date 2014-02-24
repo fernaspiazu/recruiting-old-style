@@ -5,7 +5,6 @@ import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.utils.MonthHelper;
 import it.f2informatica.webapp.utils.PeriodResolver;
-import it.f2informatica.webapp.validator.ConsultantMasterDataValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +34,6 @@ public class ConsultantControllerTest {
 
 	@Mock
 	private ConsultantService consultantService;
-
-	@Mock
-	private ConsultantMasterDataValidator consultantMasterDataValidator;
 
 	@InjectMocks
 	private ConsultantController consultantController;

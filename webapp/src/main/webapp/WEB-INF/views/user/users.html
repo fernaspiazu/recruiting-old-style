@@ -14,8 +14,10 @@
 	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
 	<script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
 	<script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body role="document">
+<script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -94,6 +96,7 @@
 					<div class="modal-body">
 						<form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post" class="form-horizontal" role="form">
 							<fieldset>
+								<div id="fieldErrors"></div>
 								<div class="form-group">
 									<label for="username" class="col-sm-2 control-label" th:text="#{user.username}">Username</label>
 									<div class="col-sm-10">
@@ -137,7 +140,7 @@
 							</fieldset>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-								<button type="submit" class="btn btn-success" th:text="#{global.save}">Save</button>
+								<button type="submit" name="submitEvent" value="save" class="btn btn-success" th:text="#{global.save}">Save</button>
 							</div>
 						</form>
 					</div>
@@ -146,13 +149,17 @@
 		</div>
 	</div>
 	<script th:inline="javascript">
+		var targetForm = "#userModelForm";
+		var asyncUrl = "/user/validateUser";
+
 		$("#userFormModal").on("shown.bs.modal", function(e) {
 			$("#username").focus();
 		});
 
 		$("#userFormModal").on("hidden.bs.modal", function(e) {
-			$("#userModelForm").find("input, select").each(function(i, elem) {
-				$(elem).val("");
+			$("#userModelForm").find("input, select").each(function(i, element) {
+				resetAllErrorMessages();
+				$(element).val("");
 			});
 		});
 	</script>

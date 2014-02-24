@@ -1,11 +1,16 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.services.user.PasswordUpdaterService;
-import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.user.PasswordUpdaterService;
+import it.f2informatica.services.user.UserService;
+import it.f2informatica.services.validator.UserModelValidator;
+import it.f2informatica.services.validator.utils.ValidationResponse;
+import it.f2informatica.services.validator.utils.ValidationResponseService;
+import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,14 +26,32 @@ public class UserController {
 	@Autowired
 	private PasswordUpdaterService passwordUpdaterService;
 
+	@Autowired
+	private UserModelValidator userModelValidator;
+
+	@Autowired
+	private ValidationResponseService validationResponseService;
+
+	@Autowired
+	private CurrentHttpServletRequest httpRequest;
+
 	@Deprecated
 	@ModelAttribute("roles")
 	public Iterable<RoleModel> loadRoles() {
 		return userService.loadRoles();
 	}
 
+	@RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
+		userModelValidator.validate(userModel, result);
+		if (result.hasErrors()) {
+			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+		}
+		return validationResponseService.validationSuccess();
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
+	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
 		userService.saveUser(userModel);
 		return "redirect:/users";
 	}
