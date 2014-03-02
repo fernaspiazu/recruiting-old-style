@@ -1,9 +1,10 @@
 package it.f2informatica.webapp.controller;
 
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 import it.f2informatica.services.user.PasswordUpdaterService;
 import it.f2informatica.services.user.UserService;
+import it.f2informatica.services.validator.UpdatePasswordModelValidator;
 import it.f2informatica.services.validator.UserModelValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
@@ -29,19 +30,13 @@ public class UserController {
 	private UserModelValidator userModelValidator;
 
 	@Autowired
+	private UpdatePasswordModelValidator updatePasswordModelValidator;
+
+	@Autowired
 	private ValidationResponseService validationResponseService;
 
 	@Autowired
 	private CurrentHttpServletRequest httpRequest;
-
-	@RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
-		userModelValidator.validate(userModel, result);
-		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
-		}
-		return validationResponseService.validationSuccess();
-	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
@@ -66,22 +61,36 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.GET)
-	public String changePasswordForm(@PathVariable String userId, ModelMap model) {
-		model.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordRequest(userId));
+	@RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
+		userModelValidator.validate(userModel, result);
+		if (result.hasErrors()) {
+			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+		}
+		return validationResponseService.validationSuccess();
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	public String changePasswordForm(@RequestParam("userId") String userId, ModelMap model) {
+		UserModel user = userService.findUserById(userId);
+		model.addAttribute("readonlyUsername", user.getUsername());
+		model.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordModel(userId));
 		return "user/changePasswordForm";
 	}
 
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordRequest request) {
-		passwordUpdaterService.updatePassword(request);
+	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel) {
+		passwordUpdaterService.updatePassword(updatePasswordModel);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/verifyCurrentPassword", method = RequestMethod.POST)
-	@ResponseBody
-	public String isCurrentPasswordValid(@RequestParam("userId") String userId, @RequestParam("currentPwd") String currentPwd) {
-		return String.valueOf(passwordUpdaterService.isCurrentPasswordValid(userId, currentPwd));
+	@RequestMapping(value = "/validatePasswordUpdating", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
+		updatePasswordModelValidator.validate(updatePasswordModel, result);
+		if (result.hasErrors()) {
+			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+		}
+		return validationResponseService.validationSuccess();
 	}
 
 }

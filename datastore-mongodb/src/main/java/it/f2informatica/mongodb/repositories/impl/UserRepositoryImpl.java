@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements CustomUserRepository {
 
 	@Override
 	public Page<User> findAllExcludingUser(Pageable pageable, String username) {
-		Query query = query(where("username").ne(username)).with(pageable);
+		Query query = query(where("username").nin(username, "admin")).with(pageable);
 		List<User> users = mongoTemplate.find(query, User.class);
 		long count = users.size();
 		return new PageImpl<>(users, pageable, count);

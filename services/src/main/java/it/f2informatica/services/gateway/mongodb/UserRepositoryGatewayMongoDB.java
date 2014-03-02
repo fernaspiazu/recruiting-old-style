@@ -11,7 +11,7 @@ import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.gateway.UserRepositoryGateway;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,7 +55,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	}
 
 	@Override
-	public boolean updatePassword(UpdatePasswordRequest request) {
+	public boolean updatePassword(UpdatePasswordModel request) {
 		return arePasswordCompiledCorrectly(request)
 			&& userRepository.updatePassword(
 			request.getUserId(),
@@ -64,7 +64,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 			request.getPasswordConfirmed());
 	}
 
-	private boolean arePasswordCompiledCorrectly(UpdatePasswordRequest request) {
+	private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
 		return StringUtils.hasText(request.getNewPassword())
 			&& StringUtils.hasText(request.getPasswordConfirmed())
 			&& request.getNewPassword().equals(request.getPasswordConfirmed());

@@ -85,7 +85,7 @@ public class UserControllerTest {
 
 	@Test
 	public void deleteUser() throws Exception {
-		mockMvc.perform(get("/user/delete/1234567890"))
+		mockMvc.perform(get("/user/delete?userId=1234567890"))
 			.andDo(print())
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/users"));

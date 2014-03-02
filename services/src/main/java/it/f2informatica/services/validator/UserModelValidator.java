@@ -32,12 +32,12 @@ public class UserModelValidator extends AbstractValidator {
 	public void validate(Object target, Errors errors) {
 		UserModel userModel = (UserModel) target;
 		if (isSaveEvent(userModel)) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "err.required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", FIELD_MANDATORY);
 		}
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "err.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "err.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "err.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "err.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", FIELD_MANDATORY);
 		invokeValidator(roleModelValidator, userModel.getRole(), "role", errors);
 		doFurtherValidation(userModel, errors);
 	}
@@ -49,7 +49,7 @@ public class UserModelValidator extends AbstractValidator {
 		if (isEmailInvalid(userModel.getEmail())) {
 			errors.rejectValue("email", "err.email");
 		}
-		if (isSaveEvent(userModel) && existsUser(userModel.getUsername())) {
+		if (existsUser(userModel.getUsername())) {
 			errors.rejectValue("username", "err.username.exists");
 		}
 	}

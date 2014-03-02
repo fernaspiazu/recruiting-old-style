@@ -111,7 +111,7 @@ public class UserRepositoryTest extends DatastoreUtils {
 
 	private void findAllExceptCurrentUser(User hughJackmanUser) {
 		Page<User> users = userRepository.findAllExcludingUser(new PageRequest(0, 10), "super_user");
-		assertThat(users).hasSize(3).contains(hughJackmanUser);
+		assertThat(users).hasSize(2).contains(hughJackmanUser);
 	}
 
 	@SuppressWarnings("ConstantConditions")

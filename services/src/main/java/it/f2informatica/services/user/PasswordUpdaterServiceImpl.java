@@ -1,7 +1,7 @@
 package it.f2informatica.services.user;
 
 import it.f2informatica.services.gateway.UserRepositoryGateway;
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
 	private UserRepositoryGateway userRepositoryGateway;
 
 	@Override
-	public boolean updatePassword(UpdatePasswordRequest request) {
+	public boolean updatePassword(UpdatePasswordModel request) {
 		return userRepositoryGateway.updatePassword(request);
 	}
 
 	@Override
-	public UpdatePasswordRequest prepareUpdatePasswordRequest(String userId) {
-		UpdatePasswordRequest request = new UpdatePasswordRequest();
+	public UpdatePasswordModel prepareUpdatePasswordModel(String userId) {
+		UpdatePasswordModel request = new UpdatePasswordModel();
 		request.setUserId(userId);
 		return request;
 	}

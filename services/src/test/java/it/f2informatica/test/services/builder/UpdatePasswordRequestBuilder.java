@@ -1,6 +1,6 @@
 package it.f2informatica.test.services.builder;
 
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 
 public class UpdatePasswordRequestBuilder {
 
@@ -41,8 +41,8 @@ public class UpdatePasswordRequestBuilder {
 		return this;
 	}
 
-	public UpdatePasswordRequest build() {
-		UpdatePasswordRequest request = new UpdatePasswordRequest();
+	public UpdatePasswordModel build() {
+		UpdatePasswordModel request = new UpdatePasswordModel();
 		request.setUserId(userId);
 		request.setCurrentPassword(currentPassword);
 		request.setNewPassword(newPassword);

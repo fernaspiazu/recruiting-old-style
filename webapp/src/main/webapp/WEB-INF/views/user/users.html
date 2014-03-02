@@ -55,7 +55,7 @@
 </div>
 <div class="container">
 	<div class="page-header">
-		<h1 th:text="#{user.usermanagement}">User Management</h1>
+		<h2 th:text="#{user.usermanagement}">User Management</h2>
 	</div>
 	<div class="row">
 		<div class="col-md-10">
@@ -69,6 +69,7 @@
 					<th th:text="#{user.email}">Email</th>
 					<th class="sorting_asc_disabled sorting_desc_disabled"></th>
 					<th class="sorting_asc_disabled sorting_desc_disabled"></th>
+					<th class="sorting_asc_disabled sorting_desc_disabled"></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -80,6 +81,7 @@
 					<td th:text="${user.email}">mario.rossi@libero.it</td>
 					<td><div class="glyphicon glyphicon-edit click-icon edit-user" th:title="#{global.edit}"></div></td>
 					<td><div class="glyphicon glyphicon-trash click-icon delete-user" th:title="#{global.delete}"></div></td>
+					<td><div class="glyphicon glyphicon-lock click-icon change-password" th:title="#{user.changepwd}"></div></td>
 				</tr>
 				</tbody>
 			</table>
@@ -226,6 +228,11 @@
 		$('#deleteUserBtn').click(function() {
 			var userId = $(this).val();
 			window.location = contextRoot + '/user/delete?' + $.param({'userId' : userId});
+		});
+
+		$('.change-password').click(function() {
+			var userId = $(this).closest('tr').attr('id');
+			window.location = contextRoot + '/user/changePassword?' + $.param({'userId' : userId});
 		});
 	</script>
 </div>

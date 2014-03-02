@@ -1,12 +1,12 @@
 package it.f2informatica.services.user;
 
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 
 public interface PasswordUpdaterService {
 
-	boolean updatePassword(UpdatePasswordRequest request);
+	boolean updatePassword(UpdatePasswordModel request);
 
-	UpdatePasswordRequest prepareUpdatePasswordRequest(String userId);
+	UpdatePasswordModel prepareUpdatePasswordModel(String userId);
 
 	boolean isCurrentPasswordValid(String userId, String currentPwd);
 }

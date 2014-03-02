@@ -2,7 +2,7 @@ package it.f2informatica.services.gateway;
 
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.requests.UpdatePasswordRequest;
+import it.f2informatica.services.model.UpdatePasswordModel;
 import it.f2informatica.services.responses.AuthenticationResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ public interface UserRepositoryGateway {
 
 	AuthenticationResponse authenticationByUsername(String username);
 
-	boolean updatePassword(UpdatePasswordRequest request);
+	boolean updatePassword(UpdatePasswordModel request);
 
 	UserModel findUserById(String userId);
 

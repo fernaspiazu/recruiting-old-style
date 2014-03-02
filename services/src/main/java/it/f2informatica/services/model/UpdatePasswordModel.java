@@ -1,4 +1,4 @@
-package it.f2informatica.services.requests;
+package it.f2informatica.services.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode
 @ToString
-public class UpdatePasswordRequest implements Serializable {
+public class UpdatePasswordModel implements Serializable {
 
 	private String userId;
 

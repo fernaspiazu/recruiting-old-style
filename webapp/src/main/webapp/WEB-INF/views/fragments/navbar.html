@@ -42,6 +42,20 @@
 					</ul>
 				</li>
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a th:inline="text" th:object="${session.user}">
+						<span class="pull-left"><div class="glyphicon glyphicon-user"></div></span>
+						&nbsp;[[*{#strings.isEmpty(firstName)} ? *{username} : |*{firstName} *{lastName}|]]
+					</a>
+				</li>
+				<li>
+					<a th:inline="text" th:href="@{/logout}">
+						<span class="pull-left"><div class="glyphicon glyphicon-log-out"></div></span>
+						&nbsp;[[#{login.logout}]]
+					</a>
+				</li>
+			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
 </div>

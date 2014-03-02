@@ -5,6 +5,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public abstract class AbstractValidator implements Validator {
+	protected static final String FIELD_MANDATORY = "err.required";
 
 	protected void invokeValidator(Validator validator, Object target, String nestedPath, Errors errors) {
 		try {
