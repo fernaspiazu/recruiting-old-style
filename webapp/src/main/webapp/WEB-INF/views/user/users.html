@@ -67,22 +67,26 @@
 					<th th:text="#{user.surename}">Surename</th>
 					<th th:text="#{user.name}">Name</th>
 					<th th:text="#{user.email}">Email</th>
+					<th class="sorting_asc_disabled sorting_desc_disabled"></th>
+					<th class="sorting_asc_disabled sorting_desc_disabled"></th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="user : ${users}" class="rowlink">
+				<tr th:each="user : ${users}" th:id="${user.userId}">
 					<td th:text="${user.username}">mario_r</td>
 					<td th:text="${user.role.roleName}">Administrator</td>
 					<td th:text="${user.lastName}">Rossi</td>
 					<td th:text="${user.firstName}">Mario</td>
 					<td th:text="${user.email}">mario.rossi@libero.it</td>
+					<td><div class="glyphicon glyphicon-edit click-icon edit-user" th:title="#{global.edit}"></div></td>
+					<td><div class="glyphicon glyphicon-trash click-icon delete-user" th:title="#{global.delete}"></div></td>
 				</tr>
 				</tbody>
 			</table>
 			<hr/>
 			<div class="control-group pull-right">
 				<div class="controls">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
+					<button type="button" id="newUserButton" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
 				</div>
 			</div>
 		</div>
@@ -97,6 +101,7 @@
 						<form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post" class="form-horizontal" role="form">
 							<fieldset>
 								<div id="fieldErrors"></div>
+								<input type="hidden" th:field="*{userId}"/>
 								<div class="form-group">
 									<label for="username" class="col-sm-2 control-label" th:text="#{user.username}">Username</label>
 									<div class="col-sm-10">
@@ -140,9 +145,26 @@
 							</fieldset>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-								<button type="submit" name="submitEvent" value="save" class="btn btn-success" th:text="#{global.save}">Save</button>
+								<button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-success" th:text="#{global.save}">Save</button>
 							</div>
 						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="deleteUserMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="deleteUserModalLabel" th:text="#{user.deleteuser}">Delete User</h4>
+					</div>
+					<div class="modal-body">
+						<p th:text="#{user.deleteuser.msg}">Are you sure to want to delete this User</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.no}">No</button>
+						<button type="button" id="deleteUserBtn" class="btn btn-primary" data-dismiss="modal" th:text="#{global.yes}">Yes</button>
 					</div>
 				</div>
 			</div>
@@ -151,6 +173,7 @@
 	<script th:inline="javascript">
 		var targetForm = "#userModelForm";
 		var asyncUrl = "/user/validateUser";
+		var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
 
 		$("#userFormModal").on("shown.bs.modal", function(e) {
 			$("#username").focus();
@@ -161,6 +184,48 @@
 				resetAllErrorMessages();
 				$(element).val("");
 			});
+		});
+
+		$("#newUserButton").click(function() {
+			var saveLabel = /*[[#{global.save}]]*/ 'Save';
+			$("#password").parent().parent().show();
+			$('#userModelForm').attr('action', contextRoot + '/user/save');
+			$('#submitEvent').html(saveLabel).val('save');
+		});
+
+		$(".edit-user").click(function() {
+			var userId = $(this).closest('tr').attr('id');
+			var url = contextRoot + "/user/edit";
+			$.get(url, {"userId" : userId}, function(data) {
+				$('#userId').val(data.userId);
+				$('#username').val(data.username).focus();
+				$('#firstName').val(data.firstName);
+				$('#lastName').val(data.lastName);
+				$('#email').val(data.email);
+				$('#role').val(data.role.roleId);
+				$("#password").parent().parent().hide();
+				$('#userModelForm').attr('action', contextRoot + '/user/update');
+				var updateLabel = /*[[#{global.update}]]*/ 'Update';
+				$('#submitEvent').html(updateLabel).val('update');
+				$("#userFormModal").modal({
+					'show' : true,
+					'backdrop' : 'static'
+				});
+			});
+		});
+
+		$('.delete-user').click(function() {
+			var userId = $(this).closest('tr').attr('id');
+			$("#deleteUserMessageModal").modal({
+				'show' : true,
+				'backdrop' : 'static'
+			});
+			$('#deleteUserBtn').val(userId);
+		});
+
+		$('#deleteUserBtn').click(function() {
+			var userId = $(this).val();
+			window.location = contextRoot + '/user/delete?' + $.param({'userId' : userId});
 		});
 	</script>
 </div>

@@ -28,4 +28,6 @@ public class UserModel implements Serializable {
 
 	private RoleModel role;
 
+	private String submitEvent;
+
 }

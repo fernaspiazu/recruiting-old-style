@@ -1,6 +1,5 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.requests.UpdatePasswordRequest;
 import it.f2informatica.services.user.PasswordUpdaterService;
@@ -35,12 +34,6 @@ public class UserController {
 	@Autowired
 	private CurrentHttpServletRequest httpRequest;
 
-	@Deprecated
-	@ModelAttribute("roles")
-	public Iterable<RoleModel> loadRoles() {
-		return userService.loadRoles();
-	}
-
 	@RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
 		userModelValidator.validate(userModel, result);
@@ -56,10 +49,9 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
-	public String editUser(@PathVariable String userId, ModelMap model) {
-		model.addAttribute("userModel", userService.findUserById(userId));
-		return "user/userEdit";
+	@RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody UserModel editUser(@RequestParam String userId) {
+		return userService.findUserById(userId);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -68,8 +60,8 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
-	public String deleteUser(@PathVariable String userId) {
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deleteUser(@RequestParam String userId) {
 		userService.deleteUser(userId);
 		return "redirect:/users";
 	}

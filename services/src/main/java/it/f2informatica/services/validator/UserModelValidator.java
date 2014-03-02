@@ -15,6 +15,8 @@ public class UserModelValidator extends AbstractValidator {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
 		"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
 
+	private static final String SAVE_EVENT = "save";
+
 	@Autowired
 	private RoleModelValidator roleModelValidator;
 
@@ -29,8 +31,10 @@ public class UserModelValidator extends AbstractValidator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserModel userModel = (UserModel) target;
+		if (isSaveEvent(userModel)) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "err.required");
+		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "err.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "err.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "err.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "err.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "err.required");
@@ -45,7 +49,7 @@ public class UserModelValidator extends AbstractValidator {
 		if (isEmailInvalid(userModel.getEmail())) {
 			errors.rejectValue("email", "err.email");
 		}
-		if (existsUser(userModel.getUsername())) {
+		if (isSaveEvent(userModel) && existsUser(userModel.getUsername())) {
 			errors.rejectValue("username", "err.username.exists");
 		}
 	}
@@ -54,6 +58,10 @@ public class UserModelValidator extends AbstractValidator {
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(email);
 		return !matcher.matches();
+	}
+
+	private boolean isSaveEvent(UserModel userModel) {
+		return SAVE_EVENT.equals(userModel.getSubmitEvent());
 	}
 
 	private boolean existsUser(String username) {

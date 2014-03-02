@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +25,8 @@ public class ErrorMessageResolver {
 				public ErrorMessage apply(FieldError input) {
 					String errorCode = input.getCode();
 					String errorMessage = messageSource.getMessage(errorCode, input.getArguments(), locale);
-					return new ErrorMessage(input.getField(), errorCode, errorMessage);
+					String field = Iterables.getFirst(Arrays.asList(input.getField().split("\\.")), "");
+					return new ErrorMessage(field, errorCode, errorMessage);
 				}
 			}
 		));

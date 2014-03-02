@@ -1,19 +1,25 @@
 package it.f2informatica.webapp.test.controllers;
 
+import it.f2informatica.services.model.RoleModel;
+import it.f2informatica.services.model.UserModel;
 import it.f2informatica.services.user.PasswordUpdaterService;
 import it.f2informatica.services.user.UserService;
+import it.f2informatica.services.validator.UserModelValidator;
+import it.f2informatica.services.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.controller.UserController;
+import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,6 +34,12 @@ public class UserControllerTest {
 	@Mock
 	private PasswordUpdaterService passwordUpdaterService;
 
+	@Mock
+	private UserModelValidator userModelValidator;
+
+	@Mock
+	private ValidationResponseService validationResponseService;
+
 	@InjectMocks
 	private UserController userController;
 
@@ -37,31 +49,26 @@ public class UserControllerTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders
 			.standaloneSetup(userController)
+			.setValidator(userModelValidator)
 			.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
 			.build();
 	}
 
 	@Test
-	public void createNewUser() throws Exception {
-		mockMvc.perform(get("/user/new"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("user/createNewUser"));
-	}
-
-	@Test
 	public void editUser() throws Exception {
-		mockMvc.perform(get("/user/edit/1234567890"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("user/userEdit"));
-	}
-
-	@Ignore
-	@Test
-	public void failingUserRegistration() throws Exception {
-		mockMvc.perform(post("/user/save"))
+		UserModel userModel = new UserModel();
+		userModel.setUserId("1234567890");
+		userModel.setUsername("username");
+		userModel.setPassword("password");
+		userModel.setRole(new RoleModel("123456", "Administrator"));
+		userModel.setFirstName("Username");
+		userModel.setLastName("Lastname");
+		userModel.setEmail("mario.rossi@tiscali.it");
+		when(userService.findUserById("1234567890")).thenReturn(userModel);
+		mockMvc.perform(get("/user/edit?userId=1234567890"))
 			.andDo(print())
-			.andExpect(model().errorCount(3))
-			.andExpect(view().name("user/createNewUser"));
+			.andExpect(status().isOk())
+			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE));
 	}
 
 	@Test
@@ -79,6 +86,7 @@ public class UserControllerTest {
 	@Test
 	public void deleteUser() throws Exception {
 		mockMvc.perform(get("/user/delete/1234567890"))
+			.andDo(print())
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/users"));
 	}
@@ -86,6 +94,7 @@ public class UserControllerTest {
 	@Test
 	public void changePasswordForm() throws Exception {
 		mockMvc.perform(get("/user/changePassword/1234567890"))
+			.andDo(print())
 			.andExpect(request().attribute("userId", "1234567890"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("user/changePasswordForm"));
@@ -94,6 +103,7 @@ public class UserControllerTest {
 	@Test
 	public void updatePassword() throws Exception {
 		mockMvc.perform(post("/user/updatePassword"))
+			.andDo(print())
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/users"));
 	}
