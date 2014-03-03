@@ -13,10 +13,11 @@ table th {
 .field-error:after {border-color: rgba(213, 154, 145, 0); border-right-color: #ffebe8; border-width: 5px; margin-top: -5px;}
 .field-error:before {border-color: rgba(204, 0, 0, 0); border-right-color: #cc0000; border-width: 6px; margin-top: -6px;}
 
-div.click-icon:hover {
-	color: #428bca;
-	cursor: pointer;
-}
+div.click-icon:hover {color: #428bca; cursor: pointer;}
+
+.padding-bottom-10px {padding-bottom: 10px;}
+.margin-bottom-10px {margin-bottom: 10px;}
+.border-bottom {border-bottom: 1px solid #e7e7e7;}
 
 /*!
  * Bootstrap v2.2.2-j3

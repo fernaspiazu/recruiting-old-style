@@ -27,18 +27,18 @@
 					<a th:text="#{home.home}" th:href="@{/home}" href="#">Home</a>
 				</li>
 				<li th:class="(${session.navbarItemActive} == 1) ? 'active' : ''" class="active">
-					<a th:text="#{user.usermanagement}" th:href="@{/users}" href="user/users.html">User Management</a>
+					<a th:text="#{user.usermanagement}" th:href="@{/users}" href="../user/users.html">User Management</a>
 				</li>
 				<li class="dropdown" th:class="(${session.navbarItemActive} == 2) ? 'dropdown active' : 'dropdown'">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.management}]] <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.consultants}]] <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li class="dropdown-header">Nav header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
+						<li><a th:href="@{/consultants}" href="../consultant/consultants.html" th:text="#{consultant.management}">Consultant Management</a></li>
+						<li><a href="#">Inserisci nuovo</a></li>
+						<!--<li><a href="#">Something else here</a></li>-->
+						<!--<li class="divider"></li>-->
+						<!--<li class="dropdown-header">Nav header</li>-->
+						<!--<li><a href="#">Separated link</a></li>-->
+						<!--<li><a href="#">One more separated link</a></li>-->
 					</ul>
 				</li>
 			</ul>
