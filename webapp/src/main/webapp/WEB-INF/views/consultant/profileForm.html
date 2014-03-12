@@ -117,7 +117,7 @@
 													<div class="col-md-6" style="padding-right: 0">
 														<select class="form-control input-sm">
 															<option value="" th:text="#{global.month}">Select Month</option>
-															<option>November</option>
+															<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
 														</select>
 													</div>
 													<div class="col-md-6">
@@ -132,7 +132,7 @@
 														<div class="col-md-6" style="padding-right: 0">
 															<select class="form-control input-sm">
 																<option value="" th:text="#{global.month}">Select Month</option>
-																<option>November</option>
+																<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
 															</select>
 														</div>
 														<div class="col-md-6">
