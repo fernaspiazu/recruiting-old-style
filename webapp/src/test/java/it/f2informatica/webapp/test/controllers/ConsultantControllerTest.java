@@ -63,7 +63,7 @@ public class ConsultantControllerTest {
 				.withFirstName("Mario")
 				.withLastName("Rossi")
 				.build();
-		when(consultantService.registerConsultantMasterData(any(ConsultantModel.class))).thenReturn(consMock);
+		when(consultantService.savePersonalDetails(any(ConsultantModel.class))).thenReturn(consMock);
 		mockMvc.perform(post("/consultant/registerMasterData"))
 				.andDo(print())
 				.andExpect(status().isFound())

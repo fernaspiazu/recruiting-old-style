@@ -29,7 +29,6 @@ import java.util.List;
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = {
 	"it.f2informatica.webapp.controller",
-	"it.f2informatica.webapp.gateway",
 	"it.f2informatica.webapp.utils"
 })
 public class WebAppContext extends WebMvcConfigurerAdapter {

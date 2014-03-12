@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:substituteby="fragments/head::head (#{consultant.management})">
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Profile Management</title>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+</head>
+<body role="document">
+<div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://www.f2informatica.it" target="_blank" th:text="#{global.recruiting}">Recruiting</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li th:class="(${session.navbarItemActive} == 0) ? 'active' : ''" class="active">
+					<a th:text="#{home.home}" th:href="@{/home}" href="#">Home</a>
+				</li>
+				<li th:class="(${session.navbarItemActive} == 1) ? 'active' : ''" class="active">
+					<a th:text="#{user.usermanagement}" th:href="@{/user}" href="user/users.html">User Management</a>
+				</li>
+				<li class="dropdown" th:class="(${session.navbarItemActive} == 2) ? 'dropdown active' : 'dropdown'">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.management}]] <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Nav header</li>
+						<li><a href="#">Separated link</a></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</div>
+<div class="container">
+	<div class="page-header">
+		<h2 th:inline="text">[[#{consultant.profile}]] <small>&emsp;&mdash;&nbsp;[[${consultantModel.firstName}]] [[${consultantModel.lastName}]]</small></h2>
+	</div>
+	<div class="row">
+		<div class="col-md-9 col-md-offset-1">
+			<div id="experienceSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{experience.title}">Experience</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
+							<button type="button" id="btnAddExperience" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#experienceFormModal" data-backdrop="static">
+								<div class="glyphicon glyphicon-plus"></div>
+								[[#{experience.add}]]
+							</button>
+						</div>
+						<div class="row" th:each="experience : ${consultantModel.experiences}" th:id="${#ids.seq('experience-')}">
+							<div class="col-md-12 margin-bottom-10px border-bottom">
+								<input type="hidden" th:value="${experience.id}"/>
+								<h4 th:inline="text">
+									[[${experience.function}]]
+									<div class="pull-right small" style="margin-right: 10px;">
+										<div class="glyphicon glyphicon-edit click-icon" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-trash click-icon" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+									</div>
+								</h4>
+								<p th:text="${experience.companyName}" style="margin-bottom: 5px;">Accenture</p>
+								<p th:text="|${{experience.periodFrom}} - ${{experience.periodTo}}| + '&emsp;|&emsp;' + |${experience.location}|" class="text-muted small"></p>
+								<p th:text="${experience.description}" class="text-justify">Experience Description</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="experienceFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel" th:text="#{experience.new}">New experience</h4>
+							</div>
+							<div class="modal-body">
+								<form id="experienceForm" action="#" method="post" role="form">
+									<fieldset>
+										<div id="fieldErrors"></div>
+										<div class="form-group">
+											<label for="companyName" class="sr-only" th:text="#{experience.companyname}">Company name</label>
+											<input type="text" id="companyName" class="form-control input-sm" th:placeholder="#{experience.companyname}" placeholder="Company name"/>
+										</div>
+										<div class="form-group">
+											<label for="function" class="sr-only" th:text="#{experience.position}">Position</label>
+											<input type="text" id="function" class="form-control input-sm" th:placeholder="#{experience.position}" placeholder="Position"/>
+										</div>
+										<div class="form-group">
+											<label for="locality" class="sr-only" th:text="#{experience.locality}">Locality</label>
+											<input type="text" id="locality" class="form-control input-sm" th:placeholder="#{experience.locality}" placeholder="Locality"/>
+										</div>
+										<div class="form-group">
+											<label th:text="#{experience.period}">Period</label>
+											<div class="row">
+												<div class="col-md-5">
+													<div class="col-md-6" style="padding-right: 0">
+														<select class="form-control input-sm">
+															<option value="" th:text="#{global.month}">Select Month</option>
+															<option>November</option>
+														</select>
+													</div>
+													<div class="col-md-6">
+														<input type="text" class="form-control input-sm" th:placeholder="#{global.year}" placeholder="Year"/>
+													</div>
+												</div>
+												<div class="col-md-1" style="padding: 0; width: 10px;">
+													<span class="text-muted">&mdash;</span>
+												</div>
+												<div class="col-md-5">
+													<div id="periodToBlock">
+														<div class="col-md-6" style="padding-right: 0">
+															<select class="form-control input-sm">
+																<option value="" th:text="#{global.month}">Select Month</option>
+																<option>November</option>
+															</select>
+														</div>
+														<div class="col-md-6">
+															<input type="text" class="form-control input-sm" th:placeholder="#{global.year}" placeholder="Year"/>
+														</div>
+													</div>
+													<div id="presentPeriodBlock" class="hidden">
+														<div class="col-md-12" style="padding-right: 0">
+															<p class="text-success" style="margin: 2px 0 0 0;" th:text="#{experience.present}">Present</p>
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="checkbox">
+															<label th:inline="text">
+																<input id="isCurrent-endDate-position" type="checkbox" value=""/>
+																[[#{experience.current}]]
+															</label>
+														</div>
+														<script th:inline="javascript">
+															$('#isCurrent-endDate-position').click(function() {
+																if ($(this).is(':checked')) {
+																	$('#periodToBlock').addClass('hidden');
+																	$('#presentPeriodBlock').removeClass('hidden');
+																} else {
+																	$('#presentPeriodBlock').addClass('hidden');
+																	$('#periodToBlock').removeClass('hidden');
+																}
+															});
+														</script>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="description" class="sr-only" th:text="#{experience.description}">Description</label>
+											<textarea id="description" class="form-control" rows="5" th:placeholder="#{experience.description}" placeholder="Description"></textarea>
+										</div>
+									</fieldset>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
+										<button type="submit" id="btnSubmitExperience" name="submitEvent" value="experience" class="btn btn-primary" th:text="#{global.save}">Save</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="languageSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{language.title}">Languages</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text">
+								<div class="glyphicon glyphicon-edit"></div>
+								[[#{global.edit}]]
+							</button>
+						</div>
+						<div class="clearfix"></div>
+						<div class="row">
+							<div class="col-md-4 margin-bottom-10px" th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}">
+								<h4 th:text="${lang.language}"></h4>
+								<p th:text="${lang.knowledge}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="skillSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{skill.title}">Skills</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text">
+								<div class="glyphicon glyphicon-edit"></div>
+								[[#{global.edit}]]
+							</button>
+						</div>
+						<div class="clearfix"></div>
+						<div style="margin: 10px 0;">
+							<p th:text="${#strings.listJoin(consultantModel.skills, ', ')}"></p>
+						</div>
+						<!--<ul class="list-group">
+							<li class="list-group-item" th:each="skill : ${consultantModel.skills}" th:id="${#ids.seq('skill-')}" th:text="${skill}">Java</li>
+						</ul>-->
+					</div>
+				</div>
+			</div>
+			<div id="educationSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{education.title}">Education</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text">
+								<div class="glyphicon glyphicon-plus"></div>
+								[[#{education.add}]]
+							</button>
+						</div>
+						<div class="row" th:each="education : ${consultantModel.educationList}" th:id="${#ids.seq('education-')}">
+							<div class="col-md-12 margin-bottom-10px border-bottom">
+								<input type="hidden" th:value="${education.id}"/>
+								<h4 th:inline="text">
+									[[${education.schoolDegree}]]
+									<div class="pull-right small" style="margin-right: 40px;">
+										<div class="glyphicon glyphicon-edit click-icon" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-trash click-icon" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+									</div>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer" th:substituteby="fragments/footer::footer">
+	<div class="container">
+		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
+	</div>
+</div>
+
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

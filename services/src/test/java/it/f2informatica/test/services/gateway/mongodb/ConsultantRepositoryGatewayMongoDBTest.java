@@ -57,7 +57,7 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 			.build();
 		when(consultantRepository.save(any(Consultant.class))).thenReturn(new Consultant());
 		when(consultantToModelConverter.convert(any(Consultant.class))).thenReturn(registeredConsultant);
-		ConsultantModel consultantModel = consultantRepositoryGateway.saveMasterData(new ConsultantModel());
+		ConsultantModel consultantModel = consultantRepositoryGateway.savePersonalDetails(new ConsultantModel());
 		assertThat(consultantModel.getConsultantNo()).isEqualTo("20131152820f6f34bdf55624303fc4");
 	}
 

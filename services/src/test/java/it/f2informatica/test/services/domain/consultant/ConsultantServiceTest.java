@@ -46,9 +46,9 @@ public class ConsultantServiceTest {
 
 	@Test
 	public void assertFirstStepOnSavingConsultant() {
-		when(consultantRepositoryGateway.saveMasterData(any(ConsultantModel.class)))
+		when(consultantRepositoryGateway.savePersonalDetails(any(ConsultantModel.class)))
 			.thenReturn(registeredConsultant());
-		ConsultantModel registeredConsultant = consultantService.registerConsultantMasterData(
+		ConsultantModel registeredConsultant = consultantService.savePersonalDetails(
 			consultantModel()
 				.withFirstName("Mario")
 				.withLastName("Rossi").build());

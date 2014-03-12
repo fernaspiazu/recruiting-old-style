@@ -50,8 +50,8 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
-	public ConsultantModel registerConsultantMasterData(ConsultantModel consultantModel) {
-		return consultantRepositoryGateway.saveMasterData(consultantModel);
+	public ConsultantModel savePersonalDetails(ConsultantModel consultantModel) {
+		return consultantRepositoryGateway.savePersonalDetails(consultantModel);
 	}
 
 	@Override

@@ -20,11 +20,11 @@ body {
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-.container .text-muted {
+.footer-container .text-muted {
 	margin: 20px 0;
 }
 
-#footer > .container {
+#footer > .footer-container {
 	padding-right: 15px;
 	padding-left: 15px;
 }

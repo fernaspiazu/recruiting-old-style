@@ -17,7 +17,6 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body role="document">
-<!--<script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>-->
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -59,14 +58,47 @@
 	</div>
 	<div class="row">
 		<div class="col-md-10">
-			<div th:each="c : ${consultants}" th:id="${#ids.seq('consultant-')}" class="col-sm-10 col-lg-10 margin-bottom-10px border-bottom">
-				<h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
-				<div>
-					<span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
-					<h5 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529-C5A707AD0713</h5>
+			<div class="btn-toolbar" role="toolbar">
+				<div class="btn-group" style="margin-bottom: 10px;">
+					<button type="submit" id="new-consultant-btn" class="btn btn-primary">Create new Consultant</button>
+				</div>
+			</div>
+			<div th:each="c : ${consultants}" th:id="${#ids.seq('consultant-')}" class="row">
+				<div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
+					<div class="pull-left">
+						<h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
+						<div>
+							<span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
+							<h6 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529-C5A707AD0713</h6>
+						</div>
+					</div>
+					<div class="pull-right">
+						<button name="btnProfile" class="btn btn-default click-icon" th:value="${c.id}">
+							<div class="glyphicon glyphicon-briefcase" style="margin-right: 8px;"></div>
+							Profile
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
+
+	$('#new-consultant-btn').click(function() {
+		window.location = contextRoot + '/consultant/new-consultant';
+	});
+
+	$('button[name="btnProfile"]').click(function() {
+		window.location = contextRoot + '/consultant/profile?consultantId='+$(this).val();
+	});
+	/*]]>*/
+</script>
+<div id="footer" th:substituteby="fragments/footer::footer">
+	<div class="container">
+		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
 	</div>
 </div>
 </body>

@@ -16,7 +16,7 @@ public interface ConsultantService {
 
 	Page<ConsultantModel> showAllConsultants(Pageable pageable);
 
-	ConsultantModel registerConsultantMasterData(ConsultantModel consultantModel);
+	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
 	ConsultantModel findConsultantById(String consultantId);
 

@@ -16,6 +16,7 @@ public class UserModelValidator extends AbstractValidator {
 		"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
 
 	private static final String SAVE_EVENT = "save";
+	private static final String UPDATE_EVENT = "update";
 
 	@Autowired
 	private RoleModelValidator roleModelValidator;
@@ -31,13 +32,13 @@ public class UserModelValidator extends AbstractValidator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserModel userModel = (UserModel) target;
-		if (isSaveEvent(userModel)) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", FIELD_MANDATORY);
-		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", FIELD_MANDATORY);
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", FIELD_MANDATORY);
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", FIELD_MANDATORY);
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", FIELD_MANDATORY);
+		if (isSaveEvent(userModel)) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", FIELD_MANDATORY);
+		}
 		invokeValidator(roleModelValidator, userModel.getRole(), "role", errors);
 		doFurtherValidation(userModel, errors);
 	}
@@ -49,7 +50,12 @@ public class UserModelValidator extends AbstractValidator {
 		if (isEmailInvalid(userModel.getEmail())) {
 			errors.rejectValue("email", "err.email");
 		}
-		if (existsUser(userModel.getUsername())) {
+
+		final String username = userModel.getUsername();
+		final UserModel user = getUser(username);
+		if (isSaveEvent(userModel) && existsUser(user)) {
+			errors.rejectValue("username", "err.username.exists");
+		} else if (isUpdateEvent(userModel) && existsUser(user) && !username.equals(user.getUsername())) {
 			errors.rejectValue("username", "err.username.exists");
 		}
 	}
@@ -64,8 +70,16 @@ public class UserModelValidator extends AbstractValidator {
 		return SAVE_EVENT.equals(userModel.getSubmitEvent());
 	}
 
-	private boolean existsUser(String username) {
-		return userService.findByUsername(username) != null;
+	private boolean isUpdateEvent(UserModel userModel) {
+		return UPDATE_EVENT.equals(userModel.getSubmitEvent());
+	}
+
+	private boolean existsUser(UserModel userFromDB) {
+		return userFromDB != null;
+	}
+
+	private UserModel getUser(String username) {
+		return userService.findByUsername(username);
 	}
 
 }

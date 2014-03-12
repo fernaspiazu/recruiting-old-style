@@ -3,6 +3,7 @@ package it.f2informatica.services.gateway.mongodb;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import it.f2informatica.mongodb.domain.Address;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
@@ -10,6 +11,7 @@ import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.gateway.EntityToModelConverter;
+import it.f2informatica.services.model.AddressModel;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static it.f2informatica.mongodb.domain.builder.AddressBuilder.anAddress;
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
 import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.experience;
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
@@ -68,7 +71,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public ConsultantModel saveMasterData(ConsultantModel consultantModel) {
+	public ConsultantModel savePersonalDetails(ConsultantModel consultantModel) {
 		Consultant consultant = consultant()
 			.withConsultantNo(consultantModel.getConsultantNo())
 			.withRegistrationDate(consultantModel.getRegistrationDate())
@@ -82,9 +85,23 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			.withBirthCountry(consultantModel.getBirthCountry())
 			.withPhoneNumber(consultantModel.getPhoneNumber())
 			.withMobileNo(consultantModel.getMobileNumber())
+			.withResidence(buildAddress(consultantModel.getResidence()))
+			.withDomicile(buildAddress(consultantModel.getDomicile()))
 			.build();
 		Consultant consultantRegistered = consultantRepository.save(consultant);
 		return consultantToModelConverter.convert(consultantRegistered);
+	}
+
+	private Address buildAddress(AddressModel addressModel) {
+		return (addressModel == null) ? null : anAddress()
+			.withStreet(addressModel.getStreet())
+			.withHouseNo(addressModel.getHouseNo())
+			.withZipCode(addressModel.getZipCode())
+			.withCity(addressModel.getCity())
+			.withProvince(addressModel.getProvince())
+			.withRegion(addressModel.getRegion())
+			.withCountry(addressModel.getCountry())
+			.build();
 	}
 
 	@Override

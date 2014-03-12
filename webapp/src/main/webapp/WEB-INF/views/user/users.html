@@ -79,9 +79,9 @@
 					<td th:text="${user.lastName}">Rossi</td>
 					<td th:text="${user.firstName}">Mario</td>
 					<td th:text="${user.email}">mario.rossi@libero.it</td>
-					<td><div class="glyphicon glyphicon-edit click-icon edit-user" th:title="#{global.edit}"></div></td>
-					<td><div class="glyphicon glyphicon-trash click-icon delete-user" th:title="#{global.delete}"></div></td>
-					<td><div class="glyphicon glyphicon-lock click-icon change-password" th:title="#{user.changepwd}"></div></td>
+					<td style="text-align: center;"><div class="glyphicon glyphicon-edit click-icon edit-user" th:title="#{global.edit}"></div></td>
+					<td style="text-align: center;"><div class="glyphicon glyphicon-trash click-icon delete-user" th:title="#{global.delete}"></div></td>
+					<td style="text-align: center;"><div class="glyphicon glyphicon-lock click-icon change-password" th:title="#{user.changepwd}"></div></td>
 				</tr>
 				</tbody>
 			</table>
@@ -147,7 +147,7 @@
 							</fieldset>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-								<button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-success" th:text="#{global.save}">Save</button>
+								<button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
 							</div>
 						</form>
 					</div>
@@ -165,14 +165,15 @@
 						<p th:text="#{user.deleteuser.msg}">Are you sure to want to delete this User</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.no}">No</button>
-						<button type="button" id="deleteUserBtn" class="btn btn-primary" data-dismiss="modal" th:text="#{global.yes}">Yes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
+						<button type="button" id="deleteUserBtn" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script th:inline="javascript">
+		/*<![CDATA[*/
 		var targetForm = "#userModelForm";
 		var asyncUrl = "/user/validateUser";
 		var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
@@ -234,6 +235,7 @@
 			var userId = $(this).closest('tr').attr('id');
 			window.location = contextRoot + '/user/changePassword?' + $.param({'userId' : userId});
 		});
+		/*]]>*/
 	</script>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">

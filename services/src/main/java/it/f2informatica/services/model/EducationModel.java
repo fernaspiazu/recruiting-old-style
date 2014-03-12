@@ -12,6 +12,8 @@ import java.io.Serializable;
 public class EducationModel implements Serializable {
 	private static final long serialVersionUID = 3982326514709392235L;
 
+	private String id;
+
 	private String school;
 
 	private int startYear;

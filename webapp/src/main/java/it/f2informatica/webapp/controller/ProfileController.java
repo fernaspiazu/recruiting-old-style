@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/consultant/profile")
-@SessionAttributes({"consultantId"})
+//@Controller
+//@RequestMapping("/consultant/profile")
+//@SessionAttributes({"consultantId"})
 public class ProfileController extends AbstractConsultantController {
 
 	@RequestMapping(value = "/{consultantId}", method = RequestMethod.GET)
