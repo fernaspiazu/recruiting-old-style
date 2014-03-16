@@ -109,8 +109,8 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 		Experience experience = experience()
 			.withId(UUID.randomUUID().toString())
 			.inCompany(experienceModel.getCompanyName())
-			.inFunctionOf(experienceModel.getFunction())
-			.locatedAt(experienceModel.getLocation())
+			.inFunctionOf(experienceModel.getPosition())
+			.locatedAt(experienceModel.getLocality())
 			.fromPeriod(experienceModel.getPeriodFrom())
 			.toPeriod(experienceModel.getPeriodTo())
 			.isThisTheCurrentJob(experienceModel.isCurrent())
@@ -123,8 +123,8 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	public boolean updateExperience(ExperienceModel experienceModel, String consultantId) {
 		Experience experience = consultantRepository.findExperience(consultantId, experienceModel.getId());
 		experience.setCompanyName(experienceModel.getCompanyName());
-		experience.setFunction(experienceModel.getFunction());
-		experience.setLocation(experienceModel.getLocation());
+		experience.setFunction(experienceModel.getPosition());
+		experience.setLocation(experienceModel.getLocality());
 		experience.setPeriodFrom(experienceModel.getPeriodFrom());
 		experience.setPeriodTo(experienceModel.getPeriodTo());
 		experience.setCurrent(experienceModel.isCurrent());

@@ -71,6 +71,8 @@ public class ConsultantModel implements Serializable {
 
 	private String photo; // TODO: GridFSFile
 
+	private String submitEvent;
+
 	public String getConsultantFullName() {
 		return lastName + " " + firstName;
 	}

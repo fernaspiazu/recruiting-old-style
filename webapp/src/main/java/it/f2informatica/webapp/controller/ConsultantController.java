@@ -1,12 +1,17 @@
 package it.f2informatica.webapp.controller;
 
+import com.google.gson.Gson;
+import it.f2informatica.services.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
+import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.validator.ConsultantExperienceValidator;
 import it.f2informatica.services.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
 import it.f2informatica.webapp.utils.Month;
 import it.f2informatica.webapp.utils.MonthHelper;
+import it.f2informatica.webapp.utils.PeriodParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,13 +23,26 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/consultant")
-public class ConsultantController extends AbstractConsultantController {
+@SessionAttributes({"consultantId"})
+public class ConsultantController {
+
+	@Autowired
+	private Gson gson;
 
 	@Autowired
 	private MonthHelper monthHelper;
 
 	@Autowired
+	private PeriodParser periodParser;
+
+	@Autowired
+	private ConsultantService consultantService;
+
+	@Autowired
 	private CurrentHttpServletRequest httpRequest;
+
+	@Autowired
+	private ConsultantExperienceValidator experienceValidator;
 
 	@Autowired
 	private ValidationResponseService validationResponseService;
@@ -61,8 +79,60 @@ public class ConsultantController extends AbstractConsultantController {
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profilePage(@RequestParam String consultantId, ModelMap model) {
 		ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
+		model.addAttribute("consultantId", consultantId);
 		model.addAttribute("consultantModel", consultantModel);
+		model.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
 		return "consultant/profileForm";
+	}
+
+	@RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String editExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
+		ExperienceModel experienceModel = consultantService.findExperience(consultantId, experienceId);
+		formatDateByMonthNameAndYear(experienceModel);
+		return gson.toJson(experienceModel);
+	}
+
+	private void formatDateByMonthNameAndYear(ExperienceModel experienceModel) {
+		experienceModel.setFormattedPeriodFrom(periodParser.formatDateByMonthNameAndYear(experienceModel.getPeriodFrom()));
+		if (!experienceModel.isCurrent()) {
+			experienceModel.setFormattedPeriodTo(periodParser.formatDateByMonthNameAndYear(experienceModel.getPeriodTo()));
+		}
+	}
+
+	@RequestMapping(value = "/save-experience", method = RequestMethod.POST)
+	public String saveExperience(@ModelAttribute("experienceModel") ExperienceModel experienceModel, @ModelAttribute("consultantId") String consultantId) {
+		setExperiencePeriods(experienceModel);
+		consultantService.addConsultantExperience(experienceModel, consultantId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/update-experience", method = RequestMethod.POST)
+	public String updateExperience(@ModelAttribute("experienceModel") ExperienceModel experienceModel, @ModelAttribute("consultantId") String consultantId) {
+		setExperiencePeriods(experienceModel);
+		consultantService.updateConsultantExperience(experienceModel, consultantId);
+		return "redirect:/consultant/profile";
+	}
+
+	private void setExperiencePeriods(ExperienceModel experienceModel) {
+		experienceModel.setPeriodFrom(periodParser.resolveDateByMonthAndYear(experienceModel.getMonthFrom(), experienceModel.getYearFrom()));
+		if (!experienceModel.isCurrent()) {
+			experienceModel.setPeriodTo(periodParser.resolveDateByMonthAndYear(experienceModel.getMonthTo(), experienceModel.getYearTo()));
+		}
+	}
+
+	@RequestMapping(value = "/validate-experience", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
+		experienceValidator.validate(experienceModel, result);
+		if (result.hasErrors()) {
+			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+		}
+		return validationResponseService.validationSuccess();
+	}
+
+	@RequestMapping(value = "/delete-experience", method = RequestMethod.GET)
+	public String deleteExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
+		consultantService.removeExperience(consultantId, experienceId);
+		return "redirect:/consultant/profile";
 	}
 
 }

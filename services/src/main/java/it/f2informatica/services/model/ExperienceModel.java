@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"description"})
 @ToString
 public class ExperienceModel implements Serializable {
 	private static final long serialVersionUID = 7350451606929379410L;
@@ -17,20 +17,30 @@ public class ExperienceModel implements Serializable {
 
 	private String companyName;
 
-	private String function;
+	private String position;
 
-	private String location;
+	private String locality;
 
 	private Date periodFrom;
 
-	private String periodFromStr;
+	private String formattedPeriodFrom;
+
+	private String monthFrom;
+
+	private String yearFrom;
 
 	private Date periodTo;
 
-	private String periodToStr;
+	private String formattedPeriodTo;
+
+	private String monthTo;
+
+	private String yearTo;
 
 	private boolean current;
 
 	private String description;
+
+	private String submitEvent;
 
 }

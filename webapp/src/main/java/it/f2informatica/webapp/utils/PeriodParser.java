@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 @Component
-public class PeriodResolver {
+public class PeriodParser {
 
 	@Autowired
 	private CurrentHttpServletRequest currentHttpRequest;
@@ -28,7 +28,7 @@ public class PeriodResolver {
 		return new GregorianCalendar(yearInt, monthInt, 1, 0, 0, 0).getTime();
 	}
 
-	public String periodToString(Date date) {
+	public String formatDateByMonthNameAndYear(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getRequestLocale());
 		return (date != null) ? dateFormat.format(date) : "";
 	}

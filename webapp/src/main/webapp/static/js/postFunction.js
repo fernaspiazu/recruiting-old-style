@@ -1,6 +1,6 @@
 var firedSubmitEvent = null;
 
-$(document).ready(function() {
+function executePost(targetForm, asyncUrl) {
 	var $form = $(targetForm);
 
 	$("form :input[type=submit]").click(function() {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 		$.post(url, data, function(response) {
 			if (response.status == "FAIL") {
-				resetAllErrorMessages();
+				resetAllErrorMessages(targetForm);
 				$.each(response.errorMessages, function(i, item) {
 					var errorMessage = item.errorMessage;
 					var $field = $('#'+item.fieldName);
@@ -44,7 +44,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		return false;
 	});
-});
+}
 
 function collectFormData(fields) {
 	var data = {};
@@ -62,7 +62,7 @@ function collectFormData(fields) {
 	return data;
 }
 
-function resetAllErrorMessages() {
+function resetAllErrorMessages(targetForm) {
 	var $form = $(targetForm);
 	var fields = $form.find(':input');
 	for (var i = 0; i < fields.length; i++) {

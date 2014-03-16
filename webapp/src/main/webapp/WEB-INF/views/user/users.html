@@ -17,7 +17,6 @@
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body role="document">
-<script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -172,76 +171,77 @@
 			</div>
 		</div>
 	</div>
-	<script th:inline="javascript">
-		/*<![CDATA[*/
-		var targetForm = "#userModelForm";
-		var asyncUrl = "/user/validateUser";
-		var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
-
-		$("#userFormModal").on("shown.bs.modal", function(e) {
-			$("#username").focus();
-		});
-
-		$("#userFormModal").on("hidden.bs.modal", function(e) {
-			$("#userModelForm").find("input, select").each(function(i, element) {
-				resetAllErrorMessages();
-				$(element).val("");
-			});
-		});
-
-		$("#newUserButton").click(function() {
-			var saveLabel = /*[[#{global.save}]]*/ 'Save';
-			$("#password").parent().parent().show();
-			$('#userModelForm').attr('action', contextRoot + '/user/save');
-			$('#submitEvent').html(saveLabel).val('save');
-		});
-
-		$(".edit-user").click(function() {
-			var userId = $(this).closest('tr').attr('id');
-			var url = contextRoot + "/user/edit";
-			$.get(url, {"userId" : userId}, function(data) {
-				$('#userId').val(data.userId);
-				$('#username').val(data.username).focus();
-				$('#firstName').val(data.firstName);
-				$('#lastName').val(data.lastName);
-				$('#email').val(data.email);
-				$('#role').val(data.role.roleId);
-				$("#password").parent().parent().hide();
-				$('#userModelForm').attr('action', contextRoot + '/user/update');
-				var updateLabel = /*[[#{global.update}]]*/ 'Update';
-				$('#submitEvent').html(updateLabel).val('update');
-				$("#userFormModal").modal({
-					'show' : true,
-					'backdrop' : 'static'
-				});
-			});
-		});
-
-		$('.delete-user').click(function() {
-			var userId = $(this).closest('tr').attr('id');
-			$("#deleteUserMessageModal").modal({
-				'show' : true,
-				'backdrop' : 'static'
-			});
-			$('#deleteUserBtn').val(userId);
-		});
-
-		$('#deleteUserBtn').click(function() {
-			var userId = $(this).val();
-			window.location = contextRoot + '/user/delete?' + $.param({'userId' : userId});
-		});
-
-		$('.change-password').click(function() {
-			var userId = $(this).closest('tr').attr('id');
-			window.location = contextRoot + '/user/changePassword?' + $.param({'userId' : userId});
-		});
-		/*]]>*/
-	</script>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">
 	<div class="container">
 		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
 	</div>
 </div>
+<script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var targetForm = "#userModelForm";
+	var asyncUrl = "/user/validateUser";
+	var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
+
+	$("#userFormModal").on("shown.bs.modal", function(e) {
+		$("#username").focus();
+	});
+
+	$("#userFormModal").on("hidden.bs.modal", function(e) {
+		$("#userModelForm").find("input, select").each(function(i, element) {
+			resetAllErrorMessages();
+			$(element).val("");
+		});
+	});
+
+	$("#newUserButton").click(function() {
+		var saveLabel = /*[[#{global.save}]]*/ 'Save';
+		$("#password").parent().parent().show();
+		$('#userModelForm').attr('action', contextRoot + '/user/save');
+		$('#submitEvent').html(saveLabel).val('save');
+	});
+
+	$(".edit-user").click(function() {
+		var userId = $(this).closest('tr').attr('id');
+		var url = contextRoot + "/user/edit";
+		$.get(url, {"userId" : userId}, function(data) {
+			$('#userId').val(data.userId);
+			$('#username').val(data.username).focus();
+			$('#firstName').val(data.firstName);
+			$('#lastName').val(data.lastName);
+			$('#email').val(data.email);
+			$('#role').val(data.role.roleId);
+			$("#password").parent().parent().hide();
+			$('#userModelForm').attr('action', contextRoot + '/user/update');
+			var updateLabel = /*[[#{global.update}]]*/ 'Update';
+			$('#submitEvent').html(updateLabel).val('update');
+			$("#userFormModal").modal({
+				'show' : true,
+				'backdrop' : 'static'
+			});
+		});
+	});
+
+	$('.delete-user').click(function() {
+		var userId = $(this).closest('tr').attr('id');
+		$("#deleteUserMessageModal").modal({
+			'show' : true,
+			'backdrop' : 'static'
+		});
+		$('#deleteUserBtn').val(userId);
+	});
+
+	$('#deleteUserBtn').click(function() {
+		var userId = $(this).val();
+		window.location = contextRoot + '/user/delete?' + $.param({'userId' : userId});
+	});
+
+	$('.change-password').click(function() {
+		var userId = $(this).closest('tr').attr('id');
+		window.location = contextRoot + '/user/changePassword?' + $.param({'userId' : userId});
+	});
+	/*]]>*/
+</script>
 </body>
 </html>

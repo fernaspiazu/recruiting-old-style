@@ -2,6 +2,7 @@ package it.f2informatica.services.model.builder;
 
 import it.f2informatica.services.model.ExperienceModel;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class ExperienceModelBuilder {
@@ -24,13 +25,33 @@ public class ExperienceModelBuilder {
 
 	public ExperienceModelBuilder fromPeriod(Date periodFrom) {
 		this.experience.setPeriodFrom(periodFrom);
+		this.experience.setMonthFrom(getMonth(periodFrom));
+		this.experience.setYearFrom(getYear(periodFrom));
 		return this;
 	}
 
 	public ExperienceModelBuilder toPeriod(Date periodTo) {
 		this.experience.setPeriodTo(periodTo);
 		this.experience.setCurrent(false);
+		if (periodTo != null) {
+			this.experience.setMonthTo(getMonth(periodTo));
+			this.experience.setYearTo(getYear(periodTo));
+		}
 		return this;
+	}
+
+	private String getMonth(Date date) {
+		return String.valueOf(getCalendar(date).get(Calendar.MONTH));
+	}
+
+	private String getYear(Date date) {
+		return String.valueOf(getCalendar(date).get(Calendar.YEAR));
+	}
+
+	private Calendar getCalendar(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
 	}
 
 	public ExperienceModelBuilder isThisTheCurrentJob(boolean isCurrent) {
@@ -47,13 +68,13 @@ public class ExperienceModelBuilder {
 		return this;
 	}
 
-	public ExperienceModelBuilder inFunctionOf(String function) {
-		this.experience.setFunction(function);
+	public ExperienceModelBuilder withPosition(String position) {
+		this.experience.setPosition(position);
 		return this;
 	}
 
 	public ExperienceModelBuilder locatedAt(String location) {
-		this.experience.setLocation(location);
+		this.experience.setLocality(location);
 		return this;
 	}
 

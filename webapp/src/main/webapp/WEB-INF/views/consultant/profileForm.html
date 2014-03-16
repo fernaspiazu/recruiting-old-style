@@ -70,18 +70,18 @@
 								[[#{experience.add}]]
 							</button>
 						</div>
-						<div class="row" th:each="experience : ${consultantModel.experiences}" th:id="${#ids.seq('experience-')}">
+						<div class="row" th:each="experience : ${consultantModel.experiences}" th:id="${experience.id}">
 							<div class="col-md-12 margin-bottom-10px border-bottom">
-								<input type="hidden" th:value="${experience.id}"/>
 								<h4 th:inline="text">
-									[[${experience.function}]]
+									[[${experience.position}]]
 									<div class="pull-right small" style="margin-right: 10px;">
-										<div class="glyphicon glyphicon-edit click-icon" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-										<div class="glyphicon glyphicon-trash click-icon" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-edit click-icon edit-experience" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-trash click-icon delete-experience" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
 									</div>
 								</h4>
 								<p th:text="${experience.companyName}" style="margin-bottom: 5px;">Accenture</p>
-								<p th:text="|${{experience.periodFrom}} - ${{experience.periodTo}}| + '&emsp;|&emsp;' + |${experience.location}|" class="text-muted small"></p>
+								<p th:if="${experience.current}" th:text="|${{experience.periodFrom}} - #{experience.present}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
+								<p th:unless="${experience.current}" th:text="|${{experience.periodFrom}} - ${{experience.periodTo}}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
 								<p th:text="${experience.description}" class="text-justify">Experience Description</p>
 							</div>
 						</div>
@@ -95,33 +95,34 @@
 								<h4 class="modal-title" id="myModalLabel" th:text="#{experience.new}">New experience</h4>
 							</div>
 							<div class="modal-body">
-								<form id="experienceForm" action="#" method="post" role="form">
+								<form id="experienceForm" th:action="@{/consultant/save-experience}" th:object="${experienceModel}" action="#" method="post" role="form">
 									<fieldset>
 										<div id="fieldErrors"></div>
+										<input type="hidden" id="experienceId" th:field="*{id}"/>
 										<div class="form-group">
 											<label for="companyName" class="sr-only" th:text="#{experience.companyname}">Company name</label>
-											<input type="text" id="companyName" class="form-control input-sm" th:placeholder="#{experience.companyname}" placeholder="Company name"/>
+											<input type="text" id="companyName" th:field="*{companyName}" class="form-control input-sm" th:placeholder="#{experience.companyname}" placeholder="Company name"/>
 										</div>
 										<div class="form-group">
-											<label for="function" class="sr-only" th:text="#{experience.position}">Position</label>
-											<input type="text" id="function" class="form-control input-sm" th:placeholder="#{experience.position}" placeholder="Position"/>
+											<label for="position" class="sr-only" th:text="#{experience.position}">Position</label>
+											<input type="text" id="position" th:field="*{position}" class="form-control input-sm" th:placeholder="#{experience.position}" placeholder="Position"/>
 										</div>
 										<div class="form-group">
 											<label for="locality" class="sr-only" th:text="#{experience.locality}">Locality</label>
-											<input type="text" id="locality" class="form-control input-sm" th:placeholder="#{experience.locality}" placeholder="Locality"/>
+											<input type="text" id="locality" th:field="*{locality}" class="form-control input-sm" th:placeholder="#{experience.locality}" placeholder="Locality"/>
 										</div>
 										<div class="form-group">
 											<label th:text="#{experience.period}">Period</label>
 											<div class="row">
 												<div class="col-md-5">
 													<div class="col-md-6" style="padding-right: 0">
-														<select class="form-control input-sm">
+														<select class="form-control input-sm" th:field="*{monthFrom}">
 															<option value="" th:text="#{global.month}">Select Month</option>
 															<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
 														</select>
 													</div>
 													<div class="col-md-6">
-														<input type="text" class="form-control input-sm" th:placeholder="#{global.year}" placeholder="Year"/>
+														<input type="text" class="form-control input-sm" th:field="*{yearFrom}" th:placeholder="#{global.year}" placeholder="Year"/>
 													</div>
 												</div>
 												<div class="col-md-1" style="padding: 0; width: 10px;">
@@ -130,13 +131,13 @@
 												<div class="col-md-5">
 													<div id="periodToBlock">
 														<div class="col-md-6" style="padding-right: 0">
-															<select class="form-control input-sm">
+															<select class="form-control input-sm" th:field="*{monthTo}">
 																<option value="" th:text="#{global.month}">Select Month</option>
 																<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
 															</select>
 														</div>
 														<div class="col-md-6">
-															<input type="text" class="form-control input-sm" th:placeholder="#{global.year}" placeholder="Year"/>
+															<input type="text" class="form-control input-sm" th:field="*{yearTo}" th:placeholder="#{global.year}" placeholder="Year"/>
 														</div>
 													</div>
 													<div id="presentPeriodBlock" class="hidden">
@@ -147,7 +148,7 @@
 													<div class="col-md-12">
 														<div class="checkbox">
 															<label th:inline="text">
-																<input id="isCurrent-endDate-position" type="checkbox" value=""/>
+																<input id="isCurrent-endDate-position" type="checkbox" th:field="*{current}"/>
 																[[#{experience.current}]]
 															</label>
 														</div>
@@ -168,14 +169,31 @@
 										</div>
 										<div class="form-group">
 											<label for="description" class="sr-only" th:text="#{experience.description}">Description</label>
-											<textarea id="description" class="form-control" rows="5" th:placeholder="#{experience.description}" placeholder="Description"></textarea>
+											<textarea id="description" th:field="*{description}" class="form-control" rows="5" th:placeholder="#{experience.description}" placeholder="Description"></textarea>
 										</div>
 									</fieldset>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-										<button type="submit" id="btnSubmitExperience" name="submitEvent" value="experience" class="btn btn-primary" th:text="#{global.save}">Save</button>
+										<button type="submit" id="btnSubmitExperience" name="submitEvent" value="saveExperience" class="btn btn-primary" th:text="#{global.save}">Save</button>
 									</div>
 								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="deleteExperienceMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="deleteExperienceModalLabel" th:text="#{experience.delete}">Delete experience</h4>
+							</div>
+							<div class="modal-body">
+								<p th:text="#{experience.delete.msg}">Are you sure to want to delete this experience</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
+								<button type="button" id="btnDeleteExperience" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
 							</div>
 						</div>
 					</div>
@@ -260,9 +278,63 @@
 		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
 	</div>
 </div>
-
+<script th:src="@{/static/js/postFunction.js}" src="../../../static/js/postFunction.js"></script>
 <script th:inline="javascript">
+	/*<![CDATA[*/
+	$('#btnSubmitExperience').click(function() {
+		executePost("#experienceForm", "/consultant/validate-experience");
+	});
 
+	$('#btnAddExperience').click(function() {
+		var saveLabel = /*[[#{global.save}]]*/ 'Save';
+		$('#experienceForm').attr('action', contextRoot + '/consultant/save-experience');
+		$('#btnSubmitExperience').html(saveLabel).val('saveExperience');
+	});
+
+	$('.edit-experience').click(function() {
+		var url = contextRoot + '/consultant/edit-experience';
+		var params = {'experienceId' : $(this).closest('div.row').attr('id')};
+		$.get(url, params, function(data) {
+			$('#experienceId').val(data.id);
+			$('#companyName').val(data.companyName);
+			$('#position').val(data.position);
+			$('#locality').val(data.locality);
+			$('#monthFrom').val(data.monthFrom);
+			$('#yearFrom').val(data.yearFrom);
+			$('#monthTo').val(data.monthTo);
+			if (eval(data.current)) {
+				$('#periodToBlock').addClass('hidden');
+				$('#presentPeriodBlock').removeClass('hidden');
+				$('#isCurrent-endDate-position').attr('checked', 'checked');
+			} else {
+				$('#presentPeriodBlock').addClass('hidden');
+				$('#periodToBlock').removeClass('hidden');
+				$('#isCurrent-endDate-position').removeAttr('checked');
+			}
+			$('#yearTo').val(data.yearTo);
+			$('#description').val(data.description);
+			var updateLabel = /*[[#{global.update}]]*/ 'Update';
+			$('#experienceForm').attr('action', contextRoot + '/consultant/update-experience');
+			$('#btnSubmitExperience').html(updateLabel).val('updateExperience');
+			$("#experienceFormModal").modal({
+				'show' : true,
+				'backdrop' : 'static'
+			});
+		});
+	});
+
+	$('.delete-experience').click(function() {
+		$("#deleteExperienceMessageModal").modal({
+			'show' : true,
+			'backdrop' : 'static'
+		});
+		$('#btnDeleteExperience').val($(this).closest('div.row').attr('id'));
+	});
+
+	$('#btnDeleteExperience').click(function() {
+		window.location = contextRoot + '/consultant/delete-experience?' + $.param({'experienceId' : $(this).val()});
+	});
+	/*]]>*/
 </script>
 </body>
 </html>

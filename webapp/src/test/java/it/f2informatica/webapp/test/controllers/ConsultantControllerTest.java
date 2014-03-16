@@ -4,7 +4,7 @@ import it.f2informatica.services.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.utils.MonthHelper;
-import it.f2informatica.webapp.utils.PeriodResolver;
+import it.f2informatica.webapp.utils.PeriodParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class ConsultantControllerTest {
 	private MonthHelper monthHelper;
 
 	@Mock
-	private PeriodResolver periodResolver;
+	private PeriodParser periodParser;
 
 	@Mock
 	private ConsultantService consultantService;
