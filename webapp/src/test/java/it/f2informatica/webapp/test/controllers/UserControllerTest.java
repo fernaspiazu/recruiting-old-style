@@ -92,15 +92,6 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void changePasswordForm() throws Exception {
-		mockMvc.perform(get("/user/changePassword/1234567890"))
-			.andDo(print())
-			.andExpect(request().attribute("userId", "1234567890"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("user/changePasswordForm"));
-	}
-
-	@Test
 	public void updatePassword() throws Exception {
 		mockMvc.perform(post("/user/updatePassword"))
 			.andDo(print())

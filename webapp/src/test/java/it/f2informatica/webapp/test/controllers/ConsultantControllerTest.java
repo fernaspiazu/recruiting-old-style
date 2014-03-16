@@ -50,24 +50,10 @@ public class ConsultantControllerTest {
 
 	@Test
 	public void consultantRegistrationPage() throws Exception {
-		mockMvc.perform(get("/consultant/create"))
+		mockMvc.perform(get("/consultant/new-consultant"))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(view().name("consultant/masterDataRegistration"));
-	}
-
-	@Test
-	public void registerConsultantMasterData() throws Exception {
-		ConsultantModel consMock = consultantModel()
-				.withId("5298766a39ef39c7c280b7e5")
-				.withFirstName("Mario")
-				.withLastName("Rossi")
-				.build();
-		when(consultantService.savePersonalDetails(any(ConsultantModel.class))).thenReturn(consMock);
-		mockMvc.perform(post("/consultant/registerMasterData"))
-				.andDo(print())
-				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/consultant/profile/"+consMock.getId()));
+				.andExpect(view().name("consultant/consultantForm"));
 	}
 
 }
