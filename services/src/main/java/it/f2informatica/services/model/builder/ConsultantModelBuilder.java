@@ -1,7 +1,5 @@
 package it.f2informatica.services.model.builder;
 
-import it.f2informatica.datastore.constant.Gender;
-import it.f2informatica.datastore.constant.MaritalStatus;
 import it.f2informatica.services.model.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -52,7 +50,7 @@ public class ConsultantModelBuilder {
 		return this;
 	}
 
-	public ConsultantModelBuilder withGender(Gender gender) {
+	public ConsultantModelBuilder withGender(String gender) {
 		consultant.setGender(gender);
 		return this;
 	}
@@ -98,11 +96,6 @@ public class ConsultantModelBuilder {
 
 	public ConsultantModelBuilder withPassportNo(String passportNo) {
 		consultant.setPassportNo(passportNo);
-		return this;
-	}
-
-	public ConsultantModelBuilder withMaritalStatus(MaritalStatus maritalStatus) {
-		consultant.setMaritalStatus(maritalStatus);
 		return this;
 	}
 

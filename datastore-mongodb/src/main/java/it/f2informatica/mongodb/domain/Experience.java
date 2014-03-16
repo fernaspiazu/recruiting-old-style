@@ -15,7 +15,7 @@ public class Experience {
 
 	private String companyName;
 
-	private String function;
+	private String position;
 
 	private String location;
 

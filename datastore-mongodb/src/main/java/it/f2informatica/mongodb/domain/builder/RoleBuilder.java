@@ -1,7 +1,6 @@
 package it.f2informatica.mongodb.domain.builder;
 
 import it.f2informatica.mongodb.domain.Role;
-import it.f2informatica.datastore.constant.Authority;
 
 public class RoleBuilder {
 	private Role role = new Role();
@@ -11,7 +10,7 @@ public class RoleBuilder {
 	}
 
 	public Role thatIsAdministrator() {
-		this.role.setName(Authority.ROLE_ADMIN.toString());
+		this.role.setName("ROLE_ADMIN");
 		return this.build();
 	}
 

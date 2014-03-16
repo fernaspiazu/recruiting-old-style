@@ -17,7 +17,7 @@ import java.util.UUID;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
-import static it.f2informatica.services.model.builder.LanguageModelBuilder.*;
+import static it.f2informatica.services.model.builder.LanguageModelBuilder.languageModel;
 
 @Service
 public class ConsultantServiceImpl implements ConsultantService {

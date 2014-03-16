@@ -66,7 +66,7 @@ public class ExperienceDataBuilder {
 		Experience experience = new Experience();
 		experience.setId(id);
 		experience.setCompanyName(companyName);
-		experience.setFunction(function);
+		experience.setPosition(function);
 		experience.setLocation(location);
 		experience.setPeriodFrom(periodFrom);
 		experience.setPeriodTo(periodTo);

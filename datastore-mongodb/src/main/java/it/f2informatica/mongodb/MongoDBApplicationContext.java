@@ -1,6 +1,7 @@
 package it.f2informatica.mongodb;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +38,7 @@ public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 	@Bean
 	@Override
 	public Mongo mongo() throws UnknownHostException {
-		Mongo mongo = new Mongo(host, Integer.parseInt(defaultPort));
+		Mongo mongo = new MongoClient(host, Integer.parseInt(defaultPort));
 		mongo.getMongoOptions().setConnectionsPerHost(10);
 		mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
 		mongo.getMongoOptions().setConnectTimeout(5000);

@@ -1,7 +1,6 @@
 package it.f2informatica.mongodb.domain.builder;
 
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.datastore.constant.LanguageProficiency;
 
 public class LanguageBuilder {
 
@@ -31,7 +30,7 @@ public class LanguageBuilder {
 		return new LanguageBuilder(language);
 	}
 
-	public LanguageBuilder withProficiency(LanguageProficiency proficiency) {
+	public LanguageBuilder withProficiency(String proficiency) {
 		lang.setProficiency(proficiency);
 		return this;
 	}

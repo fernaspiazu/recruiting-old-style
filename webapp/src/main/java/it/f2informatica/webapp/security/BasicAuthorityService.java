@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.datastore.constant.Authority;
+import it.f2informatica.services.Authority;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

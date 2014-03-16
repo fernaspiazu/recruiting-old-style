@@ -46,8 +46,8 @@ public class ExperienceBuilder {
 		return this;
 	}
 
-	public ExperienceBuilder inFunctionOf(String function) {
-		this.experience.setFunction(function);
+	public ExperienceBuilder withPosition(String position) {
+		this.experience.setPosition(position);
 		return this;
 	}
 

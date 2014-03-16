@@ -1,8 +1,6 @@
 package it.f2informatica.services.model;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.datastore.constant.Gender;
-import it.f2informatica.datastore.constant.MaritalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -31,7 +29,7 @@ public class ConsultantModel implements Serializable {
 
 	private String lastName;
 
-	private Gender gender;
+	private String gender;
 
 	private String phoneNumber;
 
@@ -50,8 +48,6 @@ public class ConsultantModel implements Serializable {
 	private String identityCardNo;
 
 	private String passportNo;
-
-	private MaritalStatus maritalStatus;
 
 	private List<ExperienceModel> experiences = Lists.newArrayList();
 

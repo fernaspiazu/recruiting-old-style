@@ -1,12 +1,11 @@
 package it.f2informatica.test.mongodb.builders;
 
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.datastore.constant.LanguageProficiency;
 
 public class LanguageDataBuilder {
 
 	private String language;
-	private LanguageProficiency proficiency = LanguageProficiency.PROFESSIONAL_WORKING;
+	private String proficiency = "professional_working";
 
 	private LanguageDataBuilder(String language) {
 		this.language = language;
@@ -24,7 +23,7 @@ public class LanguageDataBuilder {
 		return new LanguageDataBuilder("Spanish");
 	}
 
-	public LanguageDataBuilder withProficiency(LanguageProficiency proficiency) {
+	public LanguageDataBuilder withProficiency(String proficiency) {
 		this.proficiency = proficiency;
 		return this;
 	}

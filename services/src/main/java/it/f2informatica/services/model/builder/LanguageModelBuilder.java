@@ -1,6 +1,5 @@
 package it.f2informatica.services.model.builder;
 
-import it.f2informatica.datastore.constant.LanguageProficiency;
 import it.f2informatica.services.model.LanguageModel;
 
 public class LanguageModelBuilder {
@@ -35,9 +34,8 @@ public class LanguageModelBuilder {
 		return new LanguageModelBuilder(language);
 	}
 
-	public LanguageModelBuilder withProficiency(LanguageProficiency proficiency) {
+	public LanguageModelBuilder withProficiency(String proficiency) {
 		lang.setProficiency(proficiency);
-		lang.setKnowledge(proficiency.toString());
 		return this;
 	}
 

@@ -24,7 +24,6 @@
   </developers>
 
   <modules>
-    <module>datastore-api</module>
     <module>datastore-mongodb</module>
     <module>services</module>
     <module>webapp</module>
@@ -88,11 +87,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>it.f2informatica</groupId>
-        <artifactId>datastore-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
       <dependency>
         <groupId>it.f2informatica</groupId>
         <artifactId>datastore-mongodb</artifactId>

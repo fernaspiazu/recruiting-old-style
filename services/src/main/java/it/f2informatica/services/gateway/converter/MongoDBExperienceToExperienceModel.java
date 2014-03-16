@@ -15,7 +15,7 @@ public class MongoDBExperienceToExperienceModel
 			experienceModel()
 				.withId(experience.getId())
 				.inCompany(experience.getCompanyName())
-				.withPosition(experience.getFunction())
+				.withPosition(experience.getPosition())
 				.locatedAt(experience.getLocation())
 				.fromPeriod(experience.getPeriodFrom())
 				.toPeriod(experience.getPeriodTo())

@@ -1,9 +1,6 @@
 package it.f2informatica.test.mongodb.builders;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.datastore.constant.Gender;
-import it.f2informatica.datastore.constant.LanguageProficiency;
-import it.f2informatica.datastore.constant.MaritalStatus;
 import it.f2informatica.mongodb.domain.*;
 
 import java.util.Date;
@@ -25,7 +22,7 @@ public class ConsultantDataBuilder {
 	private String email = "mario.rossi@gmail.com";
 	private String firstName = "Mario";
 	private String lastName = "Rossi";
-	private Gender gender = Gender.MALE;
+	private String gender = "MALE";
 	private String phoneNumber = "02-69328884";
 	private String mobileNumber = "340-1246559";
 	private Date birthDate = new GregorianCalendar(1975, 3, 10).getTime();
@@ -33,7 +30,7 @@ public class ConsultantDataBuilder {
 	private String birthCity = "Milano";
 	private String identityCardNo = "AO652R";
 	private String passportNo = "0653214555";
-	private MaritalStatus maritalStatus = MaritalStatus.SINGLE;
+	private String maritalStatus = "SINGLE";
 	private List<Experience> experiences = Lists.newArrayList();
 	private List<Education> educationList = Lists.newArrayList();
 	private List<String> skills = Lists.newArrayList();
@@ -83,7 +80,7 @@ public class ConsultantDataBuilder {
 		return this;
 	}
 
-	public ConsultantDataBuilder withGender(Gender gender) {
+	public ConsultantDataBuilder withGender(String gender) {
 		this.gender = gender;
 		return this;
 	}
@@ -123,7 +120,7 @@ public class ConsultantDataBuilder {
 		return this;
 	}
 
-	public ConsultantDataBuilder withMaritalStatus(MaritalStatus maritalStatus) {
+	public ConsultantDataBuilder withMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 		return this;
 	}
@@ -226,9 +223,9 @@ public class ConsultantDataBuilder {
 					.withActivitiesIn("Sciences")
 					.withDegreeIn("Information Technology"))
 			.speaking(english()
-					.withProficiency(LanguageProficiency.PROFESSIONAL_WORKING))
+					.withProficiency("professional_working"))
 			.speaking(italian()
-					.withProficiency(LanguageProficiency.NATIVE_OR_BILINGUAL))
+					.withProficiency("native_or_bilingual"))
 			.withInterestsIn("Travels")
 			.build();
 		residence = address().build();

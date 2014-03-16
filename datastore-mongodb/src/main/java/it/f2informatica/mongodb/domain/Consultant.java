@@ -1,8 +1,6 @@
 package it.f2informatica.mongodb.domain;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.datastore.constant.Gender;
-import it.f2informatica.datastore.constant.MaritalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -36,7 +34,7 @@ public class Consultant extends Identifiable<String> {
 	@Indexed(direction = IndexDirection.ASCENDING)
 	private String lastName;
 
-	private Gender gender;
+	private String gender;
 
 	private String phoneNumber;
 
@@ -52,7 +50,7 @@ public class Consultant extends Identifiable<String> {
 
 	private String passportNo;
 
-	private MaritalStatus maritalStatus;
+	private String maritalStatus;
 
 	private List<Experience> experiences = Lists.newArrayList();
 

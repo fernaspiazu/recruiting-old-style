@@ -46,7 +46,6 @@ public class MongoDBConsultantToConsultantModelConverter
 				.withMobileNo(consultant.getMobileNumber())
 				.withIdentityCardNo(consultant.getIdentityCardNo())
 				.withPassportNo(consultant.getPassportNo())
-				.withMaritalStatus(consultant.getMaritalStatus())
 				.withResidence(addressToModelConverter.convert(consultant.getResidence()))
 				.withDomicile(addressToModelConverter.convert(consultant.getDomicile()))
 				.withExperiencesIn(experienceToModelConverter.convertList(consultant.getExperiences()))

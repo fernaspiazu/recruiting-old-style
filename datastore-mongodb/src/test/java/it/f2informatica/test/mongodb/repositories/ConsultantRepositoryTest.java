@@ -1,6 +1,5 @@
 package it.f2informatica.test.mongodb.repositories;
 
-import it.f2informatica.datastore.constant.LanguageProficiency;
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
@@ -56,8 +55,8 @@ public class ConsultantRepositoryTest extends DatastoreUtils {
 					"I've also participated in the Business layer development and Front-end " +
 					"layer building. Besides, has been adopted SCRUM approach as Agile methodology " +
 					"and Continuous Integration in order to release a stable version per sprint."))
-			.speaking(spanish().withProficiency(LanguageProficiency.NATIVE_OR_BILINGUAL))
-			.speaking(italian().withProficiency(LanguageProficiency.FULL_PROFESSIONAL))
+			.speaking(spanish().withProficiency("native_or_bilingual"))
+			.speaking(italian().withProficiency("full_professional"))
 			.build();
 		consultantRepository.save(consultant);
 	}

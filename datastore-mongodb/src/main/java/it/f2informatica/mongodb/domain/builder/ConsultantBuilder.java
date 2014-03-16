@@ -1,7 +1,5 @@
 package it.f2informatica.mongodb.domain.builder;
 
-import it.f2informatica.datastore.constant.Gender;
-import it.f2informatica.datastore.constant.MaritalStatus;
 import it.f2informatica.mongodb.domain.*;
 
 import java.util.Date;
@@ -50,7 +48,7 @@ public class ConsultantBuilder {
 		return this;
 	}
 
-	public ConsultantBuilder withGender(Gender gender) {
+	public ConsultantBuilder withGender(String gender) {
 		consultant.setGender(gender);
 		return this;
 	}
@@ -90,7 +88,7 @@ public class ConsultantBuilder {
 		return this;
 	}
 
-	public ConsultantBuilder withMaritalStatus(MaritalStatus maritalStatus) {
+	public ConsultantBuilder withMaritalStatus(String maritalStatus) {
 		consultant.setMaritalStatus(maritalStatus);
 		return this;
 	}
