@@ -1,6 +1,10 @@
 package it.f2informatica.webapp.utils;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -9,6 +13,9 @@ import java.util.GregorianCalendar;
 
 @Component
 public class PeriodParser {
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@Autowired
 	private CurrentHttpServletRequest currentHttpRequest;
@@ -31,6 +38,41 @@ public class PeriodParser {
 	public String formatDateByMonthNameAndYear(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getRequestLocale());
 		return (date != null) ? dateFormat.format(date) : "";
+	}
+
+	public String printTotalTimeOfPeriodWhichHasElapsed(Date from, Date to) {
+		DateTime timeFrom = new DateTime(from);
+		DateTime timeTo = (to != null) ? new DateTime(to) : new DateTime();
+		Period period = new Period(timeFrom, timeTo);
+		return "(" + appendYears(period) + appendMonths(period) + ")";
+	}
+
+	private String appendYears(Period period) {
+		int years = period.getYears();
+		if (years <= 0) {
+			return "";
+		}
+		return String.valueOf(years) + " " + ((years == 1) ? getMessage("global.year") : getMessage("global.years")) + " ";
+	}
+
+	private String appendMonths(Period period) {
+		int months = period.getMonths();
+		if (months <= 0) {
+			return appendDays(period);
+		}
+		return String.valueOf(months) + " " + ((months == 1) ? getMessage("global.month") : getMessage("global.months"));
+	}
+
+	private String appendDays(Period period) {
+		int days = period.getDays();
+		if (days <= 0) {
+			return " " + String.valueOf(days) + " " + getMessage("global.days");
+		}
+		return " " + String.valueOf(days) + " " + ((days == 1) ? getMessage("global.day") : getMessage("global.days"));
+	}
+
+	private String getMessage(String code) {
+		return messageSource.getMessage(code, ArrayUtils.EMPTY_OBJECT_ARRAY, currentHttpRequest.getRequestLocale());
 	}
 
 }

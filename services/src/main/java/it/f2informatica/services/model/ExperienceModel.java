@@ -39,6 +39,8 @@ public class ExperienceModel implements Serializable {
 
 	private boolean current;
 
+	private String totalPeriodElapsed;
+
 	private String description;
 
 	private String submitEvent;

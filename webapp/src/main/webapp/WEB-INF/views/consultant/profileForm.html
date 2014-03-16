@@ -80,8 +80,8 @@
 									</div>
 								</h4>
 								<p th:text="${experience.companyName}" style="margin-bottom: 5px;">Accenture</p>
-								<p th:if="${experience.current}" th:text="|${{experience.periodFrom}} - #{experience.present}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
-								<p th:unless="${experience.current}" th:text="|${{experience.periodFrom}} - ${{experience.periodTo}}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
+								<p th:if="${experience.current}" th:text="|${{experience.periodFrom}} - #{experience.present} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
+								<p th:unless="${experience.current}" th:text="|${{experience.periodFrom}} - ${{experience.periodTo}} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
 								<p th:text="${experience.description}" class="text-justify">Experience Description</p>
 							</div>
 						</div>

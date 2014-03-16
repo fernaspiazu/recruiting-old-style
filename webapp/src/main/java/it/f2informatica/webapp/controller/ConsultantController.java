@@ -19,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -79,10 +80,19 @@ public class ConsultantController {
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profilePage(@RequestParam String consultantId, ModelMap model) {
 		ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
+		setTotalTimeOfPeriodWhichHasElapsed(consultantModel);
 		model.addAttribute("consultantId", consultantId);
 		model.addAttribute("consultantModel", consultantModel);
 		model.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
 		return "consultant/profileForm";
+	}
+
+	private void setTotalTimeOfPeriodWhichHasElapsed(ConsultantModel consultantModel) {
+		for (ExperienceModel experienceModel : consultantModel.getExperiences()) {
+			Date from = experienceModel.getPeriodFrom();
+			Date to = experienceModel.getPeriodTo();
+			experienceModel.setTotalPeriodElapsed(periodParser.printTotalTimeOfPeriodWhichHasElapsed(from, to));
+		}
 	}
 
 	@RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
