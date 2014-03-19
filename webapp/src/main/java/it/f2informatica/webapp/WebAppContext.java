@@ -133,7 +133,8 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 			"/WEB-INF/i18n/global",
 			"/WEB-INF/i18n/user",
 			"/WEB-INF/i18n/consultant",
-			"/WEB-INF/i18n/months"
+			"/WEB-INF/i18n/months",
+			"/WEB-INF/i18n/language"
 		};
 	}
 

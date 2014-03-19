@@ -8,7 +8,7 @@ import it.f2informatica.services.validator.UpdatePasswordModelValidator;
 import it.f2informatica.services.validator.UserModelValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
-import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
+import it.f2informatica.webapp.utils.CurrentHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,19 +24,19 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private PasswordUpdaterService passwordUpdaterService;
+	private CurrentHttpRequest httpRequest;
 
 	@Autowired
 	private UserModelValidator userModelValidator;
 
 	@Autowired
-	private UpdatePasswordModelValidator updatePasswordModelValidator;
+	private PasswordUpdaterService passwordUpdaterService;
 
 	@Autowired
 	private ValidationResponseService validationResponseService;
 
 	@Autowired
-	private CurrentHttpServletRequest httpRequest;
+	private UpdatePasswordModelValidator updatePasswordModelValidator;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
@@ -65,7 +65,7 @@ public class UserController {
 	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
 		userModelValidator.validate(userModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+			return validationResponseService.validationFail(result, httpRequest.getLocale());
 		}
 		return validationResponseService.validationSuccess();
 	}
@@ -88,7 +88,7 @@ public class UserController {
 	public @ResponseBody ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
 		updatePasswordModelValidator.validate(updatePasswordModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+			return validationResponseService.validationFail(result, httpRequest.getLocale());
 		}
 		return validationResponseService.validationSuccess();
 	}

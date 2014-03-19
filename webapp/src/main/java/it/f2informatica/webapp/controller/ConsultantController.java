@@ -8,10 +8,7 @@ import it.f2informatica.services.validator.ConsultantExperienceValidator;
 import it.f2informatica.services.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
-import it.f2informatica.webapp.utils.CurrentHttpServletRequest;
-import it.f2informatica.webapp.utils.Month;
-import it.f2informatica.webapp.utils.MonthHelper;
-import it.f2informatica.webapp.utils.PeriodParser;
+import it.f2informatica.webapp.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -37,10 +34,13 @@ public class ConsultantController {
 	private PeriodParser periodParser;
 
 	@Autowired
-	private ConsultantService consultantService;
+	private LanguageHelper languageHelper;
 
 	@Autowired
-	private CurrentHttpServletRequest httpRequest;
+	private CurrentHttpRequest httpRequest;
+
+	@Autowired
+	private ConsultantService consultantService;
 
 	@Autowired
 	private ConsultantExperienceValidator experienceValidator;
@@ -54,6 +54,16 @@ public class ConsultantController {
 	@ModelAttribute("months")
 	public List<Month> loadMonths() {
 		return monthHelper.getMonths();
+	}
+
+	@ModelAttribute("languages")
+	public List<String> loadLanguages() {
+		return languageHelper.getLanguages();
+	}
+
+	@ModelAttribute("proficiencies")
+	public List<String> loadProficiencies() {
+		return languageHelper.getProficiencies();
 	}
 
 	@RequestMapping(value = "/new-consultant", method = RequestMethod.GET)
@@ -72,7 +82,7 @@ public class ConsultantController {
 	public @ResponseBody ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
 		personalDetailsValidator.validate(consultantModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+			return validationResponseService.validationFail(result, httpRequest.getLocale());
 		}
 		return validationResponseService.validationSuccess();
 	}
@@ -134,7 +144,7 @@ public class ConsultantController {
 	public @ResponseBody ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
 		experienceValidator.validate(experienceModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getRequestLocale());
+			return validationResponseService.validationFail(result, httpRequest.getLocale());
 		}
 		return validationResponseService.validationSuccess();
 	}

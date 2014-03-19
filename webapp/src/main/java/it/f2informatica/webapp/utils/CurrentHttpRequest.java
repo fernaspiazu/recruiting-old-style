@@ -17,7 +17,7 @@ import java.util.Locale;
  * Class which represents the current Http Request performed.
  */
 @Component
-public class CurrentHttpServletRequest {
+public class CurrentHttpRequest {
 
 	/**
 	 * Returns the current locale associated to this request
@@ -26,15 +26,15 @@ public class CurrentHttpServletRequest {
 	 *
 	 * @return the current locale
 	 */
-	public Locale getRequestLocale() {
-		String languageParam = currentHttpServletRequest().getParameter(WebAppContext.LANGUAGE);
+	public Locale getLocale() {
+		String languageParam = getCurrentHttpRequest().getParameter(WebAppContext.LANGUAGE);
 		if (StringUtils.hasText(languageParam)) {
 			return LocaleUtils.toLocale(languageParam);
 		} else {
 			Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
 			return (cookie != null)
 				? LocaleUtils.toLocale(cookie.getValue())
-				: currentHttpServletRequest().getLocale();
+				: getCurrentHttpRequest().getLocale();
 		}
 	}
 
@@ -46,20 +46,20 @@ public class CurrentHttpServletRequest {
 	 * @return Cookie belonging this request
 	 */
 	public Cookie getCookie(String cookieName) {
-		return WebUtils.getCookie(currentHttpServletRequest(), cookieName);
+		return WebUtils.getCookie(getCurrentHttpRequest(), cookieName);
 	}
 
 	/**
 	 * Gets the current Http Request
 	 */
-	public HttpServletRequest currentHttpServletRequest() {
-		return currentServletRequestAttributes().getRequest();
+	public HttpServletRequest getCurrentHttpRequest() {
+		return getServletRequestAttributes().getRequest();
 	}
 
 	/**
 	 * Gets servlet attributes
 	 */
-	public ServletRequestAttributes currentServletRequestAttributes() {
+	public ServletRequestAttributes getServletRequestAttributes() {
 		return (ServletRequestAttributes) currentRequestAttributes();
 	}
 

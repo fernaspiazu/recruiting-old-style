@@ -18,7 +18,7 @@ public class PeriodParser {
 	private MessageSource messageSource;
 
 	@Autowired
-	private CurrentHttpServletRequest currentHttpRequest;
+	private CurrentHttpRequest currentHttpRequest;
 
 	public Date resolveDateByMonthAndYear(String month, String year) {
 		try {
@@ -36,7 +36,7 @@ public class PeriodParser {
 	}
 
 	public String formatDateByMonthNameAndYear(Date date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getRequestLocale());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getLocale());
 		return (date != null) ? dateFormat.format(date) : "";
 	}
 
@@ -72,7 +72,7 @@ public class PeriodParser {
 	}
 
 	private String getMessage(String code) {
-		return messageSource.getMessage(code, ArrayUtils.EMPTY_OBJECT_ARRAY, currentHttpRequest.getRequestLocale());
+		return messageSource.getMessage(code, ArrayUtils.EMPTY_OBJECT_ARRAY, currentHttpRequest.getLocale());
 	}
 
 }

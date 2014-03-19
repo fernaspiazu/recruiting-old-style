@@ -63,7 +63,10 @@
 					<button type="submit" id="new-consultant-btn" class="btn btn-primary">Create new Consultant</button>
 				</div>
 			</div>
-			<div th:each="c : ${consultants}" th:id="${#ids.seq('consultant-')}" class="row">
+			<div th:if="${#lists.isEmpty(consultants.content)}" class="alert alert-info">
+				<p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
+			</div>
+			<div th:unless="${#lists.isEmpty(consultants.content)}" th:each="c : ${consultants}" th:id="${#ids.seq('consultant-')}" class="row">
 				<div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
 					<div class="pull-left">
 						<h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>

@@ -206,7 +206,7 @@
 					</div>
 					<div class="panel-body panel-body-with-padding">
 						<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
-							<button type="button" class="btn btn-primary btn-block" th:inline="text">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#languageFormModal" data-backdrop="static">
 								<div class="glyphicon glyphicon-edit"></div>
 								[[#{global.edit}]]
 							</button>
@@ -214,8 +214,86 @@
 						<div class="clearfix"></div>
 						<div class="row">
 							<div class="col-md-4 margin-bottom-10px" th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}">
-								<h4 th:text="${lang.language}"></h4>
-								<p th:text="${lang.knowledge}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
+								<h4 th:text="#{__${lang.language}__}">Spanish</h4>
+								<p th:text="#{__${lang.proficiency}__}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="languageFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="languageModalLabel" th:text="#{language.new}">New language</h4>
+							</div>
+							<div class="modal-body">
+								<form id="languagesForm" th:action="@{/consultant/save-languages}" action="#" method="post" role="form">
+									<fieldset>
+										<div class="row">
+											<div class="form-group col-md-5">
+												<label class="sr-only" th:text="#{header.selectlanguage}">Select language</label>
+												<select name="language" class="form-control input-sm">
+													<option value="" th:text="#{language.selectlanguage}">Select language</option>
+													<option th:each="lang : ${languages}" th:value="${lang}" th:text="#{__${lang}__}"></option>
+												</select>
+											</div>
+											<div class="form-group col-md-5">
+												<label class="sr-only" th:text="#{language.selectproficiency}">Select proficiency</label>
+												<select name="proficiency" class="form-control input-sm">
+													<option value="" th:text="#{language.selectproficiency}">Select proficiency</option>
+													<option th:each="prof : ${proficiencies}" th:value="${prof}" th:text="#{__${prof}__}"></option>
+												</select>
+											</div>
+											<div class="form-group col-md-1">
+												<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>
+											</div>
+										</div>
+										<button class="btn btn-link" type="button" id="linkAddNewLanguage" th:text="#{language.add}">Add</button>
+									</fieldset>
+									<script th:inline="javascript">
+										/*<![CDATA[*/
+										$('#linkAddNewLanguage').click(function() {
+											$(createSingleRowEntry()).insertBefore($('#linkAddNewLanguage'));
+										});
+
+										function createSingleRowEntry() {
+											return $('<div class="row">').append(
+												'<div class="form-group col-md-5">' +
+													'<select name="language" class="form-control input-sm">' +
+														'<option value="">'+[[#{language.selectlanguage}]]+'</option>' +
+														'<option value="english">'+[[#{english}]]+'</option>' +
+														'<option value="italian">'+[[#{italian}]]+'</option>' +
+														'<option value="spanish">'+[[#{spanish}]]+'</option>' +
+														'<option value="german">'+[[#{german}]]+'</option>' +
+														'<option value="dutch">'+[[#{dutch}]]+'</option>' +
+													'</select>' +
+												'</div>' +
+												'<div class="form-group col-md-5">' +
+													'<select name="language" class="form-control input-sm">' +
+														'<option value="">'+[[#{language.selectproficiency}]]+'</option>' +
+														'<option value="elementary">'+[[#{elementary}]]+'</option>' +
+														'<option value="limited_working">'+[[#{limited_working}]]+'</option>' +
+														'<option value="professional_working">'+[[#{professional_working}]]+'</option>' +
+														'<option value="full_professional">'+[[#{full_professional}]]+'</option>' +
+														'<option value="native_or_bilingual">'+[[#{native_or_bilingual}]]+'</option>' +
+													'</select>' +
+												'</div>' +
+												'<div class="form-group col-md-1">' +
+														'<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>' +
+												'</div>'
+											);
+										}
+
+										function dropLanguage(button) {
+											$(button).closest('.row').remove();
+										}
+										/*]]>*/
+									</script>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
+										<button type="submit" id="btnSubmitLanguages" name="submitEvent" value="saveLanguages" class="btn btn-primary" th:text="#{global.save}">Save</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

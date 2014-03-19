@@ -33,7 +33,7 @@ public class NavBarController {
 		return "homePage";
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = {"/user", "/users"}, method = RequestMethod.GET)
 	public String userManagementPage(ModelMap modelMap, Pageable pageable) {
 		String currentUser = securityAccessor.getCurrentUsername();
 		modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 1);
@@ -43,7 +43,7 @@ public class NavBarController {
 		return "user/users";
 	}
 
-	@RequestMapping(value = "/consultants", method = RequestMethod.GET)
+	@RequestMapping(value = {"/consultant", "/consultants"}, method = RequestMethod.GET)
 	public String consultantManagementPage(ModelMap modelMap, Pageable pageable) {
 		Pageable customPageableRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.ASC, "lastName", "firstName");
 		modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 2);

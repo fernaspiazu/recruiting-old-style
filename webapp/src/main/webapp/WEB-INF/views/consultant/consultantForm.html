@@ -119,7 +119,7 @@
 									</div>
 									<div class="form-group">
 										<label for="birthDate" class="sr-only" th:text="#{consultant.birth.date}">Birthdate</label>
-										<input type="text" id="birthDate" th:field="*{birthDate}" class="form-control input-sm" th:placeholder="#{consultant.birth.date}"/>
+										<input type="text" id="birthDate" th:field="*{birthDate}" class="form-control input-sm" th:placeholder="|#{consultant.birth.date} (#{global.dateformat})|"/>
 									</div>
 									<div class="form-group">
 										<label for="birthCity" class="sr-only" th:text="#{consultant.birth.city}">Birth city</label>

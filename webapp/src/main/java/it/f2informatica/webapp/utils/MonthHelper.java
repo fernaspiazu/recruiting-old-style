@@ -14,7 +14,7 @@ public class MonthHelper {
 	private MessageSource messageSource;
 
 	@Autowired
-	private CurrentHttpServletRequest currentHttpRequest;
+	private CurrentHttpRequest httpRequest;
 
 	public List<Month> getMonths() {
 		return Lists.newArrayList(
@@ -34,7 +34,7 @@ public class MonthHelper {
 	}
 
 	private String getMessage(String label) {
-		return messageSource.getMessage(label, null, currentHttpRequest.getRequestLocale());
+		return messageSource.getMessage(label, null, httpRequest.getLocale());
 	}
 
 }
