@@ -7,6 +7,7 @@ import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -111,7 +112,20 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
-		return consultantRepositoryGateway.addLanguages(languageModelArray, consultantId);
+		return consultantRepositoryGateway.addLanguages(removeEventuaEmptyLanguages(languageModelArray), consultantId);
+	}
+
+	private LanguageModel[] removeEventuaEmptyLanguages(LanguageModel[] languageModels) {
+		List<LanguageModel> listOfLanguages = Lists.newArrayList(languageModels);
+		Iterables.removeIf(listOfLanguages, new Predicate<LanguageModel>() {
+			@Override
+			public boolean apply(LanguageModel input) {
+				return input == null
+					|| StringUtils.isBlank(input.getLanguage())
+					|| StringUtils.isBlank(input.getProficiency());
+			}
+		});
+		return Iterables.toArray(listOfLanguages, LanguageModel.class);
 	}
 
 	@Override
@@ -124,7 +138,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		Iterables.removeIf(listOfSkill, new Predicate<String>() {
 			@Override
 			public boolean apply(String input) {
-				return input == null || input.isEmpty();
+				return StringUtils.isBlank(input);
 			}
 		});
 		return Iterables.toArray(listOfSkill, String.class);
