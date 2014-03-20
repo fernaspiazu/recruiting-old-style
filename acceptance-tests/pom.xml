@@ -88,11 +88,6 @@
   <dependencies>
     <dependency>
       <groupId>it.f2informatica</groupId>
-      <artifactId>datastore-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>it.f2informatica</groupId>
       <artifactId>datastore-mongodb</artifactId>
       <version>${project.parent.version}</version>
       <scope>test</scope>

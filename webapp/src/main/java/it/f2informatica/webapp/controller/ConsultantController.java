@@ -1,14 +1,19 @@
 package it.f2informatica.webapp.controller;
 
+import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
 import it.f2informatica.services.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
+import it.f2informatica.services.model.LanguageModel;
 import it.f2informatica.services.validator.ConsultantExperienceValidator;
 import it.f2informatica.services.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
-import it.f2informatica.webapp.utils.*;
+import it.f2informatica.webapp.utils.CurrentHttpRequest;
+import it.f2informatica.webapp.utils.Month;
+import it.f2informatica.webapp.utils.MonthHelper;
+import it.f2informatica.webapp.utils.PeriodParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -34,9 +39,6 @@ public class ConsultantController {
 	private PeriodParser periodParser;
 
 	@Autowired
-	private LanguageHelper languageHelper;
-
-	@Autowired
 	private CurrentHttpRequest httpRequest;
 
 	@Autowired
@@ -54,16 +56,6 @@ public class ConsultantController {
 	@ModelAttribute("months")
 	public List<Month> loadMonths() {
 		return monthHelper.getMonths();
-	}
-
-	@ModelAttribute("languages")
-	public List<String> loadLanguages() {
-		return languageHelper.getLanguages();
-	}
-
-	@ModelAttribute("proficiencies")
-	public List<String> loadProficiencies() {
-		return languageHelper.getProficiencies();
 	}
 
 	@RequestMapping(value = "/new-consultant", method = RequestMethod.GET)
@@ -152,6 +144,18 @@ public class ConsultantController {
 	@RequestMapping(value = "/delete-experience", method = RequestMethod.GET)
 	public String deleteExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
 		consultantService.removeExperience(consultantId, experienceId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/save-languages", method = RequestMethod.POST)
+	public String saveLanguages(@ModelAttribute("consultantModel") ConsultantModel consultantModel, @ModelAttribute("consultantId") String consultantId) {
+		consultantService.addLanguages(Iterables.toArray(consultantModel.getLanguages(), LanguageModel.class), consultantId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/save-skills", method = RequestMethod.POST)
+	public String saveSkills(@ModelAttribute("consultantId") String consultantId, @RequestParam("skill") String[] skill) {
+		consultantService.addSkills(skill, consultantId);
 		return "redirect:/consultant/profile";
 	}
 

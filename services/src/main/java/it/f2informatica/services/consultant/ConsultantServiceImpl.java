@@ -1,5 +1,8 @@
 package it.f2informatica.services.consultant;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.services.model.ExperienceModel;
@@ -113,7 +116,18 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public boolean addSkills(String[] skills, String consultantId) {
-		return consultantRepositoryGateway.addSkills(skills, consultantId);
+		return consultantRepositoryGateway.addSkills(removeBlankContentFromArray(skills), consultantId);
+	}
+
+	private String[] removeBlankContentFromArray(String[] skillsToProcess) {
+		List<String> listOfSkill = Lists.newArrayList(skillsToProcess);
+		Iterables.removeIf(listOfSkill, new Predicate<String>() {
+			@Override
+			public boolean apply(String input) {
+				return input == null || input.isEmpty();
+			}
+		});
+		return Iterables.toArray(listOfSkill, String.class);
 	}
 
 }
