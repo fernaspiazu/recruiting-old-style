@@ -9,6 +9,8 @@ import lombok.ToString;
 @ToString
 public class Education {
 
+	private String id;
+
 	private String school;
 
 	private int startYear;

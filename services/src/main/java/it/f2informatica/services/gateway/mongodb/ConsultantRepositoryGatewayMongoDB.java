@@ -3,18 +3,12 @@ package it.f2informatica.services.gateway.mongodb;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import it.f2informatica.mongodb.domain.Address;
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.domain.Experience;
-import it.f2informatica.mongodb.domain.Language;
+import it.f2informatica.mongodb.domain.*;
 import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.gateway.EntityToModelConverter;
-import it.f2informatica.services.model.AddressModel;
-import it.f2informatica.services.model.ConsultantModel;
-import it.f2informatica.services.model.ExperienceModel;
-import it.f2informatica.services.model.LanguageModel;
+import it.f2informatica.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -27,6 +21,7 @@ import java.util.UUID;
 
 import static it.f2informatica.mongodb.domain.builder.AddressBuilder.anAddress;
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
+import static it.f2informatica.mongodb.domain.builder.EducationBuilder.education;
 import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.experience;
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
@@ -43,6 +38,10 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Autowired
 	@Qualifier("experienceToModelConverter")
 	private EntityToModelConverter<Experience, ExperienceModel> experienceToModelConverter;
+
+	@Autowired
+	@Qualifier("educationToModelConverter")
+	private EntityToModelConverter<Education, EducationModel> educationToModelConverter;
 
 	@Override
 	public ConsultantModel findOneConsultant(String consultantId) {
@@ -179,6 +178,49 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Override
 	public boolean addSkills(String[] skills, String consultantId) {
 		return consultantRepository.addSkills(skills, consultantId);
+	}
+
+	@Override
+	public EducationModel findOneEducation(String consultantId, String educationId) {
+		Education education = consultantRepository.findEducation(consultantId, educationId);
+		return educationToModelConverter.convert(education);
+	}
+
+	@Override
+	public boolean addEducation(EducationModel educationModel, String consultantId) {
+		Education education = education()
+			.withId(UUID.randomUUID().toString())
+			.inSchool(educationModel.getSchool())
+			.startedInYear(educationModel.getStartYear())
+			.finishedInYear(educationModel.getEndYear())
+			.withDegreeIn(educationModel.getSchoolDegree())
+			.fieldOfStudyIn(educationModel.getSchoolFieldOfStudy())
+			.withGrade(educationModel.getSchoolGrade())
+			.withActivitiesIn(educationModel.getSchoolActivities())
+			.isInProgress(educationModel.isCurrent())
+			.withDescription(educationModel.getDescription())
+			.build();
+		return consultantRepository.addEducation(education, consultantId);
+	}
+
+	@Override
+	public boolean updateEducation(EducationModel educationModel, String consultantId) {
+		Education education = consultantRepository.findEducation(consultantId, educationModel.getId());
+		education.setSchool(educationModel.getSchool());
+		education.setStartYear(educationModel.getStartYear());
+		education.setEndYear(educationModel.getEndYear());
+		education.setSchoolDegree(educationModel.getSchoolDegree());
+		education.setSchoolFieldOfStudy(educationModel.getSchoolFieldOfStudy());
+		education.setSchoolGrade(educationModel.getSchoolGrade());
+		education.setSchoolActivities(educationModel.getSchoolActivities());
+		education.setCurrent(educationModel.isCurrent());
+		education.setDescription(educationModel.getDescription());
+		return consultantRepository.updateEducation(education, consultantId);
+	}
+
+	@Override
+	public void removeEducation(String consultantId, String educationId) {
+		consultantRepository.removeEducation(consultantId, educationId);
 	}
 
 }

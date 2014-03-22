@@ -7,12 +7,13 @@ import it.f2informatica.services.model.EducationModel;
 import static it.f2informatica.services.model.builder.EducationModelBuilder.educationModel;
 
 public class MongoDBEducationToEducationModelConverter
-		extends EntityToModelConverter<Education, EducationModel> {
+	extends EntityToModelConverter<Education, EducationModel> {
 
 	@Override
 	public EducationModel convert(Education education) {
 		return (education == null) ? null :
 			educationModel()
+				.withId(education.getId())
 				.inSchool(education.getSchool())
 				.startedInYear(education.getStartYear())
 				.finishedInYear(education.getEndYear())

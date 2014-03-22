@@ -10,6 +10,11 @@ public class EducationBuilder {
 		return new EducationBuilder();
 	}
 
+	public EducationBuilder withId(String id) {
+		this.education.setId(id);
+		return this;
+	}
+
 	public EducationBuilder inSchool(String school) {
 		education.setSchool(school);
 		return this;

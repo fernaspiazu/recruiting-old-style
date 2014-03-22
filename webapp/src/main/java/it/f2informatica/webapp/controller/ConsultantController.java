@@ -4,8 +4,10 @@ import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
 import it.f2informatica.services.consultant.ConsultantService;
 import it.f2informatica.services.model.ConsultantModel;
+import it.f2informatica.services.model.EducationModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
+import it.f2informatica.services.validator.ConsultantEducationValidator;
 import it.f2informatica.services.validator.ConsultantExperienceValidator;
 import it.f2informatica.services.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
@@ -43,6 +45,9 @@ public class ConsultantController {
 
 	@Autowired
 	private ConsultantService consultantService;
+
+	@Autowired
+	private ConsultantEducationValidator educationValidator;
 
 	@Autowired
 	private ConsultantExperienceValidator experienceValidator;
@@ -86,6 +91,7 @@ public class ConsultantController {
 		model.addAttribute("consultantId", consultantId);
 		model.addAttribute("consultantModel", consultantModel);
 		model.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
+		model.addAttribute("educationModel", new EducationModel());
 		return "consultant/profileForm";
 	}
 
@@ -157,6 +163,39 @@ public class ConsultantController {
 	public String saveSkills(@ModelAttribute("consultantId") String consultantId, @RequestParam("skill") String[] skill) {
 		consultantService.addSkills(skill, consultantId);
 		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/save-education", method = RequestMethod.POST)
+	public String saveEducation(@ModelAttribute("educationModel") EducationModel educationModel, @ModelAttribute("consultantId") String consultantId) {
+		consultantService.addConsultantEducation(educationModel, consultantId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/edit-education", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
+		EducationModel educationModel = consultantService.findEducation(consultantId, educationId);
+		return gson.toJson(educationModel);
+	}
+
+	@RequestMapping(value = "/update-education", method = RequestMethod.POST)
+	public String updateEducation(@ModelAttribute("educationModel") EducationModel educationModel, @ModelAttribute("consultantId") String consultantId) {
+		consultantService.updateConsultantEducation(educationModel, consultantId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/delete-education", method = RequestMethod.GET)
+	public String deleteEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
+		consultantService.removeEducation(consultantId, educationId);
+		return "redirect:/consultant/profile";
+	}
+
+	@RequestMapping(value = "/validate-education", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ValidationResponse validateEducation(@ModelAttribute("educationModel") EducationModel educationModel, BindingResult result) {
+		educationValidator.validate(educationModel, result);
+		if (result.hasErrors()) {
+			return validationResponseService.validationFail(result, httpRequest.getLocale());
+		}
+		return validationResponseService.validationSuccess();
 	}
 
 }

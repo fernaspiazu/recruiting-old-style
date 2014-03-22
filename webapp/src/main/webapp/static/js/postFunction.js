@@ -22,7 +22,7 @@ function executePost(targetForm, asyncUrl) {
 				$.each(response.errorMessages, function(i, item) {
 					var errorMessage = item.errorMessage;
 					var $field = $('#'+item.fieldName);
-					var $fieldErrors = $('#fieldErrors').html('<div class="alert alert-danger"></div>');
+					var $fieldErrors = $form.find('.error-block').html('<div class="alert alert-danger"></div>');
 
 					$field.parent().addClass('has-error');
 					if (!$fieldErrors.find('.alert-danger').html()) {
@@ -69,5 +69,5 @@ function resetAllErrorMessages(targetForm) {
 		var $item = $(fields[i]);
 		$item.parent().removeClass('has-error');
 	}
-	$('#fieldErrors').children().remove();
+	$form.find('.error-block').children().remove();
 }

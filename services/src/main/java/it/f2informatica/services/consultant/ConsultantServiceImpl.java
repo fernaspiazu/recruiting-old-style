@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.model.ConsultantModel;
+import it.f2informatica.services.model.EducationModel;
 import it.f2informatica.services.model.ExperienceModel;
 import it.f2informatica.services.model.LanguageModel;
 import org.apache.commons.lang3.StringUtils;
@@ -41,11 +42,6 @@ public class ConsultantServiceImpl implements ConsultantService {
 	@Override
 	public ExperienceModel buildNewExperienceModel() {
 		return experienceModel().build();
-	}
-
-	@Override
-	public LanguageModel buildNewLanguageModel() {
-		return languageModel().build();
 	}
 
 	@Override
@@ -96,21 +92,6 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
-	public List<ExperienceModel> findExperiences(String consultantId) {
-		return consultantRepositoryGateway.findExperiences(consultantId);
-	}
-
-	@Override
-	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
-		return consultantRepositoryGateway.findMinimalExperiences(consultantId);
-	}
-
-	@Override
-	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
-		return consultantRepositoryGateway.addLanguage(languageModel, consultantId);
-	}
-
-	@Override
 	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
 		return consultantRepositoryGateway.addLanguages(removeEventuaEmptyLanguages(languageModelArray), consultantId);
 	}
@@ -142,6 +123,26 @@ public class ConsultantServiceImpl implements ConsultantService {
 			}
 		});
 		return Iterables.toArray(listOfSkill, String.class);
+	}
+
+	@Override
+	public EducationModel findEducation(String consultantId, String educationId) {
+		return consultantRepositoryGateway.findOneEducation(consultantId, educationId);
+	}
+
+	@Override
+	public boolean addConsultantEducation(EducationModel educationModel, String consultantId) {
+		return consultantRepositoryGateway.addEducation(educationModel, consultantId);
+	}
+
+	@Override
+	public boolean updateConsultantEducation(EducationModel educationModel, String consultantId) {
+		return consultantRepositoryGateway.updateEducation(educationModel, consultantId);
+	}
+
+	@Override
+	public void removeEducation(String consultantId, String educationId) {
+		consultantRepositoryGateway.removeEducation(consultantId, educationId);
 	}
 
 }

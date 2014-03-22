@@ -1,5 +1,6 @@
 package it.f2informatica.mongodb.repositories;
 
+import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
 
@@ -20,4 +21,12 @@ public interface CustomConsultantRepository {
 	boolean addSkills(String[] skills, String consultantId);
 
 	boolean removeExperience(String consultantId, String experienceId);
+
+	Education findEducation(String consultantId, String educationId);
+
+	boolean addEducation(Education education, String consultantId);
+
+	boolean updateEducation(Education education, String consultantId);
+
+	boolean removeEducation(String consultantId, String educationId);
 }

@@ -16,9 +16,9 @@ public class EducationModel implements Serializable {
 
 	private String school;
 
-	private int startYear;
+	private Integer startYear;
 
-	private int endYear;
+	private Integer endYear;
 
 	private String schoolDegree;
 
@@ -28,7 +28,7 @@ public class EducationModel implements Serializable {
 
 	private String schoolActivities;
 
-	private boolean isCurrent;
+	private boolean current;
 
 	private String description;
 
