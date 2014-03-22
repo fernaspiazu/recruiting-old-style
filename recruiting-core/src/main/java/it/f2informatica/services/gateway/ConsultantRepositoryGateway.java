@@ -25,12 +25,6 @@ public interface ConsultantRepositoryGateway {
 
 	ExperienceModel findOneExperience(String consultantId, String experienceId);
 
-	List<ExperienceModel> findMinimalExperiences(String consultantId);
-
-	List<ExperienceModel> findExperiences(String consultantId);
-
-	boolean addLanguage(LanguageModel languageModel, String consultantId);
-
 	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
 	boolean addSkills(String[] skills, String consultantId);

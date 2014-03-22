@@ -143,28 +143,6 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	}
 
 	@Override
-	public List<ExperienceModel> findMinimalExperiences(String consultantId) {
-		List<ExperienceModel> experiences = findExperiences(consultantId);
-		if (experiences.size() > 3) {
-			return experiences.subList(0, 3);
-		}
-		return experiences;
-	}
-
-	@Override
-	public List<ExperienceModel> findExperiences(String consultantId) {
-		List<Experience> experiences = consultantRepository.findOne(consultantId).getExperiences();
-		return experienceToModelConverter.convertList(experiences);
-	}
-
-	@Override
-	public boolean addLanguage(LanguageModel languageModel, String consultantId) {
-		Language language = LanguageBuilder.language(languageModel.getLanguage())
-			.withProficiency(languageModel.getProficiency()).build();
-		return consultantRepository.addLanguage(language, consultantId);
-	}
-
-	@Override
 	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
 		List<Language> languages = Lists.newArrayList();
 		for (LanguageModel languageModel : languageModelArray) {
