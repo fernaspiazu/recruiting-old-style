@@ -61,7 +61,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/validate-user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
 		userModelValidator.validate(userModel, result);
 		if (result.hasErrors()) {
@@ -70,7 +70,7 @@ public class UserController {
 		return validationResponseService.validationSuccess();
 	}
 
-	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/change-password", method = RequestMethod.GET)
 	public String changePasswordForm(@RequestParam("userId") String userId, ModelMap model) {
 		UserModel user = userService.findUserById(userId);
 		model.addAttribute("readonlyUsername", user.getUsername());
@@ -78,13 +78,13 @@ public class UserController {
 		return "user/changePasswordForm";
 	}
 
-	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/update-password", method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel) {
 		passwordUpdaterService.updatePassword(updatePasswordModel);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validatePasswordUpdating", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/validate-password-updating", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
 		updatePasswordModelValidator.validate(updatePasswordModel, result);
 		if (result.hasErrors()) {

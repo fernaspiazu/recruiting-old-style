@@ -90,7 +90,7 @@ public class ConsultantController {
 		setTotalTimeOfPeriodWhichHasElapsed(consultantModel);
 		model.addAttribute("consultantId", consultantId);
 		model.addAttribute("consultantModel", consultantModel);
-		model.addAttribute("experienceModel", consultantService.buildNewExperienceModel());
+		model.addAttribute("experienceModel", new ExperienceModel());
 		model.addAttribute("educationModel", new EducationModel());
 		return "consultant/profileForm";
 	}

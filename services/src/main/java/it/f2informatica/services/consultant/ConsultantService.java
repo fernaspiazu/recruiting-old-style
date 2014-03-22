@@ -11,8 +11,6 @@ public interface ConsultantService {
 
 	ConsultantModel buildNewConsultantModel();
 
-	ExperienceModel buildNewExperienceModel();
-
 	Page<ConsultantModel> showAllConsultants(Pageable pageable);
 
 	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);

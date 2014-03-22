@@ -93,7 +93,7 @@ public class UserControllerTest {
 
 	@Test
 	public void updatePassword() throws Exception {
-		mockMvc.perform(post("/user/updatePassword"))
+		mockMvc.perform(post("/user/update-password"))
 			.andDo(print())
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/users"));

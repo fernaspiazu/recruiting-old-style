@@ -181,7 +181,7 @@
 <script th:inline="javascript">
 	/*<![CDATA[*/
 	var targetForm = "#userModelForm";
-	var asyncUrl = "/user/validateUser";
+	var asyncUrl = "/user/validate-user";
 	var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
 
 	$("#userFormModal").on("shown.bs.modal", function(e) {
@@ -239,7 +239,7 @@
 
 	$('.change-password').click(function() {
 		var userId = $(this).closest('tr').attr('id');
-		window.location = contextRoot + '/user/changePassword?' + $.param({'userId' : userId});
+		window.location = contextRoot + '/user/change-password?' + $.param({'userId' : userId});
 	});
 	/*]]>*/
 </script>
