@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>datastore-mongodb</artifactId>
+  <artifactId>recruiting-datastore-mongodb</artifactId>
   <name>Recruiting Datastore MongoDB</name>
   <description>Recruiting datastore module backed with MongoDB</description>
 

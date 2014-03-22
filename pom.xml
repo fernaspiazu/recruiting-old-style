@@ -24,10 +24,9 @@
   </developers>
 
   <modules>
-    <module>datastore-mongodb</module>
-    <module>services</module>
-    <module>webapp</module>
-    <module>acceptance-tests</module>
+    <module>recruiting-datastore-mongodb</module>
+    <module>recruiting-core</module>
+    <module>recruiting-webapp</module>
   </modules>
 
   <properties>
@@ -89,12 +88,12 @@
     <dependencies>
       <dependency>
         <groupId>it.f2informatica</groupId>
-        <artifactId>datastore-mongodb</artifactId>
+        <artifactId>recruiting-datastore-mongodb</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>it.f2informatica</groupId>
-        <artifactId>services</artifactId>
+        <artifactId>recruiting-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

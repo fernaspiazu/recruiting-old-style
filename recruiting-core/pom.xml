@@ -9,8 +9,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>services</artifactId>
-  <name>Recruiting Services</name>
+  <artifactId>recruiting-core</artifactId>
+  <name>Recruiting Core</name>
   <description>Recruiting Services which implement whole business logic</description>
 
   <build>
@@ -34,7 +34,7 @@
     </dependency>
     <dependency>
       <groupId>it.f2informatica</groupId>
-      <artifactId>datastore-mongodb</artifactId>
+      <artifactId>recruiting-datastore-mongodb</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
