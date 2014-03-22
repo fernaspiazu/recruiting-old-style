@@ -87,6 +87,7 @@ public class SecurityAccessorTest {
 		return new UserDetails(createLoginResponse(), Lists.newArrayList(createGrantedAuthority(authority.toString())));
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Collection getAuthorities() {
 		Collection<GrantedAuthority> authorities = Lists.newArrayList();
 		authorities.add(createGrantedAuthority(Authority.ROLE_ADMIN.toString()));

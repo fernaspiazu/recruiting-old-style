@@ -21,13 +21,15 @@ public abstract class DatastoreUtils {
 
 	@Autowired
 	protected MongoTemplate mongoTemplateTest;
+	
+	private static ApplicationContext appContext;
 
 	protected static <T> T getBean(Class<T> clazz) {
 		return getBean(null, clazz);
 	}
 
 	protected static <T> T getBean(String beanName, Class<T> clazz) {
-		ApplicationContext appContext = new AnnotationConfigApplicationContext(DatastoreApplicationContextTest.class);
+		appContext = new AnnotationConfigApplicationContext(DatastoreApplicationContextTest.class);
 		return beanName == null ? appContext.getBean(clazz) : appContext.getBean(beanName, clazz);
 	}
 

@@ -114,7 +114,6 @@ public class UserRepositoryTest extends DatastoreUtils {
 		assertThat(users).hasSize(2).contains(hughJackmanUser);
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	private void findByRoleName() {
 		User firstUserFound = Iterables.getFirst(userRepository.findByRoleName("USER"), new User());
 		assertThat(firstUserFound.getRole().getName()).isEqualTo("USER");

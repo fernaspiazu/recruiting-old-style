@@ -65,7 +65,6 @@ public class UserServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings("ConstantConditions")
 	public void findUserByRoleName() {
 		String roleAdmin = Authority.ROLE_ADMIN.toString();
 		when(userRepositoryGateway.findUsersByRoleName(roleAdmin)).thenReturn(getUserList().subList(0, 2));

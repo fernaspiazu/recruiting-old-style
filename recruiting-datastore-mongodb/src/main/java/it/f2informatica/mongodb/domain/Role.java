@@ -11,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString(callSuper = true)
 @Document
 public class Role extends Identifiable<String> {
-
+	private static final long serialVersionUID = 5703160250037838356L;
+	
 	@Indexed(unique = true)
 	private String name;
 

@@ -1,10 +1,14 @@
 package it.f2informatica.webapp.test.controllers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import it.f2informatica.services.consultant.ConsultantService;
-import it.f2informatica.services.model.ConsultantModel;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.utils.MonthHelper;
 import it.f2informatica.webapp.utils.PeriodParser;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConsultantControllerTest {

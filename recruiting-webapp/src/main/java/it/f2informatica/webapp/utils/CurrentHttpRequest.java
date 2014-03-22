@@ -30,12 +30,11 @@ public class CurrentHttpRequest {
 		String languageParam = getCurrentHttpRequest().getParameter(WebAppContext.LANGUAGE);
 		if (StringUtils.hasText(languageParam)) {
 			return LocaleUtils.toLocale(languageParam);
-		} else {
-			Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
-			return (cookie != null)
-				? LocaleUtils.toLocale(cookie.getValue())
-				: getCurrentHttpRequest().getLocale();
 		}
+		Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
+		return (cookie != null)
+			? LocaleUtils.toLocale(cookie.getValue())
+			: getCurrentHttpRequest().getLocale();
 	}
 
 	/**

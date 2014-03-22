@@ -10,6 +10,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class AuthenticationResponse implements Serializable {
+	private static final long serialVersionUID = -6498031138520487799L;
 
 	private String username;
 

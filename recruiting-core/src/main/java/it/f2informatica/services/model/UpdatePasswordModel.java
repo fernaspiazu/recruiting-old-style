@@ -10,6 +10,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class UpdatePasswordModel implements Serializable {
+	private static final long serialVersionUID = 8031360673716450792L;
 
 	private String userId;
 
