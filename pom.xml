@@ -6,7 +6,7 @@
 
   <groupId>it.f2informatica</groupId>
   <artifactId>recruiting</artifactId>
-  <version>1.0</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Recruiting Project</name>
   <description>F2 Informatica's Recruiting Project</description>
@@ -32,6 +32,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <compiler.version>3.1</compiler.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <jvm.version>1.7</jvm.version>
     <spring.version>4.0.2.RELEASE</spring.version>
     <spring.security.version>3.2.2.RELEASE</spring.security.version>
@@ -41,7 +43,7 @@
     <mockito.version>1.9.5</mockito.version>
     <joda-time.version>2.3</joda-time.version>
     <!-- <lombok.version>0.11.8</lombok.version> -->
-		<lombok.version>1.12.6</lombok.version>
+    <lombok.version>1.12.6</lombok.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j-log4j12.version>1.7.6</slf4j-log4j12.version>
     <commons-lang3.version>3.3.1</commons-lang3.version>
@@ -68,6 +70,34 @@
             <source>${jvm.version}</source>
             <target>${jvm.version}</target>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
