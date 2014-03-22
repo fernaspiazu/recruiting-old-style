@@ -7,6 +7,7 @@ import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.validator.UserModelValidator;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.controller.UserController;
+import it.f2informatica.webapp.utils.SpecialMediaType;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -68,7 +68,7 @@ public class UserControllerTest {
 		mockMvc.perform(get("/user/edit?userId=1234567890"))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE));
+			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), SpecialMediaType.JSON_UTF_8));
 	}
 
 	@Test
