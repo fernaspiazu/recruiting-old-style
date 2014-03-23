@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.utils;
 
-public interface SpecialMediaType {
+public interface MediaTypeUTF8 {
 
 	/**
 	 * application/json;charset=UTF-8

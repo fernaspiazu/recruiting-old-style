@@ -9,7 +9,7 @@ import it.f2informatica.services.validator.UserModelValidator;
 import it.f2informatica.services.validator.utils.ValidationResponse;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.utils.CurrentHttpRequest;
-import it.f2informatica.webapp.utils.SpecialMediaType;
+import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,7 +44,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody UserModel editUser(@RequestParam String userId) {
 		return userService.findUserById(userId);
 	}
@@ -61,7 +61,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validate-user", method = RequestMethod.POST, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/validate-user", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
 		userModelValidator.validate(userModel, result);
 		if (result.hasErrors()) {
@@ -84,7 +84,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validate-password-updating", method = RequestMethod.POST, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/validate-password-updating", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
 		updatePasswordModelValidator.validate(updatePasswordModel, result);
 		if (result.hasErrors()) {

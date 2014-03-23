@@ -71,7 +71,7 @@ public class ConsultantController {
 		return "redirect:/consultants";
 	}
 
-	@RequestMapping(value = "/validate-personal-details", method = RequestMethod.POST, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/validate-personal-details", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
 		personalDetailsValidator.validate(consultantModel, result);
 		if (result.hasErrors()) {
@@ -99,7 +99,7 @@ public class ConsultantController {
 		}
 	}
 
-	@RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody String editExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
 		ExperienceModel experienceModel = consultantService.findExperience(consultantId, experienceId);
 		formatDateByMonthNameAndYear(experienceModel);
@@ -134,7 +134,7 @@ public class ConsultantController {
 		}
 	}
 
-	@RequestMapping(value = "/validate-experience", method = RequestMethod.POST, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/validate-experience", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
 		experienceValidator.validate(experienceModel, result);
 		if (result.hasErrors()) {
@@ -167,7 +167,7 @@ public class ConsultantController {
 		return "redirect:/consultant/profile";
 	}
 
-	@RequestMapping(value = "/edit-education", method = RequestMethod.GET, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/edit-education", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
 		EducationModel educationModel = consultantService.findEducation(consultantId, educationId);
 		return gson.toJson(educationModel);
@@ -185,7 +185,7 @@ public class ConsultantController {
 		return "redirect:/consultant/profile";
 	}
 
-	@RequestMapping(value = "/validate-education", method = RequestMethod.POST, produces = SpecialMediaType.JSON_UTF_8)
+	@RequestMapping(value = "/validate-education", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validateEducation(@ModelAttribute("educationModel") EducationModel educationModel, BindingResult result) {
 		educationValidator.validate(educationModel, result);
 		if (result.hasErrors()) {

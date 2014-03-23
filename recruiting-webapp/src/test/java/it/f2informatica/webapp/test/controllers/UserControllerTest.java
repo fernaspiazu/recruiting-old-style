@@ -7,7 +7,7 @@ import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.validator.UserModelValidator;
 import it.f2informatica.services.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.controller.UserController;
-import it.f2informatica.webapp.utils.SpecialMediaType;
+import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +68,7 @@ public class UserControllerTest {
 		mockMvc.perform(get("/user/edit?userId=1234567890"))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), SpecialMediaType.JSON_UTF_8));
+			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaTypeUTF8.JSON_UTF_8));
 	}
 
 	@Test
