@@ -5,7 +5,7 @@ import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.repositories.CustomConsultantRepository;
+import it.f2informatica.mongodb.repositories.ConsultantRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -19,7 +19,7 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.aggregation.TypedAggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
-public class ConsultantRepositoryImpl implements CustomConsultantRepository {
+public class ConsultantRepositoryImpl implements ConsultantRepositoryCustom {
 	private static final String ID = "id";
 	private static final String EXPERIENCES = "experiences";
 	private static final String LANGUAGES = "languages";
@@ -28,6 +28,12 @@ public class ConsultantRepositoryImpl implements CustomConsultantRepository {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+
+  @Override
+  public boolean updateConsultantsPersonalDetails(Update updateFields, String consultantId) {
+    WriteResult writeResult = updateConsultant(whereConsultantIdIs(consultantId), updateFields);
+    return writeResult.getLastError().ok();
+  }
 
 	@Override
 	public Experience findExperience(String consultantId, String experienceId) {
@@ -74,12 +80,6 @@ public class ConsultantRepositoryImpl implements CustomConsultantRepository {
 			.and(EXPERIENCES + "." + Fields.UNDERSCORE_ID).is(experienceId));
 		Update update = new Update().pull(EXPERIENCES, findExperience(consultantId, experienceId));
 		return updateConsultant(query, update).getLastError().ok();
-	}
-
-	@Override
-	public boolean addLanguage(Language language, String consultantId) {
-		Update update = new Update().addToSet(LANGUAGES, language);
-		return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
 	}
 
 	@Override

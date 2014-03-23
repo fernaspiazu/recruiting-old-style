@@ -76,9 +76,13 @@
 						</div>
 					</div>
 					<div class="pull-right">
-						<button name="btnProfile" class="btn btn-default click-icon" th:value="${c.id}">
+            <button name="btnEdit" class="btn btn-default click-icon" th:value="${c.id}" th:inline="text">
+              <div class="glyphicon glyphicon-edit" style="margin-right: 8px;"></div>
+              [[#{global.edit}]]
+            </button>
+						<button name="btnProfile" class="btn btn-default click-icon" th:value="${c.id}" th:inline="text">
 							<div class="glyphicon glyphicon-briefcase" style="margin-right: 8px;"></div>
-							Profile
+							[[#{consultant.profile}]]
 						</button>
 					</div>
 				</div>
@@ -97,6 +101,10 @@
 	$('button[name="btnProfile"]').click(function() {
 		window.location = contextRoot + '/consultant/profile?consultantId='+$(this).val();
 	});
+
+  $('button[name="btnEdit"]').click(function() {
+    window.location = contextRoot + '/consultant/edit-personal-details?consultantId='+$(this).val();
+  });
 	/*]]>*/
 </script>
 <div id="footer" th:substituteby="fragments/footer::footer">

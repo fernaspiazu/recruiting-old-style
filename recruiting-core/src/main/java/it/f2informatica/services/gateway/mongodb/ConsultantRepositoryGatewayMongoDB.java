@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,6 +69,37 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			}
 		)));
 	}
+
+  @Override
+  public boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
+    Update update = new Update()
+      .set("fiscalCode", consultantModel.getFiscalCode())
+      .set("email", consultantModel.getEmail())
+      .set("firstName", consultantModel.getFirstName())
+      .set("lastName", consultantModel.getLastName())
+      .set("gender", consultantModel.getGender())
+      .set("phoneNumber", consultantModel.getPhoneNumber())
+      .set("mobileNumber",consultantModel.getMobileNumber())
+      .set("birthDate", consultantModel.getBirthDate())
+      .set("birthCity", consultantModel.getBirthCity())
+      .set("birthCountry", consultantModel.getBirthCountry())
+      .set("identityCardNo", consultantModel.getIdentityCardNo())
+      .set("passportNo", consultantModel.getPassportNo())
+      .set("interests", consultantModel.getInterests());
+    mapAddressData(update, consultantModel.getResidence(), "residence");
+    mapAddressData(update, consultantModel.getDomicile(), "domicile");
+    return consultantRepository.updateConsultantsPersonalDetails(update, consultantId);
+  }
+
+  private void mapAddressData(Update update, AddressModel address, String field) {
+    update.set(field+".street", address.getStreet());
+    update.set(field+".houseNo", address.getHouseNo());
+    update.set(field+".zipCode", address.getZipCode());
+    update.set(field+".city", address.getCity());
+    update.set(field+".province", address.getProvince());
+    update.set(field+".region", address.getRegion());
+    update.set(field+".country", address.getCountry());
+  }
 
 	@Override
 	public ConsultantModel savePersonalDetails(ConsultantModel consultantModel) {

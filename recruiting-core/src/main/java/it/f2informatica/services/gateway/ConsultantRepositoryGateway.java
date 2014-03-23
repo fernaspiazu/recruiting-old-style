@@ -14,7 +14,9 @@ public interface ConsultantRepositoryGateway {
 
 	Page<ConsultantModel> findAllConsultants(Pageable pageable);
 
-	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
+  boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
+
+  ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
 	boolean addExperience(ExperienceModel experienceModel, String consultantId);
 

@@ -47,6 +47,11 @@ public class ConsultantServiceImpl implements ConsultantService {
 		return consultantRepositoryGateway.savePersonalDetails(consultantModel);
 	}
 
+  @Override
+  public boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
+    return consultantRepositoryGateway.updatePersonalDetails(consultantModel, consultantId);
+  }
+
 	@Override
 	public ConsultantModel findConsultantById(String consultantId) {
 		return consultantRepositoryGateway.findOneConsultant(consultantId);

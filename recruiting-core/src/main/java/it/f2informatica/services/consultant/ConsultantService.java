@@ -15,7 +15,9 @@ public interface ConsultantService {
 
 	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
-	ConsultantModel findConsultantById(String consultantId);
+  boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
+
+  ConsultantModel findConsultantById(String consultantId);
 
 	String generateConsultantNumber();
 

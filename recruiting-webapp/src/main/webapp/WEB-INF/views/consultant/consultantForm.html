@@ -58,7 +58,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<form id="consultantModelForm" th:action="@{/consultant/save-personal-details}" th:object="${consultantModel}" action="#" method="post" class="form-horizontal" role="form">
+			<form id="consultantModelForm" th:action="${edit} ? @{/consultant/update-personal-details} : @{/consultant/save-personal-details}" th:object="${consultantModel}" action="#" method="post" class="form-horizontal" role="form">
 				<fieldset>
 					<input type="hidden" th:field="*{id}"/>
 					<div class="row">
@@ -143,8 +143,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="control-group pull-right">
-								<a class="btn btn-default" th:href="@{'/consultants'}" th:text="#{global.cancel}">Cancel</a>
+              <div class="control-group pull-left">
+                <a class="btn btn-default" th:href="@{'/consultants'}" th:text="#{global.cancel}">Cancel</a>
+              </div>
+              <div class="control-group pull-right" th:if="${edit}">
+                <button type="submit" name="submitEvent" value="update" class="btn btn-primary" th:text="#{global.update}">Update</button>
+                <!--<button type="button" name="submitEvent" value="delete" class="btn btn-danger" th:text="#{global.delete}">Delete</button>-->
+              </div>
+							<div class="control-group pull-right" th:unless="${edit}">
 								<button type="submit" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
 							</div>
 						</div>
@@ -225,6 +231,25 @@
 												<label for="domicile-country" class="sr-only" th:text="#{address.country}">Country</label>
 												<input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
 											</div>
+                      <div class="control-group pull-right">
+                        <button type="button" name="resetDomicileInputs" class="btn btn-default" th:text="#{global.clear}">Clear</button>
+                        <button type="button" name="copyFromResidence" class="btn btn-primary" th:text="#{address.copy-from-residence}">Copy from Residence</button>
+                        <script th:inline="javascript">
+                          $('button[name="resetDomicileInputs"]').click(function() {
+                            $('input[id|="domicile"]').val('');
+                          });
+
+                          $('button[name="copyFromResidence"]').click(function() {
+                            $('#domicile-street').val($('#residence-street').val());
+                            $('#domicile-houseNo').val($('#residence-houseNo').val());
+                            $('#domicile-zipCode').val($('#residence-zipCode').val());
+                            $('#domicile-city').val($('#residence-city').val());
+                            $('#domicile-province').val($('#residence-province').val());
+                            $('#domicile-region').val($('#residence-region').val());
+                            $('#domicile-country').val($('#residence-country').val());
+                          });
+                        </script>
+                      </div>
 										</div>
 									</div>
 								</div>

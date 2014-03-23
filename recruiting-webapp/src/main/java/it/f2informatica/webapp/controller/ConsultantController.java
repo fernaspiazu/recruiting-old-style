@@ -71,6 +71,20 @@ public class ConsultantController {
 		return "redirect:/consultants";
 	}
 
+  @RequestMapping(value = "/edit-personal-details", method = RequestMethod.GET)
+  public String editPersonalDetails(@RequestParam("consultantId") String consultantId, ModelMap model) {
+    model.addAttribute("edit", true);
+    model.addAttribute("consultantId", consultantId);
+    model.addAttribute("consultantModel", consultantService.findConsultantById(consultantId));
+    return "consultant/consultantForm";
+  }
+
+  @RequestMapping(value = "/update-personal-details", method = RequestMethod.POST)
+  public String updatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel) {
+    consultantService.updatePersonalDetails(consultantModel, consultantModel.getId());
+    return "redirect:/consultants";
+  }
+
 	@RequestMapping(value = "/validate-personal-details", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
 	public @ResponseBody ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
 		personalDetailsValidator.validate(consultantModel, result);

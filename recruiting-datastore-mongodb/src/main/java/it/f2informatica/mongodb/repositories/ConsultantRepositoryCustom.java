@@ -3,18 +3,19 @@ package it.f2informatica.mongodb.repositories;
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
+import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 
-public interface CustomConsultantRepository {
+public interface ConsultantRepositoryCustom {
 
-	Experience findExperience(String consultantId, String experienceId);
+  boolean updateConsultantsPersonalDetails(Update updateFields, String consultantId);
+
+  Experience findExperience(String consultantId, String experienceId);
 
 	boolean addExperience(Experience experience, String consultantId);
 
 	boolean updateExperience(Experience experience, String consultantId);
-
-	boolean addLanguage(Language language, String consultantId);
 
 	boolean addLanguages(List<Language> languages, String consultantId);
 
