@@ -17,7 +17,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
 @Configuration
@@ -43,7 +42,7 @@ public class MySQLApplicationContext {
   private String password;
 
   @Bean(destroyMethod = "close")
-  public DataSource dataSource() {
+  public ComboPooledDataSource dataSource() {
     ComboPooledDataSource dataSource = new ComboPooledDataSource();
     try {
       dataSource.setDriverClass(driver);
