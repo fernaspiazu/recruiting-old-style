@@ -25,6 +25,7 @@
 
   <modules>
     <module>recruiting-datastore-mongodb</module>
+    <module>recruiting-datastore-mysql</module>
     <module>recruiting-core</module>
     <module>recruiting-webapp</module>
   </modules>
@@ -119,6 +120,11 @@
       <dependency>
         <groupId>it.f2informatica</groupId>
         <artifactId>recruiting-datastore-mongodb</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.f2informatica</groupId>
+        <artifactId>recruiting-datastore-mysql</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
