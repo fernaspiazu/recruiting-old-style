@@ -45,6 +45,10 @@
       <artifactId>recruiting-datastore-mongodb</artifactId>
     </dependency>
     <dependency>
+      <groupId>it.f2informatica</groupId>
+      <artifactId>recruiting-datastore-mysql</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
     </dependency>
