@@ -1,25 +1,25 @@
 
 create table role (
-  id          integer not null auto_increment,
+  id          bigint not null auto_increment,
   name        varchar(10) not null,
   constraint pk_role primary key(id)
 );
 
 create table user (
-  id              integer not null auto_increment,
+  id              bigint not null auto_increment,
   username        varchar(20) not null,
   password        varchar(100) not null,
   firstname       varchar(50),
   lastname        varchar(50),
   email           varchar(50),
-  role_id         integer not null,
+  role_id         bigint not null,
   constraint pk_user primary key (id),
   constraint fk_role foreign key (role_id) references role(id),
   index username_idx(username asc)
 );
 
 create table consultant (
-  id              integer not null auto_increment,
+  id              bigint not null auto_increment,
   registr_date    timestamp not null default now(),
   fiscal_code     varchar(16),
   email           varchar(50),
@@ -43,7 +43,7 @@ create table consultant (
 );
 
 create table experience (
-  id              integer not null auto_increment,
+  id              bigint not null auto_increment,
   company         varchar(100) not null,
   job_position    varchar(100) not null,
   location        varchar(100),
@@ -51,13 +51,13 @@ create table experience (
   period_to       date,
   is_current      tinyint unsigned default 0,
   description     varchar(5000),
-  consultant_id   integer not null,
+  consultant_id   bigint not null,
   constraint pk_experience primary key (id),
   constraint fk_prof_consul foreign key (consultant_id) references consultant(id)
 );
 
 create table education (
-  id              integer not null auto_increment,
+  id              bigint not null auto_increment,
   school          varchar(100) not null,
   start_year      integer not null,
   end_year        integer,
@@ -67,13 +67,13 @@ create table education (
   school_grade    varchar(100),
   activities      varchar(1000),
   description     varchar(5000),
-  consultant_id   integer not null,
+  consultant_id   bigint not null,
   constraint pk_education primary key (id),
   constraint fk_educa_consul foreign key (consultant_id) references consultant(id)
 );
 
 create table languages (
-  consultant_id   integer not null,
+  consultant_id   bigint not null,
   lang            varchar(20) not null,
   proficiency     varchar(30),
   constraint pk_skill primary key (consultant_id, lang),
@@ -81,14 +81,14 @@ create table languages (
 );
 
 create table skills (
-  consultant_id   integer not null,
+  consultant_id   bigint not null,
   skill           varchar(50) not null,
   constraint pk_skill primary key (consultant_id, skill),
   constraint fk_skill_consul foreign key (consultant_id) references consultant(id)
 );
 
 create table address (
-  id              integer not null auto_increment,
+  id              bigint not null auto_increment,
   street          varchar(100),
   house_no        varchar(10),
   zip_code        varchar(10),
@@ -96,7 +96,7 @@ create table address (
   province        varchar(50),
   region          varchar(50),
   country         varchar(50),
-  consultant_id   integer not null,
+  consultant_id   bigint not null,
   constraint pk_address primary key (id),
   constraint fk_address_consul foreign key (consultant_id) references consultant(id)
 );
