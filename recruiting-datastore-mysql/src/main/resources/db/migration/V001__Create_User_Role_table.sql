@@ -1,7 +1,7 @@
 
 create table role (
   id          bigint not null auto_increment,
-  name        varchar(10) not null,
+  name        varchar(20) not null,
   constraint pk_role primary key(id)
 );
 
@@ -100,3 +100,8 @@ create table address (
   constraint pk_address primary key (id),
   constraint fk_address_consul foreign key (consultant_id) references consultant(id)
 );
+
+insert into role (name) values ('Administrator');
+insert into role (name) values ('User');
+insert into user (username, password, firstname, lastname, email, role_id)
+  values ('admin', 'admin', null, null, 'admin@f2informatica.it', 1);
