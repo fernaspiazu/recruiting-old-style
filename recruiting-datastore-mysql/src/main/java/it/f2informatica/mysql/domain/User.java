@@ -36,6 +36,7 @@ public class User implements Serializable {
   private String email;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+  @JoinColumn(name = "role_id")
   private Role role;
 
 }
