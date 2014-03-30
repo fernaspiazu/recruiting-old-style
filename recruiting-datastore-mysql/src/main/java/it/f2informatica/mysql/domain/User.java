@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = true)
+@EqualsAndHashCode
+@ToString(of = {"username", "password"})
 @Entity
 @Table(name = "user")
 public class User implements Serializable {

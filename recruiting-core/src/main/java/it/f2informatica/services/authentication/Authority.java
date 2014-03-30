@@ -1,4 +1,4 @@
-package it.f2informatica.services;
+package it.f2informatica.services.authentication;
 
 public enum Authority {
 	ANONYMOUS,

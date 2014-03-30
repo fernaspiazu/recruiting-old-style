@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -23,7 +22,6 @@ import java.beans.PropertyVetoException;
 @EnableJpaRepositories(basePackages = "it.f2informatica.mysql.repositories")
 @EnableTransactionManagement
 @PropertySource(value = "classpath:mysql.properties")
-@Profile("mysql")
 public class MySQLApplicationContext {
   private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationContext.class);
 
@@ -45,10 +43,10 @@ public class MySQLApplicationContext {
   public ComboPooledDataSource dataSource() {
     ComboPooledDataSource dataSource = new ComboPooledDataSource();
     try {
-      dataSource.setDriverClass(driver);
-      dataSource.setJdbcUrl(url);
-      dataSource.setUser(user);
-      dataSource.setPassword(password);
+      dataSource.setDriverClass("com.mysql.jdbc.Driver");
+      dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/recruiting");
+      dataSource.setUser("development");
+      dataSource.setPassword("development");
     } catch (PropertyVetoException e) {
       logger.error("Error on C3P0 DataSource construction...", e);
     }

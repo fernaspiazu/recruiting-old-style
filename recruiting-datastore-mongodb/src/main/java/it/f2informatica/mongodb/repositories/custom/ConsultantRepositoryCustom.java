@@ -1,4 +1,4 @@
-package it.f2informatica.mongodb.repositories;
+package it.f2informatica.mongodb.repositories.custom;
 
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;

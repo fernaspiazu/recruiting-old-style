@@ -1,7 +1,7 @@
 package it.f2informatica.test.services.domain.user;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.Authority;
+import it.f2informatica.services.authentication.Authority;
 import it.f2informatica.services.user.UserService;
 import it.f2informatica.services.user.UserServiceImpl;
 import it.f2informatica.services.gateway.UserRepositoryGateway;

@@ -3,7 +3,7 @@ package it.f2informatica.mongodb.repositories.impl;
 import com.google.common.collect.Lists;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.repositories.CustomUserRepository;
+import it.f2informatica.mongodb.repositories.custom.UserRepositoryCustom;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 
-@Repository
-public class UserRepositoryImpl implements CustomUserRepository {
+@Component
+public class UserRepositoryImpl implements UserRepositoryCustom {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;

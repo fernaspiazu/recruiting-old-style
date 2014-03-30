@@ -1,4 +1,4 @@
-package it.f2informatica.services.gateway.converter;
+package it.f2informatica.services.gateway.mongodb.converter;
 
 import it.f2informatica.mongodb.domain.Language;
 import it.f2informatica.services.gateway.EntityToModelConverter;

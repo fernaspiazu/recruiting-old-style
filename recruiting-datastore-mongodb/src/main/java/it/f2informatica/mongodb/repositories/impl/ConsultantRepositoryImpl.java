@@ -5,7 +5,7 @@ import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.mongodb.domain.Language;
-import it.f2informatica.mongodb.repositories.ConsultantRepositoryCustom;
+import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -13,12 +13,14 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.TypedAggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
+@Component
 public class ConsultantRepositoryImpl implements ConsultantRepositoryCustom {
 	private static final String ID = "id";
 	private static final String EXPERIENCES = "experiences";

@@ -3,7 +3,10 @@ package it.f2informatica.mongodb;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -15,7 +18,6 @@ import java.net.UnknownHostException;
 @ImportResource("classpath:spring/repository-populator-config.xml")
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
 @PropertySource("classpath:mongodb.properties")
-@Profile("mongodb")
 public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 	private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 
