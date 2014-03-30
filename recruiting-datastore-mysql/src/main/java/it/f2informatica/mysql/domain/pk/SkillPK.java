@@ -1,7 +1,9 @@
 package it.f2informatica.mysql.domain.pk;
 
 import it.f2informatica.mysql.domain.Consultant;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
@@ -11,13 +13,11 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Embeddable
-public class LanguagePK implements Serializable {
-  private static final long serialVersionUID = 5238767976519604774L;
+public class SkillPK implements Serializable {
+  private static final long serialVersionUID = 3869057767286602427L;
 
-  private String lang;
+  private String skill;
 
   @ManyToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
   private Consultant consultant;

@@ -9,7 +9,7 @@ import it.f2informatica.services.model.UserModel;
 import static it.f2informatica.services.model.builder.RoleModelBuilder.roleModel;
 import static it.f2informatica.services.model.builder.UserModelBuilder.userModel;
 
-public class MongoDBUserToUserModelConverter extends EntityToModelConverter<User, UserModel> {
+public class MongoDBUserToModelConverter extends EntityToModelConverter<User, UserModel> {
 
 	@Override
 	public UserModel convert(User user) {

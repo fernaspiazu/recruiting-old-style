@@ -6,7 +6,7 @@ import it.f2informatica.services.model.ExperienceModel;
 
 import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
 
-public class MongoDBExperienceToExperienceModel
+public class MongoDBExperienceToModelConverter
 		extends EntityToModelConverter<Experience, ExperienceModel> {
 
 	@Override

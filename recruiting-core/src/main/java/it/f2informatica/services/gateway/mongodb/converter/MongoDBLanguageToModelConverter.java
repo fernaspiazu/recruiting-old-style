@@ -6,7 +6,7 @@ import it.f2informatica.services.model.LanguageModel;
 
 import static it.f2informatica.services.model.builder.LanguageModelBuilder.languageModel;
 
-public class MongoDBLanguageToLanguageModelConverter
+public class MongoDBLanguageToModelConverter
 		extends EntityToModelConverter<Language, LanguageModel> {
 
 	@Override

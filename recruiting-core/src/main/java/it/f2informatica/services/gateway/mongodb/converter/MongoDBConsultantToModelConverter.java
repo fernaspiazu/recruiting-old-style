@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
-public class MongoDBConsultantToConsultantModelConverter
+public class MongoDBConsultantToModelConverter
 		extends EntityToModelConverter<Consultant, ConsultantModel> {
 
 	@Autowired

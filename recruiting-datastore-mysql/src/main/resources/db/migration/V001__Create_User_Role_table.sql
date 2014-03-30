@@ -18,14 +18,27 @@ create table user (
   index username_idx(username asc)
 );
 
+create table address (
+  id              bigint not null auto_increment,
+  street          varchar(100),
+  house_no        varchar(10),
+  zip_code        varchar(10),
+  city            varchar(50),
+  province        varchar(50),
+  region          varchar(50),
+  country         varchar(50),
+  constraint pk_address primary key (id)
+);
+
 create table consultant (
   id              bigint not null auto_increment,
+  consultant_no   varchar(50) not null unique,
   registr_date    timestamp not null default now(),
   fiscal_code     varchar(16),
   email           varchar(50),
   first_name      varchar(50),
   last_name       varchar(50),
-  gender          varchar(2),
+  gender          varchar(10),
   phone_number    varchar(20),
   mobile_number   varchar(20),
   birth_date      date,
@@ -33,8 +46,12 @@ create table consultant (
   birth_country   varchar(20),
   identity_card   varchar(20),
   interests       varchar(100),
+  residence       bigint,
+  domicile        bigint,
   curriculum      longblob,
   constraint pk_consultant primary key (id),
+  constraint fk_cons_resid foreign key (residence) references address(id),
+  constraint fk_cons_domic foreign key (domicile) references address(id),
   check (gender in ('M', 'F')),
   index cons_regdate_idx(registr_date desc),
   index cons_firstname_idx(first_name asc),
@@ -85,20 +102,6 @@ create table skills (
   skill           varchar(50) not null,
   constraint pk_skill primary key (consultant_id, skill),
   constraint fk_skill_consul foreign key (consultant_id) references consultant(id)
-);
-
-create table address (
-  id              bigint not null auto_increment,
-  street          varchar(100),
-  house_no        varchar(10),
-  zip_code        varchar(10),
-  city            varchar(50),
-  province        varchar(50),
-  region          varchar(50),
-  country         varchar(50),
-  consultant_id   bigint not null,
-  constraint pk_address primary key (id),
-  constraint fk_address_consul foreign key (consultant_id) references consultant(id)
 );
 
 insert into role (name) values ('Administrator');

@@ -1,5 +1,7 @@
 package it.f2informatica.mysql.domain;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode
@@ -21,6 +24,9 @@ public class Consultant implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
+
+  @Column(name = "consultant_no", unique = true, nullable = false)
+  private String consultantNo;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "registr_date")
@@ -63,13 +69,24 @@ public class Consultant implements Serializable {
   @Column(name = "interests")
   private String interests;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id.consultant", targetEntity = Skill.class)
+  private Set<Skill> skills = Sets.newHashSet();
+
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "consultant", targetEntity = Experience.class)
-  private List<Experience> experiences;
+  private List<Experience> experiences = Lists.newArrayList();
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "consultant", targetEntity = Education.class)
-  private List<Education> educations;
+  private List<Education> educations = Lists.newArrayList();
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "")
-  private List<Language> languages;
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id.consultant", targetEntity = Language.class)
+  private Set<Language> languages = Sets.newHashSet();
+
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+  @JoinColumn(name = "residence")
+  private Address residence;
+
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+  @JoinColumn(name = "domicile")
+  private Address domicile;
 
 }

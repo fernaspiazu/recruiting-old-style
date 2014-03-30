@@ -11,7 +11,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "experience")
+@Table(name = "education")
 public class Education implements Serializable {
   private static final long serialVersionUID = 5816729224700502683L;
 

@@ -33,32 +33,32 @@ public class MongoDBConversionServicesContext {
 
   @Bean(name = "userToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<User, UserModel> mongoDBUserToModelConverter() {
-    return new MongoDBUserToUserModelConverter();
+    return new MongoDBUserToModelConverter();
   }
 
   @Bean(name = "consultantToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<Consultant, ConsultantModel> mongoDBConsultantToModelConverter() {
-    return new MongoDBConsultantToConsultantModelConverter();
+    return new MongoDBConsultantToModelConverter();
   }
 
   @Bean(name = "addressToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<Address, AddressModel> mongoDBAddressToModelConverter() {
-    return new MongoDBAddressToAddressModelConverter();
+    return new MongoDBAddressToModelConverter();
   }
 
   @Bean(name = "experienceToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<Experience, ExperienceModel> mongoDBExperienceToModelConverter() {
-    return new MongoDBExperienceToExperienceModel();
+    return new MongoDBExperienceToModelConverter();
   }
 
   @Bean(name = "educationToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<Education, EducationModel> mongoDBEducationToModelConverter() {
-    return new MongoDBEducationToEducationModelConverter();
+    return new MongoDBEducationToModelConverter();
   }
 
   @Bean(name = "languageToModelConverter", autowire = Autowire.BY_NAME)
   public EntityToModelConverter<Language, LanguageModel> mongoDBLanguageToModelConverter() {
-    return new MongoDBLanguageToLanguageModelConverter();
+    return new MongoDBLanguageToModelConverter();
   }
 
 }

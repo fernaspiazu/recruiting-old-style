@@ -6,7 +6,7 @@ import it.f2informatica.services.model.EducationModel;
 
 import static it.f2informatica.services.model.builder.EducationModelBuilder.educationModel;
 
-public class MongoDBEducationToEducationModelConverter
+public class MongoDBEducationToModelConverter
 	extends EntityToModelConverter<Education, EducationModel> {
 
 	@Override

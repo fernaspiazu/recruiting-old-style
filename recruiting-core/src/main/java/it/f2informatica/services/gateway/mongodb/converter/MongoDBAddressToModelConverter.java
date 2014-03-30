@@ -6,7 +6,7 @@ import it.f2informatica.services.model.AddressModel;
 
 import static it.f2informatica.services.model.builder.AddressModelBuilder.addressModel;
 
-public class MongoDBAddressToAddressModelConverter
+public class MongoDBAddressToModelConverter
 		extends EntityToModelConverter<Address, AddressModel> {
 
 	@Override
