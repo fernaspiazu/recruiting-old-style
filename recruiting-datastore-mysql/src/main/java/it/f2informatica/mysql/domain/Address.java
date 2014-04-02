@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode
-@ToString
+@ToString(exclude = {"consultantResidence", "consultantDomicile"})
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
@@ -41,7 +41,10 @@ public class Address implements Serializable {
   @Column(name = "country")
   private String country;
 
-  @OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
-  private Consultant consultant;
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "residence")
+  private Consultant consultantResidence;
+
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "domicile")
+  private Consultant consultantDomicile;
 
 }

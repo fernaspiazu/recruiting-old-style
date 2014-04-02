@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(of = {"consultantNo", "email", "fiscalCode"})
+@ToString(exclude = {"residence", "domicile"})
 @Entity
 @Table(name = "consultant")
 public class Consultant implements Serializable {
@@ -69,16 +69,16 @@ public class Consultant implements Serializable {
   @Column(name = "interests")
   private String interests;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id.consultant", targetEntity = Skill.class)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.consultant", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Skill.class)
   private Set<Skill> skills = Sets.newHashSet();
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "consultant", targetEntity = Experience.class)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultant", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Experience.class)
   private List<Experience> experiences = Lists.newArrayList();
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "consultant", targetEntity = Education.class)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultant", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Education.class)
   private List<Education> educations = Lists.newArrayList();
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id.consultant", targetEntity = Language.class)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.consultant", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Language.class)
   private Set<Language> languages = Sets.newHashSet();
 
   @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)

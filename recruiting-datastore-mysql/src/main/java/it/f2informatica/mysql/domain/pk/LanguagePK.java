@@ -3,6 +3,7 @@ package it.f2informatica.mysql.domain.pk;
 import it.f2informatica.mysql.domain.Consultant;
 import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode
-@ToString
+@ToString(exclude = "consultant")
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable

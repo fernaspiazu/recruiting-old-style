@@ -1,10 +1,13 @@
 package it.f2informatica.services.gateway.mysql;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 import it.f2informatica.mysql.domain.*;
 import it.f2informatica.mysql.domain.pk.LanguagePK;
 import it.f2informatica.mysql.repositories.ConsultantRepository;
 import it.f2informatica.mysql.repositories.ExperienceRepository;
+import it.f2informatica.mysql.repositories.LanguageRepository;
 import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.*;
@@ -17,11 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.collect.Lists.transform;
+import static com.google.common.collect.Iterables.removeIf;
+import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Sets.newHashSet;
 
 @Service
@@ -34,6 +37,9 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   private ExperienceRepository experienceRepository;
 
   @Autowired
+  private LanguageRepository languageRepository;
+
+  @Autowired
   @Qualifier("mysqlConsultantToModelConverter")
   private EntityToModelConverter<Consultant, ConsultantModel> mysqlConsultantToModelConverter;
 
@@ -44,6 +50,10 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   @Autowired
   @Qualifier("mysqlEducationToModelConverter")
   private EntityToModelConverter<Education, EducationModel> mysqlEducationToModelConverter;
+
+  @Autowired
+  @Qualifier("mysqlLanguageToModelConverter")
+  private EntityToModelConverter<Language, LanguageModel> mysqlLanguageToModelConverter;
 
   @Override
   @Transactional(readOnly = true)
@@ -76,8 +86,8 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     consultant.setBirthCountry(consultantModel.getBirthCountry());
     consultant.setIdentityCard(consultantModel.getIdentityCardNo());
     consultant.setInterests(consultantModel.getInterests());
-    mapAddressData(consultantModel.getResidence(), new Address());
-    mapAddressData(consultantModel.getDomicile(), new Address());
+    mapResidenceData(consultantModel, consultant);
+    mapDomicileData(consultantModel, consultant);
     final Consultant savedEntity = consultantRepository.save(consultant);
     return mysqlConsultantToModelConverter.convert(savedEntity);
   }
@@ -98,24 +108,37 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     consultant.setBirthCountry(consultantModel.getBirthCountry());
     consultant.setIdentityCard(consultantModel.getIdentityCardNo());
     consultant.setInterests(consultantModel.getInterests());
-    mapAddressData(consultantModel.getResidence(), consultant.getResidence());
-    mapAddressData(consultantModel.getDomicile(), consultant.getDomicile());
+    mapResidenceData(consultantModel, consultant);
+    mapDomicileData(consultantModel, consultant);
     return consultantRepository.saveAndFlush(consultant) != null;
   }
 
-  private void mapAddressData(AddressModel addressModel, Address address) {
-    if (addressModel != null) {
-      if  (address == null) {
-        address = new Address();
-      }
-      address.setStreet(addressModel.getStreet());
-      address.setHouseNo(addressModel.getHouseNo());
-      address.setZipCode(addressModel.getZipCode());
-      address.setCity(addressModel.getCity());
-      address.setProvince(addressModel.getProvince());
-      address.setRegion(addressModel.getRegion());
-      address.setCountry(addressModel.getCountry());
+  private void mapResidenceData(ConsultantModel consultantModel, Consultant consultant) {
+    if (consultant.getResidence() == null) {
+      Address address = new Address();
+      address.setConsultantResidence(consultant);
+      consultant.setResidence(address);
     }
+    mapAddressData(consultantModel.getResidence(), consultant.getResidence());
+  }
+
+  private void mapDomicileData(ConsultantModel consultantModel, Consultant consultant) {
+    if (consultant.getDomicile() == null) {
+      Address address = new Address();
+      address.setConsultantDomicile(consultant);
+      consultant.setDomicile(address);
+    }
+    mapAddressData(consultantModel.getDomicile(), consultant.getDomicile());
+  }
+
+  private void mapAddressData(AddressModel addressModel, Address address) {
+    address.setStreet(addressModel.getStreet());
+    address.setHouseNo(addressModel.getHouseNo());
+    address.setZipCode(addressModel.getZipCode());
+    address.setCity(addressModel.getCity());
+    address.setProvince(addressModel.getProvince());
+    address.setRegion(addressModel.getRegion());
+    address.setCountry(addressModel.getCountry());
   }
 
   @Override
@@ -130,6 +153,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     experience.setCurrent(experienceModel.isCurrent());
     experience.setDescription(experienceModel.getDescription());
     Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
+    experience.setConsultant(consultant);
     return consultant.getExperiences().add(experience);
   }
 
@@ -160,20 +184,50 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   }
 
   @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public boolean addLanguages(LanguageModel[] languageModelArray, final String consultantId) {
     final Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
-    List<LanguageModel> languageModels = Arrays.asList(languageModelArray);
-    Set<Language> languages = newHashSet(transform(languageModels, new Function<LanguageModel, Language>() {
-      @Override
-      public Language apply(LanguageModel input) {
-        LanguagePK pk = new LanguagePK(input.getLanguage(), consultant);
-        Language language = new Language();
-        language.setId(pk);
-        language.setProficiency(input.getProficiency());
-        return language;
+    final List<LanguageModel> languageModels = Lists.newArrayList(languageModelArray);
+    removeLanguagesThatMustNotBeInDBAnymore(consultant, languageModels);
+    removeLanguagesThatAlreadyExistInDB(consultantId, languageModels);
+    Set<Language> languages = newHashSet(transform(languageModels,
+      new Function<LanguageModel, Language>() {
+        @Override
+        public Language apply(LanguageModel input) {
+          LanguagePK pk = new LanguagePK(input.getLanguage(), consultant);
+          Language language = new Language();
+          language.setId(pk);
+          language.setProficiency(input.getProficiency());
+          return language;
+        }
       }
-    }));
-    return consultant.getLanguages().addAll(languages);
+    ));
+    consultant.getLanguages().addAll(languages);
+    return true;
+  }
+
+  private void removeLanguagesThatMustNotBeInDBAnymore(Consultant consultant, final List<LanguageModel> languageModels) {
+    removeIf(consultant.getLanguages(),
+      new Predicate<Language>() {
+        @Override
+        public boolean apply(Language language) {
+          LanguageModel languageModel = mysqlLanguageToModelConverter.convert(language);
+          return !languageModels.contains(languageModel);
+        }
+      }
+    );
+  }
+
+  private void removeLanguagesThatAlreadyExistInDB(final String consultantId, List<LanguageModel> languageModels) {
+    removeIf(languageModels,
+      new Predicate<LanguageModel>() {
+        @Override
+        public boolean apply(LanguageModel languageModel) {
+          List<LanguageModel> languages = mysqlLanguageToModelConverter.convertList(languageRepository.findByConsultantId(Long.parseLong(consultantId)));
+          return languages.contains(languageModel);
+        }
+      }
+    );
   }
 
   @Override

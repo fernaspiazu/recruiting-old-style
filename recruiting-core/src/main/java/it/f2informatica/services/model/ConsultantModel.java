@@ -59,9 +59,9 @@ public class ConsultantModel implements Serializable {
 
 	private String interests;
 
-	private AddressModel residence = new AddressModel();
+	private AddressModel residence;
 
-	private AddressModel domicile = new AddressModel();
+	private AddressModel domicile;
 
 	private String curriculum; // TODO: GridFSFile
 

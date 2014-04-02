@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode
-@ToString
+@ToString(exclude = "consultant")
 @Entity
 @Table(name = "experience")
 public class Experience implements Serializable {

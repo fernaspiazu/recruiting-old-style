@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @ToString
 @Entity
 @Table(name = "languages")
