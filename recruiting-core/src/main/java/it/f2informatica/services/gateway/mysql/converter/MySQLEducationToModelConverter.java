@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mysql.converter;
 import it.f2informatica.mysql.domain.Education;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.EducationModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.EducationModelBuilder.educationModel;
 
+@Component("mysqlEducationToModelConverter")
 public class MySQLEducationToModelConverter extends EntityToModelConverter<Education, EducationModel> {
 
   @Override

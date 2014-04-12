@@ -3,6 +3,7 @@ package it.f2informatica.services.gateway.mongodb;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import it.f2informatica.mongodb.MongoDB;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
@@ -28,6 +29,7 @@ import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+@MongoDB
 @Service
 public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 

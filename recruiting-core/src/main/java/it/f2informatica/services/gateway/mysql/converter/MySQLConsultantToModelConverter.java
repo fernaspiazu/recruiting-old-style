@@ -6,9 +6,11 @@ import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
+@Component("mysqlConsultantToModelConverter")
 public class MySQLConsultantToModelConverter extends EntityToModelConverter<Consultant, ConsultantModel> {
 
   @Autowired

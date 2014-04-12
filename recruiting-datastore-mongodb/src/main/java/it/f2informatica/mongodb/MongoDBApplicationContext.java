@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
 @ImportResource("classpath:spring/repository-populator-config.xml")
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
 @PropertySource("classpath:mongodb.properties")
+@MongoDB
 public class MongoDBApplicationContext extends AbstractMongoConfiguration {
 	private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 

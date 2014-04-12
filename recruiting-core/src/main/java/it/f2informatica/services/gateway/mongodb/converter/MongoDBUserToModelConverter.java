@@ -5,10 +5,12 @@ import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.RoleModelBuilder.roleModel;
 import static it.f2informatica.services.model.builder.UserModelBuilder.userModel;
 
+@Component("userToModelConverter")
 public class MongoDBUserToModelConverter extends EntityToModelConverter<User, UserModel> {
 
 	@Override

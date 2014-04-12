@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mongodb.converter;
 import it.f2informatica.mongodb.domain.Experience;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.ExperienceModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
 
+@Component("experienceToModelConverter")
 public class MongoDBExperienceToModelConverter
 		extends EntityToModelConverter<Experience, ExperienceModel> {
 

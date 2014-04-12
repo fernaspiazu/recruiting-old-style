@@ -1,30 +1,29 @@
 package it.f2informatica.services;
 
 import com.google.gson.*;
+import it.f2informatica.mongodb.MongoDBApplicationContext;
+import it.f2informatica.mysql.MySQLApplicationContext;
 import org.joda.time.DateTime;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 
 @Configuration
-@ComponentScan(
-  basePackages = {"it.f2informatica.services"},
-  excludeFilters = {
-    @ComponentScan.Filter(type = FilterType.REGEX ,pattern = "it.f2informatica.services.gateway.mongodb.*"),
-    @ComponentScan.Filter(type = FilterType.REGEX ,pattern = "it.f2informatica.services.gateway.mysql.*")
-  }
-)
-@Import({MongoDBConversionServicesContext.class, MySQLConversionServicesContext.class})
+@ComponentScan(basePackages = {"it.f2informatica.services"})
+@Import({MongoDBApplicationContext.class, MySQLApplicationContext.class})
 public class ServicesApplicationContext {
 	public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 
 	@Bean
 	public Gson gson() {
 		return new GsonBuilder()
-			.setPrettyPrinting()
-			.setDateFormat(GLOBAL_DATE_FORMAT)
-			.serializeNulls()
+      .serializeNulls()
+      .setPrettyPrinting()
+      .setDateFormat(GLOBAL_DATE_FORMAT)
 			.serializeSpecialFloatingPointValues()
 			.registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
 			.create();

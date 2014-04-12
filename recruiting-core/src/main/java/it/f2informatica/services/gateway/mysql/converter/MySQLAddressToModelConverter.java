@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mysql.converter;
 import it.f2informatica.mysql.domain.Address;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.AddressModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.AddressModelBuilder.addressModel;
 
+@Component("mysqlAddressToModelConverter")
 public class MySQLAddressToModelConverter extends EntityToModelConverter<Address, AddressModel> {
 
   @Override

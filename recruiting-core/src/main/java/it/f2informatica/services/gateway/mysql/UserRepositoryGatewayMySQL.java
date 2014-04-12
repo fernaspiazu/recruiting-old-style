@@ -2,6 +2,7 @@ package it.f2informatica.services.gateway.mysql;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import it.f2informatica.mysql.MySQL;
 import it.f2informatica.mysql.domain.Role;
 import it.f2informatica.mysql.domain.User;
 import it.f2informatica.mysql.repositories.RoleRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+@MySQL
 @Service
 public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 

@@ -5,9 +5,11 @@ import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
+@Component("consultantToModelConverter")
 public class MongoDBConsultantToModelConverter
 		extends EntityToModelConverter<Consultant, ConsultantModel> {
 

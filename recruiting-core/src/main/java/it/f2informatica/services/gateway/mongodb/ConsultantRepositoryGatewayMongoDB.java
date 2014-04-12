@@ -3,6 +3,7 @@ package it.f2informatica.services.gateway.mongodb;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import it.f2informatica.mongodb.MongoDB;
 import it.f2informatica.mongodb.domain.*;
 import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
@@ -26,6 +27,7 @@ import static it.f2informatica.mongodb.domain.builder.EducationBuilder.education
 import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.experience;
 import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
 
+@MongoDB
 @Service
 public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryGateway {
 

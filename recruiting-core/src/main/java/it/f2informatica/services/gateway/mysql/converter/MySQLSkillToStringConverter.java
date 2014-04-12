@@ -2,7 +2,9 @@ package it.f2informatica.services.gateway.mysql.converter;
 
 import it.f2informatica.mysql.domain.Skill;
 import it.f2informatica.services.gateway.EntityToModelConverter;
+import org.springframework.stereotype.Component;
 
+@Component("mysqlSkillToStringConverter")
 public class MySQLSkillToStringConverter extends EntityToModelConverter<Skill, String> {
 
   @Override

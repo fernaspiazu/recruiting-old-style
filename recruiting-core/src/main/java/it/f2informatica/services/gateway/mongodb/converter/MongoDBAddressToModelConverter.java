@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mongodb.converter;
 import it.f2informatica.mongodb.domain.Address;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.AddressModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.AddressModelBuilder.addressModel;
 
+@Component("addressToModelConverter")
 public class MongoDBAddressToModelConverter
 		extends EntityToModelConverter<Address, AddressModel> {
 

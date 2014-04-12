@@ -3,6 +3,7 @@ package it.f2informatica.services.gateway.mysql;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import it.f2informatica.mysql.MySQL;
 import it.f2informatica.mysql.domain.*;
 import it.f2informatica.mysql.domain.pk.LanguagePK;
 import it.f2informatica.mysql.repositories.ConsultantRepository;
@@ -27,6 +28,7 @@ import static com.google.common.collect.Iterables.removeIf;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Sets.newHashSet;
 
+@MySQL
 @Service
 public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGateway {
 

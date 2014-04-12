@@ -5,10 +5,12 @@ import it.f2informatica.mysql.domain.User;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.RoleModel;
 import it.f2informatica.services.model.UserModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.RoleModelBuilder.roleModel;
 import static it.f2informatica.services.model.builder.UserModelBuilder.userModel;
 
+@Component("mysqlUserToModelConverter")
 public class MySQLUserToModelConverter extends EntityToModelConverter<User, UserModel> {
 
   @Override

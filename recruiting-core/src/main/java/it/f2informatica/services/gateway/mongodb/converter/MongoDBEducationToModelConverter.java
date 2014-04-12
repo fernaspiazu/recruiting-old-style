@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mongodb.converter;
 import it.f2informatica.mongodb.domain.Education;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.EducationModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.EducationModelBuilder.educationModel;
 
+@Component("educationToModelConverter")
 public class MongoDBEducationToModelConverter
 	extends EntityToModelConverter<Education, EducationModel> {
 

@@ -3,9 +3,11 @@ package it.f2informatica.services.gateway.mysql.converter;
 import it.f2informatica.mysql.domain.Experience;
 import it.f2informatica.services.gateway.EntityToModelConverter;
 import it.f2informatica.services.model.ExperienceModel;
+import org.springframework.stereotype.Component;
 
 import static it.f2informatica.services.model.builder.ExperienceModelBuilder.experienceModel;
 
+@Component("mysqlExperienceToModelConverter")
 public class MySQLExperienceToModelConverter extends EntityToModelConverter<Experience, ExperienceModel> {
 
   @Override
