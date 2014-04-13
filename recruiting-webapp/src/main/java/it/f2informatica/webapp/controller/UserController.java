@@ -45,9 +45,7 @@ public class UserController {
   }
 
   @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
-  public
-  @ResponseBody
-  UserModel editUser(@RequestParam String userId) {
+  public @ResponseBody UserModel editUser(@RequestParam String userId) {
     return userService.findUserById(userId);
   }
 
@@ -64,9 +62,7 @@ public class UserController {
   }
 
   @RequestMapping(value = "/validate-user", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-  public
-  @ResponseBody
-  ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
+  public @ResponseBody ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
     userModelValidator.validate(userModel, result);
     if (result.hasErrors()) {
       return validationResponseHandler.validationFail(result, httpRequest.getLocale());
@@ -89,9 +85,7 @@ public class UserController {
   }
 
   @RequestMapping(value = "/validate-password-updating", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-  public
-  @ResponseBody
-  ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
+  public @ResponseBody ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
     updatePasswordModelValidator.validate(updatePasswordModel, result);
     if (result.hasErrors()) {
       return validationResponseHandler.validationFail(result, httpRequest.getLocale());

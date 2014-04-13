@@ -1,14 +1,14 @@
 package it.f2informatica.mysql.domain;
 
 import it.f2informatica.mysql.domain.pk.SkillPK;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -19,4 +19,5 @@ public class Skill implements Serializable {
   @EmbeddedId
   @AttributeOverride(name = "skill", column = @Column(name = "skill"))
   private SkillPK id;
+
 }

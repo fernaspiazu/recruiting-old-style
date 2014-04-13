@@ -20,11 +20,10 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
   private UserService userService;
 
   @Override
-  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                      Authentication authentication) throws ServletException, IOException {
+  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
     String username = authentication.getName();
     UserModel user = setUserInSession(request.getSession(true), username);
-    log.info("user in session: [username: " + user.getUsername() + ", id: " + user.getUserId() + "]");
+    log.info("User in session: [username: " + user.getUsername() + ", id: " + user.getUserId() + "]");
     super.handle(request, response, authentication);
   }
 

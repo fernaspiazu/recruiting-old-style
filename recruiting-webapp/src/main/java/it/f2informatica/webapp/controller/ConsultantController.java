@@ -149,8 +149,7 @@ public class ConsultantController {
   }
 
   @RequestMapping(value = "/validate-experience", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-  public @ResponseBody
-  ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
+  public @ResponseBody ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
     experienceValidator.validate(experienceModel, result);
     if (result.hasErrors()) {
       return validationResponseHandler.validationFail(result, httpRequest.getLocale());

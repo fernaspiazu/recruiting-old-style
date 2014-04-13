@@ -288,7 +288,7 @@
 													'</select>' +
 												'</div>' +
 												'<div class="form-group col-md-1">' +
-														'<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>' +
+													'<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>' +
 												'</div>'
 											);
 										}
@@ -331,9 +331,6 @@
 						<div style="margin: 10px 0;">
 							<p th:text="${#strings.listJoin(consultantModel.skills, ', ')}"></p>
 						</div>
-						<!--<ul class="list-group">
-							<li class="list-group-item" th:each="skill : ${consultantModel.skills}" th:id="${#ids.seq('skill-')}" th:text="${skill}">Java</li>
-						</ul>-->
 					</div>
 				</div>
 				<div class="modal fade" id="skillFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

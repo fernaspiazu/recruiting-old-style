@@ -2,16 +2,17 @@ package it.f2informatica.core.gateway.mysql;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
 import it.f2informatica.mysql.MySQL;
 import it.f2informatica.mysql.domain.*;
 import it.f2informatica.mysql.domain.pk.LanguagePK;
-import it.f2informatica.mysql.repositories.ConsultantRepository;
-import it.f2informatica.mysql.repositories.ExperienceRepository;
-import it.f2informatica.mysql.repositories.LanguageRepository;
+import it.f2informatica.mysql.domain.pk.SkillPK;
+import it.f2informatica.mysql.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -24,22 +25,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.collect.Iterables.removeIf;
-import static com.google.common.collect.Iterables.transform;
-import static com.google.common.collect.Sets.newHashSet;
-
 @MySQL
 @Service
 public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGateway {
+
+  @Autowired
+  private SkillRepository skillRepository;
+
+  @Autowired
+  private LanguageRepository languageRepository;
+
+  @Autowired
+  private EducationRepository educationRepository;
 
   @Autowired
   private ConsultantRepository consultantRepository;
 
   @Autowired
   private ExperienceRepository experienceRepository;
-
-  @Autowired
-  private LanguageRepository languageRepository;
 
   @Autowired
   @Qualifier("mysqlConsultantToModelConverter")
@@ -192,7 +195,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     final List<LanguageModel> languageModels = Lists.newArrayList(languageModelArray);
     removeLanguagesThatMustNotBeInDBAnymore(consultant, languageModels);
     removeLanguagesThatAlreadyExistInDB(consultantId, languageModels);
-    Set<Language> languages = newHashSet(transform(languageModels,
+    Set<Language> languages = Sets.newHashSet(Iterables.transform(languageModels,
       new Function<LanguageModel, Language>() {
         @Override
         public Language apply(LanguageModel input) {
@@ -209,52 +212,103 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   }
 
   private void removeLanguagesThatMustNotBeInDBAnymore(Consultant consultant, final List<LanguageModel> languageModels) {
-    removeIf(consultant.getLanguages(),
-      new Predicate<Language>() {
-        @Override
-        public boolean apply(Language language) {
-          LanguageModel languageModel = mysqlLanguageToModelConverter.convert(language);
-          return !languageModels.contains(languageModel);
-        }
+    Iterables.removeIf(consultant.getLanguages(), new Predicate<Language>() {
+      @Override
+      public boolean apply(Language language) {
+        LanguageModel languageModel = mysqlLanguageToModelConverter.convert(language);
+        return !languageModels.contains(languageModel);
       }
-    );
+    });
   }
 
   private void removeLanguagesThatAlreadyExistInDB(final String consultantId, List<LanguageModel> languageModels) {
-    removeIf(languageModels,
-      new Predicate<LanguageModel>() {
-        @Override
-        public boolean apply(LanguageModel languageModel) {
-          List<LanguageModel> languages = mysqlLanguageToModelConverter.convertList(languageRepository.findByConsultantId(Long.parseLong(consultantId)));
-          return languages.contains(languageModel);
-        }
+    Iterables.removeIf(languageModels, new Predicate<LanguageModel>() {
+      @Override
+      public boolean apply(LanguageModel languageModel) {
+        List<LanguageModel> languages = mysqlLanguageToModelConverter.convertList(languageRepository.findByConsultantId(Long.parseLong(consultantId)));
+        return languages.contains(languageModel);
       }
-    );
+    });
   }
 
   @Override
-  public boolean addSkills(String[] skills, String consultantId) {
-    return false;
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public boolean addSkills(String[] skillArray, String consultantId) {
+    final Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
+    Set<String> skillSet = Sets.newHashSet(skillArray);
+    removeSkillsThatMustNotBeInDBAnymore(consultant, skillSet);
+    removeSkillsThatAlreadyExistInDB(skillSet);
+    Set<Skill> skills = Sets.newHashSet(Iterables.transform(skillSet, new Function<String, Skill>() {
+      @Override
+      public Skill apply(String input) {
+        return new Skill(new SkillPK(input, consultant));
+      }
+    }));
+    return consultant.getSkills().addAll(skills);
+  }
+
+  private void removeSkillsThatMustNotBeInDBAnymore(Consultant consultant, final Set<String> skills) {
+    Iterables.removeIf(consultant.getSkills(), new Predicate<Skill>() {
+      @Override
+      public boolean apply(Skill skill) {
+        return !skills.contains(skill.getId().getSkill());
+      }
+    });
+  }
+
+  private void removeSkillsThatAlreadyExistInDB(final Set<String> skills) {
+    Iterables.removeIf(skills, new Predicate<String>() {
+      @Override
+      public boolean apply(String skill) {
+        return skillRepository.findByIdSkill(skill) != null;
+      }
+    });
   }
 
   @Override
-  public boolean updateEducation(EducationModel educationModel, String consultantId) {
-    return false;
-  }
-
-  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public void removeEducation(String consultantId, String educationId) {
-
+    educationRepository.delete(Long.parseLong(educationId));
   }
 
   @Override
-  public boolean addEducation(EducationModel educationModel, String consultantId) {
-    return false;
-  }
-
-  @Override
+  @Transactional(readOnly = true)
   public EducationModel findOneEducation(String consultantId, String educationId) {
-    return null;
+    return mysqlEducationToModelConverter.convert(educationRepository.findOne(Long.parseLong(educationId)));
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public boolean addEducation(EducationModel educationModel, String consultantId) {
+    Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
+    Education education = new Education();
+    education.setSchoolName(educationModel.getSchool());
+    education.setStartYear(educationModel.getStartYear());
+    education.setEndYear(educationModel.getEndYear());
+    education.setCurrent(educationModel.isCurrent());
+    education.setSchoolDegree(educationModel.getSchoolDegree());
+    education.setFieldsOfStudy(educationModel.getSchoolFieldOfStudy());
+    education.setGrade(educationModel.getSchoolGrade());
+    education.setActivities(educationModel.getSchoolActivities());
+    education.setDescription(educationModel.getDescription());
+    education.setConsultant(consultant);
+    return consultant.getEducations().add(education);
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public boolean updateEducation(EducationModel educationModel, String consultantId) {
+    Education education = educationRepository.findOne(Long.parseLong(educationModel.getId()));
+    education.setSchoolName(educationModel.getSchool());
+    education.setStartYear(educationModel.getStartYear());
+    education.setEndYear(educationModel.getEndYear());
+    education.setCurrent(educationModel.isCurrent());
+    education.setSchoolDegree(educationModel.getSchoolDegree());
+    education.setFieldsOfStudy(educationModel.getSchoolFieldOfStudy());
+    education.setGrade(educationModel.getSchoolGrade());
+    education.setActivities(educationModel.getSchoolActivities());
+    education.setDescription(educationModel.getDescription());
+    return true;
   }
 
 }

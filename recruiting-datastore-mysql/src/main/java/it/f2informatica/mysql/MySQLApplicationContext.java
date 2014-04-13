@@ -21,7 +21,7 @@ import java.beans.PropertyVetoException;
 @Configuration
 @EnableJpaRepositories(basePackages = "it.f2informatica.mysql.repositories")
 @EnableTransactionManagement
-@PropertySource(value = "classpath:mysql.properties")
+@PropertySource("classpath:mysql.properties")
 @MySQL
 public class MySQLApplicationContext {
   private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationContext.class);
