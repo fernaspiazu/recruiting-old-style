@@ -28,75 +28,75 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-	@Mock
-	private UserService userService;
+  @Mock
+  private UserService userService;
 
-	@Mock
-	private PasswordUpdaterService passwordUpdaterService;
+  @Mock
+  private PasswordUpdaterService passwordUpdaterService;
 
-	@Mock
-	private UserModelValidator userModelValidator;
+  @Mock
+  private UserModelValidator userModelValidator;
 
-	@Mock
-	private ValidationResponseHandler validationResponseHandler;
+  @Mock
+  private ValidationResponseHandler validationResponseHandler;
 
-	@InjectMocks
-	private UserController userController;
+  @InjectMocks
+  private UserController userController;
 
-	private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-	@Before
-	public void setUp() {
-		mockMvc = MockMvcBuilders
-			.standaloneSetup(userController)
-			.setValidator(userModelValidator)
-			.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-			.build();
-	}
+  @Before
+  public void setUp() {
+    mockMvc = MockMvcBuilders
+      .standaloneSetup(userController)
+      .setValidator(userModelValidator)
+      .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+      .build();
+  }
 
-	@Test
-	public void editUser() throws Exception {
-		UserModel userModel = new UserModel();
-		userModel.setUserId("1234567890");
-		userModel.setUsername("username");
-		userModel.setPassword("password");
-		userModel.setRole(new RoleModel("123456", "Administrator"));
-		userModel.setFirstName("Username");
-		userModel.setLastName("Lastname");
-		userModel.setEmail("mario.rossi@tiscali.it");
-		when(userService.findUserById("1234567890")).thenReturn(userModel);
-		mockMvc.perform(get("/user/edit?userId=1234567890"))
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaTypeUTF8.JSON_UTF_8));
-	}
+  @Test
+  public void editUser() throws Exception {
+    UserModel userModel = new UserModel();
+    userModel.setUserId("1234567890");
+    userModel.setUsername("username");
+    userModel.setPassword("password");
+    userModel.setRole(new RoleModel("123456", "Administrator"));
+    userModel.setFirstName("Username");
+    userModel.setLastName("Lastname");
+    userModel.setEmail("mario.rossi@tiscali.it");
+    when(userService.findUserById("1234567890")).thenReturn(userModel);
+    mockMvc.perform(get("/user/edit?userId=1234567890"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaTypeUTF8.JSON_UTF_8));
+  }
 
-	@Test
-	public void successfulUserRegistration() throws Exception {
-		mockMvc.perform(post("/user/save")
-			.param("username", "username")
-			.param("password", "password")
-			.param("role.roleId", "52602b9b92bede6f44752e35")
-			.param("role.roleName", "ADMIN"))
-			.andDo(print())
-			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/users"));
-	}
+  @Test
+  public void successfulUserRegistration() throws Exception {
+    mockMvc.perform(post("/user/save")
+      .param("username", "username")
+      .param("password", "password")
+      .param("role.roleId", "52602b9b92bede6f44752e35")
+      .param("role.roleName", "ADMIN"))
+      .andDo(print())
+      .andExpect(status().isFound())
+      .andExpect(redirectedUrl("/users"));
+  }
 
-	@Test
-	public void deleteUser() throws Exception {
-		mockMvc.perform(get("/user/delete?userId=1234567890"))
-			.andDo(print())
-			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/users"));
-	}
+  @Test
+  public void deleteUser() throws Exception {
+    mockMvc.perform(get("/user/delete?userId=1234567890"))
+      .andDo(print())
+      .andExpect(status().isFound())
+      .andExpect(redirectedUrl("/users"));
+  }
 
-	@Test
-	public void updatePassword() throws Exception {
-		mockMvc.perform(post("/user/update-password"))
-			.andDo(print())
-			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/users"));
-	}
+  @Test
+  public void updatePassword() throws Exception {
+    mockMvc.perform(post("/user/update-password"))
+      .andDo(print())
+      .andExpect(status().isFound())
+      .andExpect(redirectedUrl("/users"));
+  }
 
 }

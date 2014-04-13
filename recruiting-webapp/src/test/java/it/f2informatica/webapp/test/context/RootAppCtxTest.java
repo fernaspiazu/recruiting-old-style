@@ -7,10 +7,10 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class RootAppCtxTest {
 
-	@Test
-	public void test() {
-		RootApplicationContext rootApplicationContext = new RootApplicationContext();
-		assertThat(rootApplicationContext).isNotNull();
-	}
+  @Test
+  public void test() {
+    RootApplicationContext rootApplicationContext = new RootApplicationContext();
+    assertThat(rootApplicationContext).isNotNull();
+  }
 
 }

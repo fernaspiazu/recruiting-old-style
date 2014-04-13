@@ -15,30 +15,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationControllerTest {
 
-	private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-	@InjectMocks
-	private AuthenticationController authenticationController;
+  @InjectMocks
+  private AuthenticationController authenticationController;
 
-	@Before
-	public void setUp() {
-		mockMvc = MockMvcBuilders
-				.standaloneSetup(authenticationController)
-				.build();
-	}
+  @Before
+  public void setUp() {
+    mockMvc = MockMvcBuilders
+      .standaloneSetup(authenticationController)
+      .build();
+  }
 
-	@Test
-	public void testLogin() throws Exception {
-		mockMvc.perform(get("/login"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("login/login"));
-	}
+  @Test
+  public void testLogin() throws Exception {
+    mockMvc.perform(get("/login"))
+      .andExpect(status().isOk())
+      .andExpect(view().name("login/login"));
+  }
 
-	@Test
-	public void testLoginFailed() throws Exception {
-		mockMvc.perform(get("/login_failed"))
-				.andExpect(model().attribute("hasErrors", true))
-				.andExpect(view().name("login/login"));
-	}
+  @Test
+  public void testLoginFailed() throws Exception {
+    mockMvc.perform(get("/login_failed"))
+      .andExpect(model().attribute("hasErrors", true))
+      .andExpect(view().name("login/login"));
+  }
 
 }
