@@ -1,13 +1,13 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.services.model.UpdatePasswordModel;
-import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.user.PasswordUpdaterService;
-import it.f2informatica.services.user.UserService;
-import it.f2informatica.services.validator.UpdatePasswordModelValidator;
-import it.f2informatica.services.validator.UserModelValidator;
-import it.f2informatica.services.validator.utils.ValidationResponse;
-import it.f2informatica.services.validator.utils.ValidationResponseService;
+import it.f2informatica.core.model.UpdatePasswordModel;
+import it.f2informatica.core.model.UserModel;
+import it.f2informatica.core.user.PasswordUpdaterService;
+import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.validator.UpdatePasswordModelValidator;
+import it.f2informatica.core.validator.UserModelValidator;
+import it.f2informatica.core.validator.utils.ValidationResponse;
+import it.f2informatica.core.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.utils.CurrentHttpRequest;
 import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.springframework.beans.factory.annotation.Autowired;

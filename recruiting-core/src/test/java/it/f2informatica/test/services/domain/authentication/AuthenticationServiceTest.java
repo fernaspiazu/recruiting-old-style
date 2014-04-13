@@ -1,9 +1,9 @@
 package it.f2informatica.test.services.domain.authentication;
 
-import it.f2informatica.services.authentication.AuthenticationService;
-import it.f2informatica.services.authentication.AuthenticationServiceImpl;
-import it.f2informatica.services.gateway.UserRepositoryGateway;
-import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.core.authentication.AuthenticationService;
+import it.f2informatica.core.authentication.AuthenticationServiceImpl;
+import it.f2informatica.core.gateway.UserRepositoryGateway;
+import it.f2informatica.core.responses.AuthenticationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

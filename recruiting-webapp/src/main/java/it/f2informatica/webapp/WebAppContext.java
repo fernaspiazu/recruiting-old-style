@@ -1,6 +1,6 @@
 package it.f2informatica.webapp;
 
-import it.f2informatica.services.ServicesApplicationContext;
+import it.f2informatica.core.ServicesApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

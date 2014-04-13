@@ -1,13 +1,13 @@
 package it.f2informatica.test.services.domain.user;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.authentication.Authority;
-import it.f2informatica.services.user.UserService;
-import it.f2informatica.services.user.UserServiceImpl;
-import it.f2informatica.services.gateway.UserRepositoryGateway;
-import it.f2informatica.services.model.RoleModel;
-import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.model.builder.RoleModelBuilder;
+import it.f2informatica.core.authentication.Authority;
+import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.user.UserServiceImpl;
+import it.f2informatica.core.gateway.UserRepositoryGateway;
+import it.f2informatica.core.model.RoleModel;
+import it.f2informatica.core.model.UserModel;
+import it.f2informatica.core.model.builder.RoleModelBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -21,8 +21,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static it.f2informatica.services.model.builder.RoleModelBuilder.roleModel;
-import static it.f2informatica.services.model.builder.UserModelBuilder.userModel;
+import static it.f2informatica.core.model.builder.RoleModelBuilder.roleModel;
+import static it.f2informatica.core.model.builder.UserModelBuilder.userModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

@@ -1,9 +1,9 @@
 package it.f2informatica.test.services.domain.consultant;
 
-import it.f2informatica.services.consultant.ConsultantService;
-import it.f2informatica.services.consultant.ConsultantServiceImpl;
-import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
-import it.f2informatica.services.model.ConsultantModel;
+import it.f2informatica.core.consultant.ConsultantService;
+import it.f2informatica.core.consultant.ConsultantServiceImpl;
+import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
+import it.f2informatica.core.model.ConsultantModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 
-import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
+import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;

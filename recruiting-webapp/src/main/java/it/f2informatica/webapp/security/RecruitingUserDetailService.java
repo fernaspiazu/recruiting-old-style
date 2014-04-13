@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.services.authentication.AuthenticationService;
-import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.core.authentication.AuthenticationService;
+import it.f2informatica.core.responses.AuthenticationResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

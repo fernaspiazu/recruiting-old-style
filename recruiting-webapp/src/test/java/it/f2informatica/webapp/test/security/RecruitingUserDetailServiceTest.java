@@ -1,9 +1,9 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.services.authentication.Authority;
-import it.f2informatica.services.authentication.AuthenticationService;
-import it.f2informatica.services.responses.AuthenticationResponse;
+import it.f2informatica.core.authentication.Authority;
+import it.f2informatica.core.authentication.AuthenticationService;
+import it.f2informatica.core.responses.AuthenticationResponse;
 import it.f2informatica.webapp.security.AuthorityService;
 import it.f2informatica.webapp.security.RecruitingUserDetailService;
 import org.junit.Before;

@@ -1,11 +1,11 @@
 package it.f2informatica.webapp.test.controllers;
 
-import it.f2informatica.services.model.RoleModel;
-import it.f2informatica.services.model.UserModel;
-import it.f2informatica.services.user.PasswordUpdaterService;
-import it.f2informatica.services.user.UserService;
-import it.f2informatica.services.validator.UserModelValidator;
-import it.f2informatica.services.validator.utils.ValidationResponseService;
+import it.f2informatica.core.model.RoleModel;
+import it.f2informatica.core.model.UserModel;
+import it.f2informatica.core.user.PasswordUpdaterService;
+import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.validator.UserModelValidator;
+import it.f2informatica.core.validator.utils.ValidationResponseService;
 import it.f2informatica.webapp.controller.UserController;
 import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.eclipse.jetty.http.HttpHeader;

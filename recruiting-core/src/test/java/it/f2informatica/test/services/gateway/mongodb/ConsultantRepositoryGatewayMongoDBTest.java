@@ -2,10 +2,10 @@ package it.f2informatica.test.services.gateway.mongodb;
 
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
-import it.f2informatica.services.gateway.ConsultantRepositoryGateway;
-import it.f2informatica.services.gateway.EntityToModelConverter;
-import it.f2informatica.services.gateway.mongodb.ConsultantRepositoryGatewayMongoDB;
-import it.f2informatica.services.model.ConsultantModel;
+import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
+import it.f2informatica.core.gateway.EntityToModelConverter;
+import it.f2informatica.core.gateway.mongodb.ConsultantRepositoryGatewayMongoDB;
+import it.f2informatica.core.model.ConsultantModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Arrays;
 
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
-import static it.f2informatica.services.model.builder.ConsultantModelBuilder.consultantModel;
+import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;

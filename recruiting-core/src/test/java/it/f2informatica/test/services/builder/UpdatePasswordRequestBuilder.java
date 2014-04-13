@@ -1,6 +1,6 @@
 package it.f2informatica.test.services.builder;
 
-import it.f2informatica.services.model.UpdatePasswordModel;
+import it.f2informatica.core.model.UpdatePasswordModel;
 
 public class UpdatePasswordRequestBuilder {
 

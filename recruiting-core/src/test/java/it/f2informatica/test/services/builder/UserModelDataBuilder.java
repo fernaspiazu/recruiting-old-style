@@ -1,7 +1,7 @@
 package it.f2informatica.test.services.builder;
 
-import it.f2informatica.services.model.RoleModel;
-import it.f2informatica.services.model.UserModel;
+import it.f2informatica.core.model.RoleModel;
+import it.f2informatica.core.model.UserModel;
 
 public class UserModelDataBuilder {
 

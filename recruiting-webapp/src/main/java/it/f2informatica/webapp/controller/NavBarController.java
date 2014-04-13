@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.services.consultant.ConsultantService;
-import it.f2informatica.services.user.UserService;
+import it.f2informatica.core.consultant.ConsultantService;
+import it.f2informatica.core.user.UserService;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

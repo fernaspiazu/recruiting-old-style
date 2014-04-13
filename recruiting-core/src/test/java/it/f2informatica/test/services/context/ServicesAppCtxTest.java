@@ -1,6 +1,6 @@
 package it.f2informatica.test.services.context;
 
-import it.f2informatica.services.ServicesApplicationContext;
+import it.f2informatica.core.ServicesApplicationContext;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
