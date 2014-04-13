@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.core.authentication.AuthenticationService;
-import it.f2informatica.core.responses.AuthenticationResponse;
+import it.f2informatica.core.model.AuthenticationModel;
+import it.f2informatica.core.services.AuthenticationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,12 +25,12 @@ public class RecruitingUserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.info("Loding user >>> " + username);
-		AuthenticationResponse authenticationResponse = authenticationService.processLogin(username);
-		return createUserDetails(authenticationResponse);
+		log.info("Loding user [" + username + "]");
+		AuthenticationModel authenticationModel = authenticationService.processLogin(username);
+		return createUserDetails(authenticationModel);
 	}
 
-	private UserDetails createUserDetails(AuthenticationResponse userLogged) {
+	private UserDetails createUserDetails(AuthenticationModel userLogged) {
 		return new UserDetails(userLogged, authorityService.createAuthorities(userLogged.getAuthorization()));
 	}
 

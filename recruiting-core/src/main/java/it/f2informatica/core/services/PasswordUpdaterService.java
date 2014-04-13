@@ -1,4 +1,4 @@
-package it.f2informatica.core.user;
+package it.f2informatica.core.services;
 
 import it.f2informatica.core.model.UpdatePasswordModel;
 

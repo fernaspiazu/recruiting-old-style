@@ -7,7 +7,7 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
-import it.f2informatica.core.authentication.Authority;
+import it.f2informatica.core.Authority;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.gateway.mongodb.UserRepositoryGatewayMongoDB;

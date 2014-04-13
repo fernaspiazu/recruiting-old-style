@@ -1,19 +1,11 @@
 package it.f2informatica.core.validator.utils;
 
-public enum ValidationStatus {
+public final class ValidationStatus {
 
-	SUCCESS {
-		@Override
-		public String toString() {
-			return "SUCCESS";
-		}
-	},
+  public static final String SUCCESSFUL = "SUCCESS";
 
-	FAIL {
-		@Override
-		public String toString() {
-			return "FAIL";
-		}
-	}
+  public static final String FAILED = "FAIL";
+
+  private ValidationStatus() {}
 
 }

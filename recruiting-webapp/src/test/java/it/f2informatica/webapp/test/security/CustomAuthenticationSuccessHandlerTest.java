@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.test.security;
 
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.services.UserService;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler;
 import org.junit.Before;

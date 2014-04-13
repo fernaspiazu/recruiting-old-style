@@ -4,7 +4,7 @@ import org.springframework.validation.Errors;
 
 import java.util.Locale;
 
-public interface ValidationResponseService {
+public interface ValidationResponseHandler {
 
 	ValidationResponse validationSuccess();
 

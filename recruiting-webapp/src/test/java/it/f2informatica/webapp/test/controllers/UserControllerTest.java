@@ -2,10 +2,10 @@ package it.f2informatica.webapp.test.controllers;
 
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
-import it.f2informatica.core.user.PasswordUpdaterService;
-import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.services.PasswordUpdaterService;
+import it.f2informatica.core.services.UserService;
 import it.f2informatica.core.validator.UserModelValidator;
-import it.f2informatica.core.validator.utils.ValidationResponseService;
+import it.f2informatica.core.validator.utils.ValidationResponseHandler;
 import it.f2informatica.webapp.controller.UserController;
 import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.eclipse.jetty.http.HttpHeader;
@@ -38,7 +38,7 @@ public class UserControllerTest {
 	private UserModelValidator userModelValidator;
 
 	@Mock
-	private ValidationResponseService validationResponseService;
+	private ValidationResponseHandler validationResponseHandler;
 
 	@InjectMocks
 	private UserController userController;

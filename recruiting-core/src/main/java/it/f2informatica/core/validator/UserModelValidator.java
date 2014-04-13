@@ -1,7 +1,7 @@
 package it.f2informatica.core.validator;
 
 import it.f2informatica.core.model.UserModel;
-import it.f2informatica.core.user.UserService;
+import it.f2informatica.core.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

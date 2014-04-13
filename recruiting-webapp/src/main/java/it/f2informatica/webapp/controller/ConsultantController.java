@@ -2,7 +2,7 @@ package it.f2informatica.webapp.controller;
 
 import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
-import it.f2informatica.core.consultant.ConsultantService;
+import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
@@ -11,7 +11,7 @@ import it.f2informatica.core.validator.ConsultantEducationValidator;
 import it.f2informatica.core.validator.ConsultantExperienceValidator;
 import it.f2informatica.core.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.core.validator.utils.ValidationResponse;
-import it.f2informatica.core.validator.utils.ValidationResponseService;
+import it.f2informatica.core.validator.utils.ValidationResponseHandler;
 import it.f2informatica.webapp.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +49,7 @@ public class ConsultantController {
 	private ConsultantExperienceValidator experienceValidator;
 
 	@Autowired
-	private ValidationResponseService validationResponseService;
+	private ValidationResponseHandler validationResponseHandler;
 
 	@Autowired
 	private ConsultantPersonalDetailsValidator personalDetailsValidator;
@@ -89,9 +89,9 @@ public class ConsultantController {
 	public @ResponseBody ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
 		personalDetailsValidator.validate(consultantModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getLocale());
+			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
 		}
-		return validationResponseService.validationSuccess();
+		return validationResponseHandler.validationSuccess();
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -152,9 +152,9 @@ public class ConsultantController {
 	public @ResponseBody ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
 		experienceValidator.validate(experienceModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getLocale());
+			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
 		}
-		return validationResponseService.validationSuccess();
+		return validationResponseHandler.validationSuccess();
 	}
 
 	@RequestMapping(value = "/delete-experience", method = RequestMethod.GET)
@@ -203,9 +203,9 @@ public class ConsultantController {
 	public @ResponseBody ValidationResponse validateEducation(@ModelAttribute("educationModel") EducationModel educationModel, BindingResult result) {
 		educationValidator.validate(educationModel, result);
 		if (result.hasErrors()) {
-			return validationResponseService.validationFail(result, httpRequest.getLocale());
+			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
 		}
-		return validationResponseService.validationSuccess();
+		return validationResponseHandler.validationSuccess();
 	}
 
 }

@@ -1,7 +1,7 @@
 package it.f2informatica.core.validator;
 
 import it.f2informatica.core.model.UpdatePasswordModel;
-import it.f2informatica.core.user.PasswordUpdaterService;
+import it.f2informatica.core.services.PasswordUpdaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

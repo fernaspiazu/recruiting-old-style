@@ -1,8 +1,8 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.core.authentication.Authority;
-import it.f2informatica.core.responses.AuthenticationResponse;
+import it.f2informatica.core.Authority;
+import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import it.f2informatica.webapp.security.UserDetails;
 import org.junit.Before;
@@ -99,8 +99,8 @@ public class SecurityAccessorTest {
 		return new SimpleGrantedAuthority(authorityName);
 	}
 
-	private AuthenticationResponse createLoginResponse() {
-		AuthenticationResponse response = new AuthenticationResponse();
+	private AuthenticationModel createLoginResponse() {
+		AuthenticationModel response = new AuthenticationModel();
 		response.setUsername("response");
 		response.setPassword("password");
 		response.setAuthorization("Administrator");

@@ -1,4 +1,4 @@
-package it.f2informatica.core.consultant;
+package it.f2informatica.core.services;
 
 import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;

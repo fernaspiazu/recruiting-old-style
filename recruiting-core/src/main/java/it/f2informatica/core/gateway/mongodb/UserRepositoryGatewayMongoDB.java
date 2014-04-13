@@ -3,6 +3,7 @@ package it.f2informatica.core.gateway.mongodb;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.mongodb.MongoDB;
 import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
@@ -13,7 +14,6 @@ import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UpdatePasswordModel;
 import it.f2informatica.core.model.UserModel;
-import it.f2informatica.core.responses.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -47,13 +47,13 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	private EntityToModelConverter<User, UserModel> userToModelConverter;
 
 	@Override
-	public AuthenticationResponse authenticationByUsername(String username) {
+	public AuthenticationModel authenticationByUsername(String username) {
 		User user = userRepository.findByUsername(username);
-		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-		authenticationResponse.setUsername(user.getUsername());
-		authenticationResponse.setPassword(user.getPassword());
-		authenticationResponse.setAuthorization(user.getRole().getName());
-		return authenticationResponse;
+		AuthenticationModel authenticationModel = new AuthenticationModel();
+		authenticationModel.setUsername(user.getUsername());
+		authenticationModel.setPassword(user.getPassword());
+		authenticationModel.setAuthorization(user.getRole().getName());
+		return authenticationModel;
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package it.f2informatica.webapp.test.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.core.authentication.Authority;
-import it.f2informatica.core.authentication.AuthenticationService;
-import it.f2informatica.core.responses.AuthenticationResponse;
+import it.f2informatica.core.Authority;
+import it.f2informatica.core.model.AuthenticationModel;
+import it.f2informatica.core.services.AuthenticationService;
 import it.f2informatica.webapp.security.AuthorityService;
 import it.f2informatica.webapp.security.RecruitingUserDetailService;
 import org.junit.Before;
@@ -64,12 +64,12 @@ public class RecruitingUserDetailServiceTest {
 		);
 	}
 
-	private static AuthenticationResponse createResponse() {
-		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-		authenticationResponse.setUsername("username1");
-		authenticationResponse.setPassword("password1");
-		authenticationResponse.setAuthorization("role_admin");
-		return authenticationResponse;
+	private static AuthenticationModel createResponse() {
+		AuthenticationModel authenticationModel = new AuthenticationModel();
+		authenticationModel.setUsername("username1");
+		authenticationModel.setPassword("password1");
+		authenticationModel.setAuthorization("role_admin");
+		return authenticationModel;
 	}
 
 }

@@ -1,8 +1,8 @@
 package it.f2informatica.test.services.domain.user;
 
 import it.f2informatica.core.model.UpdatePasswordModel;
-import it.f2informatica.core.user.PasswordUpdaterService;
-import it.f2informatica.core.user.PasswordUpdaterServiceImpl;
+import it.f2informatica.core.services.PasswordUpdaterService;
+import it.f2informatica.core.services.PasswordUpdaterServiceImpl;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import org.junit.Test;
 import org.junit.runner.RunWith;

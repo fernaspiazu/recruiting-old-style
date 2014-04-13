@@ -1,9 +1,9 @@
 package it.f2informatica.test.services.domain.authentication;
 
-import it.f2informatica.core.authentication.AuthenticationService;
-import it.f2informatica.core.authentication.AuthenticationServiceImpl;
+import it.f2informatica.core.model.AuthenticationModel;
+import it.f2informatica.core.services.AuthenticationService;
+import it.f2informatica.core.services.AuthenticationServiceImpl;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
-import it.f2informatica.core.responses.AuthenticationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,12 +25,12 @@ public class AuthenticationServiceTest {
 	@Test
 	public void processLoginTest() {
 		when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(response());
-		AuthenticationResponse response = authenticationService.processLogin("jhon");
+		AuthenticationModel response = authenticationService.processLogin("jhon");
 		assertThat(response.getUsername()).isEqualTo("jhon");
 	}
 
-	private AuthenticationResponse response() {
-		AuthenticationResponse response = new AuthenticationResponse();
+	private AuthenticationModel response() {
+		AuthenticationModel response = new AuthenticationModel();
 		response.setUsername("jhon");
 		response.setPassword("jhon85*");
 		response.setAuthorization("Administrator");

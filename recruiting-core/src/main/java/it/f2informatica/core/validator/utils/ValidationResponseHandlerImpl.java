@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import java.util.Locale;
 
 @Service
-public class ValidationResponseServiceImpl implements ValidationResponseService {
+public class ValidationResponseHandlerImpl implements ValidationResponseHandler {
 
 	@Autowired
 	private ErrorMessageResolver resolver;
@@ -15,14 +15,14 @@ public class ValidationResponseServiceImpl implements ValidationResponseService 
 	@Override
 	public ValidationResponse validationSuccess() {
 		ValidationResponse validationResponse = new ValidationResponse();
-		validationResponse.setStatus(ValidationStatus.SUCCESS.toString());
+		validationResponse.setStatus(ValidationStatus.SUCCESSFUL);
 		return validationResponse;
 	}
 
 	@Override
 	public ValidationResponse validationFail(Errors errors, Locale locale) {
 		ValidationResponse validationResponse = new ValidationResponse();
-		validationResponse.setStatus(ValidationStatus.FAIL.toString());
+		validationResponse.setStatus(ValidationStatus.FAILED);
 		validationResponse.setErrorMessages(resolver.resolveErrorCodes(errors.getFieldErrors(), locale));
 		return validationResponse;
 	}

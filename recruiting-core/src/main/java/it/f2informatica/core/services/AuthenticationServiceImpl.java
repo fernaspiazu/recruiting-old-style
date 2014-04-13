@@ -1,7 +1,7 @@
-package it.f2informatica.core.authentication;
+package it.f2informatica.core.services;
 
 import it.f2informatica.core.gateway.UserRepositoryGateway;
-import it.f2informatica.core.responses.AuthenticationResponse;
+import it.f2informatica.core.model.AuthenticationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private UserRepositoryGateway userRepositoryGateway;
 
 	@Override
-	public AuthenticationResponse processLogin(String username) {
+	public AuthenticationModel processLogin(String username) {
 		return userRepositoryGateway.authenticationByUsername(username);
 	}
 

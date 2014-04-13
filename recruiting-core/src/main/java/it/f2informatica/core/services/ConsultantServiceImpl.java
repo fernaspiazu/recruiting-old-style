@@ -1,4 +1,4 @@
-package it.f2informatica.core.consultant;
+package it.f2informatica.core.services;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -8,19 +8,18 @@ import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
-import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
@@ -59,14 +58,12 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public String generateConsultantNumber() {
-		String uuid = UUID.randomUUID().toString();
-		String[] components = uuid.split("-");
+		String[] components = UUID.randomUUID().toString().split("-");
 		return getTimePrefixFormat() + "-" + components[components.length - 1].toUpperCase();
 	}
 
 	private String getTimePrefixFormat() {
-		DateFormat dateFormat = new SimpleDateFormat(YEAR_MONTH_MILLISECONDS_FORMAT);
-		return dateFormat.format(Calendar.getInstance().getTime());
+    return new DateTime().toString(YEAR_MONTH_MILLISECONDS_FORMAT);
 	}
 
 	@Override
@@ -91,21 +88,23 @@ public class ConsultantServiceImpl implements ConsultantService {
 
 	@Override
 	public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
-		return consultantRepositoryGateway.addLanguages(removeEventuaEmptyLanguages(languageModelArray), consultantId);
+		return consultantRepositoryGateway.addLanguages(removeFurtherEmptyLanguages(languageModelArray), consultantId);
 	}
 
-	private LanguageModel[] removeEventuaEmptyLanguages(LanguageModel[] languageModels) {
-		List<LanguageModel> listOfLanguages = Lists.newArrayList(languageModels);
-		Iterables.removeIf(listOfLanguages, new Predicate<LanguageModel>() {
-			@Override
-			public boolean apply(LanguageModel input) {
-				return input == null
-					|| StringUtils.isBlank(input.getLanguage())
-					|| StringUtils.isBlank(input.getProficiency());
-			}
-		});
-		return Iterables.toArray(listOfLanguages, LanguageModel.class);
+	private LanguageModel[] removeFurtherEmptyLanguages(LanguageModel[] languageModels) {
+		List<LanguageModel> languages = Lists.newArrayList(languageModels);
+		Iterables.removeIf(languages, doesNotHaveAnyItemToAdd());
+		return Iterables.toArray(languages, LanguageModel.class);
 	}
+
+  private Predicate<LanguageModel> doesNotHaveAnyItemToAdd() {
+    return new Predicate<LanguageModel>() {
+      @Override
+      public boolean apply(LanguageModel input) {
+        return input == null || isBlank(input.getLanguage()) || isBlank(input.getProficiency());
+      }
+    };
+  }
 
 	@Override
 	public boolean addSkills(String[] skills, String consultantId) {
@@ -117,7 +116,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		Iterables.removeIf(listOfSkill, new Predicate<String>() {
 			@Override
 			public boolean apply(String input) {
-				return StringUtils.isBlank(input);
+				return isBlank(input);
 			}
 		});
 		return Iterables.toArray(listOfSkill, String.class);

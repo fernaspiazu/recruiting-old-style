@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.core.authentication.Authority;
+import it.f2informatica.core.Authority;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
