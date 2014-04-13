@@ -11,50 +11,50 @@ import java.util.Collection;
 
 public class SecurityAccessor {
 
-	public String getCurrentUsername() {
-		return getAuthentication().getName();
-	}
+  public String getCurrentUsername() {
+    return getAuthentication().getName();
+  }
 
-	public boolean isCurrentUserAdmin() {
-		return isCurrentHasRole(Authority.ROLE_ADMIN);
-	}
+  public boolean isCurrentUserAdmin() {
+    return isCurrentHasRole(Authority.ROLE_ADMIN);
+  }
 
-	private boolean isCurrentHasRole(Authority type) {
-		return isPrincipalForAuthenticatedUser() && isRolePresent(type);
-	}
+  private boolean isCurrentHasRole(Authority type) {
+    return isPrincipalForAuthenticatedUser() && isRolePresent(type);
+  }
 
-	private boolean isRolePresent(Authority type){
-		boolean isRolePresent = false;
-		for (GrantedAuthority auth : getAuthorities()) {
-			isRolePresent = auth.getAuthority().equals(type.toString());
-			if (isRolePresent) break;
-		}
-		return isRolePresent;
-	}
+  private boolean isRolePresent(Authority type) {
+    boolean isRolePresent = false;
+    for (GrantedAuthority auth : getAuthorities()) {
+      isRolePresent = auth.getAuthority().equals(type.toString());
+      if (isRolePresent) break;
+    }
+    return isRolePresent;
+  }
 
-	private Collection<GrantedAuthority> getAuthorities() {
-		return Lists.newArrayList(((UserDetails) getPrincipal()).getAuthorities());
-	}
+  private Collection<GrantedAuthority> getAuthorities() {
+    return Lists.newArrayList(((UserDetails) getPrincipal()).getAuthorities());
+  }
 
-	private Authentication getAuthentication() {
-		return getSecurityContext().getAuthentication();
-	}
+  private Authentication getAuthentication() {
+    return getSecurityContext().getAuthentication();
+  }
 
-	private SecurityContext getSecurityContext() {
-		return SecurityContextHolder.getContext();
-	}
+  private SecurityContext getSecurityContext() {
+    return SecurityContextHolder.getContext();
+  }
 
-	private boolean isPrincipalForAuthenticatedUser(){
-		return isPrincipalInstanceOf(UserDetails.class);
-	}
+  private boolean isPrincipalForAuthenticatedUser() {
+    return isPrincipalInstanceOf(UserDetails.class);
+  }
 
-	private boolean isPrincipalInstanceOf(Class<?> type){
-		Object principal = getPrincipal();
-		return principal != null && principal.getClass().isAssignableFrom(type);
-	}
+  private boolean isPrincipalInstanceOf(Class<?> type) {
+    Object principal = getPrincipal();
+    return principal != null && principal.getClass().isAssignableFrom(type);
+  }
 
-	private Object getPrincipal() {
-		return getAuthentication().getPrincipal();
-	}
+  private Object getPrincipal() {
+    return getAuthentication().getPrincipal();
+  }
 
 }

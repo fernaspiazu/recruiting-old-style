@@ -7,10 +7,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface UserRepository extends PagingAndSortingRepository<User, String>, UserRepositoryCustom {
 
-	User findByUsername(String username);
+  User findByUsername(String username);
 
-	User findByUsernameAndPassword(String username, String password);
+  User findByUsernameAndPassword(String username, String password);
 
-	Iterable<User> findByRole(Role role);
+  Iterable<User> findByRole(Role role);
 
 }

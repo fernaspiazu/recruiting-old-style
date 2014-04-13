@@ -14,65 +14,65 @@ import java.util.GregorianCalendar;
 @Component
 public class PeriodParser {
 
-	@Autowired
-	private MessageSource messageSource;
+  @Autowired
+  private MessageSource messageSource;
 
-	@Autowired
-	private CurrentHttpRequest currentHttpRequest;
+  @Autowired
+  private CurrentHttpRequest currentHttpRequest;
 
-	public Date resolveDateByMonthAndYear(String month, String year) {
-		try {
-			return _resolveDateByMonthAndYear(month, year);
-		} catch (NumberFormatException nfe) {
-			nfe.printStackTrace();
-			return null;
-		}
-	}
+  public Date resolveDateByMonthAndYear(String month, String year) {
+    try {
+      return _resolveDateByMonthAndYear(month, year);
+    } catch (NumberFormatException nfe) {
+      nfe.printStackTrace();
+      return null;
+    }
+  }
 
-	private Date _resolveDateByMonthAndYear(String month, String year) {
-		int yearInt = Integer.parseInt(year);
-		int monthInt = Integer.parseInt(month);
-		return new GregorianCalendar(yearInt, monthInt, 1, 0, 0, 0).getTime();
-	}
+  private Date _resolveDateByMonthAndYear(String month, String year) {
+    int yearInt = Integer.parseInt(year);
+    int monthInt = Integer.parseInt(month);
+    return new GregorianCalendar(yearInt, monthInt, 1, 0, 0, 0).getTime();
+  }
 
-	public String formatDateByMonthNameAndYear(Date date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getLocale());
-		return (date != null) ? dateFormat.format(date) : "";
-	}
+  public String formatDateByMonthNameAndYear(Date date) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM yyyy", currentHttpRequest.getLocale());
+    return (date != null) ? dateFormat.format(date) : "";
+  }
 
-	public String printTotalTimeOfPeriodWhichHasElapsed(Date from, Date to) {
-		DateTime timeFrom = new DateTime(from);
-		DateTime timeTo = (to != null) ? new DateTime(to) : new DateTime();
-		Period period = new Period(timeFrom, timeTo);
-		return "(" + appendYears(period) + appendMonths(period) + ")";
-	}
+  public String printTotalTimeOfPeriodWhichHasElapsed(Date from, Date to) {
+    DateTime timeFrom = new DateTime(from);
+    DateTime timeTo = (to != null) ? new DateTime(to) : new DateTime();
+    Period period = new Period(timeFrom, timeTo);
+    return "(" + appendYears(period) + appendMonths(period) + ")";
+  }
 
-	private String appendYears(Period period) {
-		int years = period.getYears();
-		if (years <= 0) {
-			return "";
-		}
-		return String.valueOf(years) + " " + ((years == 1) ? getMessage("global.year") : getMessage("global.years")) + " ";
-	}
+  private String appendYears(Period period) {
+    int years = period.getYears();
+    if (years <= 0) {
+      return "";
+    }
+    return String.valueOf(years) + " " + ((years == 1) ? getMessage("global.year") : getMessage("global.years")) + " ";
+  }
 
-	private String appendMonths(Period period) {
-		int months = period.getMonths();
-		if (months <= 0) {
-			return appendDays(period);
-		}
-		return String.valueOf(months) + " " + ((months == 1) ? getMessage("global.month") : getMessage("global.months"));
-	}
+  private String appendMonths(Period period) {
+    int months = period.getMonths();
+    if (months <= 0) {
+      return appendDays(period);
+    }
+    return String.valueOf(months) + " " + ((months == 1) ? getMessage("global.month") : getMessage("global.months"));
+  }
 
-	private String appendDays(Period period) {
-		int days = period.getDays();
-		if (days <= 0) {
-			return " " + String.valueOf(days) + " " + getMessage("global.days");
-		}
-		return " " + String.valueOf(days) + " " + ((days == 1) ? getMessage("global.day") : getMessage("global.days"));
-	}
+  private String appendDays(Period period) {
+    int days = period.getDays();
+    if (days <= 0) {
+      return " " + String.valueOf(days) + " " + getMessage("global.days");
+    }
+    return " " + String.valueOf(days) + " " + ((days == 1) ? getMessage("global.day") : getMessage("global.days"));
+  }
 
-	private String getMessage(String code) {
-		return messageSource.getMessage(code, ArrayUtils.EMPTY_OBJECT_ARRAY, currentHttpRequest.getLocale());
-	}
+  private String getMessage(String code) {
+    return messageSource.getMessage(code, ArrayUtils.EMPTY_OBJECT_ARRAY, currentHttpRequest.getLocale());
+  }
 
 }

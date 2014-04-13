@@ -10,10 +10,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LanguageModel implements Serializable {
-	private static final long serialVersionUID = 5650873740412761162L;
+  private static final long serialVersionUID = 5650873740412761162L;
 
-	private String language;
+  private String language;
 
-	private String proficiency;
+  private String proficiency;
 
 }

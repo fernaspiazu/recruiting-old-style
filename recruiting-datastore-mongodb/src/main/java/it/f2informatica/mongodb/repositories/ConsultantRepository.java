@@ -6,8 +6,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface ConsultantRepository extends ConsultantRepositoryCustom, PagingAndSortingRepository<Consultant, String> {
 
-	Consultant findByConsultantNo(String consultantNo);
+  Consultant findByConsultantNo(String consultantNo);
 
-	Consultant findByFiscalCode(String fiscalCode);
+  Consultant findByFiscalCode(String fiscalCode);
 
 }

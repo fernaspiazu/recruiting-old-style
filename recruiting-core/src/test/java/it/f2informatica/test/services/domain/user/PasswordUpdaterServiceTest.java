@@ -1,9 +1,9 @@
 package it.f2informatica.test.services.domain.user;
 
+import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.UpdatePasswordModel;
 import it.f2informatica.core.services.PasswordUpdaterService;
 import it.f2informatica.core.services.PasswordUpdaterServiceImpl;
-import it.f2informatica.core.gateway.UserRepositoryGateway;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,17 +17,17 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PasswordUpdaterServiceTest {
 
-	@Mock
-	private UserRepositoryGateway userRepositoryGateway;
+  @Mock
+  private UserRepositoryGateway userRepositoryGateway;
 
-	@InjectMocks
-	private PasswordUpdaterService passwordUpdaterService = new PasswordUpdaterServiceImpl();
+  @InjectMocks
+  private PasswordUpdaterService passwordUpdaterService = new PasswordUpdaterServiceImpl();
 
-	@Test
-	public void updatePasswordTest() {
-		UpdatePasswordModel updatePasswordModel = updatePasswordRequest().build();
-		when(userRepositoryGateway.updatePassword(updatePasswordModel)).thenReturn(true);
-		assertThat(passwordUpdaterService.updatePassword(updatePasswordModel)).isTrue();
-	}
+  @Test
+  public void updatePasswordTest() {
+    UpdatePasswordModel updatePasswordModel = updatePasswordRequest().build();
+    when(userRepositoryGateway.updatePassword(updatePasswordModel)).thenReturn(true);
+    assertThat(passwordUpdaterService.updatePassword(updatePasswordModel)).isTrue();
+  }
 
 }

@@ -5,80 +5,80 @@ import it.f2informatica.core.model.UserModel;
 
 public class UserModelDataBuilder {
 
-	private String id = "52820f6f34bdf55624303fc1";
-	private String username = "jhon_kent77";
-	private String password = "okisteralio";
-	private String firstName = "Jhon";
-	private String lastName = "Kent";
-	private String email = "jhon_kent77@aol.com";
-	private boolean notRemovable = false;
-	private RoleModel role = new RoleModel();
+  private String id = "52820f6f34bdf55624303fc1";
+  private String username = "jhon_kent77";
+  private String password = "okisteralio";
+  private String firstName = "Jhon";
+  private String lastName = "Kent";
+  private String email = "jhon_kent77@aol.com";
+  private boolean notRemovable = false;
+  private RoleModel role = new RoleModel();
 
-	public static UserModelDataBuilder userModel() {
-		return new UserModelDataBuilder();
-	}
+  public static UserModelDataBuilder userModel() {
+    return new UserModelDataBuilder();
+  }
 
-	public UserModelDataBuilder withId(String id) {
-		this.id = id;
-		return this;
-	}
+  public UserModelDataBuilder withId(String id) {
+    this.id = id;
+    return this;
+  }
 
-	public UserModelDataBuilder withUsername(String username) {
-		this.username = username;
-		return this;
-	}
+  public UserModelDataBuilder withUsername(String username) {
+    this.username = username;
+    return this;
+  }
 
-	public UserModelDataBuilder withPassword(String password) {
-		this.password = password;
-		return this;
-	}
+  public UserModelDataBuilder withPassword(String password) {
+    this.password = password;
+    return this;
+  }
 
-	public UserModelDataBuilder withEmail(String email) {
-		this.email = email;
-		return this;
-	}
+  public UserModelDataBuilder withEmail(String email) {
+    this.email = email;
+    return this;
+  }
 
-	public UserModelDataBuilder withFirstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
+  public UserModelDataBuilder withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
 
-	public UserModelDataBuilder withLastName(String lastName) {
-		this.lastName = lastName;
-		return this;
-	}
+  public UserModelDataBuilder withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
 
-	public UserModelDataBuilder withRoleId(String roleId) {
-		role.setRoleId(roleId);
-		return this;
-	}
+  public UserModelDataBuilder withRoleId(String roleId) {
+    role.setRoleId(roleId);
+    return this;
+  }
 
-	public UserModelDataBuilder withRoleName(String roleName) {
-		role.setRoleName(roleName);
-		return this;
-	}
+  public UserModelDataBuilder withRoleName(String roleName) {
+    role.setRoleName(roleName);
+    return this;
+  }
 
-	public UserModelDataBuilder thatIsNotRemovable() {
-		this.notRemovable = true;
-		return this;
-	}
+  public UserModelDataBuilder thatIsNotRemovable() {
+    this.notRemovable = true;
+    return this;
+  }
 
-	public UserModelDataBuilder thatIsRemovable() {
-		this.notRemovable = false;
-		return this;
-	}
+  public UserModelDataBuilder thatIsRemovable() {
+    this.notRemovable = false;
+    return this;
+  }
 
-	public UserModel build() {
-		UserModel user = new UserModel();
-		user.setUserId(id);
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEmail(email);
-		user.setNotRemovable(notRemovable);
-		user.setRole(role);
-		return user;
-	}
+  public UserModel build() {
+    UserModel user = new UserModel();
+    user.setUserId(id);
+    user.setUsername(username);
+    user.setPassword(password);
+    user.setFirstName(firstName);
+    user.setLastName(lastName);
+    user.setEmail(email);
+    user.setNotRemovable(notRemovable);
+    user.setRole(role);
+    return user;
+  }
 
 }

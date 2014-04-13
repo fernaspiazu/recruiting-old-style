@@ -13,21 +13,21 @@ public interface ConsultantRepositoryCustom {
 
   Experience findExperience(String consultantId, String experienceId);
 
-	boolean addExperience(Experience experience, String consultantId);
+  boolean addExperience(Experience experience, String consultantId);
 
-	boolean updateExperience(Experience experience, String consultantId);
+  boolean updateExperience(Experience experience, String consultantId);
 
-	boolean addLanguages(List<Language> languages, String consultantId);
+  boolean addLanguages(List<Language> languages, String consultantId);
 
-	boolean addSkills(String[] skills, String consultantId);
+  boolean addSkills(String[] skills, String consultantId);
 
-	boolean removeExperience(String consultantId, String experienceId);
+  boolean removeExperience(String consultantId, String experienceId);
 
-	Education findEducation(String consultantId, String educationId);
+  Education findEducation(String consultantId, String educationId);
 
-	boolean addEducation(Education education, String consultantId);
+  boolean addEducation(Education education, String consultantId);
 
-	boolean updateEducation(Education education, String consultantId);
+  boolean updateEducation(Education education, String consultantId);
 
-	boolean removeEducation(String consultantId, String educationId);
+  boolean removeEducation(String consultantId, String educationId);
 }

@@ -6,13 +6,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryCustom {
 
-	Page<User> findAllExcludingUser(Pageable pageable, String username);
+  Page<User> findAllExcludingUser(Pageable pageable, String username);
 
-	Iterable<User> findByRoleName(String roleName);
+  Iterable<User> findByRoleName(String roleName);
 
-	void deleteRemovableUser(String userId);
+  void deleteRemovableUser(String userId);
 
-	boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd);
+  boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd);
 
-	boolean isCurrentPasswordValid(String userId, String currentPwd);
+  boolean isCurrentPasswordValid(String userId, String currentPwd);
 }

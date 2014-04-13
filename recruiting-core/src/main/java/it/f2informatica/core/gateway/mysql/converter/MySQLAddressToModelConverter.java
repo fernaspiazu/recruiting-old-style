@@ -1,8 +1,8 @@
 package it.f2informatica.core.gateway.mysql.converter;
 
-import it.f2informatica.mysql.domain.Address;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.AddressModel;
+import it.f2informatica.mysql.domain.Address;
 import org.springframework.stereotype.Component;
 
 import static it.f2informatica.core.model.builder.AddressModelBuilder.addressModel;

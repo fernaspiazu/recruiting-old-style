@@ -10,20 +10,20 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class AddressModel implements Serializable {
-	private static final long serialVersionUID = 8584553310786911492L;
+  private static final long serialVersionUID = 8584553310786911492L;
 
-	private String street;
+  private String street;
 
-	private String houseNo;
+  private String houseNo;
 
-	private String zipCode;
+  private String zipCode;
 
-	private String city;
+  private String city;
 
-	private String province;
+  private String province;
 
-	private String region;
+  private String region;
 
-	private String country;
+  private String country;
 
 }

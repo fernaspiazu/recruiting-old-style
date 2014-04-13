@@ -1,8 +1,8 @@
 package it.f2informatica.core.gateway.mysql.converter;
 
-import it.f2informatica.mysql.domain.Language;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.LanguageModel;
+import it.f2informatica.mysql.domain.Language;
 import org.springframework.stereotype.Component;
 
 import static it.f2informatica.core.model.builder.LanguageModelBuilder.languageModel;

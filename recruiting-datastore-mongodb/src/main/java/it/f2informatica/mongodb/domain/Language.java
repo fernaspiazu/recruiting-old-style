@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class Language {
 
-	private String language;
+  private String language;
 
-	private String proficiency;
+  private String proficiency;
 
 }

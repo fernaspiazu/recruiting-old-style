@@ -10,12 +10,12 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class AuthenticationModel implements Serializable {
-	private static final long serialVersionUID = -6498031138520487799L;
+  private static final long serialVersionUID = -6498031138520487799L;
 
-	private String username;
+  private String username;
 
-	private String password;
+  private String password;
 
-	private String authorization;
+  private String authorization;
 
 }

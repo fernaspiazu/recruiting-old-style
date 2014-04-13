@@ -4,43 +4,43 @@ import it.f2informatica.core.model.LanguageModel;
 
 public class LanguageModelBuilder {
 
-	private LanguageModel lang = new LanguageModel();
+  private LanguageModel lang = new LanguageModel();
 
-	private LanguageModelBuilder(String language) {
-		this.lang.setLanguage(language);
-	}
+  private LanguageModelBuilder(String language) {
+    this.lang.setLanguage(language);
+  }
 
-	public static LanguageModelBuilder english() {
-		return new LanguageModelBuilder("English");
-	}
+  public static LanguageModelBuilder english() {
+    return new LanguageModelBuilder("English");
+  }
 
-	public static LanguageModelBuilder italian() {
-		return new LanguageModelBuilder("Italian");
-	}
+  public static LanguageModelBuilder italian() {
+    return new LanguageModelBuilder("Italian");
+  }
 
-	public static LanguageModelBuilder spanish() {
-		return new LanguageModelBuilder("Spanish");
-	}
+  public static LanguageModelBuilder spanish() {
+    return new LanguageModelBuilder("Spanish");
+  }
 
-	public static LanguageModelBuilder french() {
-		return new LanguageModelBuilder("French");
-	}
+  public static LanguageModelBuilder french() {
+    return new LanguageModelBuilder("French");
+  }
 
-	public static LanguageModelBuilder languageModel() {
-		return new LanguageModelBuilder(null);
-	}
+  public static LanguageModelBuilder languageModel() {
+    return new LanguageModelBuilder(null);
+  }
 
-	public static LanguageModelBuilder languageModel(String language) {
-		return new LanguageModelBuilder(language);
-	}
+  public static LanguageModelBuilder languageModel(String language) {
+    return new LanguageModelBuilder(language);
+  }
 
-	public LanguageModelBuilder withProficiency(String proficiency) {
-		lang.setProficiency(proficiency);
-		return this;
-	}
+  public LanguageModelBuilder withProficiency(String proficiency) {
+    lang.setProficiency(proficiency);
+    return this;
+  }
 
-	public LanguageModel build() {
-		return lang;
-	}
+  public LanguageModel build() {
+    return lang;
+  }
 
 }

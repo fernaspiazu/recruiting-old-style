@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @Import({
-	ServicesApplicationContext.class,
-	WebAppContext.class
+  ServicesApplicationContext.class,
+  WebAppContext.class
 })
 @ImportResource({"classpath:spring-config/security-config.xml"})
 public class RootApplicationContext {

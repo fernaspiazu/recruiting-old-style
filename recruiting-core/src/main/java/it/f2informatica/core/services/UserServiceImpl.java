@@ -13,62 +13,62 @@ import static it.f2informatica.core.model.builder.UserModelBuilder.userModel;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepositoryGateway userRepositoryGateway;
+  @Autowired
+  private UserRepositoryGateway userRepositoryGateway;
 
-	@Override
-	public UserModel findUserById(String userId) {
-		return userRepositoryGateway.findUserById(userId);
-	}
+  @Override
+  public UserModel findUserById(String userId) {
+    return userRepositoryGateway.findUserById(userId);
+  }
 
-	@Override
-	public UserModel findByUsername(String username) {
-		return userRepositoryGateway.findByUsername(username);
-	}
+  @Override
+  public UserModel findByUsername(String username) {
+    return userRepositoryGateway.findByUsername(username);
+  }
 
-	@Override
-	public UserModel findByUsernameAndPassword(String username, String password) {
-		return userRepositoryGateway.findByUsernameAndPassword(username, password);
-	}
+  @Override
+  public UserModel findByUsernameAndPassword(String username, String password) {
+    return userRepositoryGateway.findByUsernameAndPassword(username, password);
+  }
 
-	@Override
-	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
-		return userRepositoryGateway.findAllExcludingCurrentUser(pageable, usernameToExclude);
-	}
+  @Override
+  public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
+    return userRepositoryGateway.findAllExcludingCurrentUser(pageable, usernameToExclude);
+  }
 
-	@Override
-	public Iterable<UserModel> findUsersByRoleName(String roleName) {
-		return userRepositoryGateway.findUsersByRoleName(roleName);
-	}
+  @Override
+  public Iterable<UserModel> findUsersByRoleName(String roleName) {
+    return userRepositoryGateway.findUsersByRoleName(roleName);
+  }
 
-	@Override
-	public UserModel saveUser(UserModel userModel) {
-		return userRepositoryGateway.saveUser(userModel);
-	}
+  @Override
+  public UserModel saveUser(UserModel userModel) {
+    return userRepositoryGateway.saveUser(userModel);
+  }
 
-	@Override
-	public boolean updateUser(UserModel userModel) {
-		return userRepositoryGateway.updateUser(userModel);
-	}
+  @Override
+  public boolean updateUser(UserModel userModel) {
+    return userRepositoryGateway.updateUser(userModel);
+  }
 
-	@Override
-	public void deleteUser(String userId) {
-		userRepositoryGateway.deleteUser(userId);
-	}
+  @Override
+  public void deleteUser(String userId) {
+    userRepositoryGateway.deleteUser(userId);
+  }
 
-	@Override
-	public Iterable<RoleModel> loadRoles() {
-		return userRepositoryGateway.loadRoles();
-	}
+  @Override
+  public Iterable<RoleModel> loadRoles() {
+    return userRepositoryGateway.loadRoles();
+  }
 
-	@Override
-	public RoleModel findRoleByName(String roleName) {
-		return userRepositoryGateway.findRoleByName(roleName);
-	}
+  @Override
+  public RoleModel findRoleByName(String roleName) {
+    return userRepositoryGateway.findRoleByName(roleName);
+  }
 
-	@Override
-	public UserModel buildEmptyUserModel() {
-		return userModel().build();
-	}
+  @Override
+  public UserModel buildEmptyUserModel() {
+    return userModel().build();
+  }
 
 }

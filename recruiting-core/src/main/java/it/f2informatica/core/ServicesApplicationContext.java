@@ -16,34 +16,34 @@ import java.util.Date;
 @ComponentScan(basePackages = {"it.f2informatica.core"})
 @Import({MongoDBApplicationContext.class, MySQLApplicationContext.class})
 public class ServicesApplicationContext {
-	public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
+  public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 
-	@Bean
-	public Gson gson() {
-		return new GsonBuilder()
+  @Bean
+  public Gson gson() {
+    return new GsonBuilder()
       .serializeNulls()
       .setPrettyPrinting()
       .setDateFormat(GLOBAL_DATE_FORMAT)
-			.serializeSpecialFloatingPointValues()
-			.registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
-			.create();
-	}
+      .serializeSpecialFloatingPointValues()
+      .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
+      .create();
+  }
 
-	private static class DateTimeTypeAdapter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
-		@Override
-		public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
-			return new JsonPrimitive(src.toString(GLOBAL_DATE_FORMAT));
-		}
+  private static class DateTimeTypeAdapter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
+    @Override
+    public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
+      return new JsonPrimitive(src.toString(GLOBAL_DATE_FORMAT));
+    }
 
-		@Override
-		public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-			try {
-				return new DateTime(json.getAsString());
-			} catch (IllegalArgumentException e) {
-				Date date = context.deserialize(json, Date.class);
-				return new DateTime(date);
-			}
-		}
-	}
+    @Override
+    public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+      try {
+        return new DateTime(json.getAsString());
+      } catch (IllegalArgumentException e) {
+        Date date = context.deserialize(json, Date.class);
+        return new DateTime(date);
+      }
+    }
+  }
 
 }

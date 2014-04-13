@@ -4,6 +4,6 @@ import it.f2informatica.core.model.AuthenticationModel;
 
 public interface AuthenticationService {
 
-	AuthenticationModel processLogin(String username);
+  AuthenticationModel processLogin(String username);
 
 }

@@ -1,7 +1,7 @@
 package it.f2informatica.core.gateway.mysql.converter;
 
-import it.f2informatica.mysql.domain.Skill;
 import it.f2informatica.core.gateway.EntityToModelConverter;
+import it.f2informatica.mysql.domain.Skill;
 import org.springframework.stereotype.Component;
 
 @Component("mysqlSkillToStringConverter")

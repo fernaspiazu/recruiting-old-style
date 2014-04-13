@@ -9,19 +9,19 @@ import java.util.List;
 
 public abstract class EntityToModelConverter<S, T> implements Converter<S, T> {
 
-	public List<T> convertList(List<S> sourceList) {
+  public List<T> convertList(List<S> sourceList) {
     return FluentIterable.from(convertIterable(sourceList)).toList();
-	}
+  }
 
-	public Iterable<T> convertIterable(Iterable<S> sourceIterable) {
-		return Iterables.transform(sourceIterable,
-			new Function<S, T>() {
-				@Override
-				public T apply(S source) {
-					return convert(source);
-				}
-			}
-		);
-	}
+  public Iterable<T> convertIterable(Iterable<S> sourceIterable) {
+    return Iterables.transform(sourceIterable,
+      new Function<S, T>() {
+        @Override
+        public T apply(S source) {
+          return convert(source);
+        }
+      }
+    );
+  }
 
 }

@@ -1,9 +1,9 @@
 package it.f2informatica.core.gateway.mysql.converter;
 
 import com.google.common.collect.Lists;
-import it.f2informatica.mysql.domain.*;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
+import it.f2informatica.mysql.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

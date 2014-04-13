@@ -10,26 +10,26 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class EducationModel implements Serializable {
-	private static final long serialVersionUID = 3982326514709392235L;
+  private static final long serialVersionUID = 3982326514709392235L;
 
-	private String id;
+  private String id;
 
-	private String school;
+  private String school;
 
-	private Integer startYear;
+  private Integer startYear;
 
-	private Integer endYear;
+  private Integer endYear;
 
-	private String schoolDegree;
+  private String schoolDegree;
 
-	private String schoolFieldOfStudy;
+  private String schoolFieldOfStudy;
 
-	private String schoolGrade;
+  private String schoolGrade;
 
-	private String schoolActivities;
+  private String schoolActivities;
 
-	private boolean current;
+  private boolean current;
 
-	private String description;
+  private String description;
 
 }

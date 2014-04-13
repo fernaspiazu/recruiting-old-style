@@ -10,24 +10,24 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class UserModel implements Serializable {
-	private static final long serialVersionUID = -7604082585104660083L;
+  private static final long serialVersionUID = -7604082585104660083L;
 
-	private String userId;
+  private String userId;
 
-	private String username;
+  private String username;
 
-	private String password;
+  private String password;
 
-	private String firstName;
+  private String firstName;
 
-	private String lastName;
+  private String lastName;
 
-	private String email;
+  private String email;
 
-	private boolean notRemovable;
+  private boolean notRemovable;
 
-	private RoleModel role;
+  private RoleModel role;
 
-	private String submitEvent;
+  private String submitEvent;
 
 }

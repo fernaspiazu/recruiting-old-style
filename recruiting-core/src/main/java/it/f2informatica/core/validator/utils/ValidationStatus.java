@@ -6,6 +6,7 @@ public final class ValidationStatus {
 
   public static final String FAILED = "FAIL";
 
-  private ValidationStatus() {}
+  private ValidationStatus() {
+  }
 
 }

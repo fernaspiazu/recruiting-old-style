@@ -1,7 +1,7 @@
 package it.f2informatica.webapp.security;
 
-import it.f2informatica.core.services.UserService;
 import it.f2informatica.core.model.UserModel;
+import it.f2informatica.core.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,23 +14,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-	private static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
+  private static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
 
-	@Autowired
-	private UserService userService;
+  @Autowired
+  private UserService userService;
 
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-																			Authentication authentication) throws ServletException, IOException {
-		String username = authentication.getName();
-		UserModel user = setUserInSession(request.getSession(true), username);
-		log.info("user in session: [username: " + user.getUsername() + ", id: " + user.getUserId() + "]");
-		super.handle(request, response, authentication);
-	}
+  @Override
+  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                      Authentication authentication) throws ServletException, IOException {
+    String username = authentication.getName();
+    UserModel user = setUserInSession(request.getSession(true), username);
+    log.info("user in session: [username: " + user.getUsername() + ", id: " + user.getUserId() + "]");
+    super.handle(request, response, authentication);
+  }
 
-	private UserModel setUserInSession(HttpSession session, String username) {
-		UserModel user = userService.findByUsername(username);
-		session.setAttribute("user", user);
-		return user;
-	}
+  private UserModel setUserInSession(HttpSession session, String username) {
+    UserModel user = userService.findByUsername(username);
+    session.setAttribute("user", user);
+    return user;
+  }
 }

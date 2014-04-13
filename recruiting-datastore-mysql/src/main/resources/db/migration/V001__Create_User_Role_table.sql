@@ -1,110 +1,109 @@
-
-create table role (
-  id          bigint not null auto_increment,
-  name        varchar(20) not null,
-  constraint pk_role primary key(id)
+CREATE TABLE role (
+  id   BIGINT      NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) NOT NULL,
+  CONSTRAINT pk_role PRIMARY KEY (id)
 );
 
-create table user (
-  id              bigint not null auto_increment,
-  username        varchar(20) not null,
-  password        varchar(100) not null,
-  firstname       varchar(50),
-  lastname        varchar(50),
-  email           varchar(50),
-  role_id         bigint not null,
-  constraint pk_user primary key (id),
-  constraint fk_role foreign key (role_id) references role(id),
-  index username_idx(username asc)
+CREATE TABLE user (
+  id        BIGINT       NOT NULL AUTO_INCREMENT,
+  username  VARCHAR(20)  NOT NULL,
+  password  VARCHAR(100) NOT NULL,
+  firstname VARCHAR(50),
+  lastname  VARCHAR(50),
+  email     VARCHAR(50),
+  role_id   BIGINT       NOT NULL,
+  CONSTRAINT pk_user PRIMARY KEY (id),
+  CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role (id),
+  INDEX username_idx(username ASC)
 );
 
-create table address (
-  id              bigint not null auto_increment,
-  street          varchar(100),
-  house_no        varchar(10),
-  zip_code        varchar(10),
-  city            varchar(50),
-  province        varchar(50),
-  region          varchar(50),
-  country         varchar(50),
-  constraint pk_address primary key (id)
+CREATE TABLE address (
+  id       BIGINT NOT NULL AUTO_INCREMENT,
+  street   VARCHAR(100),
+  house_no VARCHAR(10),
+  zip_code VARCHAR(10),
+  city     VARCHAR(50),
+  province VARCHAR(50),
+  region   VARCHAR(50),
+  country  VARCHAR(50),
+  CONSTRAINT pk_address PRIMARY KEY (id)
 );
 
-create table consultant (
-  id              bigint not null auto_increment,
-  consultant_no   varchar(50) not null unique,
-  registr_date    timestamp not null default now(),
-  fiscal_code     varchar(16),
-  email           varchar(50),
-  first_name      varchar(50),
-  last_name       varchar(50),
-  gender          varchar(10),
-  phone_number    varchar(20),
-  mobile_number   varchar(20),
-  birth_date      date,
-  birth_city      varchar(20),
-  birth_country   varchar(20),
-  identity_card   varchar(20),
-  interests       varchar(100),
-  residence       bigint,
-  domicile        bigint,
-  curriculum      longblob,
-  constraint pk_consultant primary key (id),
-  constraint fk_cons_resid foreign key (residence) references address(id),
-  constraint fk_cons_domic foreign key (domicile) references address(id),
-  check (gender in ('M', 'F')),
-  index cons_regdate_idx(registr_date desc),
-  index cons_firstname_idx(first_name asc),
-  index cons_lastname_idx(last_name asc),
-  index cons_fullname_idx(first_name asc, last_name asc)
+CREATE TABLE consultant (
+  id            BIGINT      NOT NULL AUTO_INCREMENT,
+  consultant_no VARCHAR(50) NOT NULL UNIQUE,
+  registr_date  TIMESTAMP   NOT NULL DEFAULT now(),
+  fiscal_code   VARCHAR(16),
+  email         VARCHAR(50),
+  first_name    VARCHAR(50),
+  last_name     VARCHAR(50),
+  gender        VARCHAR(10),
+  phone_number  VARCHAR(20),
+  mobile_number VARCHAR(20),
+  birth_date    DATE,
+  birth_city    VARCHAR(20),
+  birth_country VARCHAR(20),
+  identity_card VARCHAR(20),
+  interests     VARCHAR(100),
+  residence     BIGINT,
+  domicile      BIGINT,
+  curriculum    LONGBLOB,
+  CONSTRAINT pk_consultant PRIMARY KEY (id),
+  CONSTRAINT fk_cons_resid FOREIGN KEY (residence) REFERENCES address (id),
+  CONSTRAINT fk_cons_domic FOREIGN KEY (domicile) REFERENCES address (id),
+  CHECK (gender IN ('M', 'F')),
+  INDEX cons_regdate_idx(registr_date DESC),
+  INDEX cons_firstname_idx(first_name ASC),
+  INDEX cons_lastname_idx(last_name ASC),
+  INDEX cons_fullname_idx(first_name ASC, last_name ASC)
 );
 
-create table experience (
-  id              bigint not null auto_increment,
-  company         varchar(100) not null,
-  job_position    varchar(100) not null,
-  location        varchar(100),
-  period_from     date not null,
-  period_to       date,
-  is_current      tinyint unsigned default 0,
-  description     varchar(5000),
-  consultant_id   bigint not null,
-  constraint pk_experience primary key (id),
-  constraint fk_prof_consul foreign key (consultant_id) references consultant(id)
+CREATE TABLE experience (
+  id            BIGINT       NOT NULL AUTO_INCREMENT,
+  company       VARCHAR(100) NOT NULL,
+  job_position  VARCHAR(100) NOT NULL,
+  location      VARCHAR(100),
+  period_from   DATE         NOT NULL,
+  period_to     DATE,
+  is_current    TINYINT UNSIGNED DEFAULT 0,
+  description   VARCHAR(5000),
+  consultant_id BIGINT       NOT NULL,
+  CONSTRAINT pk_experience PRIMARY KEY (id),
+  CONSTRAINT fk_prof_consul FOREIGN KEY (consultant_id) REFERENCES consultant (id)
 );
 
-create table education (
-  id              bigint not null auto_increment,
-  school          varchar(100) not null,
-  start_year      integer not null,
-  end_year        integer,
-  is_current      tinyint unsigned default 0,
-  school_degree   varchar(100),
-  field_study     varchar(100),
-  school_grade    varchar(100),
-  activities      varchar(1000),
-  description     varchar(5000),
-  consultant_id   bigint not null,
-  constraint pk_education primary key (id),
-  constraint fk_educa_consul foreign key (consultant_id) references consultant(id)
+CREATE TABLE education (
+  id            BIGINT       NOT NULL AUTO_INCREMENT,
+  school        VARCHAR(100) NOT NULL,
+  start_year    INTEGER      NOT NULL,
+  end_year      INTEGER,
+  is_current    TINYINT UNSIGNED DEFAULT 0,
+  school_degree VARCHAR(100),
+  field_study   VARCHAR(100),
+  school_grade  VARCHAR(100),
+  activities    VARCHAR(1000),
+  description   VARCHAR(5000),
+  consultant_id BIGINT       NOT NULL,
+  CONSTRAINT pk_education PRIMARY KEY (id),
+  CONSTRAINT fk_educa_consul FOREIGN KEY (consultant_id) REFERENCES consultant (id)
 );
 
-create table languages (
-  consultant_id   bigint not null,
-  lang            varchar(20) not null,
-  proficiency     varchar(30),
-  constraint pk_skill primary key (consultant_id, lang),
-  constraint fk_lang_consul foreign key (consultant_id) references consultant(id)
+CREATE TABLE languages (
+  consultant_id BIGINT      NOT NULL,
+  lang          VARCHAR(20) NOT NULL,
+  proficiency   VARCHAR(30),
+  CONSTRAINT pk_skill PRIMARY KEY (consultant_id, lang),
+  CONSTRAINT fk_lang_consul FOREIGN KEY (consultant_id) REFERENCES consultant (id)
 );
 
-create table skills (
-  consultant_id   bigint not null,
-  skill           varchar(50) not null,
-  constraint pk_skill primary key (consultant_id, skill),
-  constraint fk_skill_consul foreign key (consultant_id) references consultant(id)
+CREATE TABLE skills (
+  consultant_id BIGINT      NOT NULL,
+  skill         VARCHAR(50) NOT NULL,
+  CONSTRAINT pk_skill PRIMARY KEY (consultant_id, skill),
+  CONSTRAINT fk_skill_consul FOREIGN KEY (consultant_id) REFERENCES consultant (id)
 );
 
-insert into role (name) values ('Administrator');
-insert into role (name) values ('User');
-insert into user (username, password, firstname, lastname, email, role_id)
-  values ('admin', 'admin', null, null, 'admin@f2informatica.it', 1);
+INSERT INTO role (name) VALUES ('Administrator');
+INSERT INTO role (name) VALUES ('User');
+INSERT INTO user (username, password, firstname, lastname, email, role_id)
+VALUES ('admin', 'admin', NULL, NULL, 'admin@f2informatica.it', 1);

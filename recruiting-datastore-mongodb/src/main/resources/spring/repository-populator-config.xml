@@ -7,12 +7,12 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd">
 
   <repository:unmarshaller-populator
-      locations="classpath:/dataset/data/*.xml"
-      unmarshaller-ref="castorMarshaller"/>
+    locations="classpath:/dataset/data/*.xml"
+    unmarshaller-ref="castorMarshaller"/>
 
   <oxm:castor-marshaller
-      id="castorMarshaller"
-      encoding="UTF-8"
-      mapping-location="classpath:/dataset/mappings/mapping.xml"/>
+    id="castorMarshaller"
+    encoding="UTF-8"
+    mapping-location="classpath:/dataset/mappings/mapping.xml"/>
 
 </beans>

@@ -6,8 +6,8 @@ import java.util.Locale;
 
 public interface ValidationResponseHandler {
 
-	ValidationResponse validationSuccess();
+  ValidationResponse validationSuccess();
 
-	ValidationResponse validationFail(Errors errors, Locale locale);
+  ValidationResponse validationFail(Errors errors, Locale locale);
 
 }

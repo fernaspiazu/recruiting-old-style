@@ -20,39 +20,39 @@ import java.net.UnknownHostException;
 @PropertySource("classpath:mongodb.properties")
 @MongoDB
 public class MongoDBApplicationContext extends AbstractMongoConfiguration {
-	private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
+  private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 
-	@Value("${mongodb.host}")
-	private String host;
+  @Value("${mongodb.host}")
+  private String host;
 
-	@Value("${mongodb.port}")
-	private String defaultPort;
+  @Value("${mongodb.port}")
+  private String defaultPort;
 
-	@Value("${mongodb.database}")
-	private String database;
+  @Value("${mongodb.database}")
+  private String database;
 
-	@Override
-	protected String getDatabaseName() {
-		return StringUtils.hasText(OTHER_DATABASE) ? OTHER_DATABASE : database;
-	}
+  @Override
+  protected String getDatabaseName() {
+    return StringUtils.hasText(OTHER_DATABASE) ? OTHER_DATABASE : database;
+  }
 
-	@Bean
-	@Override
-	public Mongo mongo() throws UnknownHostException {
-		Mongo mongo = new MongoClient(host, Integer.parseInt(defaultPort));
-		mongo.getMongoOptions().setConnectionsPerHost(10);
-		mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
-		mongo.getMongoOptions().setConnectTimeout(5000);
-		mongo.getMongoOptions().setMaxWaitTime(3000);
-		mongo.getMongoOptions().setAutoConnectRetry(true);
-		mongo.getMongoOptions().setSocketKeepAlive(true);
-		mongo.getMongoOptions().setSocketTimeout(3000);
-		return mongo;
-	}
+  @Bean
+  @Override
+  public Mongo mongo() throws UnknownHostException {
+    Mongo mongo = new MongoClient(host, Integer.parseInt(defaultPort));
+    mongo.getMongoOptions().setConnectionsPerHost(10);
+    mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
+    mongo.getMongoOptions().setConnectTimeout(5000);
+    mongo.getMongoOptions().setMaxWaitTime(3000);
+    mongo.getMongoOptions().setAutoConnectRetry(true);
+    mongo.getMongoOptions().setSocketKeepAlive(true);
+    mongo.getMongoOptions().setSocketTimeout(3000);
+    return mongo;
+  }
 
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+  }
 
 }

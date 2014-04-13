@@ -19,51 +19,51 @@ import java.util.Locale;
 @Component
 public class CurrentHttpRequest {
 
-	/**
-	 * Returns the current locale associated to this request
-	 * if any has been selected, otherwise it will return the
-	 * default browser locale.
-	 *
-	 * @return the current locale
-	 */
-	public Locale getLocale() {
-		String languageParam = getCurrentHttpRequest().getParameter(WebAppContext.LANGUAGE);
-		if (StringUtils.hasText(languageParam)) {
-			return LocaleUtils.toLocale(languageParam);
-		}
-		Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
-		return (cookie != null)
-			? LocaleUtils.toLocale(cookie.getValue())
-			: getCurrentHttpRequest().getLocale();
-	}
+  /**
+   * Returns the current locale associated to this request
+   * if any has been selected, otherwise it will return the
+   * default browser locale.
+   *
+   * @return the current locale
+   */
+  public Locale getLocale() {
+    String languageParam = getCurrentHttpRequest().getParameter(WebAppContext.LANGUAGE);
+    if (StringUtils.hasText(languageParam)) {
+      return LocaleUtils.toLocale(languageParam);
+    }
+    Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
+    return (cookie != null)
+      ? LocaleUtils.toLocale(cookie.getValue())
+      : getCurrentHttpRequest().getLocale();
+  }
 
-	/**
-	 * Gets the cookie associated to this request given
-	 * the cookie's name.
-	 *
-	 * @param cookieName name of cookie which wish be retrieved
-	 * @return Cookie belonging this request
-	 */
-	public Cookie getCookie(String cookieName) {
-		return WebUtils.getCookie(getCurrentHttpRequest(), cookieName);
-	}
+  /**
+   * Gets the cookie associated to this request given
+   * the cookie's name.
+   *
+   * @param cookieName name of cookie which wish be retrieved
+   * @return Cookie belonging this request
+   */
+  public Cookie getCookie(String cookieName) {
+    return WebUtils.getCookie(getCurrentHttpRequest(), cookieName);
+  }
 
-	/**
-	 * Gets the current Http Request
-	 */
-	public HttpServletRequest getCurrentHttpRequest() {
-		return getServletRequestAttributes().getRequest();
-	}
+  /**
+   * Gets the current Http Request
+   */
+  public HttpServletRequest getCurrentHttpRequest() {
+    return getServletRequestAttributes().getRequest();
+  }
 
-	/**
-	 * Gets servlet attributes
-	 */
-	public ServletRequestAttributes getServletRequestAttributes() {
-		return (ServletRequestAttributes) currentRequestAttributes();
-	}
+  /**
+   * Gets servlet attributes
+   */
+  public ServletRequestAttributes getServletRequestAttributes() {
+    return (ServletRequestAttributes) currentRequestAttributes();
+  }
 
-	private RequestAttributes currentRequestAttributes() {
-		return RequestContextHolder.currentRequestAttributes();
-	}
+  private RequestAttributes currentRequestAttributes() {
+    return RequestContextHolder.currentRequestAttributes();
+  }
 
 }

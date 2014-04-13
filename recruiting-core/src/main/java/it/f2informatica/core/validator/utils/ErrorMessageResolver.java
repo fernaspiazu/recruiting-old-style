@@ -15,21 +15,21 @@ import java.util.Locale;
 @Component
 public class ErrorMessageResolver {
 
-	@Autowired
-	private MessageSource messageSource;
+  @Autowired
+  private MessageSource messageSource;
 
-	public List<ErrorMessage> resolveErrorCodes(List<FieldError> fieldErrors, final Locale locale) {
-		return Lists.newArrayList(Iterables.transform(fieldErrors,
-			new Function<FieldError, ErrorMessage>() {
-				@Override
-				public ErrorMessage apply(FieldError input) {
-					String errorCode = input.getCode();
-					String errorMessage = messageSource.getMessage(errorCode, input.getArguments(), locale);
-					String field = Iterables.getFirst(Arrays.asList(input.getField().split("\\.")), "");
-					return new ErrorMessage(field, errorCode, errorMessage);
-				}
-			}
-		));
-	}
+  public List<ErrorMessage> resolveErrorCodes(List<FieldError> fieldErrors, final Locale locale) {
+    return Lists.newArrayList(Iterables.transform(fieldErrors,
+      new Function<FieldError, ErrorMessage>() {
+        @Override
+        public ErrorMessage apply(FieldError input) {
+          String errorCode = input.getCode();
+          String errorMessage = messageSource.getMessage(errorCode, input.getArguments(), locale);
+          String field = Iterables.getFirst(Arrays.asList(input.getField().split("\\.")), "");
+          return new ErrorMessage(field, errorCode, errorMessage);
+        }
+      }
+    ));
+  }
 
 }

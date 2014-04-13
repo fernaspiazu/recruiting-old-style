@@ -9,35 +9,35 @@ import org.springframework.data.domain.Pageable;
 
 public interface ConsultantService {
 
-	ConsultantModel buildNewConsultantModel();
+  ConsultantModel buildNewConsultantModel();
 
-	Page<ConsultantModel> showAllConsultants(Pageable pageable);
+  Page<ConsultantModel> showAllConsultants(Pageable pageable);
 
-	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
+  ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
   boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 
   ConsultantModel findConsultantById(String consultantId);
 
-	String generateConsultantNumber();
+  String generateConsultantNumber();
 
-	boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
+  boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
-	boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
+  boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
-	boolean addSkills(String[] skills, String consultantId);
+  boolean addSkills(String[] skills, String consultantId);
 
-	ExperienceModel findExperience(String consultantId, String experienceId);
+  ExperienceModel findExperience(String consultantId, String experienceId);
 
-	boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+  boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
-	void removeExperience(String consultantId, String experienceId);
+  void removeExperience(String consultantId, String experienceId);
 
-	EducationModel findEducation(String consultantId, String educationId);
+  EducationModel findEducation(String consultantId, String educationId);
 
-	boolean addConsultantEducation(EducationModel educationModel, String consultantId);
+  boolean addConsultantEducation(EducationModel educationModel, String consultantId);
 
-	boolean updateConsultantEducation(EducationModel educationModel, String consultantId);
+  boolean updateConsultantEducation(EducationModel educationModel, String consultantId);
 
-	void removeEducation(String consultantId, String educationId);
+  void removeEducation(String consultantId, String educationId);
 }
