@@ -14,15 +14,17 @@
   <description>Recruiting datastore module backed with MySQL</description>
 
   <properties>
+    <mysql.driver>com.mysql.jdbc.Driver</mysql.driver>
+    <mysql.url>jdbc:mysql://localhost:3306/recruiting</mysql.url>
+    <mysql.user>development</mysql.user>
+    <mysql.password>development</mysql.password>
     <spring-data-jpa.version>1.5.1.RELEASE</spring-data-jpa.version>
     <hibernate-jpa.version>1.0.0.Final</hibernate-jpa.version>
     <hibernate-entitymanager.version>4.3.4.Final</hibernate-entitymanager.version>
     <mysql-connector-java.version>5.1.29</mysql-connector-java.version>
     <c3p0.version>0.9.5-pre7</c3p0.version>
-    <mysql.driver>com.mysql.jdbc.Driver</mysql.driver>
-    <mysql.url>jdbc:mysql://localhost:3306/recruiting</mysql.url>
-    <mysql.user>development</mysql.user>
-    <mysql.password>development</mysql.password>
+    <flyway.version>2.3.1</flyway.version>
+    <flyway-spring4-test.version>2.3.0.1</flyway-spring4-test.version>
   </properties>
 
   <build>
@@ -50,7 +52,7 @@
       <plugin>
         <groupId>com.googlecode.flyway</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
-        <version>2.3.1</version>
+        <version>${flyway.version}</version>
         <configuration>
           <driver>${mysql.driver}</driver>
           <url>${mysql.url}</url>
@@ -94,6 +96,23 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>${c3p0.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.flyway</groupId>
+      <artifactId>flyway-core</artifactId>
+      <version>${flyway.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.flyway-test-extensions</groupId>
+      <artifactId>flyway-spring4-test</artifactId>
+      <version>${flyway-spring4-test.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+        </exclusion>
+      </exclusions>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

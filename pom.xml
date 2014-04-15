@@ -279,6 +279,8 @@
         <artifactId>powermock-api-mockito</artifactId>
         <version>${powermock.version}</version>
       </dependency>
+
+      <!-- Obsolete -->
       <dependency>
         <groupId>org.codehaus.castor</groupId>
         <artifactId>castor-xml</artifactId>

@@ -1,5 +1,6 @@
 package it.f2informatica.mysql;
 
+import com.googlecode.flyway.core.Flyway;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,14 +45,23 @@ public class MySQLApplicationContext {
   public ComboPooledDataSource dataSource() {
     ComboPooledDataSource dataSource = new ComboPooledDataSource();
     try {
-      dataSource.setDriverClass("com.mysql.jdbc.Driver");
-      dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/recruiting");
-      dataSource.setUser("development");
-      dataSource.setPassword("development");
+      dataSource.setDriverClass(driver);
+      dataSource.setJdbcUrl(url);
+      dataSource.setUser(user);
+      dataSource.setPassword(password);
     } catch (PropertyVetoException e) {
-      logger.error("Error on C3P0 DataSource construction...", e);
+      logger.error("Error on C3P0 DataSource building...", e);
     }
     return dataSource;
+  }
+
+  @Bean(initMethod = "migrate")
+  public Flyway flyway() {
+    Flyway flyway = new Flyway();
+    flyway.setDataSource(dataSource());
+    flyway.setInitOnMigrate(true);
+    flyway.setCleanOnValidationError(true);
+    return flyway;
   }
 
   @Bean
@@ -76,7 +86,7 @@ public class MySQLApplicationContext {
   }
 
   @Bean
-  public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
     return new PropertySourcesPlaceholderConfigurer();
   }
 

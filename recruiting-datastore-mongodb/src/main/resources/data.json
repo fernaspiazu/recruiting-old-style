@@ -1,0 +1,24 @@
+[
+  {
+    "id" : "52602b9b92bede6f44717f87",
+    "_class" : "it.f2informatica.mongodb.domain.User",
+    "username" : "admin",
+    "password" : "admin",
+    "notRemovable" : "true",
+    "role" : {
+      "id" : "52602b9b92bede6f44752e34",
+      "_class" : "it.f2informatica.mongodb.domain.Role",
+      "name" : "Administrator"
+    }
+  },
+  {
+    "id" : "52602b9b92bede6f44752e34",
+    "_class" : "it.f2informatica.mongodb.domain.Role",
+    "name" : "Administrator"
+  },
+  {
+    "id" : "52602b9b92bede6f44752e35",
+    "_class" : "it.f2informatica.mongodb.domain.Role",
+    "name" : "User"
+  }
+]
