@@ -1,276 +1,295 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:substituteby="fragments/head::head (#{consultant.management})">
-	<meta charset="UTF-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<title>Consultant Management</title>
-	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
-	<script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
-	<script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
-	<script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
-	<script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
-	<script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
-	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Consultant Management</title>
+  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+  <script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
+  <script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
+  <script th:src="@{/static/js/jquery.dataTables.min.js}" src="../../../static/js/jquery.dataTables.min.js"></script>
+  <script th:src="@{/static/js/dataTables.bootstrap.js}" src="../../../static/js/dataTables.bootstrap.js"></script>
+  <script th:src="@{/static/js/dataTables.bootstrapPagination.js}" src="../../../static/js/dataTables.bootstrapPagination.js"></script>
+  <script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body role="document">
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="http://www.f2informatica.it" target="_blank" th:text="#{global.recruiting}">Recruiting</a>
-		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li th:class="(${session.navbarItemActive} == 0) ? 'active' : ''" class="active">
-					<a th:text="#{home.home}" th:href="@{/home}" href="#">Home</a>
-				</li>
-				<li th:class="(${session.navbarItemActive} == 1) ? 'active' : ''" class="active">
-					<a th:text="#{user.usermanagement}" th:href="@{/user}" href="user/users.html">User Management</a>
-				</li>
-				<li class="dropdown" th:class="(${session.navbarItemActive} == 2) ? 'dropdown active' : 'dropdown'">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.management}]] <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li class="dropdown-header">Nav header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div><!--/.nav-collapse -->
-	</div>
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://www.f2informatica.it" target="_blank" th:text="#{global.recruiting}">Recruiting</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li th:class="(${session.navbarItemActive} == 0) ? 'active' : ''" class="active">
+          <a th:text="#{home.home}" th:href="@{/home}" href="#">Home</a>
+        </li>
+        <li th:class="(${session.navbarItemActive} == 1) ? 'active' : ''" class="active">
+          <a th:text="#{user.usermanagement}" th:href="@{/user}" href="user/users.html">User Management</a>
+        </li>
+        <li class="dropdown" th:class="(${session.navbarItemActive} == 2) ? 'dropdown active' : 'dropdown'">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.management}]] <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
 </div>
 <div class="container">
-	<div class="page-header">
-		<h2 th:text="#{consultant.registernew}">New Consultant</h2>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<form id="consultantModelForm" th:action="${edit} ? @{/consultant/update-personal-details} : @{/consultant/save-personal-details}" th:object="${consultantModel}" action="#" method="post" class="form-horizontal" role="form">
-				<fieldset>
-					<input type="hidden" th:field="*{id}"/>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title panel-title-custom" th:text="#{consultant.consultantno}">Consultant number</h4>
-								</div>
-								<div class="panel-body panel-body-with-padding">
-									<input type="hidden" th:field="*{consultantNo}"/>
-									<span th:text="*{consultantNo}">1234567890</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title panel-title-custom" th:text="#{consultant.registrationdate}">Registration date</h4>
-								</div>
-								<div class="panel-body panel-body-with-padding">
-									<input type="hidden" th:field="*{registrationDate}"/>
-									<span th:text="*{{registrationDate}}">2014-01-01</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="fieldErrors" class="form-group" style="margin-bottom: 0; margin-left: 0; margin-right: 0;"></div>
-					<div class="row">
-						<div class="col-md-7">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title panel-title-custom" th:text="#{consultant.personaldetails}">Personal Details</h4>
-								</div>
-								<div class="panel-body panel-body-with-padding">
-									<div class="form-group">
-										<label for="firstName" class="sr-only" th:text="#{consultant.firstname}">First name</label>
-										<input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm" th:placeholder="#{consultant.firstname}" autofocus="autofocus"/>
-									</div>
-									<div class="form-group">
-										<label for="lastName" class="sr-only" th:text="#{consultant.lastname}">Last name</label>
-										<input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm" th:placeholder="#{consultant.lastname}"/>
-									</div>
-									<div class="form-group">
-										<label class="radio-inline">
-											<input type="radio" th:field="*{gender}" value="MALE" th:title="#{consultant.selectgender}" th:text="#{global.male}"/>
-										</label>
-										<label class="radio-inline">
-											<input type="radio" th:field="*{gender}" value="FEMALE" th:title="#{consultant.selectgender}" th:text="#{global.female}"/>
-										</label>
-									</div>
-									<div class="form-group">
-										<label for="email" class="sr-only" th:text="#{consultant.email}">Email</label>
-										<input type="email" id="email" th:field="*{email}" class="form-control input-sm" th:placeholder="#{consultant.email}"/>
-									</div>
-									<div class="form-group">
-										<label for="fiscalCode" class="sr-only" th:text="#{consultant.fiscalcode}">Fiscal code</label>
-										<input type="text" id="fiscalCode" th:field="*{fiscalCode}" class="form-control input-sm" th:placeholder="#{consultant.fiscalcode}" maxlength="16"/>
-									</div>
-									<div class="form-group">
-										<label for="birthDate" class="sr-only" th:text="#{consultant.birth.date}">Birthdate</label>
-										<input type="text" id="birthDate" th:field="*{birthDate}" class="form-control input-sm" th:placeholder="|#{consultant.birth.date} (#{global.dateformat})|"/>
-									</div>
-									<div class="form-group">
-										<label for="birthCity" class="sr-only" th:text="#{consultant.birth.city}">Birth city</label>
-										<input type="text" id="birthCity" th:field="*{birthCity}" class="form-control input-sm" th:placeholder="#{consultant.birth.city}"/>
-									</div>
-									<div class="form-group">
-										<label for="birthCountry" class="sr-only" th:text="#{consultant.birth.country}">Birth country</label>
-										<input type="text" id="birthCountry" th:field="*{birthCountry}" class="form-control input-sm" th:placeholder="#{consultant.birth.country}"/>
-									</div>
-									<div class="form-group">
-										<label for="nationality" class="sr-only" th:text="#{consultant.nationality}">Nationality</label>
-										<input type="text" id="nationality" th:field="*{nationality}" class="form-control input-sm" th:placeholder="#{consultant.nationality}"/>
-									</div>
-									<div class="form-group">
-										<label for="phoneNumber" class="sr-only" th:text="#{consultant.phone.number}">Phone number</label>
-										<input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control input-sm" th:placeholder="#{consultant.phone.number}"/>
-									</div>
-									<div class="form-group">
-										<label for="mobileNumber" class="sr-only" th:text="#{consultant.mobile.number}">Mobile number</label>
-										<input type="text" id="mobileNumber" th:field="*{mobileNumber}" class="form-control input-sm" th:placeholder="#{consultant.mobile.number}"/>
-									</div>
-								</div>
-							</div>
-              <div class="control-group pull-left">
-                <a class="btn btn-default" th:href="@{'/consultants'}" th:text="#{global.cancel}">Cancel</a>
+<div class="page-header">
+  <h2 th:text="#{consultant.registernew}">New Consultant</h2>
+</div>
+<div class="row">
+<div class="col-md-12">
+<form id="consultantModelForm" th:action="${edit} ? @{/consultant/update-personal-details} : @{/consultant/save-personal-details}" th:object="${consultantModel}" action="#" method="post" class="form-horizontal" role="form">
+  <fieldset>
+    <input type="hidden" th:field="*{id}"/>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title panel-title-custom" th:text="#{consultant.consultantno}">Consultant number</h4>
+          </div>
+          <div class="panel-body panel-body-with-padding">
+            <input type="hidden" th:field="*{consultantNo}"/>
+            <span th:text="*{consultantNo}">1234567890</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title panel-title-custom" th:text="#{consultant.registrationdate}">Registration date</h4>
+          </div>
+          <div class="panel-body panel-body-with-padding">
+            <input type="hidden" th:field="*{registrationDate}"/>
+            <span th:text="*{{registrationDate}}">2014-01-01</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="fieldErrors" class="form-group" style="margin-bottom: 0; margin-left: 0; margin-right: 0;"></div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title panel-title-custom" th:text="#{consultant.personaldetails}">Personal Details</h4>
+          </div>
+          <div class="panel-body panel-body-with-padding">
+            <div class="form-group">
+              <label for="firstName" class="sr-only" th:text="#{consultant.firstname}">First name</label>
+              <input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm" th:placeholder="#{consultant.firstname}" autofocus="autofocus"/>
+            </div>
+            <div class="form-group">
+              <label for="lastName" class="sr-only" th:text="#{consultant.lastname}">Last name</label>
+              <input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm" th:placeholder="#{consultant.lastname}"/>
+            </div>
+            <div class="form-group">
+              <label class="radio-inline">
+                <input type="radio" th:field="*{gender}" value="MALE" th:title="#{consultant.selectgender}" th:text="#{global.male}"/>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" th:field="*{gender}" value="FEMALE" th:title="#{consultant.selectgender}" th:text="#{global.female}"/>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="email" class="sr-only" th:text="#{consultant.email}">Email</label>
+              <input type="email" id="email" th:field="*{email}" class="form-control input-sm" th:placeholder="#{consultant.email}"/>
+            </div>
+            <div class="form-group">
+              <label for="fiscalCode" class="sr-only" th:text="#{consultant.fiscalcode}">Fiscal code</label>
+              <input type="text" id="fiscalCode" th:field="*{fiscalCode}" class="form-control input-sm" th:placeholder="#{consultant.fiscalcode}" maxlength="16"/>
+            </div>
+            <div class="form-group">
+              <label for="birthDate" class="sr-only" th:text="#{consultant.birth.date}">Birthdate</label>
+              <input type="text" id="birthDate" th:field="*{birthDate}" class="form-control input-sm"
+                     th:placeholder="|#{consultant.birth.date} (#{global.dateformat})|"/>
+            </div>
+            <div class="form-group">
+              <label for="birthCity" class="sr-only" th:text="#{consultant.birth.city}">Birth city</label>
+              <input type="text" id="birthCity" th:field="*{birthCity}" class="form-control input-sm" th:placeholder="#{consultant.birth.city}"/>
+            </div>
+            <div class="form-group">
+              <label for="birthCountry" class="sr-only" th:text="#{consultant.birth.country}">Birth country</label>
+              <input type="text" id="birthCountry" th:field="*{birthCountry}" class="form-control input-sm"
+                     th:placeholder="#{consultant.birth.country}"/>
+            </div>
+            <div class="form-group">
+              <label for="nationality" class="sr-only" th:text="#{consultant.nationality}">Nationality</label>
+              <input type="text" id="nationality" th:field="*{nationality}" class="form-control input-sm" th:placeholder="#{consultant.nationality}"/>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber" class="sr-only" th:text="#{consultant.phone.number}">Phone number</label>
+              <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control input-sm"
+                     th:placeholder="#{consultant.phone.number}"/>
+            </div>
+            <div class="form-group">
+              <label for="mobileNumber" class="sr-only" th:text="#{consultant.mobile.number}">Mobile number</label>
+              <input type="text" id="mobileNumber" th:field="*{mobileNumber}" class="form-control input-sm"
+                     th:placeholder="#{consultant.mobile.number}"/>
+            </div>
+          </div>
+        </div>
+        <div class="control-group pull-left">
+          <a class="btn btn-default" th:href="@{'/consultants'}" th:text="#{global.cancel}">Cancel</a>
+        </div>
+        <div class="control-group pull-right" th:if="${edit}">
+          <button type="submit" name="submitEvent" value="update" class="btn btn-primary" th:text="#{global.update}">Update</button>
+          <!--<button type="button" name="submitEvent" value="delete" class="btn btn-danger" th:text="#{global.delete}">Delete</button>-->
+        </div>
+        <div class="control-group pull-right" th:unless="${edit}">
+          <button type="submit" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title panel-title-custom">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseResidence" th:text="#{address.residence}">Residence</a>
+              </h4>
+            </div>
+            <div id="collapseResidence" class="panel-collapse collapse in">
+              <div class="panel-body panel-body-with-padding">
+                <div class="form-group">
+                  <label for="residence-street" class="sr-only" th:text="#{address.street}">Street</label>
+                  <input type="text" id="residence-street" th:field="*{residence.street}" class="form-control input-sm"
+                         th:placeholder="#{address.street}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
+                  <input type="text" id="residence-houseNo" th:field="*{residence.houseNo}" class="form-control input-sm"
+                         th:placeholder="#{address.houseNo}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
+                  <input type="text" id="residence-zipCode" th:field="*{residence.zipCode}" class="form-control input-sm"
+                         th:placeholder="#{address.zipCode}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-city" class="sr-only" th:text="#{address.city}">City</label>
+                  <input type="text" id="residence-city" th:field="*{residence.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-province" class="sr-only" th:text="#{address.province}">Province</label>
+                  <input type="text" id="residence-province" th:field="*{residence.province}" class="form-control input-sm"
+                         th:placeholder="#{address.province}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-region" class="sr-only" th:text="#{address.region}">Region</label>
+                  <input type="text" id="residence-region" th:field="*{residence.region}" class="form-control input-sm"
+                         th:placeholder="#{address.region}"/>
+                </div>
+                <div class="form-group">
+                  <label for="residence-country" class="sr-only" th:text="#{address.country}">Country</label>
+                  <input type="text" id="residence-country" th:field="*{residence.country}" class="form-control input-sm"
+                         th:placeholder="#{address.country}"/>
+                </div>
               </div>
-              <div class="control-group pull-right" th:if="${edit}">
-                <button type="submit" name="submitEvent" value="update" class="btn btn-primary" th:text="#{global.update}">Update</button>
-                <!--<button type="button" name="submitEvent" value="delete" class="btn btn-danger" th:text="#{global.delete}">Delete</button>-->
-              </div>
-							<div class="control-group pull-right" th:unless="${edit}">
-								<button type="submit" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
-							</div>
-						</div>
-						<div class="col-md-5">
-							<div class="panel-group" id="accordion">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title panel-title-custom">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseResidence" th:text="#{address.residence}">Residence</a>
-										</h4>
-									</div>
-									<div id="collapseResidence" class="panel-collapse collapse in">
-										<div class="panel-body panel-body-with-padding">
-											<div class="form-group">
-												<label for="residence-street" class="sr-only" th:text="#{address.street}">Street</label>
-												<input type="text" id="residence-street" th:field="*{residence.street}" class="form-control input-sm" th:placeholder="#{address.street}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
-												<input type="text" id="residence-houseNo" th:field="*{residence.houseNo}" class="form-control input-sm" th:placeholder="#{address.houseNo}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
-												<input type="text" id="residence-zipCode" th:field="*{residence.zipCode}" class="form-control input-sm" th:placeholder="#{address.zipCode}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-city" class="sr-only" th:text="#{address.city}">City</label>
-												<input type="text" id="residence-city" th:field="*{residence.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-province" class="sr-only" th:text="#{address.province}">Province</label>
-												<input type="text" id="residence-province" th:field="*{residence.province}" class="form-control input-sm" th:placeholder="#{address.province}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-region" class="sr-only" th:text="#{address.region}">Region</label>
-												<input type="text" id="residence-region" th:field="*{residence.region}" class="form-control input-sm" th:placeholder="#{address.region}"/>
-											</div>
-											<div class="form-group">
-												<label for="residence-country" class="sr-only" th:text="#{address.country}">Country</label>
-												<input type="text" id="residence-country" th:field="*{residence.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title panel-title-custom">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseDomicile" th:text="#{address.domicile}">Domicile</a>
-										</h4>
-									</div>
-									<div id="collapseDomicile" class="panel-collapse collapse">
-										<div class="panel-body panel-body-with-padding">
-											<div class="form-group">
-												<label for="domicile-street" class="sr-only" th:text="#{address.street}">Street</label>
-												<input type="text" id="domicile-street" th:field="*{domicile.street}" class="form-control input-sm" th:placeholder="#{address.street}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
-												<input type="text" id="domicile-houseNo" th:field="*{domicile.houseNo}" class="form-control input-sm" th:placeholder="#{address.houseNo}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
-												<input type="text" id="domicile-zipCode" th:field="*{domicile.zipCode}" class="form-control input-sm" th:placeholder="#{address.zipCode}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-city" class="sr-only" th:text="#{address.city}">City</label>
-												<input type="text" id="domicile-city" th:field="*{domicile.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-province" class="sr-only" th:text="#{address.province}">Province</label>
-												<input type="text" id="domicile-province" th:field="*{domicile.province}" class="form-control input-sm" th:placeholder="#{address.province}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-region" class="sr-only" th:text="#{address.region}">Region</label>
-												<input type="text" id="domicile-region" th:field="*{domicile.region}" class="form-control input-sm" th:placeholder="#{address.region}"/>
-											</div>
-											<div class="form-group">
-												<label for="domicile-country" class="sr-only" th:text="#{address.country}">Country</label>
-												<input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
-											</div>
-                      <div class="control-group pull-right">
-                        <button type="button" name="resetDomicileInputs" class="btn btn-default" th:text="#{global.clear}">Clear</button>
-                        <button type="button" name="copyFromResidence" class="btn btn-primary" th:text="#{address.copy-from-residence}">Copy from Residence</button>
-                        <script th:inline="javascript">
-                          $('button[name="resetDomicileInputs"]').click(function() {
-                            $('input[id|="domicile"]').val('');
-                          });
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title panel-title-custom">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDomicile" th:text="#{address.domicile}">Domicile</a>
+              </h4>
+            </div>
+            <div id="collapseDomicile" class="panel-collapse collapse">
+              <div class="panel-body panel-body-with-padding">
+                <div class="form-group">
+                  <label for="domicile-street" class="sr-only" th:text="#{address.street}">Street</label>
+                  <input type="text" id="domicile-street" th:field="*{domicile.street}" class="form-control input-sm"
+                         th:placeholder="#{address.street}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
+                  <input type="text" id="domicile-houseNo" th:field="*{domicile.houseNo}" class="form-control input-sm"
+                         th:placeholder="#{address.houseNo}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
+                  <input type="text" id="domicile-zipCode" th:field="*{domicile.zipCode}" class="form-control input-sm"
+                         th:placeholder="#{address.zipCode}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-city" class="sr-only" th:text="#{address.city}">City</label>
+                  <input type="text" id="domicile-city" th:field="*{domicile.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-province" class="sr-only" th:text="#{address.province}">Province</label>
+                  <input type="text" id="domicile-province" th:field="*{domicile.province}" class="form-control input-sm"
+                         th:placeholder="#{address.province}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-region" class="sr-only" th:text="#{address.region}">Region</label>
+                  <input type="text" id="domicile-region" th:field="*{domicile.region}" class="form-control input-sm"
+                         th:placeholder="#{address.region}"/>
+                </div>
+                <div class="form-group">
+                  <label for="domicile-country" class="sr-only" th:text="#{address.country}">Country</label>
+                  <input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control input-sm"
+                         th:placeholder="#{address.country}"/>
+                </div>
+                <div class="control-group pull-right">
+                  <button type="button" name="resetDomicileInputs" class="btn btn-default" th:text="#{global.clear}">Clear</button>
+                  <button type="button" name="copyFromResidence" class="btn btn-primary" th:text="#{address.copy-from-residence}">Copy from
+                    Residence
+                  </button>
+                  <script th:inline="javascript">
+                    $('button[name="resetDomicileInputs"]').click(function () {
+                      $('input[id|="domicile"]').val('');
+                    });
 
-                          $('button[name="copyFromResidence"]').click(function() {
-                            $('#domicile-street').val($('#residence-street').val());
-                            $('#domicile-houseNo').val($('#residence-houseNo').val());
-                            $('#domicile-zipCode').val($('#residence-zipCode').val());
-                            $('#domicile-city').val($('#residence-city').val());
-                            $('#domicile-province').val($('#residence-province').val());
-                            $('#domicile-region').val($('#residence-region').val());
-                            $('#domicile-country').val($('#residence-country').val());
-                          });
-                        </script>
-                      </div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
-			</form>
-		</div>
-	</div>
+                    $('button[name="copyFromResidence"]').click(function () {
+                      $('#domicile-street').val($('#residence-street').val());
+                      $('#domicile-houseNo').val($('#residence-houseNo').val());
+                      $('#domicile-zipCode').val($('#residence-zipCode').val());
+                      $('#domicile-city').val($('#residence-city').val());
+                      $('#domicile-province').val($('#residence-province').val());
+                      $('#domicile-region').val($('#residence-region').val());
+                      $('#domicile-country').val($('#residence-country').val());
+                    });
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
+</div>
+</div>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">
-	<div class="container">
-		<p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
-	</div>
+  <div class="container">
+    <p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
+  </div>
 </div>
 <script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>
 <script th:inline="javascript">
-	var targetForm = "#consultantModelForm";
-	var asyncUrl = "/consultant/validate-personal-details";
-	var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
+  var targetForm = "#consultantModelForm";
+  var asyncUrl = "/consultant/validate-personal-details";
+  var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
 </script>
 </body>
 </html>

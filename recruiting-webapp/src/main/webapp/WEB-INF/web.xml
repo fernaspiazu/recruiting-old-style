@@ -21,7 +21,7 @@
     <param-name>log4jConfigLocation</param-name>
     <param-value>classpath:${spring.profiles.active}-log4j.properties</param-value>
   </context-param>
-  
+
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
@@ -53,7 +53,7 @@
       <max-request-size>5242880</max-request-size>
     </multipart-config>
   </servlet>
-  
+
   <servlet-mapping>
     <servlet-name>Recruiting Servlet</servlet-name>
     <url-pattern>/</url-pattern>

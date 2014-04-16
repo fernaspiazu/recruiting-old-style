@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<title th:text="#{login.login}">Login Page</title>
-	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/login.css}" href="../../../static/css/login.css" rel="stylesheet"/>
-	<style type="text/css">
-		body {overflow: hidden;}
-	</style>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title th:text="#{login.login}">Login Page</title>
+  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/login.css}" href="../../../static/css/login.css" rel="stylesheet"/>
+  <style type="text/css">
+    body {
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-recruiting">
-	<form id="loginForm" th:action="@{/processLogin}" method="post" action="../homePage.html" class="navbar-form navbar-right navbar-static-top" role="form">
-		<div class="form-group">
-			<label class="sr-only" for="usernameId">Username</label>
-			<input type="text" id="usernameId" name="username" th:placeholder="#{login.username}" class="form-control input-sm" placeholder="Username" autofocus="" autocomplete="false"/>
-		</div>
-		<div class="form-group">
-			<label class="sr-only" for="passwordId">Password</label>
-			<input type="password" id="passwordId" name="password" th:placeholder="#{login.password}" class="form-control input-sm" placeholder="Password" autocomplete="false"/>
-		</div>
-		<button type="submit" id="loginButton" th:text="#{login.login}" class="btn btn-sm btn-primary">Loggin</button>
-		<!--<div class="alert alert-danger f2-alert" th:if="${hasErrors}">Bad Credentials</div>-->
-	</form>
+  <form id="loginForm" th:action="@{/processLogin}" method="post" action="../homePage.html" class="navbar-form navbar-right navbar-static-top" role="form">
+    <div class="form-group">
+      <label class="sr-only" for="usernameId">Username</label>
+      <input type="text" id="usernameId" name="username" th:placeholder="#{login.username}" class="form-control input-sm" placeholder="Username" autofocus="" autocomplete="false"/>
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="passwordId">Password</label>
+      <input type="password" id="passwordId" name="password" th:placeholder="#{login.password}" class="form-control input-sm" placeholder="Password" autocomplete="false"/>
+    </div>
+    <button type="submit" id="loginButton" th:text="#{login.login}" class="btn btn-sm btn-primary">Loggin</button>
+    <!--<div class="alert alert-danger f2-alert" th:if="${hasErrors}">Bad Credentials</div>-->
+  </form>
 </nav>
 <div class="container">
-	<div class="f2informatica-area"></div>
+  <div class="f2informatica-area"></div>
 </div>
 
 <script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
 <script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	var loginErrMsg = $("#login-error-msg");
-	if (loginErrMsg.length) {
-		var formPosition = loginErrMsg.parent().position();
-		loginErrMsg.css({
-			"top" : formPosition.top - 3,
-			"left" : formPosition.left - loginErrMsg.width() - 40
-		});
-	}
+  var loginErrMsg = $("#login-error-msg");
+  if (loginErrMsg.length) {
+    var formPosition = loginErrMsg.parent().position();
+    loginErrMsg.css({
+      "top": formPosition.top - 3,
+      "left": formPosition.left - loginErrMsg.width() - 40
+    });
+  }
 </script>
 </body>
 </html>
