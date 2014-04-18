@@ -9,7 +9,7 @@ import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
 import it.f2informatica.mysql.MySQL;
-import it.f2informatica.mysql.MySQLApplicationContext;
+import it.f2informatica.mysql.Persistence;
 import it.f2informatica.mysql.domain.*;
 import it.f2informatica.mysql.domain.pk.LanguagePK;
 import it.f2informatica.mysql.domain.pk.SkillPK;
@@ -32,7 +32,7 @@ import java.util.Set;
 @Service
 public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGateway {
 
-  @PersistenceContext(unitName = MySQLApplicationContext.RECRUITING_PERSISTENCE_UNIT)
+  @PersistenceContext(unitName = Persistence.PERSISTENCE_UNIT_NAME)
   private EntityManager entityManager;
 
   @Autowired
@@ -122,7 +122,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     consultant.setInterests(consultantModel.getInterests());
     mapResidenceData(consultantModel, consultant);
     mapDomicileData(consultantModel, consultant);
-    return consultantRepository.saveAndFlush(consultant) != null;
+    return true;
   }
 
   private void mapResidenceData(ConsultantModel consultantModel, Consultant consultant) {

@@ -81,11 +81,11 @@ public class Consultant implements Serializable {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.consultant", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Language.class)
   private Set<Language> languages = Sets.newHashSet();
 
-  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class, cascade = CascadeType.ALL)
   @JoinColumn(name = "residence")
   private Address residence;
 
-  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+  @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class, cascade = CascadeType.ALL)
   @JoinColumn(name = "domicile")
   private Address domicile;
 

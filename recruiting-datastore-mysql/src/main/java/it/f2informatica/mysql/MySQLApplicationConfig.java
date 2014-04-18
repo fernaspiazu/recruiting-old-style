@@ -24,11 +24,9 @@ import java.beans.PropertyVetoException;
 @EnableTransactionManagement
 @PropertySource("classpath:mysql.properties")
 @MySQL
-public class MySQLApplicationContext {
-  private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationContext.class);
+public class MySQLApplicationConfig {
+  private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationConfig.class);
   private static final String DOMAIN_PACKAGE = "it.f2informatica.mysql.domain";
-
-  public static final String RECRUITING_PERSISTENCE_UNIT = "recruiting-persistence-unit";
 
   @Value("${mysql.driver}")
   private String driver;
@@ -73,7 +71,7 @@ public class MySQLApplicationContext {
     vendorAdapter.setShowSql(true);
 
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-    factoryBean.setPersistenceUnitName(RECRUITING_PERSISTENCE_UNIT);
+    factoryBean.setPersistenceUnitName(Persistence.PERSISTENCE_UNIT_NAME);
     factoryBean.setJpaVendorAdapter(vendorAdapter);
     factoryBean.setPackagesToScan(DOMAIN_PACKAGE);
     factoryBean.setDataSource(dataSource());

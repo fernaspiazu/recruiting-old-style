@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @SessionAttributes({"navbarItemActive", "roles"})
 public class NavBarController {
-  public static final String NAVBAR_ITEM_ACTIVE = "navbarItemActive";
-
-  @Autowired
-  private SecurityAccessor securityAccessor;
+  private static final String NAVBAR_ITEM_ACTIVE = "navbarItemActive";
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private SecurityAccessor securityAccessor;
 
   @Autowired
   private ConsultantService consultantService;

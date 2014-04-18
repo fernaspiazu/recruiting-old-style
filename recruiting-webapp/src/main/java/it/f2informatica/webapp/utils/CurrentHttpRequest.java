@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.utils;
 
-import it.f2informatica.webapp.WebAppContext;
+import it.f2informatica.webapp.WebApplicationConfig;
 import org.apache.commons.lang3.LocaleUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -27,11 +27,11 @@ public class CurrentHttpRequest {
    * @return the current locale
    */
   public Locale getLocale() {
-    String languageParam = getCurrentHttpRequest().getParameter(WebAppContext.LANGUAGE);
+    String languageParam = getCurrentHttpRequest().getParameter(WebApplicationConfig.LANGUAGE);
     if (StringUtils.hasText(languageParam)) {
       return LocaleUtils.toLocale(languageParam);
     }
-    Cookie cookie = getCookie(WebAppContext.CURRENT_LOCALE_COOKIE);
+    Cookie cookie = getCookie(WebApplicationConfig.CURRENT_LOCALE_COOKIE);
     return (cookie != null)
       ? LocaleUtils.toLocale(cookie.getValue())
       : getCurrentHttpRequest().getLocale();

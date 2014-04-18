@@ -1,6 +1,6 @@
 package it.f2informatica.webapp.utils;
 
-import it.f2informatica.webapp.WebAppContext;
+import it.f2informatica.webapp.WebApplicationConfig;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Component
 public class ShortDateFormatter {
 
-  private SimpleDateFormat dateFormat = new SimpleDateFormat(WebAppContext.GLOBAL_DATE_FORMAT);
+  private SimpleDateFormat dateFormat = new SimpleDateFormat(WebApplicationConfig.GLOBAL_DATE_FORMAT);
 
   public Date parse(String value) throws ParseException {
     return dateFormat.parse(value);

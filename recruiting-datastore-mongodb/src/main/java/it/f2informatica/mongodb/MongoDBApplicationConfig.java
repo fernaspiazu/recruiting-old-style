@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
 @EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
 @PropertySource("classpath:mongodb.properties")
 @MongoDB
-public class MongoDBApplicationContext extends AbstractMongoConfiguration {
+public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
   private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 
   @Value("${mongodb.host}")

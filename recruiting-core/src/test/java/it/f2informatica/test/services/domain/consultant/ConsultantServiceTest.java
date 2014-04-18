@@ -89,8 +89,7 @@ public class ConsultantServiceTest {
   @Test
   public void testConsultantNumberFormat() {
     String consultantNumber = consultantService.generateConsultantNumber();
-    assertThat(consultantNumber).hasSize(22);
-    assertThat(consultantNumber.split("-")).hasSize(2);
+    assertThat(consultantNumber).hasSize(21);
   }
 
 }

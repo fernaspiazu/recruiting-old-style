@@ -58,8 +58,8 @@ public class ConsultantServiceImpl implements ConsultantService {
 
   @Override
   public String generateConsultantNumber() {
-    String[] components = UUID.randomUUID().toString().split("-");
-    return getTimePrefixFormat() + "-" + components[components.length - 1].toUpperCase();
+    String[] UUIDs = UUID.randomUUID().toString().split("-");
+    return getTimePrefixFormat() + UUIDs[UUIDs.length - 1].toUpperCase();
   }
 
   private String getTimePrefixFormat() {

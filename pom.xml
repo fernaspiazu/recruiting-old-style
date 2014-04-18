@@ -57,6 +57,7 @@
     <hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
     <gson.version>2.2.4</gson.version>
     <jackson-core.version>2.3.2</jackson-core.version>
+    <aspectjweaver.version>1.8.0</aspectjweaver.version>
   </properties>
 
   <build>
@@ -278,6 +279,11 @@
         <groupId>org.powermock</groupId>
         <artifactId>powermock-api-mockito</artifactId>
         <version>${powermock.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectjweaver.version}</version>
       </dependency>
 
       <!-- Obsolete -->

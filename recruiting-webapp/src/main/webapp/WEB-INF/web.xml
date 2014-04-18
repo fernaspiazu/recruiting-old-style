@@ -10,7 +10,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>it.f2informatica.webapp.RootApplicationContext</param-value>
+    <param-value>it.f2informatica.webapp.ApplicationConfig</param-value>
   </context-param>
 
   <listener>
@@ -44,7 +44,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>it.f2informatica.webapp.RootApplicationContext</param-value>
+      <param-value>it.f2informatica.webapp.ApplicationConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
     <!-- Since Servlet 3.x -->

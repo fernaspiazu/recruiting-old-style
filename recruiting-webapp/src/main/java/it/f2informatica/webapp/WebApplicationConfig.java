@@ -1,6 +1,6 @@
 package it.f2informatica.webapp;
 
-import it.f2informatica.core.ServicesApplicationContext;
+import it.f2informatica.core.CoreApplicationConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +32,8 @@ import java.util.List;
   "it.f2informatica.webapp.controller",
   "it.f2informatica.webapp.utils"
 })
-public class WebAppContext extends WebMvcConfigurerAdapter {
-  public static final String GLOBAL_DATE_FORMAT = ServicesApplicationContext.GLOBAL_DATE_FORMAT;
+public class WebApplicationConfig extends WebMvcConfigurerAdapter {
+  public static final String GLOBAL_DATE_FORMAT = CoreApplicationConfig.GLOBAL_DATE_FORMAT;
   public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
   public static final String LANGUAGE = "siteLanguage";
 

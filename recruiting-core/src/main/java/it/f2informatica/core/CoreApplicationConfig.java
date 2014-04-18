@@ -1,21 +1,19 @@
 package it.f2informatica.core;
 
 import com.google.gson.*;
-import it.f2informatica.mongodb.MongoDBApplicationContext;
-import it.f2informatica.mysql.MySQLApplicationContext;
+import it.f2informatica.mongodb.MongoDBApplicationConfig;
+import it.f2informatica.mysql.MySQLApplicationConfig;
 import org.joda.time.DateTime;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 
 @Configuration
 @ComponentScan(basePackages = {"it.f2informatica.core"})
-@Import({MongoDBApplicationContext.class, MySQLApplicationContext.class})
-public class ServicesApplicationContext {
+@EnableAspectJAutoProxy
+@Import({MongoDBApplicationConfig.class, MySQLApplicationConfig.class})
+public class CoreApplicationConfig {
   public static final String GLOBAL_DATE_FORMAT = "dd-MM-yyyy";
 
   @Bean
@@ -30,6 +28,7 @@ public class ServicesApplicationContext {
   }
 
   private static class DateTimeTypeAdapter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
+
     @Override
     public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
       return new JsonPrimitive(src.toString(GLOBAL_DATE_FORMAT));
@@ -44,6 +43,7 @@ public class ServicesApplicationContext {
         return new DateTime(date);
       }
     }
+
   }
 
 }
