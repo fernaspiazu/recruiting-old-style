@@ -9,6 +9,7 @@ import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
 import it.f2informatica.mysql.MySQL;
+import it.f2informatica.mysql.MySQLApplicationContext;
 import it.f2informatica.mysql.domain.*;
 import it.f2informatica.mysql.domain.pk.LanguagePK;
 import it.f2informatica.mysql.domain.pk.SkillPK;
@@ -22,12 +23,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
 
 @MySQL
 @Service
 public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGateway {
+
+  @PersistenceContext(unitName = MySQLApplicationContext.RECRUITING_PERSISTENCE_UNIT)
+  private EntityManager entityManager;
 
   @Autowired
   private SkillRepository skillRepository;
@@ -93,8 +99,9 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     consultant.setInterests(consultantModel.getInterests());
     mapResidenceData(consultantModel, consultant);
     mapDomicileData(consultantModel, consultant);
-    final Consultant savedEntity = consultantRepository.save(consultant);
-    return mysqlConsultantToModelConverter.convert(savedEntity);
+    consultantRepository.save(consultant);
+    entityManager.refresh(consultant);
+    return mysqlConsultantToModelConverter.convert(consultant);
   }
 
   @Override
