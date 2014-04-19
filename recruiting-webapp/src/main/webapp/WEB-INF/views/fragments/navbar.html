@@ -22,7 +22,7 @@
       <a class="navbar-brand" href="http://www.f2informatica.it" target="_blank" th:text="#{global.recruiting}">Recruiting</a>
     </div>
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" style="margin-left: 50px;">
         <li th:class="(${session.navbarItemActive} == 0) ? 'active' : ''" class="active">
           <a th:text="#{home.home}" th:href="@{/home}" href="#">Home</a>
         </li>
@@ -32,7 +32,8 @@
         <li class="dropdown" th:class="(${session.navbarItemActive} == 2) ? 'dropdown active' : 'dropdown'">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" th:inline="text">[[#{consultant.consultants}]] <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a th:href="@{/consultants}" href="../consultant/consultants.html" th:text="#{consultant.management}">Consultant Management</a></li>
+            <li><a th:href="@{/consultants}" href="../consultant/consultants.html" th:text="#{consultant.search}">Search Consultant</a></li>
+            <li><a th:href="@{/consultant/new-consultant}" href="../consultant/consultantForm.html" th:text="#{consultant.registernew}">Register Consultant</a></li>
             <!--<li><a href="#">Inserisci nuovo</a></li>-->
             <!--<li><a href="#">Something else here</a></li>-->
             <!--<li class="divider"></li>-->

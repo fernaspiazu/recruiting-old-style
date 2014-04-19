@@ -24,6 +24,14 @@ div.click-icon:hover {color: #428bca; cursor: pointer;}
 
 .xs-small {font-size: 80%;}
 
+form.style-1 {
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
 /*!
  * Bootstrap v2.2.2-j3
  *

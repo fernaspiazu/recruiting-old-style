@@ -51,4 +51,11 @@ public class NavBarController {
     return "consultant/consultants";
   }
 
+  @RequestMapping(value = "/consultant/new-consultant", method = RequestMethod.GET)
+  public String createConsultant(ModelMap modelMap) {
+    modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
+    modelMap.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
+    return "consultant/consultantForm";
+  }
+
 }

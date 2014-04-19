@@ -58,6 +58,8 @@
     <gson.version>2.2.4</gson.version>
     <jackson-core.version>2.3.2</jackson-core.version>
     <aspectjweaver.version>1.8.0</aspectjweaver.version>
+    <querydsl.version>3.3.2</querydsl.version>
+    <apt-maven-plugin.version>1.1.1</apt-maven-plugin.version>
   </properties>
 
   <build>
@@ -99,6 +101,11 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.mysema.maven</groupId>
+          <artifactId>apt-maven-plugin</artifactId>
+          <version>${apt-maven-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
@@ -201,6 +208,21 @@
         <version>${gson.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>${querydsl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>${querydsl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-sql</artifactId>
+        <version>${querydsl.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
         <version>${jackson-core.version}</version>
@@ -246,6 +268,13 @@
         <version>${lombok.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectjweaver.version}</version>
+      </dependency>
+
+      <!-- Test dependencies -->
+      <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons-lang3.version}</version>
@@ -279,11 +308,6 @@
         <groupId>org.powermock</groupId>
         <artifactId>powermock-api-mockito</artifactId>
         <version>${powermock.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-        <version>${aspectjweaver.version}</version>
       </dependency>
 
       <!-- Obsolete -->

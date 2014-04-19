@@ -59,12 +59,6 @@ public class ConsultantController {
     return monthHelper.getMonths();
   }
 
-  @RequestMapping(value = "/new-consultant", method = RequestMethod.GET)
-  public String createConsultant(ModelMap modelMap) {
-    modelMap.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
-    return "consultant/consultantForm";
-  }
-
   @RequestMapping(value = "/save-personal-details", method = RequestMethod.POST)
   public String savePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel) {
     consultantService.savePersonalDetails(consultantModel);

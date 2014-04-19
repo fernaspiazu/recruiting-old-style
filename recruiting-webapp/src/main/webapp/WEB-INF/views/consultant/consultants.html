@@ -59,11 +59,28 @@
   </div>
   <div class="row">
     <div class="col-md-10">
-      <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group" style="margin-bottom: 10px;">
-          <button type="submit" id="new-consultant-btn" class="btn btn-primary">Create new Consultant</button>
-        </div>
-      </div>
+      <form action="#" method="POST" class="style-1" role="form">
+        <fieldset>
+          <legend>Search Consultant</legend>
+          <div class="form-group col-md-4">
+            <label for="name" class="control-label">Consultant name:</label>
+            <input type="text" id="name" class="form-control input-sm" autofocus=""/>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="lastname" class="control-label">Consultant lastname:</label>
+            <input type="text" id="lastname" class="form-control input-sm"/>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="skills" class="control-label">Skills (separated by commas):</label>
+            <input type="text" id="skills" class="form-control input-sm"/>
+          </div>
+          <div class="control-group pull-right">
+            <button type="button" value="search" class="btn btn-primary">Search</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-10">
       <div th:if="${#lists.isEmpty(consultants.content)}" class="alert alert-info">
         <p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
       </div>
@@ -74,6 +91,8 @@
             <div>
               <span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
               <h6 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529C5A707AD0713</h6>
+              <h6 th:if="${#lists.isEmpty(c.skills)}" th:text="#{skill.noskills}" class="text-warning">No skill assigned</h6>
+              <h6 th:unless="${#lists.isEmpty(c.skills)}" th:text="|#{skill.title}: ${#strings.listJoin(c.skills, ', ')}|" class="text-success">Skills</h6>
             </div>
           </div>
           <div class="pull-right">
@@ -94,10 +113,6 @@
 <script th:inline="javascript">
   /*<![CDATA[*/
   var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
-
-  $('#new-consultant-btn').click(function () {
-    window.location = contextRoot + '/consultant/new-consultant';
-  });
 
   $('button[name="btnProfile"]').click(function () {
     window.location = contextRoot + '/consultant/profile?consultantId=' + $(this).val();
