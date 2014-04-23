@@ -37,7 +37,7 @@
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <jvm.version>1.7</jvm.version>
     <spring.version>4.0.2.RELEASE</spring.version>
-    <spring.security.version>3.2.2.RELEASE</spring.security.version>
+    <spring.security.version>3.2.3.RELEASE</spring.security.version>
     <guava.version>16.0.1</guava.version>
     <junit.version>4.11</junit.version>
     <fest.version>1.4</fest.version>

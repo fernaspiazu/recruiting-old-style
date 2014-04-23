@@ -45,11 +45,11 @@ public class ConsultantControllerTest {
   }
 
   @Test
-  public void consultantRegistrationPage() throws Exception {
-    mockMvc.perform(get("/consultant/new-consultant"))
+  public void consultantProfilePage() throws Exception {
+    mockMvc.perform(get("/consultant/profile"))
       .andDo(print())
       .andExpect(status().isOk())
-      .andExpect(view().name("consultant/consultantForm"));
+      .andExpect(view().name("consultant/profileForm"));
   }
 
 }
