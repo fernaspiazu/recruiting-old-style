@@ -23,7 +23,7 @@
     <authentication-provider user-service-ref="userDetailsService"/>
   </authentication-manager>
 
-  <beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.RecruitingUserDetailService"/>
+  <beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.DatabaseUserDetailService"/>
 
   <beans:bean id="authorityService" class="it.f2informatica.webapp.security.BasicAuthorityService"/>
 

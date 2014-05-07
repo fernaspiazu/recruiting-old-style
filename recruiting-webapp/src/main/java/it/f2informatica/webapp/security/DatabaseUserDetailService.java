@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class RecruitingUserDetailService implements UserDetailsService {
-  private static final Logger log = Logger.getLogger(RecruitingUserDetailService.class);
+public class DatabaseUserDetailService implements UserDetailsService {
+  private static final Logger logger = Logger.getLogger(DatabaseUserDetailService.class);
 
   private AuthorityService authorityService;
   private AuthenticationService authenticationService;
@@ -25,9 +25,9 @@ public class RecruitingUserDetailService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    log.info("Loding user [" + username + "]");
-    AuthenticationModel authenticationModel = authenticationService.processLogin(username);
-    return createUserDetails(authenticationModel);
+    AuthenticationModel authentication = authenticationService.processLogin(username);
+    logger.info("Authenticating with username: '" + authentication.getUsername() + "', with role: '" + authentication.getAuthorization() + "'");
+    return createUserDetails(authentication);
   }
 
   private UserDetails createUserDetails(AuthenticationModel userLogged) {

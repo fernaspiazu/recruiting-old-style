@@ -5,7 +5,7 @@ import it.f2informatica.core.Authority;
 import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.core.services.AuthenticationService;
 import it.f2informatica.webapp.security.AuthorityService;
-import it.f2informatica.webapp.security.RecruitingUserDetailService;
+import it.f2informatica.webapp.security.DatabaseUserDetailService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RecruitingUserDetailServiceTest {
+public class DatabaseUserDetailServiceTest {
 
   @Mock
   private AuthenticationService authenticationService;
@@ -34,9 +34,9 @@ public class RecruitingUserDetailServiceTest {
 
   @Before
   public void setUp() {
-    UserDetailsService userDetailsService = new RecruitingUserDetailService();
-    ((RecruitingUserDetailService) userDetailsService).setAuthenticationService(authenticationService);
-    ((RecruitingUserDetailService) userDetailsService).setAuthorityService(authorityService);
+    UserDetailsService userDetailsService = new DatabaseUserDetailService();
+    ((DatabaseUserDetailService) userDetailsService).setAuthenticationService(authenticationService);
+    ((DatabaseUserDetailService) userDetailsService).setAuthorityService(authorityService);
 
     when(authenticationService.processLogin("username1")).thenReturn(createResponse());
     when(authorityService.createAuthorities("role_admin")).thenReturn(getGrantedAuthorities());
