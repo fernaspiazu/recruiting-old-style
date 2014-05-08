@@ -76,7 +76,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   @Transactional(readOnly = true)
   public Page<ConsultantModel> findAllConsultants(Pageable pageable) {
     Page<Consultant> consultantPage = consultantRepository.findAll(pageable);
-    return new PageImpl<>(mysqlConsultantToModelConverter.convertList(consultantPage.getContent()));
+    return new PageImpl<>(mysqlConsultantToModelConverter.convertList(consultantPage.getContent()), pageable, consultantPage.getTotalElements());
   }
 
   @Override

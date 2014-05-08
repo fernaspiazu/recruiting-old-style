@@ -1,9 +1,11 @@
 package it.f2informatica.webapp.controller;
 
+import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.services.UserService;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,27 +36,31 @@ public class NavBarController {
   }
 
   @RequestMapping(value = {"/user", "/users"}, method = RequestMethod.GET)
-  public String userManagementPage(ModelMap modelMap, Pageable pageable) {
+  public String userManagementPage(ModelMap model, Pageable pageable) {
     String currentUser = securityAccessor.getCurrentUsername();
-    modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 1);
-    modelMap.addAttribute("roles", userService.loadRoles());
-    modelMap.addAttribute("users", userService.findAllExcludingCurrentUser(pageable, currentUser));
-    modelMap.addAttribute("userModel", userService.buildEmptyUserModel());
+    model.addAttribute(NAVBAR_ITEM_ACTIVE, 1);
+    model.addAttribute("roles", userService.loadRoles());
+    model.addAttribute("users", userService.findAllExcludingCurrentUser(pageable, currentUser));
+    model.addAttribute("userModel", userService.buildEmptyUserModel());
     return "user/users";
   }
 
   @RequestMapping(value = {"/consultant", "/consultants"}, method = RequestMethod.GET)
-  public String consultantManagementPage(ModelMap modelMap, Pageable pageable) {
-    Pageable customPageableRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.DESC, "registrationDate");
-    modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
-    modelMap.addAttribute("consultants", consultantService.showAllConsultants(customPageableRequest));
+  public String consultantManagementPage(ModelMap model, Pageable pageable) {
+    Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
+    Page<ConsultantModel> page = consultantService.showAllConsultants(pageRequest);
+    model.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
+    model.addAttribute("currentPage", page.getNumber());
+    model.addAttribute("isFirstPage", page.isFirstPage());
+    model.addAttribute("isLastPage", page.isLastPage());
+    model.addAttribute("consultants", page);
     return "consultant/consultants";
   }
 
   @RequestMapping(value = "/consultant/new-consultant", method = RequestMethod.GET)
-  public String createConsultant(ModelMap modelMap) {
-    modelMap.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
-    modelMap.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
+  public String createConsultant(ModelMap model) {
+    model.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
+    model.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
     return "consultant/consultantForm";
   }
 

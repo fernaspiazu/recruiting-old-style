@@ -69,7 +69,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
             .build();
         }
       }
-    )));
+    )), pageable, consultantPage.getTotalElements());
   }
 
   @Override
