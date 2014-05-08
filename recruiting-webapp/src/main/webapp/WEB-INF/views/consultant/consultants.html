@@ -81,10 +81,11 @@
       </form>
     </div>
     <div class="col-md-10">
-      <div th:if="${#lists.isEmpty(consultants.content)}" class="alert alert-info">
+      <div th:unless="${page.hasContent()}" class="alert alert-info">
         <p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
       </div>
-      <div th:unless="${#lists.isEmpty(consultants.content)}" th:each="c : ${consultants}" th:id="${#ids.seq('consultant-')}" class="row">
+      <h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="text-info"></h5>
+      <div th:if="${page.hasContent()}" th:each="c : ${page}" th:id="${#ids.seq('consultant-')}" class="row">
         <div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
           <div class="pull-left">
             <h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
@@ -110,10 +111,10 @@
       <ul class="pagination"></ul>
       <script th:inline="javascript">
         /*<![CDATA[*/
-        var totalPages = /*[[${consultants.totalPages}]]*/ 10;
-        var currentPage = /*[[${currentPage}]]*/ 5;
-        var isFirstPage = /*[[${isFirstPage}]]*/ true;
-        var isLastPage = /*[[${isLastPage}]]*/ false;
+        var totalPages = /*[[${page.totalPages}]]*/ 10;
+        var currentPage = /*[[${page.number}]]*/ 5;
+        var isFirstPage = /*[[${page.firstPage}]]*/ true;
+        var isLastPage = /*[[${page.lastPage}]]*/ false;
         if (isFirstPage) {
           $('.pagination').append($('<li class="disabled">').append('<a href="#">&laquo;</a>'));
         } else {

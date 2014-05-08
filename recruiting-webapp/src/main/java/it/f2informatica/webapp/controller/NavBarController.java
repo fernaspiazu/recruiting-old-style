@@ -50,10 +50,7 @@ public class NavBarController {
     Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
     Page<ConsultantModel> page = consultantService.showAllConsultants(pageRequest);
     model.addAttribute(NAVBAR_ITEM_ACTIVE, 2);
-    model.addAttribute("currentPage", page.getNumber());
-    model.addAttribute("isFirstPage", page.isFirstPage());
-    model.addAttribute("isLastPage", page.isLastPage());
-    model.addAttribute("consultants", page);
+    model.addAttribute("page", page);
     return "consultant/consultants";
   }
 

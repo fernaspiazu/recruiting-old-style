@@ -73,7 +73,10 @@
           [[#{experience.add}]]
         </button>
       </div>
-      <div class="row" th:each="experience : ${consultantModel.experiences}" th:id="${experience.id}">
+      <div class="row" th:if="${#lists.isEmpty(consultantModel.experiences)}">
+        <p th:text="#{experience.norecords}" class="text-info text-center" style="padding-top: 10px;">No experience registered at the moment</p>
+      </div>
+      <div class="row" th:unless="${#lists.isEmpty(consultantModel.experiences)}" th:each="experience : ${consultantModel.experiences}" th:id="${experience.id}">
         <div class="col-md-12 margin-bottom-10px border-bottom">
           <h4 th:inline="text">
             [[${experience.position}]]
@@ -215,8 +218,11 @@
         </button>
       </div>
       <div class="clearfix"></div>
-      <div class="row">
-        <div class="col-md-4 margin-bottom-10px" th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}">
+      <div class="row" th:if="${#lists.isEmpty(consultantModel.languages)}">
+        <p th:text="#{language.norecords}" class="text-info text-center" style="padding-top: 10px;">No language registered at the moment</p>
+      </div>
+      <div class="row" th:unless="${#lists.isEmpty(consultantModel.languages)}">
+        <div th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}" class="col-md-4 margin-bottom-10px">
           <h4 th:text="#{__${lang.language}__}">Spanish</h4>
           <p th:text="#{__${lang.proficiency}__}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
         </div>
@@ -331,7 +337,10 @@
         </button>
       </div>
       <div class="clearfix"></div>
-      <div style="margin: 10px 0;">
+      <div class="row" th:if="${#lists.isEmpty(consultantModel.skills)}">
+        <p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No skill registered at the moment</p>
+      </div>
+      <div th:unless="${#lists.isEmpty(consultantModel.skills)}" style="margin: 10px 0;">
         <p th:text="${#strings.listJoin(consultantModel.skills, ', ')}"></p>
       </div>
     </div>
@@ -405,7 +414,10 @@
           [[#{education.add}]]
         </button>
       </div>
-      <div class="row" th:each="education : ${consultantModel.educationList}" th:id="${education.id}">
+      <div class="row" th:if="${#lists.isEmpty(consultantModel.educationList)}">
+        <p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No education registered at the moment</p>
+      </div>
+      <div class="row" th:unless="${#lists.isEmpty(consultantModel.educationList)}" th:each="education : ${consultantModel.educationList}" th:id="${education.id}">
         <div class="col-md-12 margin-bottom-10px border-bottom">
           <input type="hidden" th:value="${education.id}"/>
           <h4 th:inline="text">
