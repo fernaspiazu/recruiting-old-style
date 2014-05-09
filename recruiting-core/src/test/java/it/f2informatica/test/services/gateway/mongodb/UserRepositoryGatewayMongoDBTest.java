@@ -125,8 +125,7 @@ public class UserRepositoryGatewayMongoDBTest {
   @Test
   public void updateUser() {
     stubUpdateSuccess();
-    boolean recordUpdated = userRepositoryGateway.updateUser(userModel().build());
-    assertThat(recordUpdated).isTrue();
+    userRepositoryGateway.updateUser(userModel().build());
   }
 
   private void stubUpdateSuccess() {

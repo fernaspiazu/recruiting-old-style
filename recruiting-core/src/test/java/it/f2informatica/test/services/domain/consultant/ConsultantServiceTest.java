@@ -33,7 +33,7 @@ public class ConsultantServiceTest {
   @Test
   public void assertThatShowAllConsultantsMethodWorks() {
     when(consultantRepositoryGateway.findAllConsultants(any(Pageable.class))).thenReturn(consultants());
-    Page<ConsultantModel> paginatedResult = consultantService.showAllConsultants(new PageRequest(1, 10));
+    Page<ConsultantModel> paginatedResult = consultantService.paginateConsultants(new PageRequest(1, 10));
     assertThat(paginatedResult).isNotEmpty().hasSize(2);
   }
 

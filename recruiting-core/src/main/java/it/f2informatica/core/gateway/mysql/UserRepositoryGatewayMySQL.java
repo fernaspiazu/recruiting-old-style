@@ -50,9 +50,13 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean updatePassword(UpdatePasswordModel request) {
-    return arePasswordCompiledCorrectly(request)
-      && (0 != userRepository.updatePassword(Long.parseLong(request.getUserId()), request.getCurrentPassword(), request.getNewPassword()));
+  public void updatePassword(UpdatePasswordModel request) {
+    if (arePasswordCompiledCorrectly(request)) {
+      userRepository.updatePassword(
+        Long.parseLong(request.getUserId()),
+        request.getCurrentPassword(),
+        request.getNewPassword());
+    }
   }
 
   private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
@@ -107,15 +111,14 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean updateUser(UserModel userModel) {
-    int recordsUpdated = userRepository.updateUser(
+  public void updateUser(UserModel userModel) {
+    userRepository.updateUser(
       Long.parseLong(userModel.getUserId()),
       userModel.getUsername(),
       userModel.getFirstName(),
       userModel.getLastName(),
       userModel.getEmail(),
       roleRepository.findOne(Long.parseLong(userModel.getRole().getRoleId())));
-    return recordsUpdated != 0;
   }
 
   @Override

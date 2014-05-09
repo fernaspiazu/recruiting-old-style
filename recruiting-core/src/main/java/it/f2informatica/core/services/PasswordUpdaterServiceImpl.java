@@ -12,8 +12,8 @@ public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
   private UserRepositoryGateway userRepositoryGateway;
 
   @Override
-  public boolean updatePassword(UpdatePasswordModel request) {
-    return userRepositoryGateway.updatePassword(request);
+  public void updatePassword(UpdatePasswordModel request) {
+    userRepositoryGateway.updatePassword(request);
   }
 
   @Override

@@ -105,13 +105,6 @@ public class UserServiceTest {
     assertThat("1234567890").isEqualTo(argument.getValue());
   }
 
-  @Test
-  public void updateUser() {
-    when(userRepositoryGateway.updateUser(any(UserModel.class))).thenReturn(true);
-    boolean recordUpdated = userService.updateUser(userModel().build());
-    assertThat(recordUpdated).isTrue();
-  }
-
   private UserModel getUserModel() {
     return userModel()
       .withId("1234567890")

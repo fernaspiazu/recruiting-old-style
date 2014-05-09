@@ -57,13 +57,14 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
   }
 
   @Override
-  public boolean updatePassword(UpdatePasswordModel request) {
-    return arePasswordCompiledCorrectly(request)
-      && userRepository.updatePassword(
-      request.getUserId(),
-      request.getCurrentPassword(),
-      request.getNewPassword(),
-      request.getPasswordConfirmed());
+  public void updatePassword(UpdatePasswordModel request) {
+    if (arePasswordCompiledCorrectly(request)) {
+      userRepository.updatePassword(
+        request.getUserId(),
+        request.getCurrentPassword(),
+        request.getNewPassword(),
+        request.getPasswordConfirmed());
+    }
   }
 
   private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
@@ -114,17 +115,15 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
   }
 
   @Override
-  public boolean updateUser(UserModel userModel) {
+  public void updateUser(UserModel userModel) {
     Query query = query(where("id").is(userModel.getUserId()));
-
     Update update = new Update()
       .set("username", userModel.getUsername())
       .set("role", roleRepository.findOne(userModel.getRole().getRoleId()))
       .set("lastName", userModel.getLastName())
       .set("firstName", userModel.getFirstName())
       .set("email", userModel.getEmail());
-
-    return mongoTemplate.updateFirst(query, update, User.class).getLastError().ok();
+    mongoTemplate.updateFirst(query, update, User.class).getLastError().ok();
   }
 
   @Override

@@ -64,7 +64,7 @@
           <legend>Search Consultant</legend>
           <div class="form-group col-md-4">
             <label for="name" class="control-label">Consultant name:</label>
-            <input type="text" id="name" class="form-control input-sm" autofocus=""/>
+            <input type="text" id="name" class="form-control input-sm"/>
           </div>
           <div class="form-group col-md-4">
             <label for="lastname" class="control-label">Consultant lastname:</label>
@@ -108,37 +108,7 @@
           </div>
         </div>
       </div>
-      <ul class="pagination"></ul>
-      <script th:inline="javascript">
-        /*<![CDATA[*/
-        var totalPages = /*[[${page.totalPages}]]*/ 10;
-        var currentPage = /*[[${page.number}]]*/ 5;
-        var isFirstPage = /*[[${page.firstPage}]]*/ true;
-        var isLastPage = /*[[${page.lastPage}]]*/ false;
-        if (isFirstPage) {
-          $('.pagination').append($('<li class="disabled">').append('<a href="#">&laquo;</a>'));
-        } else {
-          var firstPageUrl = contextRoot + '/consultant?page=0';
-          $('.pagination').append($('<li>').append('<a href="'+ firstPageUrl +'">&laquo;</a>'));
-        }
-
-        for (var page = 0; page < totalPages; page++) {
-          if (page === currentPage) {
-            $('.pagination').append($('<li class="active">').append('<a href="#">'+page+'</a>'));
-          } else {
-            var url = contextRoot + '/consultant?page=' + page;
-            $('.pagination').append($('<li>').append('<a href="'+ url +'">'+page+'</a>'));
-          }
-        }
-
-        if (isLastPage) {
-          $('.pagination').append($('<li class="disabled">').append('<a href="#">&raquo;</a>'));
-        } else {
-          var lastPageUrl = contextRoot + '/consultant?page=' + (totalPages - 1);
-          $('.pagination').append($('<li>').append('<a href="'+ lastPageUrl +'">&raquo;</a>'));
-        }
-        /*]]>*/
-      </script>
+      <div th:substituteby="fragments/pagination::pagination (${page})"></div>
     </div>
   </div>
 </div>

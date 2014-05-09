@@ -25,6 +25,15 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public class ConsultantServiceImpl implements ConsultantService {
   private static final String YEAR_MONTH_MILLISECONDS_FORMAT = "yyyyMMSSS";
 
+  private static final Predicate<LanguageModel> DOES_NOT_HAVE_ITEM_TO_ADD = new Predicate<LanguageModel>() {
+    @Override
+    public boolean apply(LanguageModel input) {
+      return input == null
+        || isBlank(input.getLanguage())
+        || isBlank(input.getProficiency());
+    }
+  };
+
   @Autowired
   private ConsultantRepositoryGateway consultantRepositoryGateway;
 
@@ -37,7 +46,7 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public Page<ConsultantModel> showAllConsultants(Pageable pageable) {
+  public Page<ConsultantModel> paginateConsultants(Pageable pageable) {
     return consultantRepositoryGateway.findAllConsultants(pageable);
   }
 
@@ -47,8 +56,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
-    return consultantRepositoryGateway.updatePersonalDetails(consultantModel, consultantId);
+  public void updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
+    consultantRepositoryGateway.updatePersonalDetails(consultantModel, consultantId);
   }
 
   @Override
@@ -72,8 +81,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-    return consultantRepositoryGateway.updateExperience(experienceModel, consultantId);
+  public void updateConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+    consultantRepositoryGateway.updateExperience(experienceModel, consultantId);
   }
 
   @Override
@@ -93,17 +102,8 @@ public class ConsultantServiceImpl implements ConsultantService {
 
   private LanguageModel[] removeFurtherEmptyLanguages(LanguageModel[] languageModels) {
     List<LanguageModel> languages = Lists.newArrayList(languageModels);
-    Iterables.removeIf(languages, doesNotHaveAnyItemToAdd());
+    Iterables.removeIf(languages, DOES_NOT_HAVE_ITEM_TO_ADD);
     return Iterables.toArray(languages, LanguageModel.class);
-  }
-
-  private Predicate<LanguageModel> doesNotHaveAnyItemToAdd() {
-    return new Predicate<LanguageModel>() {
-      @Override
-      public boolean apply(LanguageModel input) {
-        return input == null || isBlank(input.getLanguage()) || isBlank(input.getProficiency());
-      }
-    };
   }
 
   @Override
@@ -133,8 +133,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public boolean updateConsultantEducation(EducationModel educationModel, String consultantId) {
-    return consultantRepositoryGateway.updateEducation(educationModel, consultantId);
+  public void updateConsultantEducation(EducationModel educationModel, String consultantId) {
+    consultantRepositoryGateway.updateEducation(educationModel, consultantId);
   }
 
   @Override

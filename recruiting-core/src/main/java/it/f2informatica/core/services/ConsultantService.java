@@ -11,15 +11,15 @@ public interface ConsultantService {
 
   ConsultantModel buildNewConsultantModel();
 
-  Page<ConsultantModel> showAllConsultants(Pageable pageable);
-
-  ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
-
-  boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
+  Page<ConsultantModel> paginateConsultants(Pageable pageable);
 
   ConsultantModel findConsultantById(String consultantId);
 
   String generateConsultantNumber();
+
+  ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
+
+  void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 
   boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
@@ -29,7 +29,7 @@ public interface ConsultantService {
 
   ExperienceModel findExperience(String consultantId, String experienceId);
 
-  boolean updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+  void updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
   void removeExperience(String consultantId, String experienceId);
 
@@ -37,7 +37,7 @@ public interface ConsultantService {
 
   boolean addConsultantEducation(EducationModel educationModel, String consultantId);
 
-  boolean updateConsultantEducation(EducationModel educationModel, String consultantId);
+  void updateConsultantEducation(EducationModel educationModel, String consultantId);
 
   void removeEducation(String consultantId, String educationId);
 }

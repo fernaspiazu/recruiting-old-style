@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+  <link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+  <script th:src="@{/static/js/jquery-1.10.2.min.js}" src="../../../static/js/jquery-1.10.2.min.js"></script>
+  <script th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:fragment="pagination (page)">
+  <ul class="pagination"></ul>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var totalPages = /*[[${page.totalPages}]]*/ 10;
+    var currentPage = /*[[${page.number}]]*/ 5;
+    var isFirstPage = /*[[${page.firstPage}]]*/ true;
+    var isLastPage = /*[[${page.lastPage}]]*/ false;
+    var baseUrl = window.location.href.split('?')[0];
+
+    if (isFirstPage) {
+      $('.pagination').append($('<li class="disabled">').append('<a href="#">&laquo;</a>'));
+    } else {
+      var firstPageUrl = baseUrl + '?page=0';
+      $('.pagination').append($('<li>').append('<a href="'+ firstPageUrl +'">&laquo;</a>'));
+    }
+
+    for (var page = 0; page < totalPages; page++) {
+      if (page === currentPage) {
+        $('.pagination').append($('<li class="active">').append('<a href="#">'+page+'</a>'));
+      } else {
+        var url = baseUrl + '?page=' + page;
+        $('.pagination').append($('<li>').append('<a href="'+ url +'">'+page+'</a>'));
+      }
+    }
+
+    if (isLastPage) {
+      $('.pagination').append($('<li class="disabled">').append('<a href="#">&raquo;</a>'));
+    } else {
+      var lastPageUrl = baseUrl + '?page=' + (totalPages - 1);
+      $('.pagination').append($('<li>').append('<a href="'+ lastPageUrl +'">&raquo;</a>'));
+    }
+    /*]]>*/
+  </script>
+</div>
+</body>
+</html>

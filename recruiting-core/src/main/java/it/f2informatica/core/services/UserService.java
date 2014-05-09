@@ -19,7 +19,7 @@ public interface UserService {
 
   UserModel saveUser(UserModel user);
 
-  boolean updateUser(UserModel userRequest);
+  void updateUser(UserModel userRequest);
 
   void deleteUser(String userId);
 

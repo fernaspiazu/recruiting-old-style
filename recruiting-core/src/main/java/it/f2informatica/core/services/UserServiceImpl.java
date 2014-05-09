@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean updateUser(UserModel userModel) {
-    return userRepositoryGateway.updateUser(userModel);
+  public void updateUser(UserModel userModel) {
+    userRepositoryGateway.updateUser(userModel);
   }
 
   @Override

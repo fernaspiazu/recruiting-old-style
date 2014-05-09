@@ -4,7 +4,7 @@ import it.f2informatica.core.model.UpdatePasswordModel;
 
 public interface PasswordUpdaterService {
 
-  boolean updatePassword(UpdatePasswordModel request);
+  void updatePassword(UpdatePasswordModel request);
 
   UpdatePasswordModel prepareUpdatePasswordModel(String userId);
 

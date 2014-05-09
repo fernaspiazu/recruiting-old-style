@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static it.f2informatica.test.services.builder.UpdatePasswordRequestBuilder.updatePasswordRequest;
-import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,8 +25,8 @@ public class PasswordUpdaterServiceTest {
   @Test
   public void updatePasswordTest() {
     UpdatePasswordModel updatePasswordModel = updatePasswordRequest().build();
-    when(userRepositoryGateway.updatePassword(updatePasswordModel)).thenReturn(true);
-    assertThat(passwordUpdaterService.updatePassword(updatePasswordModel)).isTrue();
+    userRepositoryGateway.updatePassword(updatePasswordModel);
+    passwordUpdaterService.updatePassword(updatePasswordModel);
   }
 
 }

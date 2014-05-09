@@ -11,7 +11,7 @@ public interface UserRepositoryGateway {
 
   AuthenticationModel authenticationByUsername(String username);
 
-  boolean updatePassword(UpdatePasswordModel request);
+  void updatePassword(UpdatePasswordModel request);
 
   UserModel findUserById(String userId);
 
@@ -25,7 +25,7 @@ public interface UserRepositoryGateway {
 
   UserModel saveUser(UserModel userModel);
 
-  boolean updateUser(UserModel userModel);
+  void updateUser(UserModel userModel);
 
   void deleteUser(String userId);
 
