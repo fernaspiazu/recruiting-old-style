@@ -1,10 +1,10 @@
 package it.f2informatica.core.model.query;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class ConsultantSearchCriteria {

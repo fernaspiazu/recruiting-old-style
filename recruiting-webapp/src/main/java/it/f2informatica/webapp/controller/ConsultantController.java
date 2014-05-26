@@ -7,6 +7,7 @@ import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.validator.ConsultantEducationValidator;
 import it.f2informatica.core.validator.ConsultantExperienceValidator;
@@ -58,6 +59,16 @@ public class ConsultantController {
   @ModelAttribute("months")
   public List<Month> loadMonths() {
     return monthHelper.getMonths();
+  }
+
+  @RequestMapping(value = "/search", method = RequestMethod.POST)
+  public String searchConsultants(
+      @RequestParam(value = "name", required = false) String name,
+      @RequestParam(value = "lastname", required = false) String lastname,
+      @RequestParam(value = "skills", required = false) String skills) {
+
+    ConsultantSearchCriteria searchCriteria = new ConsultantSearchCriteria(name, lastname, skills);
+    return "consultant/consultants";
   }
 
   @RequestMapping(value = "/save-personal-details", method = RequestMethod.POST)

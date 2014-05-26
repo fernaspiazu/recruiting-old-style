@@ -18,7 +18,6 @@
     <mysql.url>jdbc:mysql://localhost:3306/recruiting</mysql.url>
     <mysql.user>development</mysql.user>
     <mysql.password>development</mysql.password>
-    <spring-data-jpa.version>1.5.1.RELEASE</spring-data-jpa.version>
     <hibernate-jpa.version>1.0.0.Final</hibernate-jpa.version>
     <hibernate-entitymanager.version>4.3.4.Final</hibernate-entitymanager.version>
     <mysql-connector-java.version>5.1.29</mysql-connector-java.version>
@@ -80,6 +79,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>it.f2informatica</groupId>
+      <artifactId>recruiting-pagination</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
     </dependency>
@@ -90,7 +93,6 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
-      <version>${spring-data-jpa.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.aspectj</groupId>
@@ -121,18 +123,6 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>${c3p0.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.mysema.querydsl</groupId>
-      <artifactId>querydsl-apt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.mysema.querydsl</groupId>
-      <artifactId>querydsl-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.mysema.querydsl</groupId>
-      <artifactId>querydsl-sql</artifactId>
     </dependency>
     <dependency>
       <groupId>com.googlecode.flyway</groupId>
