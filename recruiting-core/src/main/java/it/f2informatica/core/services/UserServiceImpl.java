@@ -1,5 +1,6 @@
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
@@ -17,18 +18,18 @@ public class UserServiceImpl implements UserService {
   private UserRepositoryGateway userRepositoryGateway;
 
   @Override
-  public UserModel findUserById(String userId) {
-    return userRepositoryGateway.findUserById(userId);
+  public Optional<UserModel> findUserById(String userId) {
+    return Optional.fromNullable(userRepositoryGateway.findUserById(userId));
   }
 
   @Override
-  public UserModel findByUsername(String username) {
-    return userRepositoryGateway.findByUsername(username);
+  public Optional<UserModel> findByUsername(String username) {
+    return Optional.fromNullable(userRepositoryGateway.findByUsername(username));
   }
 
   @Override
-  public UserModel findByUsernameAndPassword(String username, String password) {
-    return userRepositoryGateway.findByUsernameAndPassword(username, password);
+  public Optional<UserModel> findByUsernameAndPassword(String username, String password) {
+    return Optional.fromNullable(userRepositoryGateway.findByUsernameAndPassword(username, password));
   }
 
   @Override
@@ -62,8 +63,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public RoleModel findRoleByName(String roleName) {
-    return userRepositoryGateway.findRoleByName(roleName);
+  public Optional<RoleModel> findRoleByName(String roleName) {
+    return Optional.fromNullable(userRepositoryGateway.findRoleByName(roleName));
   }
 
   @Override

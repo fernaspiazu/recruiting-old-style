@@ -1,5 +1,6 @@
 package it.f2informatica.webapp.test.security;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.core.services.UserService;
 import it.f2informatica.mongodb.domain.User;
@@ -48,7 +49,7 @@ public class CustomAuthenticationSuccessHandlerTest {
   public void setUp() {
     when(authentication.getName()).thenReturn("username");
     when(request.getSession(true)).thenReturn(session);
-    when(userService.findByUsername("username")).thenReturn(createUser());
+    when(userService.findByUsername("username")).thenReturn(Optional.of(createUser()));
   }
 
   @Test

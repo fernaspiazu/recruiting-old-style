@@ -6,7 +6,7 @@ public interface PasswordUpdaterService {
 
   void updatePassword(UpdatePasswordModel request);
 
-  UpdatePasswordModel prepareUpdatePasswordModel(String userId);
-
   boolean isCurrentPasswordValid(String userId, String currentPwd);
+
+  UpdatePasswordModel prepareUpdatePasswordModel(String userId);
 }

@@ -1,5 +1,6 @@
 package it.f2informatica.webapp.controller;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.UpdatePasswordModel;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.core.services.PasswordUpdaterService;
@@ -46,7 +47,7 @@ public class UserController {
 
   @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
   public @ResponseBody UserModel editUser(@RequestParam String userId) {
-    return userService.findUserById(userId);
+    return userService.findUserById(userId).orNull();
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -72,10 +73,14 @@ public class UserController {
 
   @RequestMapping(value = "/change-password", method = RequestMethod.GET)
   public String changePasswordForm(@RequestParam("userId") String userId, ModelMap model) {
-    UserModel user = userService.findUserById(userId);
-    model.addAttribute("readonlyUsername", user.getUsername());
-    model.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordModel(userId));
-    return "user/changePasswordForm";
+    Optional<UserModel> user = userService.findUserById(userId);
+    if (user.isPresent()) {
+      model.addAttribute("readonlyUsername", user.get().getUsername());
+      model.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordModel(userId));
+      return "user/changePasswordForm";
+    }
+
+    return pageNotFound();
   }
 
   @RequestMapping(value = "/update-password", method = RequestMethod.POST)
@@ -91,6 +96,10 @@ public class UserController {
       return validationResponseHandler.validationFail(result, httpRequest.getLocale());
     }
     return validationResponseHandler.validationSuccess();
+  }
+
+  private static String pageNotFound() {
+    return "404";
   }
 
 }

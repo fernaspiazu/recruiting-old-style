@@ -1,5 +1,6 @@
 package it.f2informatica.core.validator;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.core.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,13 @@ public class UserModelValidator extends AbstractValidator {
     }
 
     final String username = userModel.getUsername();
-    final UserModel user = getUser(username);
-    if (isSaveEvent(userModel) && existsUser(user)) {
-      errors.rejectValue("username", "err.username.exists");
-    } else if (isUpdateEvent(userModel) && existsUser(user) && !username.equals(user.getUsername())) {
-      errors.rejectValue("username", "err.username.exists");
+    Optional<UserModel> user = userService.findByUsername(username);
+    if (user.isPresent()) {
+      if (isSaveEvent(userModel)) {
+        errors.rejectValue("username", "err.username.exists");
+      } else if (isUpdateEvent(userModel) && !username.equals(user.get().getUsername())) {
+        errors.rejectValue("username", "err.username.exists");
+      }
     }
   }
 
@@ -72,14 +75,6 @@ public class UserModelValidator extends AbstractValidator {
 
   private boolean isUpdateEvent(UserModel userModel) {
     return UPDATE_EVENT.equals(userModel.getSubmitEvent());
-  }
-
-  private boolean existsUser(UserModel userFromDB) {
-    return userFromDB != null;
-  }
-
-  private UserModel getUser(String username) {
-    return userService.findByUsername(username);
   }
 
 }

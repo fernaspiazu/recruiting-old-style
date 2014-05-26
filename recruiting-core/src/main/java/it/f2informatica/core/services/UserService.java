@@ -1,5 +1,6 @@
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
 import org.springframework.data.domain.Page;
@@ -7,11 +8,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  UserModel findUserById(String userId);
+  Optional<UserModel> findUserById(String userId);
 
-  UserModel findByUsername(String username);
+  Optional<UserModel> findByUsername(String username);
 
-  UserModel findByUsernameAndPassword(String username, String password);
+  Optional<UserModel> findByUsernameAndPassword(String username, String password);
 
   Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
@@ -25,7 +26,7 @@ public interface UserService {
 
   Iterable<RoleModel> loadRoles();
 
-  RoleModel findRoleByName(String roleName);
+  Optional<RoleModel> findRoleByName(String roleName);
 
   UserModel buildEmptyUserModel();
 }

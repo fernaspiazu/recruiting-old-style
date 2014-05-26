@@ -1,5 +1,6 @@
 package it.f2informatica.test.services.domain.user;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import it.f2informatica.core.Authority;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
@@ -38,22 +39,24 @@ public class UserServiceTest {
   @Test
   public void findUserById() {
     when(userRepositoryGateway.findUserById(anyString())).thenReturn(getUserModel());
-    UserModel userResponse = userService.findUserById("1234567890");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon");
+    Optional<UserModel> user = userService.findUserById("1234567890");
+    assertThat(user.isPresent()).isTrue();
+    assertThat(user.get().getUsername()).isEqualTo("jhon");
   }
 
   @Test
   public void findByUsername() {
     when(userRepositoryGateway.findByUsername(anyString())).thenReturn(getUserModel());
-    UserModel userResponse = userService.findByUsername("jhon");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon");
+    Optional<UserModel> user = userService.findByUsername("jhon");
+    assertThat(user.isPresent()).isTrue();
+    assertThat(user.get().getUsername()).isEqualTo("jhon");
   }
 
   @Test
   public void findByUsernameAndPassword() {
     when(userRepositoryGateway.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUserModel());
-    UserModel userResponse = userService.findByUsernameAndPassword("jhon", "jhon78*");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon");
+    Optional<UserModel> user = userService.findByUsernameAndPassword("jhon", "jhon78*");
+    assertThat(user.get().getUsername()).isEqualTo("jhon");
   }
 
   @Test
@@ -93,8 +96,8 @@ public class UserServiceTest {
   public void findRoleByName() {
     when(userRepositoryGateway.findRoleByName("Administrator"))
       .thenReturn(roleModel().withId("12345").withAuthorization("Administrator").build());
-    RoleModel response = userService.findRoleByName("Administrator");
-    assertThat(response.getRoleName()).isEqualTo("Administrator");
+    Optional<RoleModel> role = userService.findRoleByName("Administrator");
+    assertThat(role.get().getRoleName()).isEqualTo("Administrator");
   }
 
   @Test

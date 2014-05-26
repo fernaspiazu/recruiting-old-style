@@ -1,5 +1,6 @@
 package it.f2informatica.webapp.test.controllers;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.core.services.PasswordUpdaterService;
@@ -64,7 +65,7 @@ public class UserControllerTest {
     userModel.setFirstName("Username");
     userModel.setLastName("Lastname");
     userModel.setEmail("mario.rossi@tiscali.it");
-    when(userService.findUserById("1234567890")).thenReturn(userModel);
+    when(userService.findUserById("1234567890")).thenReturn(Optional.of(userModel));
     mockMvc.perform(get("/user/edit?userId=1234567890"))
       .andDo(print())
       .andExpect(status().isOk())

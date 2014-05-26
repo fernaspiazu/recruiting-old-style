@@ -17,15 +17,15 @@ public class PasswordUpdaterServiceImpl implements PasswordUpdaterService {
   }
 
   @Override
+  public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+    return userRepositoryGateway.isCurrentPasswordValid(userId, currentPwd);
+  }
+
+  @Override
   public UpdatePasswordModel prepareUpdatePasswordModel(String userId) {
     UpdatePasswordModel request = new UpdatePasswordModel();
     request.setUserId(userId);
     return request;
-  }
-
-  @Override
-  public boolean isCurrentPasswordValid(String userId, String currentPwd) {
-    return userRepositoryGateway.isCurrentPasswordValid(userId, currentPwd);
   }
 
 }
