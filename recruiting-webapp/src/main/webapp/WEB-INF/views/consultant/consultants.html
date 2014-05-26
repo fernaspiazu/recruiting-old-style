@@ -59,7 +59,7 @@
   </div>
   <div class="row">
     <div class="col-md-10">
-      <form action="#" th:action="@{/search}" th:object="${searchCriteria}" method="POST" class="style-1" role="form">
+      <form action="#" th:action="@{/consultant/search}" th:object="${searchCriteria}" method="POST" class="style-1" role="form">
         <fieldset>
           <legend>Search Consultant</legend>
           <div class="form-group col-md-4">
@@ -68,14 +68,14 @@
           </div>
           <div class="form-group col-md-4">
             <label for="lastname" class="control-label">Consultant lastname:</label>
-            <input type="text" id="lastname" th:field="*{lastname}" class="form-control input-sm"/>
+            <input type="text" id="lastname" th:field="*{lastName}" class="form-control input-sm"/>
           </div>
           <div class="form-group col-md-4">
             <label for="skills" class="control-label">Skills (separated by commas):</label>
             <input type="text" id="skills" th:field="*{skills}" class="form-control input-sm"/>
           </div>
           <div class="control-group pull-right" style="margin-right: 15px;">
-            <button type="button" value="search" class="btn btn-primary">Search</button>
+            <button type="submit" value="search" class="btn btn-primary">Search</button>
           </div>
         </fieldset>
       </form>

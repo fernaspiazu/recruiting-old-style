@@ -92,10 +92,10 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   private com.mysema.query.types.Predicate whereCondition(ConsultantSearchCriteria searchCriteria) {
     BooleanBuilder whereCondition = new BooleanBuilder();
     if (StringUtils.hasText(searchCriteria.getName())) {
-      whereCondition.and(fromConsultant().firstName.like(contains(searchCriteria.getName())));
+      whereCondition.and(fromConsultant().firstName.toLowerCase().like(contains(searchCriteria.getName())));
     }
     if (StringUtils.hasText(searchCriteria.getLastName())) {
-      whereCondition.and(fromConsultant().lastName.like(contains(searchCriteria.getLastName())));
+      whereCondition.and(fromConsultant().lastName.toLowerCase().like(contains(searchCriteria.getLastName())));
     }
     if (StringUtils.hasText(searchCriteria.getSkills())) {
       QSkill skill = QSkill.skill;
