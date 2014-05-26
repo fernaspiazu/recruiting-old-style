@@ -1,12 +1,10 @@
 package it.f2informatica.webapp.controller;
 
-import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.services.UserService;
 import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
