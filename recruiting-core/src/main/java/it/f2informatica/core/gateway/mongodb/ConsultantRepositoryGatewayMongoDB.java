@@ -73,7 +73,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
   }
 
   @Override
-  public boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
+  public void updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
     Update update = new Update()
       .set("fiscalCode", consultantModel.getFiscalCode())
       .set("email", consultantModel.getEmail())
@@ -90,7 +90,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
       .set("interests", consultantModel.getInterests());
     mapAddressData(update, consultantModel.getResidence(), "residence");
     mapAddressData(update, consultantModel.getDomicile(), "domicile");
-    return consultantRepository.updateConsultantsPersonalDetails(update, consultantId);
+    consultantRepository.updateConsultantsPersonalDetails(update, consultantId);
   }
 
   private void mapAddressData(Update update, AddressModel address, String field) {
@@ -138,7 +138,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
   }
 
   @Override
-  public boolean addExperience(ExperienceModel experienceModel, String consultantId) {
+  public void addExperience(ExperienceModel experienceModel, String consultantId) {
     Experience experience = experience()
       .withId(UUID.randomUUID().toString())
       .inCompany(experienceModel.getCompanyName())
@@ -149,11 +149,11 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
       .isThisTheCurrentJob(experienceModel.isCurrent())
       .withDescription(experienceModel.getDescription())
       .build();
-    return consultantRepository.addExperience(experience, consultantId);
+    consultantRepository.addExperience(experience, consultantId);
   }
 
   @Override
-  public boolean updateExperience(ExperienceModel experienceModel, String consultantId) {
+  public void updateExperience(ExperienceModel experienceModel, String consultantId) {
     Experience experience = consultantRepository.findExperience(consultantId, experienceModel.getId());
     experience.setCompanyName(experienceModel.getCompanyName());
     experience.setPosition(experienceModel.getPosition());
@@ -162,7 +162,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
     experience.setPeriodTo(experienceModel.getPeriodTo());
     experience.setCurrent(experienceModel.isCurrent());
     experience.setDescription(experienceModel.getDescription());
-    return consultantRepository.updateExperience(experience, consultantId);
+    consultantRepository.updateExperience(experience, consultantId);
   }
 
   @Override
@@ -177,19 +177,19 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
   }
 
   @Override
-  public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
+  public void addLanguages(LanguageModel[] languageModelArray, String consultantId) {
     List<Language> languages = Lists.newArrayList();
     for (LanguageModel languageModel : languageModelArray) {
       Language language = LanguageBuilder.language(languageModel.getLanguage())
         .withProficiency(languageModel.getProficiency()).build();
       languages.add(language);
     }
-    return consultantRepository.addLanguages(languages, consultantId);
+    consultantRepository.addLanguages(languages, consultantId);
   }
 
   @Override
-  public boolean addSkills(String[] skills, String consultantId) {
-    return consultantRepository.addSkills(skills, consultantId);
+  public void addSkills(String[] skills, String consultantId) {
+    consultantRepository.addSkills(skills, consultantId);
   }
 
   @Override
@@ -199,7 +199,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
   }
 
   @Override
-  public boolean addEducation(EducationModel educationModel, String consultantId) {
+  public void addEducation(EducationModel educationModel, String consultantId) {
     Education education = education()
       .withId(UUID.randomUUID().toString())
       .inSchool(educationModel.getSchool())
@@ -212,11 +212,11 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
       .isInProgress(educationModel.isCurrent())
       .withDescription(educationModel.getDescription())
       .build();
-    return consultantRepository.addEducation(education, consultantId);
+    consultantRepository.addEducation(education, consultantId);
   }
 
   @Override
-  public boolean updateEducation(EducationModel educationModel, String consultantId) {
+  public void updateEducation(EducationModel educationModel, String consultantId) {
     Education education = consultantRepository.findEducation(consultantId, educationModel.getId());
     education.setSchool(educationModel.getSchool());
     education.setStartYear(educationModel.getStartYear());
@@ -227,7 +227,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
     education.setSchoolActivities(educationModel.getSchoolActivities());
     education.setCurrent(educationModel.isCurrent());
     education.setDescription(educationModel.getDescription());
-    return consultantRepository.updateEducation(education, consultantId);
+    consultantRepository.updateEducation(education, consultantId);
   }
 
   @Override

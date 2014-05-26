@@ -13,27 +13,27 @@ public interface ConsultantRepositoryGateway {
 
   Page<ConsultantModel> findAllConsultants(Pageable pageable);
 
-  boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
+  void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 
   ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
-  boolean addExperience(ExperienceModel experienceModel, String consultantId);
+  void addExperience(ExperienceModel experienceModel, String consultantId);
 
-  boolean updateExperience(ExperienceModel experienceModel, String consultantId);
+  void updateExperience(ExperienceModel experienceModel, String consultantId);
 
   void removeExperience(String consultantId, String experienceId);
 
   ExperienceModel findOneExperience(String consultantId, String experienceId);
 
-  boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
+  void addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
-  boolean addSkills(String[] skills, String consultantId);
+  void addSkills(String[] skills, String consultantId);
 
-  boolean updateEducation(EducationModel educationModel, String consultantId);
+  void updateEducation(EducationModel educationModel, String consultantId);
 
   void removeEducation(String consultantId, String educationId);
 
-  boolean addEducation(EducationModel educationModel, String consultantId);
+  void addEducation(EducationModel educationModel, String consultantId);
 
   EducationModel findOneEducation(String consultantId, String educationId);
 }

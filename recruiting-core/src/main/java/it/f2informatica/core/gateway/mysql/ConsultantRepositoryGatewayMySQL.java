@@ -106,7 +106,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
+  public void updatePersonalDetails(ConsultantModel consultantModel, String consultantId) {
     Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
     consultant.setFiscalCode(consultantModel.getFiscalCode());
     consultant.setEmail(consultantModel.getEmail());
@@ -122,7 +122,6 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     consultant.setInterests(consultantModel.getInterests());
     mapResidenceData(consultantModel, consultant);
     mapDomicileData(consultantModel, consultant);
-    return true;
   }
 
   private void mapResidenceData(ConsultantModel consultantModel, Consultant consultant) {
@@ -155,7 +154,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean addExperience(ExperienceModel experienceModel, String consultantId) {
+  public void addExperience(ExperienceModel experienceModel, String consultantId) {
     Experience experience = new Experience();
     experience.setCompanyName(experienceModel.getCompanyName());
     experience.setJobPosition(experienceModel.getPosition());
@@ -166,13 +165,13 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     experience.setDescription(experienceModel.getDescription());
     Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
     experience.setConsultant(consultant);
-    return consultant.getExperiences().add(experience);
+    consultant.getExperiences().add(experience);
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean updateExperience(ExperienceModel experienceModel, String consultantId) {
-    return experienceRepository.updateExperience(
+  public void updateExperience(ExperienceModel experienceModel, String consultantId) {
+    experienceRepository.updateExperience(
       Long.parseLong(experienceModel.getId()),
       experienceModel.getCompanyName(),
       experienceModel.getPosition(),
@@ -180,7 +179,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
       experienceModel.getPeriodFrom(),
       experienceModel.getPeriodTo(),
       experienceModel.isCurrent(),
-      experienceModel.getDescription()) != 0;
+      experienceModel.getDescription());
   }
 
   @Override
@@ -197,7 +196,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean addLanguages(LanguageModel[] languageModelArray, final String consultantId) {
+  public void addLanguages(LanguageModel[] languageModelArray, final String consultantId) {
     final Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
     final List<LanguageModel> languageModels = Lists.newArrayList(languageModelArray);
     removeLanguagesThatMustNotBeInDBAnymore(consultant, languageModels);
@@ -215,7 +214,6 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
       }
     ));
     consultant.getLanguages().addAll(languages);
-    return true;
   }
 
   private void removeLanguagesThatMustNotBeInDBAnymore(Consultant consultant, final List<LanguageModel> languageModels) {
@@ -240,7 +238,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean addSkills(String[] skillArray, String consultantId) {
+  public void addSkills(String[] skillArray, String consultantId) {
     final Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
     Set<String> skillSet = Sets.newHashSet(skillArray);
     removeSkillsThatMustNotBeInDBAnymore(consultant, skillSet);
@@ -251,7 +249,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
         return new Skill(new SkillPK(input, consultant));
       }
     }));
-    return consultant.getSkills().addAll(skills);
+    consultant.getSkills().addAll(skills);
   }
 
   private void removeSkillsThatMustNotBeInDBAnymore(Consultant consultant, final Set<String> skills) {
@@ -286,7 +284,7 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean addEducation(EducationModel educationModel, String consultantId) {
+  public void addEducation(EducationModel educationModel, String consultantId) {
     Consultant consultant = consultantRepository.findOne(Long.parseLong(consultantId));
     Education education = new Education();
     education.setSchoolName(educationModel.getSchool());
@@ -299,12 +297,12 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     education.setActivities(educationModel.getSchoolActivities());
     education.setDescription(educationModel.getDescription());
     education.setConsultant(consultant);
-    return consultant.getEducations().add(education);
+    consultant.getEducations().add(education);
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public boolean updateEducation(EducationModel educationModel, String consultantId) {
+  public void updateEducation(EducationModel educationModel, String consultantId) {
     Education education = educationRepository.findOne(Long.parseLong(educationModel.getId()));
     education.setSchoolName(educationModel.getSchool());
     education.setStartYear(educationModel.getStartYear());
@@ -315,7 +313,6 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
     education.setGrade(educationModel.getSchoolGrade());
     education.setActivities(educationModel.getSchoolActivities());
     education.setDescription(educationModel.getDescription());
-    return true;
   }
 
 }

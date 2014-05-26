@@ -1,5 +1,6 @@
 package it.f2informatica.webapp.controller;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
 import it.f2informatica.core.model.ConsultantModel;
@@ -90,13 +91,17 @@ public class ConsultantController {
 
   @RequestMapping(value = "/profile", method = RequestMethod.GET)
   public String profilePage(@RequestParam String consultantId, ModelMap model) {
-    ConsultantModel consultantModel = consultantService.findConsultantById(consultantId);
-    setTotalTimeOfPeriodWhichHasElapsed(consultantModel);
-    model.addAttribute("consultantId", consultantId);
-    model.addAttribute("consultantModel", consultantModel);
-    model.addAttribute("experienceModel", new ExperienceModel());
-    model.addAttribute("educationModel", new EducationModel());
-    return "consultant/profileForm";
+    Optional<ConsultantModel> consultant = consultantService.findConsultantById(consultantId);
+    if (consultant.isPresent()) {
+      setTotalTimeOfPeriodWhichHasElapsed(consultant.get());
+      model.addAttribute("consultantId", consultantId);
+      model.addAttribute("consultantModel", consultant.get());
+      model.addAttribute("experienceModel", new ExperienceModel());
+      model.addAttribute("educationModel", new EducationModel());
+      return "consultant/profileForm";
+    }
+
+    return pageNotFound();
   }
 
   private void setTotalTimeOfPeriodWhichHasElapsed(ConsultantModel consultantModel) {
@@ -109,9 +114,13 @@ public class ConsultantController {
 
   @RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
   public @ResponseBody String editExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
-    ExperienceModel experienceModel = consultantService.findExperience(consultantId, experienceId);
-    formatDateByMonthNameAndYear(experienceModel);
-    return gson.toJson(experienceModel);
+    Optional<ExperienceModel> experience = consultantService.findExperience(consultantId, experienceId);
+    if (experience.isPresent()) {
+      formatDateByMonthNameAndYear(experience.get());
+      return gson.toJson(experience);
+    }
+
+    return pageNotFound();
   }
 
   private void formatDateByMonthNameAndYear(ExperienceModel experienceModel) {
@@ -177,8 +186,12 @@ public class ConsultantController {
 
   @RequestMapping(value = "/edit-education", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
   public @ResponseBody String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
-    EducationModel educationModel = consultantService.findEducation(consultantId, educationId);
-    return gson.toJson(educationModel);
+    Optional<EducationModel> education = consultantService.findEducation(consultantId, educationId);
+    if (education.isPresent()) {
+      return gson.toJson(education);
+    }
+
+    return pageNotFound();
   }
 
   @RequestMapping(value = "/update-education", method = RequestMethod.POST)
@@ -200,6 +213,10 @@ public class ConsultantController {
       return validationResponseHandler.validationFail(result, httpRequest.getLocale());
     }
     return validationResponseHandler.validationSuccess();
+  }
+
+  private static String pageNotFound() {
+    return "404";
   }
 
 }

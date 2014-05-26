@@ -32,9 +32,8 @@ public class ConsultantRepositoryImpl implements ConsultantRepositoryCustom {
   private MongoTemplate mongoTemplate;
 
   @Override
-  public boolean updateConsultantsPersonalDetails(Update updateFields, String consultantId) {
-    WriteResult writeResult = updateConsultant(whereConsultantIdIs(consultantId), updateFields);
-    return writeResult.getLastError().ok();
+  public int updateConsultantsPersonalDetails(Update updateFields, String consultantId) {
+    return updateConsultant(whereConsultantIdIs(consultantId), updateFields).getN();
   }
 
   @Override
@@ -62,61 +61,61 @@ public class ConsultantRepositoryImpl implements ConsultantRepositoryCustom {
   }
 
   @Override
-  public boolean addExperience(Experience experience, String consultantId) {
+  public int addExperience(Experience experience, String consultantId) {
     Query query = whereConsultantIdIs(consultantId);
     Update update = new Update().addToSet(EXPERIENCES, experience);
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   @Override
-  public boolean updateExperience(Experience experience, String consultantId) {
+  public int updateExperience(Experience experience, String consultantId) {
     Query query = new Query(where(ID).is(consultantId)
       .and(EXPERIENCES + "." + Fields.UNDERSCORE_ID).is(experience.getId()));
     Update update = new Update().set(EXPERIENCES + ".$", experience);
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   @Override
-  public boolean removeExperience(String consultantId, String experienceId) {
+  public int removeExperience(String consultantId, String experienceId) {
     Query query = new Query(where(ID).is(consultantId)
       .and(EXPERIENCES + "." + Fields.UNDERSCORE_ID).is(experienceId));
     Update update = new Update().pull(EXPERIENCES, findExperience(consultantId, experienceId));
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   @Override
-  public boolean addLanguages(List<Language> languages, String consultantId) {
+  public int addLanguages(List<Language> languages, String consultantId) {
     Update update = new Update().set(LANGUAGES, languages);
-    return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
+    return updateConsultant(whereConsultantIdIs(consultantId), update).getN();
   }
 
   @Override
-  public boolean addSkills(String[] skills, String consultantId) {
+  public int addSkills(String[] skills, String consultantId) {
     Update update = new Update().set(SKILLS, skills);
-    return updateConsultant(whereConsultantIdIs(consultantId), update).getLastError().ok();
+    return updateConsultant(whereConsultantIdIs(consultantId), update).getN();
   }
 
   @Override
-  public boolean addEducation(Education education, String consultantId) {
+  public int addEducation(Education education, String consultantId) {
     Query query = whereConsultantIdIs(consultantId);
     Update update = new Update().addToSet(EDUCATIONS, education);
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   @Override
-  public boolean updateEducation(Education education, String consultantId) {
+  public int updateEducation(Education education, String consultantId) {
     Query query = new Query(where(ID).is(consultantId)
       .and(EDUCATIONS + "." + Fields.UNDERSCORE_ID).is(education.getId()));
     Update update = new Update().set(EDUCATIONS + ".$", education);
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   @Override
-  public boolean removeEducation(String consultantId, String educationId) {
+  public int removeEducation(String consultantId, String educationId) {
     Query query = new Query(where(ID).is(consultantId)
       .and(EDUCATIONS + "." + Fields.UNDERSCORE_ID).is(educationId));
     Update update = new Update().pull(EDUCATIONS, findEducation(consultantId, educationId));
-    return updateConsultant(query, update).getLastError().ok();
+    return updateConsultant(query, update).getN();
   }
 
   private Query whereConsultantIdIs(String consultantId) {

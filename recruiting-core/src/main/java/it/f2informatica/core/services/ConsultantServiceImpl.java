@@ -1,5 +1,6 @@
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -61,8 +62,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public ConsultantModel findConsultantById(String consultantId) {
-    return consultantRepositoryGateway.findOneConsultant(consultantId);
+  public Optional<ConsultantModel> findConsultantById(String consultantId) {
+    return Optional.fromNullable(consultantRepositoryGateway.findOneConsultant(consultantId));
   }
 
   @Override
@@ -76,8 +77,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
-    return consultantRepositoryGateway.addExperience(experienceModel, consultantId);
+  public void addConsultantExperience(ExperienceModel experienceModel, String consultantId) {
+    consultantRepositoryGateway.addExperience(experienceModel, consultantId);
   }
 
   @Override
@@ -91,13 +92,13 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public ExperienceModel findExperience(String consultantId, String experienceId) {
-    return consultantRepositoryGateway.findOneExperience(consultantId, experienceId);
+  public Optional<ExperienceModel> findExperience(String consultantId, String experienceId) {
+    return Optional.fromNullable(consultantRepositoryGateway.findOneExperience(consultantId, experienceId));
   }
 
   @Override
-  public boolean addLanguages(LanguageModel[] languageModelArray, String consultantId) {
-    return consultantRepositoryGateway.addLanguages(removeFurtherEmptyLanguages(languageModelArray), consultantId);
+  public void addLanguages(LanguageModel[] languageModelArray, String consultantId) {
+    consultantRepositoryGateway.addLanguages(removeFurtherEmptyLanguages(languageModelArray), consultantId);
   }
 
   private LanguageModel[] removeFurtherEmptyLanguages(LanguageModel[] languageModels) {
@@ -107,8 +108,8 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public boolean addSkills(String[] skills, String consultantId) {
-    return consultantRepositoryGateway.addSkills(removeBlankContentFromArray(skills), consultantId);
+  public void addSkills(String[] skills, String consultantId) {
+    consultantRepositoryGateway.addSkills(removeBlankContentFromArray(skills), consultantId);
   }
 
   private String[] removeBlankContentFromArray(String[] skillsToProcess) {
@@ -123,13 +124,13 @@ public class ConsultantServiceImpl implements ConsultantService {
   }
 
   @Override
-  public EducationModel findEducation(String consultantId, String educationId) {
-    return consultantRepositoryGateway.findOneEducation(consultantId, educationId);
+  public Optional<EducationModel> findEducation(String consultantId, String educationId) {
+    return Optional.fromNullable(consultantRepositoryGateway.findOneEducation(consultantId, educationId));
   }
 
   @Override
-  public boolean addConsultantEducation(EducationModel educationModel, String consultantId) {
-    return consultantRepositoryGateway.addEducation(educationModel, consultantId);
+  public void addConsultantEducation(EducationModel educationModel, String consultantId) {
+    consultantRepositoryGateway.addEducation(educationModel, consultantId);
   }
 
   @Override

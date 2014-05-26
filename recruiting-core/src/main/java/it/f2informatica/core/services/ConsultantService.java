@@ -1,5 +1,6 @@
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
@@ -13,7 +14,7 @@ public interface ConsultantService {
 
   Page<ConsultantModel> paginateConsultants(Pageable pageable);
 
-  ConsultantModel findConsultantById(String consultantId);
+  Optional<ConsultantModel> findConsultantById(String consultantId);
 
   String generateConsultantNumber();
 
@@ -21,21 +22,21 @@ public interface ConsultantService {
 
   void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 
-  boolean addConsultantExperience(ExperienceModel experienceModel, String consultantId);
+  void addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
-  boolean addLanguages(LanguageModel[] languageModelArray, String consultantId);
+  void addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
-  boolean addSkills(String[] skills, String consultantId);
+  void addSkills(String[] skills, String consultantId);
 
-  ExperienceModel findExperience(String consultantId, String experienceId);
+  Optional<ExperienceModel> findExperience(String consultantId, String experienceId);
 
   void updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
   void removeExperience(String consultantId, String experienceId);
 
-  EducationModel findEducation(String consultantId, String educationId);
+  Optional<EducationModel> findEducation(String consultantId, String educationId);
 
-  boolean addConsultantEducation(EducationModel educationModel, String consultantId);
+  void addConsultantEducation(EducationModel educationModel, String consultantId);
 
   void updateConsultantEducation(EducationModel educationModel, String consultantId);
 

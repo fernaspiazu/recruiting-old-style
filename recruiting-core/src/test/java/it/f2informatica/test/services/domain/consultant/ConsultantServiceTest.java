@@ -1,5 +1,6 @@
 package it.f2informatica.test.services.domain.consultant;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.services.ConsultantService;
@@ -73,8 +74,9 @@ public class ConsultantServiceTest {
       .withLastName("Rossi")
       .build();
     when(consultantRepositoryGateway.findOneConsultant(consMock.getId())).thenReturn(consMock);
-    ConsultantModel result = consultantService.findConsultantById(consMock.getId());
-    assertThat(result.getFirstName()).isEqualTo(consMock.getFirstName());
+    Optional<ConsultantModel> consultant = consultantService.findConsultantById(consMock.getId());
+    assertThat(consultant.isPresent()).isTrue();
+    assertThat(consultant.get().getFirstName()).isEqualTo(consMock.getFirstName());
   }
 
   @Test
