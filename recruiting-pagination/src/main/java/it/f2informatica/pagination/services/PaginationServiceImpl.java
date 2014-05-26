@@ -30,7 +30,6 @@ import java.util.Map;
  */
 @Service
 public class PaginationServiceImpl implements PaginationService {
-
   private static final String UNIQUE_PREFIX = "unique";
 
   @Autowired
@@ -47,7 +46,7 @@ public class PaginationServiceImpl implements PaginationService {
   }
 
   @Override
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({"unchecked", "rawtypes"})
   public String getEmptyPaginatedResultAsJson(QueryParameters parameters) {
     Map<String, Object> datatableAttributes = createDatatableAttributes(parameters, new PageImpl(Lists.newArrayList()));
     return gson.toJson(datatableAttributes);
@@ -116,7 +115,7 @@ public class PaginationServiceImpl implements PaginationService {
     return data;
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({"unchecked", "rawtypes"})
   private <T> PaginationRepository<T, ? extends Serializable> getRepository(Class<T> entityClass) {
     Object repository = repositories.getRepositoryFor(entityClass);
     if (repository instanceof PaginationRepository) {
@@ -201,10 +200,10 @@ public class PaginationServiceImpl implements PaginationService {
         Method getter = entity.getClass().getMethod("get" + StringUtils.capitalize(field));
         result = Optional.fromNullable(getter.invoke(entity));
 
-        if ( !result.isPresent() ) {
+        if (!result.isPresent()) {
           break;
         } else if (!field.equals(fieldName)) {
-				/*
+        /*
 				 * If the current field is not equals to the nested
 				 * field properties, then it will call itself until
 				 * reach the last property (via Recursive Call).
