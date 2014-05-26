@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.mongodb.MongoDB;
 import it.f2informatica.mongodb.domain.*;
 import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
@@ -70,6 +71,11 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
         }
       }
     )), pageable, consultantPage.getTotalElements());
+  }
+
+  @Override
+  public Page<ConsultantModel> paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable) {
+    return null;
   }
 
   @Override

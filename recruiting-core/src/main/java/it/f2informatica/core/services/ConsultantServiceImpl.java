@@ -9,6 +9,7 @@ import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,11 @@ public class ConsultantServiceImpl implements ConsultantService {
   @Override
   public Page<ConsultantModel> paginateConsultants(Pageable pageable) {
     return consultantRepositoryGateway.findAllConsultants(pageable);
+  }
+
+  @Override
+  public Page<ConsultantModel> paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable) {
+    return consultantRepositoryGateway.paginateConsultants(searchCriteria, pageable);
   }
 
   @Override

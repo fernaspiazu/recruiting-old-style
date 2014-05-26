@@ -16,6 +16,9 @@ import it.f2informatica.core.validator.utils.ValidationResponse;
 import it.f2informatica.core.validator.utils.ValidationResponseHandler;
 import it.f2informatica.webapp.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -62,12 +65,10 @@ public class ConsultantController {
   }
 
   @RequestMapping(value = "/search", method = RequestMethod.POST)
-  public String searchConsultants(
-      @RequestParam(value = "name", required = false) String name,
-      @RequestParam(value = "lastname", required = false) String lastname,
-      @RequestParam(value = "skills", required = false) String skills) {
-
-    ConsultantSearchCriteria searchCriteria = new ConsultantSearchCriteria(name, lastname, skills);
+  public String searchConsultants(@ModelAttribute("searchCriteria") ConsultantSearchCriteria searchCriteria, Pageable pageable, ModelMap model) {
+    Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
+    model.addAttribute("page", consultantService.paginateConsultants(searchCriteria, pageRequest));
+    model.addAttribute("searchCriteria", new ConsultantSearchCriteria());
     return "consultant/consultants";
   }
 

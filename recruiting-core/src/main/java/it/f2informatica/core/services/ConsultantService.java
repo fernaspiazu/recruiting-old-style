@@ -5,6 +5,7 @@ import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,6 +14,8 @@ public interface ConsultantService {
   ConsultantModel buildNewConsultantModel();
 
   Page<ConsultantModel> paginateConsultants(Pageable pageable);
+
+  Page paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable);
 
   Optional<ConsultantModel> findConsultantById(String consultantId);
 

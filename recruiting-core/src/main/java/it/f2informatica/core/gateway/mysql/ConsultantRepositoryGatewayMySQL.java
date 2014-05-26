@@ -5,9 +5,13 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.googlecode.flyway.core.util.StringUtils;
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.sql.SQLSubQuery;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.model.*;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.mysql.MySQL;
 import it.f2informatica.mysql.Persistence;
 import it.f2informatica.mysql.domain.*;
@@ -77,6 +81,36 @@ public class ConsultantRepositoryGatewayMySQL implements ConsultantRepositoryGat
   public Page<ConsultantModel> findAllConsultants(Pageable pageable) {
     Page<Consultant> consultantPage = consultantRepository.findAll(pageable);
     return new PageImpl<>(mysqlConsultantToModelConverter.convertList(consultantPage.getContent()), pageable, consultantPage.getTotalElements());
+  }
+
+  @Override
+  public Page<ConsultantModel> paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable) {
+    Page<Consultant> consultantPage = consultantRepository.findAll(whereCondition(searchCriteria), pageable);
+    return new PageImpl<>(mysqlConsultantToModelConverter.convertList(consultantPage.getContent()), pageable, consultantPage.getTotalElements());
+  }
+
+  private com.mysema.query.types.Predicate whereCondition(ConsultantSearchCriteria searchCriteria) {
+    BooleanBuilder whereCondition = new BooleanBuilder();
+    if (StringUtils.hasText(searchCriteria.getName())) {
+      whereCondition.and(fromConsultant().firstName.like(contains(searchCriteria.getName())));
+    }
+    if (StringUtils.hasText(searchCriteria.getLastName())) {
+      whereCondition.and(fromConsultant().lastName.like(contains(searchCriteria.getLastName())));
+    }
+    if (StringUtils.hasText(searchCriteria.getSkills())) {
+      QSkill skill = QSkill.skill;
+      whereCondition.and(fromConsultant().skills.any().in(
+        new SQLSubQuery().from(skill).where(skill.id.skill.in(searchCriteria.getSkills().split(", "))).list(skill)));
+    }
+    return whereCondition.getValue();
+  }
+
+  private static String contains(String value) {
+    return "%" + value.toLowerCase() + "%";
+  }
+
+  private static QConsultant fromConsultant() {
+    return QConsultant.consultant;
   }
 
   @Override

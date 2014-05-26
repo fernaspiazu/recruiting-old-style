@@ -3,12 +3,14 @@ package it.f2informatica.pagination;
 import com.google.gson.*;
 import org.joda.time.DateTime;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 
 @Configuration
+@ComponentScan(basePackages = "it.f2informatica.pagination")
 public class PaginationConfig {
 
   @Bean

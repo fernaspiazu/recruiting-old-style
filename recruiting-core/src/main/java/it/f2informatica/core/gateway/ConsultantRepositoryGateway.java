@@ -4,6 +4,7 @@ import it.f2informatica.core.model.ConsultantModel;
 import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,6 +13,8 @@ public interface ConsultantRepositoryGateway {
   ConsultantModel findOneConsultant(String consultantId);
 
   Page<ConsultantModel> findAllConsultants(Pageable pageable);
+
+  Page<ConsultantModel> paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable);
 
   void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 

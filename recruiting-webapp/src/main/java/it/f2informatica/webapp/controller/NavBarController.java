@@ -1,6 +1,7 @@
 package it.f2informatica.webapp.controller;
 
 import it.f2informatica.core.model.ConsultantModel;
+import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.services.UserService;
 import it.f2informatica.webapp.security.SecurityAccessor;
@@ -47,9 +48,9 @@ public class NavBarController {
   @RequestMapping(value = {"/consultant", "/consultants"}, method = RequestMethod.GET)
   public String consultantManagementPage(ModelMap model, Pageable pageable) {
     Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
-    Page<ConsultantModel> page = consultantService.paginateConsultants(pageRequest);
+    model.addAttribute("page", consultantService.paginateConsultants(pageRequest));
+    model.addAttribute("searchCriteria", new ConsultantSearchCriteria());
     model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 2);
-    model.addAttribute("page", page);
     return "consultant/consultants";
   }
 
