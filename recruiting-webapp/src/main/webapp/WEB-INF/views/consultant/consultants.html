@@ -75,56 +75,44 @@
             <input type="text" id="skills" th:field="*{skills}" class="form-control input-sm"/>
           </div>
           <div class="control-group pull-right" style="margin-right: 15px;">
-            <button type="submit" value="search" class="btn btn-primary">Search</button>
+            <a class="btn btn-default btn-sm" th:href="@{/consultant}" th:text="#{global.cancel}">Cancel</a>
+            <button type="submit" value="search" class="btn btn-primary btn-sm">Search</button>
           </div>
         </fieldset>
-      </form>
-    </div>
-    <div class="col-md-10">
-      <div th:unless="${page.hasContent()}" class="alert alert-info">
-        <p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
-      </div>
-      <h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="text-info"></h5>
-      <div th:if="${page.hasContent()}" th:each="c : ${page}" th:id="${#ids.seq('consultant-')}" class="row">
-        <div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
-          <div class="pull-left">
-            <h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
-            <div>
-              <span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
-              <h6 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529C5A707AD0713</h6>
-              <h6 th:if="${#lists.isEmpty(c.skills)}" th:text="#{skill.noskills}" class="text-warning">No skill assigned</h6>
-              <h6 th:unless="${#lists.isEmpty(c.skills)}" th:text="|#{skill.title}: ${#strings.listJoin(c.skills, ', ')}|" class="text-success">Skills</h6>
+        <div class="col-md-12" style="margin-top: 20px;">
+          <div th:unless="${page.hasContent()}" class="alert alert-info">
+            <p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
+          </div>
+          <h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="text-info"></h5>
+          <div th:if="${page.hasContent()}" th:each="c : ${page}" th:id="${#ids.seq('consultant-')}" class="row">
+            <div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
+              <div class="pull-left">
+                <h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
+                <div>
+                  <span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
+                  <h6 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529C5A707AD0713</h6>
+                  <h6 th:if="${#lists.isEmpty(c.skills)}" th:text="#{skill.noskills}" class="text-warning">No skill assigned</h6>
+                  <h6 th:unless="${#lists.isEmpty(c.skills)}" th:text="|#{skill.title}: ${#strings.listJoin(c.skills, ', ')}|" class="text-success">Skills</h6>
+                </div>
+              </div>
+              <div class="pull-right">
+                <a th:href="@{/consultant/edit-personal-details?consultantId=}+${c.id}" class="btn btn-default btn-sm click-icon" th:inline="text">
+                  <div class="glyphicon glyphicon-briefcase" style="margin-right: 8px;"></div>
+                  [[#{global.edit}]]
+                </a>
+                <a th:href="@{/consultant/profile?consultantId=}+${c.id}" class="btn btn-default btn-sm click-icon" th:inline="text">
+                  <div class="glyphicon glyphicon-edit" style="margin-right: 8px;"></div>
+                  [[#{consultant.profile}]]
+                </a>
+              </div>
             </div>
           </div>
-          <div class="pull-right">
-            <button name="btnEdit" class="btn btn-default click-icon" th:value="${c.id}" th:inline="text">
-              <div class="glyphicon glyphicon-edit" style="margin-right: 8px;"></div>
-              [[#{global.edit}]]
-            </button>
-            <button name="btnProfile" class="btn btn-default click-icon" th:value="${c.id}" th:inline="text">
-              <div class="glyphicon glyphicon-briefcase" style="margin-right: 8px;"></div>
-              [[#{consultant.profile}]]
-            </button>
-          </div>
+          <div th:substituteby="fragments/pagination::pagination (${page})"></div>
         </div>
-      </div>
-      <div th:substituteby="fragments/pagination::pagination (${page})"></div>
+      </form>
     </div>
   </div>
 </div>
-<script th:inline="javascript">
-  /*<![CDATA[*/
-  var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
-
-  $('button[name="btnProfile"]').click(function () {
-    window.location = contextRoot + '/consultant/profile?consultantId=' + $(this).val();
-  });
-
-  $('button[name="btnEdit"]').click(function () {
-    window.location = contextRoot + '/consultant/edit-personal-details?consultantId=' + $(this).val();
-  });
-  /*]]>*/
-</script>
 <div id="footer" th:substituteby="fragments/footer::footer">
   <div class="container">
     <p class="text-muted" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>

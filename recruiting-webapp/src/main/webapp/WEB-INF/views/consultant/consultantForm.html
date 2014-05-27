@@ -118,9 +118,7 @@
               <label for="fiscalCode" class="sr-only" th:text="#{consultant.fiscalcode}">Fiscal code</label>
               <input type="text" id="fiscalCode" th:field="*{fiscalCode}" class="form-control input-sm" th:placeholder="#{consultant.fiscalcode}" maxlength="16"/>
               <script type="text/javascript">
-                $('#fiscalCode').blur(function() {
-                  $(this).val($(this).val().toUpperCase());
-                });
+                $('#fiscalCode').blur(function() { $(this).val($(this).val().toUpperCase()); });
               </script>
             </div>
             <div class="form-group">
@@ -150,13 +148,13 @@
           </div>
         </div>
         <div class="control-group pull-left">
-          <a class="btn btn-default" th:href="@{'/home'}" th:text="#{home.homePage}">Home Page</a>
+          <a class="btn btn-default btn-sm" th:href="@{'/consultants'}" th:text="#{global.back}">Back</a>
         </div>
         <div class="control-group pull-right" th:if="${edit}">
-          <button type="submit" name="submitEvent" value="update" class="btn btn-primary" th:text="#{global.update}">Update</button>
+          <button type="submit" name="submitEvent" value="update" class="btn btn-primary btn-sm" th:text="#{global.update}">Update</button>
         </div>
         <div class="control-group pull-right" th:unless="${edit}">
-          <button type="submit" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
+          <button type="submit" name="submitEvent" value="save" class="btn btn-primary btn-sm" th:text="#{global.save}">Save</button>
         </div>
       </div>
       <div class="col-md-5">
@@ -237,8 +235,8 @@
                   <input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
                 </div>
                 <div class="control-group pull-right">
-                  <button type="button" name="resetDomicileInputs" class="btn btn-default" th:text="#{global.clear}">Clear</button>
-                  <button type="button" name="copyFromResidence" class="btn btn-primary" th:text="#{address.copy-from-residence}">Copy from Residence</button>
+                  <button type="button" name="resetDomicileInputs" class="btn btn-default btn-sm" th:text="#{global.clear}">Clear</button>
+                  <button type="button" name="copyFromResidence" class="btn btn-primary btn-sm" th:text="#{address.copy-from-residence}">Copy from Residence</button>
                   <script th:inline="javascript">
                     $('button[name="resetDomicileInputs"]').click(function () {
                       $('input[id|="domicile"]').val('');

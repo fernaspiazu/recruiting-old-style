@@ -29,10 +29,10 @@
 
     for (var page = 0; page < totalPages; page++) {
       if (page === currentPage) {
-        $('.pagination').append($('<li class="active">').append('<a href="#">'+page+'</a>'));
+        $('.pagination').append($('<li class="active">').append('<a href="#">'+(page+1)+'</a>'));
       } else {
         var url = baseUrl + '?page=' + page;
-        $('.pagination').append($('<li>').append('<a href="'+ url +'">'+page+'</a>'));
+        $('.pagination').append($('<li>').append('<a href="'+ url +'">'+(page+1)+'</a>'));
       }
     }
 
@@ -42,6 +42,11 @@
       var lastPageUrl = baseUrl + '?page=' + (totalPages - 1);
       $('.pagination').append($('<li>').append('<a href="'+ lastPageUrl +'">&raquo;</a>'));
     }
+
+    $('.pagination').append($('<input type="hidden">').attr('name', 'totalPages').val(totalPages));
+    $('.pagination').append($('<input type="hidden">').attr('name', 'number').val(currentPage));
+    $('.pagination').append($('<input type="hidden">').attr('name', 'firstPage').val(0));
+    $('.pagination').append($('<input type="hidden">').attr('name', 'lastPage').val(totalPages - 1));
     /*]]>*/
   </script>
 </div>

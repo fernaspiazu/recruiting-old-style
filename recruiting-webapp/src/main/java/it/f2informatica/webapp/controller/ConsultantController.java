@@ -80,10 +80,15 @@ public class ConsultantController {
 
   @RequestMapping(value = "/edit-personal-details", method = RequestMethod.GET)
   public String editPersonalDetails(@RequestParam("consultantId") String consultantId, ModelMap model) {
-    model.addAttribute("edit", true);
-    model.addAttribute("consultantId", consultantId);
-    model.addAttribute("consultantModel", consultantService.findConsultantById(consultantId));
-    return "consultant/consultantForm";
+    Optional<ConsultantModel> consultant = consultantService.findConsultantById(consultantId);
+    if (consultant.isPresent()) {
+      model.addAttribute("edit", true);
+      model.addAttribute("consultantId", consultantId);
+      model.addAttribute("consultantModel", consultant.get());
+      return "consultant/consultantForm";
+    }
+
+    return pageNotFound();
   }
 
   @RequestMapping(value = "/update-personal-details", method = RequestMethod.POST)
