@@ -22,6 +22,7 @@ package it.f2informatica.webapp.test.context;
 import com.google.common.collect.Iterables;
 import it.f2informatica.webapp.WebApplicationConfig;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -103,6 +104,7 @@ public class WebApplicationContextTest {
   }
 
   @Test
+  @Ignore
   public void addViewControllerMappingRootUrlToRedirectHomePage() {
     ArgumentCaptor<String> urlPathArgument = ArgumentCaptor.forClass(String.class);
     ArgumentCaptor<String> viewNameArgument = ArgumentCaptor.forClass(String.class);

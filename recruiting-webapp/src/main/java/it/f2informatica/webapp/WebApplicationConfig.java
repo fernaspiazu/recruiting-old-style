@@ -20,6 +20,7 @@
 package it.f2informatica.webapp;
 
 import it.f2informatica.pagination.DatePatterns;
+import it.f2informatica.webapp.handler.Pages;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -47,10 +48,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan(basePackages = {
-  "it.f2informatica.webapp.controller",
-  "it.f2informatica.webapp.utils"
-})
+@ComponentScan(basePackages = {"it.f2informatica.webapp"})
 public class WebApplicationConfig extends WebMvcConfigurerAdapter {
   public static final String GLOBAL_DATE_FORMAT = DatePatterns.GLOBAL_DATE_FORMAT;
   public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
@@ -69,6 +67,8 @@ public class WebApplicationConfig extends WebMvcConfigurerAdapter {
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("redirect:/home");
+    registry.addViewController("/404").setViewName(Pages.PAGE_NOT_FOUND);
+    registry.addViewController("/500").setViewName(Pages.SERVER_ERROR);
   }
 
   @Override

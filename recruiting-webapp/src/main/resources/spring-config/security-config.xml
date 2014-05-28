@@ -19,7 +19,14 @@
        xmlns:beans="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+  <http pattern="/static/img/favicon.ico" security="none"/>
+
   <http create-session="ifRequired" use-expressions="true">
+    <intercept-url pattern="/400" access="permitAll"/>
+    <intercept-url pattern="/403" access="permitAll"/>
+    <intercept-url pattern="/404" access="permitAll"/>
+    <intercept-url pattern="/500" access="permitAll"/>
+    
     <intercept-url pattern="/login*" access="permitAll" method="GET"/>
     <intercept-url pattern="/static/**" access="isAnonymous() or isAuthenticated()"/>
     <intercept-url pattern="/**" access="isAuthenticated()" method="GET"/>
