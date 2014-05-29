@@ -19,7 +19,8 @@ The technologies required are:
 In order to compile and run application in your local computer it's sufficient to launch these Maven commands:
 
 * `$ mvn clean install`	at the root directory folder level `$ cd recruiting/pom.xml`
-* `$ mvn jetty:run-war -Dspring.profiles.active=mysql` if you have MySQL up and running, or `$ mvn jetty:run-war -Dspring.profiles.active=mongodb` if you have MongoDB up and running. All of this must be done at the recruiting-webapp folder level: `$ cd recruiting/recruiting-webapp/pom.xml`
+* `$ mvn jetty:run-war -Dspring.profiles.active=mysql` if you have MySQL up and running. Or:
+* `$ mvn jetty:run-war -Dspring.profiles.active=mongodb` if you have MongoDB up and running. All of this must be done at the recruiting-webapp folder level: `$ cd recruiting/recruiting-webapp/pom.xml`
 * By the way you could not pass the `-Dspring.profiles.active=mysql` parameter since the default environment selected will always be MySQL. 
 
 As can be seen, the Web server used is [Jetty](http://www.eclipse.org/jetty/). This because in the future it may (potentially) be useful with the aim of introduce the [SPDY](http://en.wikipedia.org/wiki/SPDY) protocol.
