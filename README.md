@@ -2,7 +2,7 @@
 
 Recruiting, is an Open-sourced Web Application which handles the registration, search, recruitment and any other kind of management in a Consultancy company.
 
-It's been built making use of the lightweight container [Spring Framework](http://spring.io/) and, currently can be backed with two databases: [MongoDB](http://www.mongodb.org/) and [MySQL](http://www.mysql.com/), that is, a classic RDBMS and a NoSQL databases. What database technology you use, will depend on what profile you'll use when the container will be started.
+It's been built making use of the lightweight container [Spring Framework](http://spring.io/) and, currently can be backed with two databases: [MongoDB](http://www.mongodb.org/) and [MySQL](http://www.mysql.com/), that is, a classic RDBMS and a NoSQL databases (just to experiment). What database technology you use, will depend on what profile you'll use when the container will be started.
 
 ## Requirements ##
 
