@@ -30,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static it.f2informatica.test.services.builder.UpdatePasswordRequestBuilder.updatePasswordRequest;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PasswordUpdaterServiceTest {

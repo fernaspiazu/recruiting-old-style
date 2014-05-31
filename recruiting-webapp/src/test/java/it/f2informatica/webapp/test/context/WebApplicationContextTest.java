@@ -22,17 +22,18 @@ package it.f2informatica.webapp.test.context;
 import com.google.common.collect.Iterables;
 import it.f2informatica.webapp.WebApplicationConfig;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
@@ -51,31 +52,22 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class WebApplicationContextTest {
 
-  static WebApplicationConfig webApplicationConfig;
+  @Mock
+  private InterceptorRegistry interceptorRegistry;
 
   @Mock
-  ResourceHandlerRegistry handlerRegistry;
+  private ResourceHandlerRegistry handlerRegistry;
 
   @Mock
-  ResourceHandlerRegistration resourceHandlerRegistration;
+  private List<HandlerMethodArgumentResolver> argumentResolvers;
 
   @Mock
-  List<HandlerMethodArgumentResolver> argumentResolvers;
+  private ResourceHandlerRegistration resourceHandlerRegistration;
 
   @Mock
-  ResourceLoader resourceLoader;
+  private DefaultServletHandlerConfigurer servletHandlerConfigurer;
 
-  @Mock
-  ViewControllerRegistry viewControllerRegistry;
-
-  @Mock
-  ViewControllerRegistration viewControllerRegistration;
-
-  @Mock
-  DefaultServletHandlerConfigurer servletHandlerConfigurer;
-
-  @Mock
-  InterceptorRegistry interceptorRegistry;
+  private static WebApplicationConfig webApplicationConfig;
 
   @BeforeClass
   public static void beforeClass() {
@@ -101,24 +93,6 @@ public class WebApplicationContextTest {
 
   private ArgumentCaptor<PageableHandlerMethodArgumentResolver> pageableArgumentCaptor() {
     return ArgumentCaptor.forClass(PageableHandlerMethodArgumentResolver.class);
-  }
-
-  @Test
-  @Ignore
-  public void addViewControllerMappingRootUrlToRedirectHomePage() {
-    ArgumentCaptor<String> urlPathArgument = ArgumentCaptor.forClass(String.class);
-    ArgumentCaptor<String> viewNameArgument = ArgumentCaptor.forClass(String.class);
-
-    when(viewControllerRegistry.addViewController("/")).thenReturn(viewControllerRegistration);
-    doNothing().when(viewControllerRegistration).setViewName("redirect:/home");
-
-    webApplicationConfig.addViewControllers(viewControllerRegistry);
-
-    verify(viewControllerRegistry).addViewController(urlPathArgument.capture());
-    verify(viewControllerRegistration).setViewName(viewNameArgument.capture());
-
-    assertThat("/").isEqualTo(urlPathArgument.getValue());
-    assertThat("redirect:/home").isEqualTo(viewNameArgument.getValue());
   }
 
   @Test

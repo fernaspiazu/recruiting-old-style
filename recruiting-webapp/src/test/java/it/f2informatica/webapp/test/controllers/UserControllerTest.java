@@ -37,25 +37,26 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
+  public static final String USER_ID = "1234567890";
 
   @Mock
   private UserService userService;
 
   @Mock
-  private PasswordUpdaterService passwordUpdaterService;
+  private UserModelValidator userModelValidator;
 
   @Mock
-  private UserModelValidator userModelValidator;
+  private PasswordUpdaterService passwordUpdaterService;
 
   @Mock
   private ValidationResponseHandler validationResponseHandler;
@@ -67,8 +68,7 @@ public class UserControllerTest {
 
   @Before
   public void setUp() {
-    mockMvc = MockMvcBuilders
-      .standaloneSetup(userController)
+    mockMvc = standaloneSetup(userController)
       .setValidator(userModelValidator)
       .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
       .build();
@@ -76,19 +76,24 @@ public class UserControllerTest {
 
   @Test
   public void editUser() throws Exception {
+    UserModel userModel = getUserModel();
+    when(userService.findUserById(USER_ID)).thenReturn(Optional.of(userModel));
+    mockMvc.perform(get("/user/edit?userId=1234567890"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaTypeUTF8.JSON_UTF_8));
+  }
+
+  private UserModel getUserModel() {
     UserModel userModel = new UserModel();
-    userModel.setUserId("1234567890");
+    userModel.setUserId(USER_ID);
     userModel.setUsername("username");
     userModel.setPassword("password");
     userModel.setRole(new RoleModel("123456", "Administrator"));
     userModel.setFirstName("Username");
     userModel.setLastName("Lastname");
     userModel.setEmail("mario.rossi@tiscali.it");
-    when(userService.findUserById("1234567890")).thenReturn(Optional.of(userModel));
-    mockMvc.perform(get("/user/edit?userId=1234567890"))
-      .andDo(print())
-      .andExpect(status().isOk())
-      .andExpect(header().string(HttpHeader.CONTENT_TYPE.asString(), MediaTypeUTF8.JSON_UTF_8));
+    return userModel;
   }
 
   @Test
