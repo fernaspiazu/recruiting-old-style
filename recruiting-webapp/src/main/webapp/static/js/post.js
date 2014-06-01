@@ -11,7 +11,7 @@ $(document).ready(function() {
 	$form.bind('submit', function(event) {
 		var $inputs = $form.find(':input');
 		var data = collectFormData($inputs);
-		var url = contextRoot + asyncUrl;
+		var url = evaluateContextRoot() + asyncUrl;
 
 		firedSubmitEvent = $(":input[type='submit'][clicked=true]").attr("value");
 		data["submitEvent"] = firedSubmitEvent;

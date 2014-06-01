@@ -24,7 +24,7 @@
   </div>
   <div class="row">
     <div class="col-md-10">
-      <table class="table table-bordered table-striped default-datatable">
+      <table id="userTable" class="tableServerSide table table-bordered table-striped default-datatable">
         <thead>
         <tr>
           <th th:text="#{user.username}">Username</th>
@@ -38,7 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}" th:id="${user.userId}">
+        <!--<tr th:each="user : ${users}" th:id="${user.userId}">
           <td th:text="${user.username}">mario_r</td>
           <td th:text="${user.role.roleName}">Administrator</td>
           <td th:text="${user.lastName}">Rossi</td>
@@ -53,13 +53,13 @@
           <td style="text-align: center;">
             <div class="glyphicon glyphicon-lock click-icon change-password" th:title="#{user.changepwd}"></div>
           </td>
-        </tr>
+        </tr>-->
         </tbody>
       </table>
       <hr/>
       <div class="control-group pull-right">
         <div class="controls">
-          <button type="button" id="newUserButton" class="btn btn-primary" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
+          <button type="button" id="newUserButton" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
         </div>
       </div>
     </div>
@@ -117,8 +117,8 @@
                 </div>
               </fieldset>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-                <button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-primary" th:text="#{global.save}">Save</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.close}">Close</button>
+                <button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-primary btn-sm" th:text="#{global.save}">Save</button>
               </div>
             </form>
           </div>
@@ -136,8 +136,8 @@
             <p th:text="#{user.deleteuser.msg}">Are you sure to want to delete this User</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
-            <button type="button" id="deleteUserBtn" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
+            <button type="button" id="deleteUserBtn" class="btn btn-danger btn-sm" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
           </div>
         </div>
       </div>
@@ -150,69 +150,20 @@
   </div>
 </div>
 <script th:src="@{/static/js/post.js}" src="../../../static/js/post.js"></script>
+<script th:src="@{/static/js/users.js}" src="../../../static/js/users.js"></script>
+<script th:src="@{/static/js/pagination-serverside.js}" src="../../../static/js/pagination-serverside.js"></script>
 <script th:inline="javascript">
   /*<![CDATA[*/
   var targetForm = "#userModelForm";
   var asyncUrl = "/user/validate-user";
-  var contextRoot = /*[[${#httpServletRequest.getContextPath()}]]*/ 'http://localhost:8080/recruiting';
 
-  $("#userFormModal").on("shown.bs.modal", function (e) {
-    $("#username").focus();
-  });
+  var userParams = {
+    'userFormModal' : '#userFormModal',
+    'saveLabelBtn' : /*[[#{global.save}]]*/ 'Save',
+    'updateLabelBtn' : /*[[#{global.update}]]*/ 'Update'
+  };
+  $user.init(userParams);
 
-  $("#userFormModal").on("hidden.bs.modal", function (e) {
-    $("#userModelForm").find("input, select").each(function (i, element) {
-      resetAllErrorMessages();
-      $(element).val("");
-    });
-  });
-
-  $("#newUserButton").click(function () {
-    var saveLabel = /*[[#{global.save}]]*/ 'Save';
-    $("#password").parent().parent().show();
-    $('#userModelForm').attr('action', contextRoot + '/user/save');
-    $('#submitEvent').html(saveLabel).val('save');
-  });
-
-  $(".edit-user").click(function () {
-    var userId = $(this).closest('tr').attr('id');
-    var url = contextRoot + "/user/edit";
-    $.get(url, {"userId": userId}, function (data) {
-      $('#userId').val(data.userId);
-      $('#username').val(data.username).focus();
-      $('#firstName').val(data.firstName);
-      $('#lastName').val(data.lastName);
-      $('#email').val(data.email);
-      $('#role').val(data.role.roleId);
-      $("#password").parent().parent().hide();
-      $('#userModelForm').attr('action', contextRoot + '/user/update');
-      var updateLabel = /*[[#{global.update}]]*/ 'Update';
-      $('#submitEvent').html(updateLabel).val('update');
-      $("#userFormModal").modal({
-        'show': true,
-        'backdrop': 'static'
-      });
-    });
-  });
-
-  $('.delete-user').click(function () {
-    var userId = $(this).closest('tr').attr('id');
-    $("#deleteUserMessageModal").modal({
-      'show': true,
-      'backdrop': 'static'
-    });
-    $('#deleteUserBtn').val(userId);
-  });
-
-  $('#deleteUserBtn').click(function () {
-    var userId = $(this).val();
-    window.location = contextRoot + '/user/delete?' + $.param({'userId': userId});
-  });
-
-  $('.change-password').click(function () {
-    var userId = $(this).closest('tr').attr('id');
-    window.location = contextRoot + '/user/change-password?' + $.param({'userId': userId});
-  });
   /*]]>*/
 </script>
 </body>

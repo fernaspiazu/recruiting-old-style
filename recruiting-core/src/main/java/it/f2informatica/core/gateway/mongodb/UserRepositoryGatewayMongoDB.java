@@ -33,6 +33,7 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
+import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -112,6 +113,11 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
     return new PageImpl<>(Lists.newArrayList(
       userToModelConverter.convertIterable(userRepository.findAllExcludingUser(pageable, usernameToExclude))
     ));
+  }
+
+  @Override
+  public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
+    return null;
   }
 
   @Override

@@ -23,6 +23,7 @@ import com.google.common.base.Optional;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
+import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +50,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public Optional<UserModel> findByUsernameAndPassword(String username, String password) {
     return Optional.fromNullable(userRepositoryGateway.findByUsernameAndPassword(username, password));
+  }
+
+  @Override
+  public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
+    return userRepositoryGateway.getAllUsersPaginated(parameters, currentUsername);
   }
 
   @Override

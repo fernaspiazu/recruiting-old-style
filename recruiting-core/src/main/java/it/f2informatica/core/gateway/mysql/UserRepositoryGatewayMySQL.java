@@ -21,6 +21,8 @@ package it.f2informatica.core.gateway.mysql;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.jpa.impl.JPAQuery;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.AuthenticationModel;
@@ -28,10 +30,13 @@ import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UpdatePasswordModel;
 import it.f2informatica.core.model.UserModel;
 import it.f2informatica.mysql.MySQL;
+import it.f2informatica.mysql.Persistence;
 import it.f2informatica.mysql.domain.Role;
 import it.f2informatica.mysql.domain.User;
 import it.f2informatica.mysql.repositories.RoleRepository;
 import it.f2informatica.mysql.repositories.UserRepository;
+import it.f2informatica.pagination.services.PaginationService;
+import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -42,15 +47,27 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static it.f2informatica.mysql.domain.QUser.*;
+
 @MySQL
 @Service
+@Transactional
 public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
+
+  @PersistenceContext(name = Persistence.PERSISTENCE_UNIT_NAME)
+  private EntityManager entityManager;
 
   @Autowired
   private UserRepository userRepository;
 
   @Autowired
   private RoleRepository roleRepository;
+
+  @Autowired
+  private PaginationService paginationService;
 
   @Autowired
   @Qualifier("mysqlUserToModelConverter")
@@ -85,31 +102,40 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
   }
 
   @Override
-  @Transactional(readOnly = true)
   public UserModel findUserById(String userId) {
     return mysqlUserToModelConverter.convert(userRepository.findOne(Long.parseLong(userId)));
   }
 
   @Override
-  @Transactional(readOnly = true)
   public UserModel findByUsername(String username) {
     return mysqlUserToModelConverter.convert(userRepository.findByUsername(username));
   }
 
   @Override
-  @Transactional(readOnly = true)
   public UserModel findByUsernameAndPassword(String username, String password) {
     return mysqlUserToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
   }
 
   @Override
-  @Transactional(readOnly = true)
   public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
     return new PageImpl<>(mysqlUserToModelConverter.convertList(userRepository.findAllExcludingCurrentUser(usernameToExclude)));
   }
 
   @Override
-  @Transactional(readOnly = true)
+  public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
+    BooleanBuilder whereCondition = new BooleanBuilder(user.username.notEqualsIgnoreCase(currentUsername));
+    if (StringUtils.hasText(parameters.getSearchCriteria())) {
+      whereCondition.and(user.username.toLowerCase().like(contains(parameters.getSearchCriteria())));
+    }
+    JPAQuery jpaQuery = new JPAQuery(entityManager).from(user).where(whereCondition.getValue());
+    return paginationService.getPaginatedResultAsJson(parameters, jpaQuery, user);
+  }
+
+  private static String contains(String value) {
+    return "%" + value.toLowerCase() + "%";
+  }
+
+  @Override
   public Iterable<UserModel> findUsersByRoleName(String roleName) {
     return mysqlUserToModelConverter.convertIterable(userRepository.findByRoleName(roleName));
   }
@@ -147,13 +173,11 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
   }
 
   @Override
-  @Transactional(readOnly = true)
   public Iterable<RoleModel> loadRoles() {
     return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
   }
 
   @Override
-  @Transactional(readOnly = true)
   public RoleModel findRoleByName(String roleName) {
     return roleToRoleModel().apply(roleRepository.findByName(roleName));
   }
@@ -171,7 +195,6 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
   }
 
   @Override
-  @Transactional(readOnly = true)
   public boolean isCurrentPasswordValid(String userId, String currentPwd) {
     return userRepository.findByIdAndPassword(Long.parseLong(userId), currentPwd) != null;
   }

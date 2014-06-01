@@ -19,12 +19,21 @@
  */
 package it.f2informatica.pagination.services;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.mysema.query.Tuple;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Expression;
+import com.mysema.query.types.Order;
+import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.DslExpression;
+import com.mysema.query.types.expr.SimpleExpression;
 import it.f2informatica.pagination.repository.PaginationRepository;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -78,6 +87,12 @@ public class PaginationServiceImpl implements PaginationService {
   }
 
   @Override
+  public String getPaginatedResultAsJson(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args) {
+    Page<Tuple> paginatedQueryResult = getPaginatedResult(parameters, jpaQuery, args);
+    return gson.toJson(createDatatableAttributes(parameters, paginatedQueryResult));
+  }
+
+  @Override
   public <T> String getPaginatedResultAsJson(QueryParameters parameters, Predicate predicate, Class<T> entityClass) {
     Page<T> paginatedQueryResult = getPaginatedResult(parameters, predicate, entityClass);
     return gson.toJson(createDatatableAttributes(parameters, paginatedQueryResult));
@@ -92,6 +107,27 @@ public class PaginationServiceImpl implements PaginationService {
   @Override
   public <T> Page<T> getPaginatedResult(QueryParameters parameters, Class<T> entityClass) {
     return getRepository(entityClass).findAll(getPageable(parameters));
+  }
+
+  @Override
+  public Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args) {
+    // TODO: I have to make this getting work
+//    Optional<Sort> sort = getSort(parameters);
+//    if (sort.isPresent() && args.length >= 0) {
+//      jpaQuery.orderBy(extractOrderSpecifiers(sort.get(), args));
+//    }
+    List<Tuple> result = jpaQuery.offset(parameters.getDisplayStart()).limit(parameters.getSize()).list(args);
+    return new PageImpl<>(result, getPageable(parameters), jpaQuery.count());
+  }
+
+  private OrderSpecifier[] extractOrderSpecifiers(Sort order, final Expression<?>... args) {
+    return FluentIterable.from(order).transform(new Function<Sort.Order, OrderSpecifier>() {
+      @Override @SuppressWarnings("unchecked")
+      public OrderSpecifier apply(Sort.Order order) {
+        //((SimpleExpression) args[0]).
+        return new OrderSpecifier(order.isAscending() ? Order.ASC : Order.DESC, args[0]);
+      }
+    }).toArray(OrderSpecifier.class);
   }
 
   @Override
@@ -124,14 +160,23 @@ public class PaginationServiceImpl implements PaginationService {
   private <T> List<Map<String, Object>> constructDataFrom(QueryParameters parameters, Page<T> paginatedQueryResult) {
     List<Map<String, Object>> data = Lists.newArrayList();
     for (T entity : paginatedQueryResult.getContent()) {
+      T tuple = resolveTuple(entity);
       Map<String, Object> row = Maps.newHashMap();
       for (int columnIndex = 0; columnIndex < parameters.getColumnsNumber(); columnIndex++) {
         String field = parameters.getColumnName(columnIndex);
-        row.put(field, new SafeGetterMethodExecutor().invokeGetter(field, entity));
+        row.put(field, new SafeGetterMethodExecutor().invokeGetter(field, tuple));
       }
       data.add(row);
     }
     return data;
+  }
+
+  @SuppressWarnings("unchecked")
+  private <T> T resolveTuple(T entity) {
+    if (entity instanceof Tuple) {
+      return (T) ((Tuple) entity).toArray()[0];
+    }
+    return entity;
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})

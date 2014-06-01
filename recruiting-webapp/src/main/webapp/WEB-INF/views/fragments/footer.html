@@ -23,45 +23,34 @@
   </div>
   <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    $(document).ready(function () {
-      $(".default-datatable").dataTable({
-        "iDisplayLength": 10,
-        "bLengthChange": true,
-        "sDom": "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
-        "sPaginationType": "bootstrap",
-        "bInfo": true,
-        "oLanguage": languageSettings()
-      });
+    var oLanguage = {
+      "sEmptyTable": /*[[#{table.emptyTable}]]*/   "No data available in table",
+      "sInfo": /*[[#{table.info}]]*/ "Showing _START_ to _END_ of _TOTAL_ entries",
+      "sInfoEmpty": /*[[#{table.infoEmpty}]]*/ "Showing 0 to 0 of 0 entries",
+      "sInfoFiltered": /*[[#{table.infoFiltered}]]*/ "(filtered from _MAX_ total entries)",
+      "sInfoPostFix": "",
+      "sInfoThousands": /*[[#{table.thousands}]]*/ ",",
+      "sLengthMenu": /*[[#{table.entriesShowed}]]*/ "Show _MENU_ entries",
+      "sLoadingRecords": /*[[#{table.loading}]]*/ "Loading...",
+      "sProcessing": /*[[#{table.processing}]]*/ "Processing...",
+      "sSearch": /*[[#{table.search}]]*/ "Search:",
+      "sZeroRecords": /*[[#{table.emptyFiltered}]]*/ "No matching records found",
+      "oPaginate": {
+        "sFirst": /*[[#{table.first}]]*/ "First",
+        "sLast": /*[[#{table.last}]]*/ "Last",
+        "sNext": /*[[#{table.next}]]*/ "Next",
+        "sPrevious": /*[[#{table.previous}]]*/ "Previous"
+      },
+      "oAria": {
+        "sSortAscending": ": activate to sort column ascending",
+        "sSortDescending": ": activate to sort column descending"
+      }
+    };
 
+    $(document).ready(function () {
       $(".default-datatable").parent().find("input[type='text']").addClass("form-control input-sm").css({"width": 250});
       $(".default-datatable").parent().find("select").addClass("form-control input-sm");
     });
-
-    function languageSettings() {
-      return {
-        "sEmptyTable": /*[[#{table.emptyTable}]]*/   "No data available in table",
-        "sInfo": /*[[#{table.info}]]*/ "Showing _START_ to _END_ of _TOTAL_ entries",
-        "sInfoEmpty": /*[[#{table.infoEmpty}]]*/ "Showing 0 to 0 of 0 entries",
-        "sInfoFiltered": /*[[#{table.infoFiltered}]]*/ "(filtered from _MAX_ total entries)",
-        "sInfoPostFix": "",
-        "sInfoThousands": /*[[#{table.thousands}]]*/ ",",
-        "sLengthMenu": /*[[#{table.entriesShowed}]]*/ "Show _MENU_ entries",
-        "sLoadingRecords": /*[[#{table.loading}]]*/ "Loading...",
-        "sProcessing": /*[[#{table.processing}]]*/ "Processing...",
-        "sSearch": /*[[#{table.search}]]*/ "Search:",
-        "sZeroRecords": /*[[#{table.emptyFiltered}]]*/ "No matching records found",
-        "oPaginate": {
-          "sFirst": /*[[#{table.first}]]*/ "First",
-          "sLast": /*[[#{table.last}]]*/ "Last",
-          "sNext": /*[[#{table.next}]]*/ "Next",
-          "sPrevious": /*[[#{table.previous}]]*/ "Previous"
-        },
-        "oAria": {
-          "sSortAscending": ": activate to sort column ascending",
-          "sSortDescending": ": activate to sort column descending"
-        }
-      };
-    }
     /*]]>*/
   </script>
 </div>

@@ -112,14 +112,13 @@
             </div>
           </div>
         </div>
-        <div class="control-group pull-left">
-          <a class="btn btn-default btn-sm" th:href="@{'/consultants'}" th:text="#{global.back}">Back</a>
-        </div>
-        <div class="control-group pull-right" th:if="${edit}">
-          <button type="submit" name="submitEvent" value="update" class="btn btn-primary btn-sm" th:text="#{global.update}">Update</button>
-        </div>
-        <div class="control-group pull-right" th:unless="${edit}">
-          <button type="submit" name="submitEvent" value="save" class="btn btn-primary btn-sm" th:text="#{global.save}">Save</button>
+        <div class="control-group pull-right">
+          <a class="btn btn-default btn-sm" th:href="@{'/consultants'}" th:inline="text">
+            <div class="glyphicon glyphicon-circle-arrow-left"></div>
+            [[#{global.back}]]
+          </a>
+          <button th:if="${edit}" type="submit" name="submitEvent" value="update" class="btn btn-primary btn-sm" th:text="#{global.update}">Update</button>
+          <button th:unless="${edit}" type="submit" name="submitEvent" value="save" class="btn btn-success btn-sm" th:text="#{global.save}">Save</button>
         </div>
       </div>
       <div class="col-md-5">

@@ -23,6 +23,7 @@ import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UpdatePasswordModel;
 import it.f2informatica.core.model.UserModel;
+import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -39,6 +40,8 @@ public interface UserRepositoryGateway {
   UserModel findByUsernameAndPassword(String username, String password);
 
   Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
+
+  String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
 
   Iterable<UserModel> findUsersByRoleName(String roleName);
 

@@ -19,6 +19,9 @@
  */
 package it.f2informatica.pagination.services;
 
+import com.mysema.query.Tuple;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Expression;
 import com.mysema.query.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,11 +37,15 @@ public interface PaginationService {
 
   <T> String getPaginatedResultAsJson(QueryParameters parameters, Class<T> entityClass);
 
+  String getPaginatedResultAsJson(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
+
   <T> String getPaginatedResultAsJson(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
 
   <T> String getPaginatedResultAsJson(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
 
   <T> Page<T> getPaginatedResult(QueryParameters parameters, Class<T> entityClass);
+
+  Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
 
   <T> Page<T> getPaginatedResult(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
 

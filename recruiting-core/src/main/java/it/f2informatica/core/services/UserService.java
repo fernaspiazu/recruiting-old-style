@@ -22,6 +22,7 @@ package it.f2informatica.core.services;
 import com.google.common.base.Optional;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
+import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -32,6 +33,8 @@ public interface UserService {
   Optional<UserModel> findByUsername(String username);
 
   Optional<UserModel> findByUsernameAndPassword(String username, String password);
+
+  String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
 
   Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 

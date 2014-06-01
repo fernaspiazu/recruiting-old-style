@@ -22,7 +22,6 @@ package it.f2informatica.webapp.controller;
 import it.f2informatica.core.model.query.ConsultantSearchCriteria;
 import it.f2informatica.core.services.ConsultantService;
 import it.f2informatica.core.services.UserService;
-import it.f2informatica.webapp.security.SecurityAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,9 +40,6 @@ public class NavBarController {
   private UserService userService;
 
   @Autowired
-  private SecurityAccessor securityAccessor;
-
-  @Autowired
   private ConsultantService consultantService;
 
   @RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -53,11 +49,9 @@ public class NavBarController {
   }
 
   @RequestMapping(value = {"/user", "/users"}, method = RequestMethod.GET)
-  public String userManagementPage(ModelMap model, Pageable pageable) {
-    String currentUser = securityAccessor.getCurrentUsername();
+  public String userManagementPage(ModelMap model) {
     model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 1);
     model.addAttribute(SessionAttribute.ROLES, userService.loadRoles());
-    model.addAttribute("users", userService.findAllExcludingCurrentUser(pageable, currentUser));
     model.addAttribute("userModel", userService.buildEmptyUserModel());
     return "user/users";
   }

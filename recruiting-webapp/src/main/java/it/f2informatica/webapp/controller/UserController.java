@@ -28,7 +28,10 @@ import it.f2informatica.core.validator.UpdatePasswordModelValidator;
 import it.f2informatica.core.validator.UserModelValidator;
 import it.f2informatica.core.validator.utils.ValidationResponse;
 import it.f2informatica.core.validator.utils.ValidationResponseHandler;
+import it.f2informatica.pagination.services.QueryParameters;
+import it.f2informatica.webapp.security.SecurityAccessor;
 import it.f2informatica.webapp.utils.CurrentHttpRequest;
+import it.f2informatica.webapp.utils.HttpRequestQueryParameters;
 import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +50,9 @@ public class UserController {
   private CurrentHttpRequest httpRequest;
 
   @Autowired
+  private SecurityAccessor securityAccessor;
+
+  @Autowired
   private UserModelValidator userModelValidator;
 
   @Autowired
@@ -57,6 +63,12 @@ public class UserController {
 
   @Autowired
   private UpdatePasswordModelValidator updatePasswordModelValidator;
+
+  @RequestMapping(value = "/load-users", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
+  public @ResponseBody String loadUsers() {
+    QueryParameters parameters = new HttpRequestQueryParameters(httpRequest.getCurrentHttpRequest());
+    return userService.getAllUsersPaginated(parameters, securityAccessor.getCurrentUsername());
+  }
 
   @RequestMapping(value = "/save", method = RequestMethod.POST)
   public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
