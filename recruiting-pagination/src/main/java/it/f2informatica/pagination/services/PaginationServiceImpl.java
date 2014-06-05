@@ -19,9 +19,7 @@
  */
 package it.f2informatica.pagination.services;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -32,8 +30,7 @@ import com.mysema.query.types.Expression;
 import com.mysema.query.types.Order;
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
-import com.mysema.query.types.expr.DslExpression;
-import com.mysema.query.types.expr.SimpleExpression;
+import com.mysema.query.types.path.EntityPathBase;
 import it.f2informatica.pagination.repository.PaginationRepository;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -111,23 +108,18 @@ public class PaginationServiceImpl implements PaginationService {
 
   @Override
   public Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args) {
-    // TODO: I have to make this getting work
-//    Optional<Sort> sort = getSort(parameters);
-//    if (sort.isPresent() && args.length >= 0) {
-//      jpaQuery.orderBy(extractOrderSpecifiers(sort.get(), args));
-//    }
-    List<Tuple> result = jpaQuery.offset(parameters.getDisplayStart()).limit(parameters.getSize()).list(args);
+    List<Tuple> result = jpaQuery.orderBy(extractOrderSpecifier(parameters, args))
+      .offset(parameters.getDisplayStart())
+      .limit(parameters.getSize()).list(args);
     return new PageImpl<>(result, getPageable(parameters), jpaQuery.count());
   }
 
-  private OrderSpecifier[] extractOrderSpecifiers(Sort order, final Expression<?>... args) {
-    return FluentIterable.from(order).transform(new Function<Sort.Order, OrderSpecifier>() {
-      @Override @SuppressWarnings("unchecked")
-      public OrderSpecifier apply(Sort.Order order) {
-        //((SimpleExpression) args[0]).
-        return new OrderSpecifier(order.isAscending() ? Order.ASC : Order.DESC, args[0]);
-      }
-    }).toArray(OrderSpecifier.class);
+  @SuppressWarnings("unchecked")
+  private OrderSpecifier extractOrderSpecifier(QueryParameters parameters, Expression<?>... args) {
+    final String sortColumn = parameters.getSortColumn();
+    final String sortDirection = parameters.getSortDirection();
+    Order order = (Sort.Direction.ASC.compareTo(getDirection(sortDirection)) == 0) ? Order.ASC : Order.DESC;
+    return new OrderSpecifier<>(order, new EntityPathBase(args[0].getType(), suppressUniquePrefixIfAny(sortColumn)));
   }
 
   @Override
@@ -229,9 +221,9 @@ public class PaginationServiceImpl implements PaginationService {
         }
         realComposedField.add(fakeField);
       }
-      return org.apache.commons.lang3.StringUtils.join(realComposedField, separator);
+      return org.apache.commons.lang3.StringUtils.join(realComposedField, separator).replace("_", ".");
     }
-    return sortColumn;
+    return sortColumn.replace("_", ".");
   }
 
   /**
