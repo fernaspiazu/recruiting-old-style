@@ -54,7 +54,7 @@ public class User implements Serializable {
   @Column(name = "email")
   private String email;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "role_id")
   private Role role;
 
