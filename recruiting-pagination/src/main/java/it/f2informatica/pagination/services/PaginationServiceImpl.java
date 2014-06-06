@@ -108,18 +108,16 @@ public class PaginationServiceImpl implements PaginationService {
 
   @Override
   public Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args) {
-    List<Tuple> result = jpaQuery.orderBy(extractOrderSpecifier(parameters, args))
+    List<Tuple> result = jpaQuery.orderBy(getOrderSpecifier(parameters, args))
       .offset(parameters.getDisplayStart())
       .limit(parameters.getSize()).list(args);
     return new PageImpl<>(result, getPageable(parameters), jpaQuery.count());
   }
 
   @SuppressWarnings("unchecked")
-  private OrderSpecifier extractOrderSpecifier(QueryParameters parameters, Expression<?>... args) {
-    final String sortColumn = parameters.getSortColumn();
-    final String sortDirection = parameters.getSortDirection();
-    Order order = (Sort.Direction.ASC.compareTo(getDirection(sortDirection)) == 0) ? Order.ASC : Order.DESC;
-    return new OrderSpecifier<>(order, new EntityPathBase(args[0].getType(), suppressUniquePrefixIfAny(sortColumn)));
+  private OrderSpecifier getOrderSpecifier(QueryParameters parameters, Expression<?>... args) {
+    Order order = (Sort.Direction.ASC.compareTo(getDirection(parameters.getSortDirection())) == 0) ? Order.ASC : Order.DESC;
+    return new OrderSpecifier<>(order, new EntityPathBase(args[0].getType(), suppressUniquePrefixIfAny(parameters.getSortColumn())));
   }
 
   @Override
