@@ -208,7 +208,6 @@ public class PaginationServiceImpl implements PaginationService {
 
   /*
    * Since it's been switched Entity relationships from @OneToOne to
-   *
    * @OneToMany / @ManyToOne, some getter fields has consequently changed by
    * adding the prefix 'unique', so, for each method Set<T> getEntity(), it will
    * be a T getUniqueEntity() method. This method helps to take away the unique
