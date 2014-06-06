@@ -264,15 +264,15 @@ public class PaginationServiceImpl implements PaginationService {
           break;
         } else if (!field.equals(fieldName)) {
         /*
-				 * If the current field is not equals to the nested
-				 * field properties, then it will call itself until
-				 * reach the last property (via Recursive Call).
-				 * On the other hand, fieldName.substring(field.length() + 1)
-				 * means that I'm passing the entire nested field path
-				 * to the next recursive call, except the current property
-				 * evaluated considering also the 'dot'.
-				 * For example, if we have "someProperty." (will be excluded)
-				 */
+	 * If the current field is not equals to the nested
+	 * field properties, then it will call itself until
+	 * reach the last property (via Recursive Call).
+	 * On the other hand, fieldName.substring(field.length() + 1)
+	 * means that I'm passing the entire nested field path
+	 * to the next recursive call, except the current property
+	 * evaluated considering also the 'dot'.
+	 * For example, if we have "someProperty." (will be excluded)
+	 */
           return _invokeGetter(fieldName.substring(field.length() + 1), result.get());
         }
       }
