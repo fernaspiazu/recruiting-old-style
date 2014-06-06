@@ -108,16 +108,12 @@ public class PaginationServiceImpl implements PaginationService {
 
   @Override
   public Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args) {
-    List<Tuple> result = jpaQuery.orderBy(getOrderSpecifier(parameters, args))
-      .offset(parameters.getDisplayStart())
-      .limit(parameters.getSize()).list(args);
+    Optional<OrderSpecifier> orderSpecifier = getOrderSpecifier(parameters, args);
+    if (orderSpecifier.isPresent()) {
+      jpaQuery.orderBy(orderSpecifier.get());
+    }
+    List<Tuple> result = jpaQuery.offset(parameters.getDisplayStart()).limit(parameters.getSize()).list(args);
     return new PageImpl<>(result, getPageable(parameters), jpaQuery.count());
-  }
-
-  @SuppressWarnings("unchecked")
-  private OrderSpecifier getOrderSpecifier(QueryParameters parameters, Expression<?>... args) {
-    Order order = (Sort.Direction.ASC.compareTo(getDirection(parameters.getSortDirection())) == 0) ? Order.ASC : Order.DESC;
-    return new OrderSpecifier<>(order, new EntityPathBase(args[0].getType(), suppressUniquePrefixIfAny(parameters.getSortColumn())));
   }
 
   @Override
@@ -192,6 +188,17 @@ public class PaginationServiceImpl implements PaginationService {
     return (StringUtils.hasText(sortColumn) && StringUtils.hasText(sortDirection))
       ? Optional.of(new Sort(getDirection(sortDirection), suppressUniquePrefixIfAny(sortColumn)))
       : Optional.<Sort>absent();
+  }
+
+  @SuppressWarnings("unchecked")
+  private Optional<OrderSpecifier> getOrderSpecifier(QueryParameters parameters, Expression<?>... args) {
+    final String sortColumn = parameters.getSortColumn();
+    final String sortDirection = parameters.getSortDirection();
+    if (StringUtils.hasText(sortColumn) && StringUtils.hasText(sortDirection)) {
+      Order order = (Sort.Direction.ASC.compareTo(getDirection(sortDirection)) == 0) ? Order.ASC : Order.DESC;
+      return Optional.of(new OrderSpecifier(order, new EntityPathBase(args[0].getType(), suppressUniquePrefixIfAny(sortColumn))));
+    }
+    return Optional.absent();
   }
 
   private Sort.Direction getDirection(String sortDirection) {
