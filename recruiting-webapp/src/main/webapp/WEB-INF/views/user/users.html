@@ -38,22 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        <!--<tr th:each="user : ${users}" th:id="${user.userId}">
-          <td th:text="${user.username}">mario_r</td>
-          <td th:text="${user.role.roleName}">Administrator</td>
-          <td th:text="${user.lastName}">Rossi</td>
-          <td th:text="${user.firstName}">Mario</td>
-          <td th:text="${user.email}">mario.rossi@libero.it</td>
-          <td style="text-align: center;">
-            <div class="glyphicon glyphicon-edit click-icon edit-user" th:title="#{global.edit}"></div>
-          </td>
-          <td style="text-align: center;">
-            <div class="glyphicon glyphicon-trash click-icon delete-user" th:title="#{global.delete}"></div>
-          </td>
-          <td style="text-align: center;">
-            <div class="glyphicon glyphicon-lock click-icon change-password" th:title="#{user.changepwd}"></div>
-          </td>
-        </tr>-->
+          <!-- Built by datatables -->
         </tbody>
       </table>
       <hr/>
@@ -156,14 +141,13 @@
   /*<![CDATA[*/
   var targetForm = "#userModelForm";
   var asyncUrl = "/user/validate-user";
-
   var userParams = {
     'userFormModal' : '#userFormModal',
     'saveLabelBtn' : /*[[#{global.save}]]*/ 'Save',
     'updateLabelBtn' : /*[[#{global.update}]]*/ 'Update'
   };
-  $user.init(userParams);
 
+  $user.init(userParams);
   /*]]>*/
 </script>
 </body>
