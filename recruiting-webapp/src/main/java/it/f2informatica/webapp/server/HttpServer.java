@@ -26,7 +26,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import java.io.File;
 import java.security.ProtectionDomain;
 
-public class RecruitingMain {
+public class HttpServer {
   private static final boolean IS_PROCESSING = Boolean.parseBoolean(System.getProperty("processing.config"));
   private static final String LOCAL_WAR_DIR = "./src/main/webapp";
 
@@ -58,7 +58,7 @@ public class RecruitingMain {
     if (new File(LOCAL_WAR_DIR).exists()) {
       return LOCAL_WAR_DIR;
     }
-    ProtectionDomain domain = RecruitingMain.class.getProtectionDomain();
+    ProtectionDomain domain = HttpServer.class.getProtectionDomain();
     return domain.getCodeSource().getLocation().toString();
   }
 

@@ -32,9 +32,10 @@
   <properties>
     <contextPath>recruiting</contextPath>
     <maven.war.version>2.4</maven.war.version>
+    <exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
     <thymeleaf.version>2.1.2.RELEASE</thymeleaf.version>
     <thymeleaf-testing.version>2.1.2.RELEASE</thymeleaf-testing.version>
-    <jetty-maven-plugin.version>9.1.3.v20140225</jetty-maven-plugin.version>
+    <npn.version>1.7_u45</npn.version>
   </properties>
 
   <build>
@@ -50,13 +51,14 @@
         <version>${maven.war.version}</version>
         <configuration>
           <archiveClasses>false</archiveClasses>
+          <outputDirectory>${basedir}/target/webapps</outputDirectory>
           <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
           <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>/WEB-INF/lib</classpathPrefix>
-              <mainClass>it.f2informatica.webapp.server.RecruitingMain</mainClass>
+              <mainClass>it.f2informatica.webapp.server.HttpServer</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -64,19 +66,108 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>${jetty-maven-plugin.version}</version>
+        <version>${jetty.version}</version>
         <configuration>
+          <stopPort>9966</stopPort>
+          <stopKey>quit</stopKey>
+          <jvmArgs>
+            -Xbootclasspath/p:${basedir}/npn/npn-boot-${npn.version}.jar -Dspring.profiles.active=mysql
+          </jvmArgs>
+          <jettyXml>${basedir}/src/main/config/recruiting-jetty-spdy.xml</jettyXml>
           <war>${project.build.directory}/${contextPath}.war</war>
           <webApp>
             <contextPath>/${contextPath}</contextPath>
           </webApp>
           <scanIntervalSeconds>5</scanIntervalSeconds>
-          <stopPort>9966</stopPort>
-          <stopKey>recruiting</stopKey>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.eclipse.jetty.spdy</groupId>
+            <artifactId>spdy-http-server</artifactId>
+            <version>${jetty.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>mysql</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>${exec-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <mainClass>it.f2informatica.webapp.server.SpdyServer</mainClass>
+              <systemProperties>
+                <systemProperty>
+                  <key>spring.profiles.active</key>
+                  <value>mysql</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>jetty.home</key>
+                  <value>${basedir}/src/main/resources/jetty</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>webapp.target</key>
+                  <value>${basedir}/target</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>mongodb</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>${exec-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <mainClass>it.f2informatica.webapp.server.SpdyServer</mainClass>
+              <systemProperties>
+                <systemProperty>
+                  <key>spring.profiles.active</key>
+                  <value>mongodb</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>jetty.home</key>
+                  <value>${basedir}/src/main/resources/jetty</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>webapp.target</key>
+                  <value>${basedir}/target</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -167,25 +258,49 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
+
+    <!-- Jetty Web Server dependencies -->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
-      <version>${jetty-maven-plugin.version}</version>
+      <version>${jetty.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty-maven-plugin.version}</version>
+      <artifactId>jetty-deploy</artifactId>
+      <version>${jetty.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${jetty-maven-plugin.version}</version>
+      <artifactId>jetty-util</artifactId>
+      <version>${jetty.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-rewrite</artifactId>
-      <version>${jetty-maven-plugin.version}</version>
+      <artifactId>jetty-io</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jmx</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+
+    <!-- Jetty SPDY modules -->
+    <dependency>
+      <groupId>org.eclipse.jetty.spdy</groupId>
+      <artifactId>spdy-server</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.spdy</groupId>
+      <artifactId>spdy-http-server</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.assoba.open</groupId>
+      <artifactId>npn-boot</artifactId>
+      <version>${npn.version}</version>
     </dependency>
 
     <!-- Test Frameworks -->
