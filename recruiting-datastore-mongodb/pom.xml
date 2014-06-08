@@ -29,7 +29,7 @@
   <description>Recruiting datastore module backed with MongoDB</description>
 
   <properties>
-    <spring-data-mongodb.version>1.4.1.RELEASE</spring-data-mongodb.version>
+    <spring-data-mongodb.version>1.5.0.RELEASE</spring-data-mongodb.version>
   </properties>
 
   <build>

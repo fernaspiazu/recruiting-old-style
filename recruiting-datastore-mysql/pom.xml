@@ -34,9 +34,9 @@
     <mysql.user>development</mysql.user>
     <mysql.password>development</mysql.password>
     <hibernate-jpa.version>1.0.0.Final</hibernate-jpa.version>
-    <hibernate-entitymanager.version>4.3.4.Final</hibernate-entitymanager.version>
-    <mysql-connector-java.version>5.1.29</mysql-connector-java.version>
-    <c3p0.version>0.9.5-pre7</c3p0.version>
+    <hibernate.version>4.3.5.Final</hibernate.version>
+    <mysql-connector-java.version>5.1.31</mysql-connector-java.version>
+    <c3p0.version>0.9.5-pre8</c3p0.version>
     <flyway.version>2.3.1</flyway.version>
     <flyway-spring4-test.version>2.3.0.1</flyway-spring4-test.version>
   </properties>
@@ -127,7 +127,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-      <version>${hibernate-entitymanager.version}</version>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-envers</artifactId>
+      <version>${hibernate.version}</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
