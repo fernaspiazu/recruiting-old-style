@@ -123,7 +123,8 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 
   @Override
   public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
-    BooleanBuilder whereCondition = new BooleanBuilder(user.username.notEqualsIgnoreCase(currentUsername));
+    BooleanBuilder whereCondition = new BooleanBuilder(user.username.notEqualsIgnoreCase(currentUsername))
+        .and(user.username.notEqualsIgnoreCase("admin"));
     if (StringUtils.hasText(parameters.getSearchCriteria())) {
       whereCondition.and(user.username.toLowerCase().like(contains(parameters.getSearchCriteria())));
     }
