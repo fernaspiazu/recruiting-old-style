@@ -78,7 +78,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
   @Override
   public boolean updatePassword(String userId, String currentPwd, String newPwd, String confirmedPwd) {
     Query query = query(where("id").is(userId).and("password").is(currentPwd));
-    return mongoTemplate.updateFirst(query, update("password", newPwd), User.class).getLastError().ok();
+    return mongoTemplate.updateFirst(query, update("password", newPwd), User.class).isUpdateOfExisting();
   }
 
 }

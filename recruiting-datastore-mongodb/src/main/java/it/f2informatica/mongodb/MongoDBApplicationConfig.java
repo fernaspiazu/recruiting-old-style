@@ -21,6 +21,7 @@ package it.f2informatica.mongodb;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.util.StringUtils;
@@ -66,16 +66,19 @@ public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
   @Bean
   @Override
   public Mongo mongo() throws UnknownHostException {
-    Mongo mongo = new MongoClient(new ServerAddress(host, Integer.parseInt(defaultPort)));
-    mongo.getMongoOptions().setConnectionsPerHost(10);
-    mongo.getMongoOptions().setThreadsAllowedToBlockForConnectionMultiplier(4);
-    mongo.getMongoOptions().setConnectTimeout(5000);
-    mongo.getMongoOptions().setMaxWaitTime(3000);
-    mongo.getMongoOptions().setAutoConnectRetry(true);
-    mongo.getMongoOptions().setSocketKeepAlive(true);
-    mongo.getMongoOptions().setSocketTimeout(3000);
-    return mongo;
+    return new MongoClient(new ServerAddress(host, Integer.parseInt(defaultPort)), mongoClientOptions());
   }
+
+	private MongoClientOptions mongoClientOptions() {
+		return MongoClientOptions.builder()
+			.connectionsPerHost(10)
+			.threadsAllowedToBlockForConnectionMultiplier(4)
+			.connectTimeout(10000)
+			.maxWaitTime(5000)
+			.socketKeepAlive(true)
+			.socketTimeout(5000)
+			.build();
+	}
 
   /*protected UserCredentials getUserCredentials() {
     return new UserCredentials(user, password);

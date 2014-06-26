@@ -51,7 +51,7 @@
         <version>${maven.war.version}</version>
         <configuration>
           <archiveClasses>false</archiveClasses>
-          <outputDirectory>${basedir}/target/webapps</outputDirectory>
+          <!--<outputDirectory>${basedir}/target/webapps</outputDirectory>-->
           <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
           <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
           <archive>
@@ -74,7 +74,7 @@
             -Xbootclasspath/p:${basedir}/npn/npn-boot-${npn.version}.jar -Dspring.profiles.active=mysql
           </jvmArgs>
           <jettyXml>${basedir}/src/main/config/recruiting-jetty-spdy.xml</jettyXml>-->
-          <war>${project.build.directory}/webapps/${contextPath}.war</war>
+          <war>${project.build.directory}/${contextPath}.war</war>
           <webApp>
             <contextPath>/${contextPath}</contextPath>
           </webApp>
