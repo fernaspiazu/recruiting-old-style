@@ -5,3 +5,5 @@ target/
 .settings/
 *.classpath
 *.springBeans
+*.DS_Store
+*.swp

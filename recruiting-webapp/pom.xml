@@ -70,11 +70,11 @@
         <configuration>
           <stopPort>9966</stopPort>
           <stopKey>quit</stopKey>
-          <jvmArgs>
+          <!--<jvmArgs>
             -Xbootclasspath/p:${basedir}/npn/npn-boot-${npn.version}.jar -Dspring.profiles.active=mysql
           </jvmArgs>
-          <jettyXml>${basedir}/src/main/config/recruiting-jetty-spdy.xml</jettyXml>
-          <war>${project.build.directory}/${contextPath}.war</war>
+          <jettyXml>${basedir}/src/main/config/recruiting-jetty-spdy.xml</jettyXml>-->
+          <war>${project.build.directory}/webapps/${contextPath}.war</war>
           <webApp>
             <contextPath>/${contextPath}</contextPath>
           </webApp>

@@ -77,9 +77,9 @@ public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
     return mongo;
   }
 
-  protected UserCredentials getUserCredentials() {
+  /*protected UserCredentials getUserCredentials() {
     return new UserCredentials(user, password);
-  }
+  }*/
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
