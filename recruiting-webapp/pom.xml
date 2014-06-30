@@ -46,24 +46,6 @@
         <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>${maven.war.version}</version>
-        <configuration>
-          <archiveClasses>false</archiveClasses>
-          <!--<outputDirectory>${basedir}/target/webapps</outputDirectory>-->
-          <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
-          <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <classpathPrefix>/WEB-INF/lib</classpathPrefix>
-              <mainClass>it.f2informatica.webapp.server.HttpServer</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty.version}</version>
@@ -167,6 +149,55 @@
         </plugins>
       </build>
     </profile>
+	  <profile>
+		  <id>http</id>
+		  <build>
+			  <plugins>
+				  <plugin>
+					  <groupId>org.apache.maven.plugins</groupId>
+					  <artifactId>maven-war-plugin</artifactId>
+					  <version>${maven.war.version}</version>
+					  <configuration>
+						  <archiveClasses>false</archiveClasses>
+						  <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+						  <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
+						  <archive>
+							  <manifest>
+								  <addClasspath>true</addClasspath>
+								  <classpathPrefix>/WEB-INF/lib</classpathPrefix>
+								  <mainClass>it.f2informatica.webapp.server.HttpServer</mainClass>
+							  </manifest>
+						  </archive>
+					  </configuration>
+				  </plugin>
+			  </plugins>
+		  </build>
+	  </profile>
+	  <profile>
+		  <id>spdy</id>
+		  <build>
+			  <plugins>
+				  <plugin>
+					  <groupId>org.apache.maven.plugins</groupId>
+					  <artifactId>maven-war-plugin</artifactId>
+					  <version>${maven.war.version}</version>
+					  <configuration>
+						  <archiveClasses>false</archiveClasses>
+						  <outputDirectory>${basedir}/target/webapps</outputDirectory>
+						  <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+						  <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
+						  <archive>
+							  <manifest>
+								  <addClasspath>true</addClasspath>
+								  <classpathPrefix>/WEB-INF/lib</classpathPrefix>
+								  <mainClass>it.f2informatica.webapp.server.HttpServer</mainClass>
+							  </manifest>
+						  </archive>
+					  </configuration>
+				  </plugin>
+			  </plugins>
+		  </build>
+	  </profile>
   </profiles>
 
   <dependencies>
