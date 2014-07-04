@@ -157,7 +157,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
   @Override
   public void deleteUser(String userId) {
-    userRepository.deleteUser(userId);
+    userRepository.deleteByIdAndNotNotRemovable(userId);
   }
 
   @Override

@@ -23,7 +23,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -44,7 +43,6 @@ public class User extends Identifiable<String> {
 
   private String email;
 
-  @DBRef
   private Role role;
 
   private boolean notRemovable;
