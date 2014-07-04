@@ -20,13 +20,21 @@
 package it.f2informatica.mongodb.repositories;
 
 import it.f2informatica.mongodb.domain.User;
-import it.f2informatica.mongodb.repositories.custom.UserRepositoryCustom;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import it.f2informatica.pagination.repository.MongoPaginationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.Query;
 
-public interface UserRepository extends PagingAndSortingRepository<User, String>, UserRepositoryCustom {
+public interface UserRepository extends MongoPaginationRepository<User, String> {
 
   User findByUsername(String username);
 
   User findByUsernameAndPassword(String username, String password);
+
+	@Query(value = "{ 'username' : { $ne : ?0 } }")
+	Page<User> findAllExcludingUser(String username, Pageable pageable);
+
+	@Query(value = "{ '_id' : ?0, 'notRemovable' : false }", delete = true)
+	void deleteUser(String userId);
 
 }

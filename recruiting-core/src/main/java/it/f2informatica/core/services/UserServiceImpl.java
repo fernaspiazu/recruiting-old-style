@@ -63,11 +63,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Iterable<UserModel> findUsersByRoleName(String roleName) {
-    return userRepositoryGateway.findUsersByRoleName(roleName);
-  }
-
-  @Override
   public UserModel saveUser(UserModel userModel) {
     return userRepositoryGateway.saveUser(userModel);
   }

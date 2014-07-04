@@ -29,7 +29,7 @@ import org.springframework.data.jpa.domain.Specification;
 /**
  * Executes queries and perform pagination.
  *
- * @author Fernando
+ * @author Fernando Aspiazu
  */
 public interface PaginationService {
 
@@ -50,4 +50,5 @@ public interface PaginationService {
   <T> Page<T> getPaginatedResult(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
 
   <T> Page<T> getPaginatedResult(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
+
 }

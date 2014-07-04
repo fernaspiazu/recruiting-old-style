@@ -17,16 +17,26 @@
  *
  * =============================================================================
  */
-package it.f2informatica.mongodb.repositories;
+package it.f2informatica.pagination.services;
 
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import it.f2informatica.pagination.repository.mongodb.MongoQueryPredicate;
+import org.springframework.data.domain.Page;
 
-public interface ConsultantRepository extends MongoRepository<Consultant, String>, ConsultantRepositoryCustom {
+/**
+ * Executes queries and perform pagination with MongoDB.
+ *
+ * @author Fernando Aspiazu
+ */
+public interface MongoDBPaginationService {
 
-  Consultant findByConsultantNo(String consultantNo);
+	String getEmptyPaginatedResultAsJson(QueryParameters parameters);
 
-  Consultant findByFiscalCode(String fiscalCode);
+	<T> String getPaginatedResultAsJson(QueryParameters parameters, Class<T> entityClass);
+
+	<T> String getPaginatedResultAsJson(QueryParameters parameters, MongoQueryPredicate<T> queryPredicate);
+
+	<T> Page<T> getPaginatedResult(QueryParameters parameters, Class<T> entityClass);
+
+	<T> Page<T> getPaginatedResult(QueryParameters parameters, MongoQueryPredicate<T> queryPredicate);
 
 }

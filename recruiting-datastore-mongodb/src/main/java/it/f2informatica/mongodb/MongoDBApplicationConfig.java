@@ -37,8 +37,12 @@ import java.net.UnknownHostException;
 
 @Configuration
 @ImportResource("classpath:spring/repository-populator-config.xml")
-@EnableMongoRepositories(basePackages = {"it.f2informatica.mongodb.repositories"})
 @PropertySource("classpath:mongodb.properties")
+@EnableMongoRepositories(
+	basePackages = {
+		"it.f2informatica.mongodb.repositories",
+		"it.f2informatica.pagination.repository"},
+	repositoryFactoryBeanClass = MongoPaginationRepositoryFactoryBean.class)
 @MongoDB
 public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
   private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
@@ -79,10 +83,6 @@ public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
 			.socketTimeout(5000)
 			.build();
 	}
-
-  /*protected UserCredentials getUserCredentials() {
-    return new UserCredentials(user, password);
-  }*/
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

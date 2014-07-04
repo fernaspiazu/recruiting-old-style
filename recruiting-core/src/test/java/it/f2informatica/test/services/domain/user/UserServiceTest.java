@@ -21,7 +21,6 @@ package it.f2informatica.test.services.domain.user;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import it.f2informatica.core.Authority;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UserModel;
@@ -84,13 +83,6 @@ public class UserServiceTest {
     when(userRepositoryGateway.findAllExcludingCurrentUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
     Page<UserModel> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
     assertThat(users.getContent()).hasSize(10);
-  }
-
-  @Test
-  public void findUserByRoleName() {
-    String roleAdmin = Authority.ROLE_ADMIN.toString();
-    when(userRepositoryGateway.findUsersByRoleName(roleAdmin)).thenReturn(getUserList().subList(0, 2));
-    assertThat(userService.findUsersByRoleName(roleAdmin)).hasSize(2);
   }
 
   @Test

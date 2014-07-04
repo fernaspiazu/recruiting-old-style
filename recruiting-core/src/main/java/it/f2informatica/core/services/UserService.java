@@ -38,8 +38,6 @@ public interface UserService {
 
   Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
-  Iterable<UserModel> findUsersByRoleName(String roleName);
-
   UserModel saveUser(UserModel user);
 
   void updateUser(UserModel userRequest);

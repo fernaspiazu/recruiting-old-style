@@ -33,6 +33,8 @@ import it.f2informatica.mongodb.domain.Role;
 import it.f2informatica.mongodb.domain.User;
 import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
+import it.f2informatica.pagination.repository.mongodb.MongoQueryPredicate;
+import it.f2informatica.pagination.services.MongoDBPaginationService;
 import it.f2informatica.pagination.services.QueryParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +50,7 @@ import org.springframework.util.StringUtils;
 import static it.f2informatica.mongodb.domain.builder.UserBuilder.user;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
 
 @MongoDB
 @Service
@@ -61,6 +64,9 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
   @Autowired
   private RoleRepository roleRepository;
+
+	@Autowired
+	private MongoDBPaginationService mongoDBPaginationService;
 
   @Autowired
   @Qualifier("userToModelConverter")
@@ -79,11 +85,8 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
   @Override
   public void updatePassword(UpdatePasswordModel request) {
     if (arePasswordCompiledCorrectly(request)) {
-      userRepository.updatePassword(
-        request.getUserId(),
-        request.getCurrentPassword(),
-        request.getNewPassword(),
-        request.getPasswordConfirmed());
+	    Query query = query(where("id").is(request.getUserId()).and("password").is(request.getCurrentPassword()));
+	    mongoTemplate.updateFirst(query, update("password", request.getCurrentPassword()), User.class);
     }
   }
 
@@ -111,18 +114,19 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
   @Override
   public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
     return new PageImpl<>(Lists.newArrayList(
-      userToModelConverter.convertIterable(userRepository.findAllExcludingUser(pageable, usernameToExclude))
+      userToModelConverter.convertIterable(userRepository.findAllExcludingUser(usernameToExclude, pageable))
     ));
   }
 
   @Override
-  public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
-    return null;
-  }
-
-  @Override
-  public Iterable<UserModel> findUsersByRoleName(String roleName) {
-    return userToModelConverter.convertIterable(userRepository.findByRoleName(roleName));
+  public String getAllUsersPaginated(QueryParameters parameters, final String currentUsername) {
+	  MongoQueryPredicate<User> queryPredicate = new MongoQueryPredicate<User>(User.class) {
+		  @Override
+		  public Query queryPredicate() {
+			  return query(where("username").not().regex(currentUsername));
+		  }
+	  };
+	  return mongoDBPaginationService.getPaginatedResultAsJson(parameters, queryPredicate);
   }
 
   @Override
@@ -153,7 +157,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
   @Override
   public void deleteUser(String userId) {
-    userRepository.deleteRemovableUser(userId);
+    userRepository.deleteUser(userId);
   }
 
   @Override
@@ -168,7 +172,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
   @Override
   public boolean isCurrentPasswordValid(String userId, String currentPwd) {
-    return userRepository.isCurrentPasswordValid(userId, currentPwd);
+	  return mongoTemplate.count(query(where("id").is(userId).and("password").is(currentPwd)), User.class) != 0;
   }
 
   private Function<Role, RoleModel> roleToRoleModel() {

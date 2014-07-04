@@ -40,6 +40,6 @@ import java.io.Serializable;
  */
 @NoRepositoryBean
 public interface PaginationRepository<T, ID extends Serializable>
-  extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, QueryDslPredicateExecutor<T> {
+		extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, QueryDslPredicateExecutor<T> {
 
 }

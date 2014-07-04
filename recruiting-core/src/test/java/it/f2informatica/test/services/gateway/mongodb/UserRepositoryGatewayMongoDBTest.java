@@ -34,7 +34,6 @@ import it.f2informatica.mongodb.repositories.RoleRepository;
 import it.f2informatica.mongodb.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -50,7 +49,8 @@ import static it.f2informatica.test.services.builder.UserModelDataBuilder.userMo
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserRepositoryGatewayMongoDBTest {
@@ -131,14 +131,6 @@ public class UserRepositoryGatewayMongoDBTest {
     when(roleRepository.findByName(roleAdmin)).thenReturn(role().thatIsAdministrator());
     RoleModel response = userRepositoryGateway.findRoleByName(roleAdmin);
     assertThat(response.getRoleName()).isEqualTo("ROLE_ADMIN");
-  }
-
-  @Test
-  public void deleteUserByUserId() {
-    ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
-    userRepositoryGateway.deleteUser("1234567890");
-    verify(userRepository).deleteRemovableUser(argument.capture());
-    assertThat("1234567890").isEqualTo(argument.getValue());
   }
 
   @Test

@@ -17,16 +17,22 @@
  *
  * =============================================================================
  */
-package it.f2informatica.mongodb.repositories;
+package it.f2informatica.pagination.repository.mongodb;
 
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.core.query.Query;
 
-public interface ConsultantRepository extends MongoRepository<Consultant, String>, ConsultantRepositoryCustom {
+public abstract class MongoQueryPredicate<T> {
 
-  Consultant findByConsultantNo(String consultantNo);
+	private Class<T> entityClass;
 
-  Consultant findByFiscalCode(String fiscalCode);
+	public MongoQueryPredicate(Class<T> clazz) {
+		this.entityClass = clazz;
+	}
+
+	public abstract Query queryPredicate();
+
+	public Class<T> getEntityClass() {
+		return entityClass;
+	}
 
 }

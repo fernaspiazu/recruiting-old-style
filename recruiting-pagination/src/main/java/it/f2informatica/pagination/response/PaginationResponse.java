@@ -17,16 +17,15 @@
  *
  * =============================================================================
  */
-package it.f2informatica.mongodb.repositories;
+package it.f2informatica.pagination.response;
 
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import it.f2informatica.pagination.services.QueryParameters;
+import org.springframework.data.domain.Page;
 
-public interface ConsultantRepository extends MongoRepository<Consultant, String>, ConsultantRepositoryCustom {
+import java.util.Map;
 
-  Consultant findByConsultantNo(String consultantNo);
+public interface PaginationResponse {
 
-  Consultant findByFiscalCode(String fiscalCode);
+	<T> Map<String, Object> generateResponseAttributes(QueryParameters parameters, Page<T> paginatedQueryResult);
 
 }

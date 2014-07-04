@@ -43,8 +43,6 @@ public interface UserRepositoryGateway {
 
   String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
 
-  Iterable<UserModel> findUsersByRoleName(String roleName);
-
   UserModel saveUser(UserModel userModel);
 
   void updateUser(UserModel userModel);

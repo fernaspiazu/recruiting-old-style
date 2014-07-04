@@ -17,16 +17,18 @@
  *
  * =============================================================================
  */
-package it.f2informatica.mongodb.repositories;
+package it.f2informatica.pagination.services;
 
-import it.f2informatica.mongodb.domain.Consultant;
-import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.google.common.base.Optional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-public interface ConsultantRepository extends MongoRepository<Consultant, String>, ConsultantRepositoryCustom {
+public interface PageableFactory {
 
-  Consultant findByConsultantNo(String consultantNo);
+	Pageable getPageable(QueryParameters parameters);
 
-  Consultant findByFiscalCode(String fiscalCode);
+	Optional<Sort> getSort(QueryParameters parameters);
+
+	Sort.Direction getDirection(String sortDirection);
 
 }

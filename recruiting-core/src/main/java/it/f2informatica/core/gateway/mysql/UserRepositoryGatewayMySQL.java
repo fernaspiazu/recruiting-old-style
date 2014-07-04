@@ -50,7 +50,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import static it.f2informatica.mysql.domain.QUser.*;
+import static it.f2informatica.mysql.domain.QUser.user;
 
 @MySQL
 @Service
@@ -134,11 +134,6 @@ public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 
   private static String contains(String value) {
     return "%" + value.toLowerCase() + "%";
-  }
-
-  @Override
-  public Iterable<UserModel> findUsersByRoleName(String roleName) {
-    return mysqlUserToModelConverter.convertIterable(userRepository.findByRoleName(roleName));
   }
 
   @Override
