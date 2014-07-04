@@ -32,6 +32,10 @@ form.style-1 {
   border-radius: 4px;
 }
 
+.btn {
+	min-width: 120px;
+}
+
 /*!
  * Bootstrap v2.2.2-j3
  *

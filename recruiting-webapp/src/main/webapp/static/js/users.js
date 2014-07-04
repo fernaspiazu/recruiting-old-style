@@ -49,11 +49,11 @@ $user = {
     var datatableParams = {
       ajaxSource : evaluateContextRoot() + '/user/load-users',
       columns : [
-        {"mData" : "username", "sClass" : "username"},
-        {"mData" : "role_name", "sClass" : "role_name"},
-        {"mData" : "lastName", "sClass" : "lastName"},
-        {"mData" : "firstName", "sClass" : "firstName"},
-        {"mData" : "email", "sClass" : "email"},
+        {"mData" : "username", "sClass" : "username", bAutoWidth : false},
+        {"mData" : "role_name", "sClass" : "role_name", bAutoWidth : false},
+        {"mData" : "lastName", "sClass" : "lastName", bAutoWidth : false},
+        {"mData" : "firstName", "sClass" : "firstName", bAutoWidth : false},
+        {"mData" : "email", "sClass" : "email", bAutoWidth : false},
         {"mData" : "id", "sClass" : "editUser", bSortable : false, sWidth : "30px"},
         {"mData" : "id", "sClass" : "deleteUser", bSortable : false, sWidth : "30px"},
         {"mData" : "id", "sClass" : "changePassword", bSortable : false, sWidth : "30px"}
