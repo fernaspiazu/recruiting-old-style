@@ -123,7 +123,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 	  MongoQueryPredicate<User> queryPredicate = new MongoQueryPredicate<User>(User.class) {
 		  @Override
 		  public Query queryPredicate() {
-			  return query(where("username").not().regex(currentUsername));
+			  return query(where("username").nin("admin", currentUsername));
 		  }
 	  };
 	  return mongoDBPaginationService.getPaginatedResultAsJson(parameters, queryPredicate);
@@ -157,7 +157,7 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
   @Override
   public void deleteUser(String userId) {
-    userRepository.deleteByIdAndNotNotRemovable(userId);
+    userRepository.deleteByExcludingNotRemovableUser(userId);
   }
 
   @Override

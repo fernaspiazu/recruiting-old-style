@@ -34,7 +34,7 @@ public interface UserRepository extends MongoPaginationRepository<User, String> 
 	@Query(value = "{ 'username' : { $ne : ?0 } }")
 	Page<User> findAllExcludingUser(String username, Pageable pageable);
 
-	@Query(value = "{ 'id' : ?0, 'notRemovable' : false }", delete = true)
-	Long deleteByIdAndNotNotRemovable(String id);
+	@Query(value = "{ '_id' : ?0, 'notRemovable' : false }", delete = true)
+	Long deleteByExcludingNotRemovableUser(String id);
 
 }
