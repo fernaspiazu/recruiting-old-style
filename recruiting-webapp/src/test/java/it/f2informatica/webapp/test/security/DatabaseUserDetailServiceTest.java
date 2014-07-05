@@ -19,6 +19,7 @@
  */
 package it.f2informatica.webapp.test.security;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import it.f2informatica.core.Authority;
 import it.f2informatica.core.model.AuthenticationModel;
@@ -57,7 +58,7 @@ public class DatabaseUserDetailServiceTest {
     ((DatabaseUserDetailService) userDetailsService).setAuthenticationService(authenticationService);
     ((DatabaseUserDetailService) userDetailsService).setAuthorityService(authorityService);
 
-    when(authenticationService.processLogin("username1")).thenReturn(createResponse());
+    when(authenticationService.processLogin("username1")).thenReturn(Optional.of(createResponse()));
     when(authorityService.createAuthorities("role_admin")).thenReturn(getGrantedAuthorities());
     userAuthenticated = userDetailsService.loadUserByUsername("username1");
   }

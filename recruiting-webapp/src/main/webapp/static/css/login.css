@@ -1,5 +1,5 @@
 .navbar-recruiting {
-	padding-right: 40px;
+	padding-right: 0;
 	border-radius: 0;
 }
 
@@ -9,5 +9,13 @@
 }
 
 .f2-alert {
-	width: 500px;
+	color: red;
+	padding: 5px 0 0 5px;
+}
+
+.btn {
+	min-width: 80px;
+	height: 30px;
+	vertical-align: middle;
+	padding: 0;
 }

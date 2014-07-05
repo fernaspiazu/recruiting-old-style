@@ -19,6 +19,7 @@
  */
 package it.f2informatica.webapp.security;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.core.services.AuthenticationService;
 import org.apache.log4j.Logger;
@@ -44,9 +45,19 @@ public class DatabaseUserDetailService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    AuthenticationModel authentication = authenticationService.processLogin(username);
-    logger.info("Authenticating with username: '" + authentication.getUsername() + "', with role: '" + authentication.getAuthorization() + "'");
-    return createUserDetails(authentication);
+    Optional<AuthenticationModel> user = authenticationService.processLogin(username);
+	  if (user.isPresent()) {
+		  AuthenticationModel foundUser = user.get();
+		  logger.info("Authenticating with username: '" + foundUser.getUsername()
+			          + "', with role: '" + foundUser.getAuthorization() + "'");
+		  return createUserDetails(foundUser);
+	  }
+
+	  UsernameNotFoundException userNotFoundException = new UsernameNotFoundException(
+		  "Bad Credentials!!! User has not been found. Wrong Username[" + username + "]");
+	  logger.info(userNotFoundException.getMessage());
+
+	  throw userNotFoundException;
   }
 
   private UserDetails createUserDetails(AuthenticationModel userLogged) {

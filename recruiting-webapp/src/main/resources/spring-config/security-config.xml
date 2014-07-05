@@ -34,7 +34,7 @@
     <form-login login-page="/login" login-processing-url="/processLogin"
         username-parameter="username" password-parameter="password"
         default-target-url="/home" always-use-default-target="true"
-        authentication-failure-url="/login_failed"
+        authentication-failure-url="/login?error=true"
         authentication-success-handler-ref="authSuccessHandler"/>
 
     <logout logout-url="/logout" logout-success-url="/login" delete-cookies="JSESSIONID"/>

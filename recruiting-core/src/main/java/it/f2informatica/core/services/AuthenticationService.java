@@ -19,10 +19,11 @@
  */
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.AuthenticationModel;
 
 public interface AuthenticationService {
 
-  AuthenticationModel processLogin(String username);
+  Optional<AuthenticationModel> processLogin(String username);
 
 }

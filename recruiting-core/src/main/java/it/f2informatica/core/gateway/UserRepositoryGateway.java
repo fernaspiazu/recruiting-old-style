@@ -19,6 +19,7 @@
  */
 package it.f2informatica.core.gateway;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.core.model.RoleModel;
 import it.f2informatica.core.model.UpdatePasswordModel;
@@ -29,7 +30,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryGateway {
 
-  AuthenticationModel authenticationByUsername(String username);
+  Optional<AuthenticationModel> authenticationByUsername(String username);
 
   void updatePassword(UpdatePasswordModel request);
 

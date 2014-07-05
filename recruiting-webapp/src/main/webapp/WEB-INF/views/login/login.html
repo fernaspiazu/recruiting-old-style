@@ -18,7 +18,7 @@
 </head>
 <body>
 <nav class="navbar navbar-default navbar-recruiting">
-  <form id="loginForm" th:action="@{/processLogin}" method="post" action="../homePage.html" class="navbar-form navbar-right navbar-static-top" role="form">
+  <form id="loginForm" th:action="@{/processLogin}" method="post" action="../homePage.html" class="navbar-form navbar-right navbar-static-top login-form" role="form" style="margin-right: 90px;">
     <div class="form-group">
       <label class="sr-only" for="usernameId">Username</label>
       <input type="text" id="usernameId" name="username" th:placeholder="#{login.username}" class="form-control input-sm" placeholder="Username" autofocus="" autocomplete="false"/>
@@ -27,8 +27,8 @@
       <label class="sr-only" for="passwordId">Password</label>
       <input type="password" id="passwordId" name="password" th:placeholder="#{login.password}" class="form-control input-sm" placeholder="Password" autocomplete="false"/>
     </div>
-    <button type="submit" id="loginButton" th:text="#{login.login}" class="btn btn-sm btn-primary">Loggin</button>
-    <!--<div class="alert alert-danger f2-alert" th:if="${hasErrors}">Bad Credentials</div>-->
+    <button type="submit" id="loginButton" th:text="#{login.login}" class="btn btn-success">Loggin</button>
+    <div class="f2-alert" th:if="${hasErrors}">Bad Credentials</div>
   </form>
 </nav>
 <div class="container">
@@ -37,15 +37,5 @@
 
 <script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
 <script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
-<script type="text/javascript">
-  var loginErrMsg = $("#login-error-msg");
-  if (loginErrMsg.length) {
-    var formPosition = loginErrMsg.parent().position();
-    loginErrMsg.css({
-      "top": formPosition.top - 3,
-      "left": formPosition.left - loginErrMsg.width() - 40
-    });
-  }
-</script>
 </body>
 </html>

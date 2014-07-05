@@ -53,7 +53,7 @@ public class AuthenticationControllerTest {
 
   @Test
   public void testLoginFailed() throws Exception {
-    mockMvc.perform(get("/login_failed"))
+    mockMvc.perform(get("/login?error=true"))
       .andExpect(model().attribute("hasErrors", true))
       .andExpect(view().name("login/login"));
   }

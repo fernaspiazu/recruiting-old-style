@@ -20,6 +20,7 @@
 package it.f2informatica.core.gateway.mongodb;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import it.f2informatica.core.gateway.EntityToModelConverter;
@@ -73,13 +74,16 @@ public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
   private EntityToModelConverter<User, UserModel> userToModelConverter;
 
   @Override
-  public AuthenticationModel authenticationByUsername(String username) {
-    User user = userRepository.findByUsername(username);
-    AuthenticationModel authenticationModel = new AuthenticationModel();
-    authenticationModel.setUsername(user.getUsername());
-    authenticationModel.setPassword(user.getPassword());
-    authenticationModel.setAuthorization(user.getRole().getName());
-    return authenticationModel;
+  public Optional<AuthenticationModel> authenticationByUsername(String username) {
+    Optional<User> user = Optional.fromNullable(userRepository.findByUsername(username));
+	  if (user.isPresent()) {
+		  AuthenticationModel authenticationModel = new AuthenticationModel();
+		  authenticationModel.setUsername(user.get().getUsername());
+		  authenticationModel.setPassword(user.get().getPassword());
+		  authenticationModel.setAuthorization(user.get().getRole().getName());
+		  return Optional.of(authenticationModel);
+	  }
+	  return Optional.absent();
   }
 
   @Override

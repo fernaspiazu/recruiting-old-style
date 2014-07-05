@@ -19,6 +19,7 @@
  */
 package it.f2informatica.core.services;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.AuthenticationModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private UserRepositoryGateway userRepositoryGateway;
 
   @Override
-  public AuthenticationModel processLogin(String username) {
+  public Optional<AuthenticationModel> processLogin(String username) {
     return userRepositoryGateway.authenticationByUsername(username);
   }
 

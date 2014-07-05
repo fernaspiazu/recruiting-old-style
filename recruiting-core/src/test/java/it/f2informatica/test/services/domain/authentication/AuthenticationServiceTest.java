@@ -19,6 +19,7 @@
  */
 package it.f2informatica.test.services.domain.authentication;
 
+import com.google.common.base.Optional;
 import it.f2informatica.core.gateway.UserRepositoryGateway;
 import it.f2informatica.core.model.AuthenticationModel;
 import it.f2informatica.core.services.AuthenticationService;
@@ -43,9 +44,9 @@ public class AuthenticationServiceTest {
 
   @Test
   public void processLoginTest() {
-    when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(response());
-    AuthenticationModel response = authenticationService.processLogin("jhon");
-    assertThat(response.getUsername()).isEqualTo("jhon");
+    when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(Optional.of(response()));
+    Optional<AuthenticationModel> response = authenticationService.processLogin("jhon");
+    assertThat(response.get().getUsername()).isEqualTo("jhon");
   }
 
   private AuthenticationModel response() {
