@@ -27,17 +27,16 @@ import java.io.Serializable;
 
 /**
  * <p>
- *   Extend this repository in order to use the server-side pagination
- *   backed with MongoDB.
+ * Extend this repository in order to use the server-side pagination
+ * backed with MongoDB.
  * </p>
  *
- * @author Fernando Aspiazu
- *
- * @param <T> Entity Document Type
+ * @param <T>  Entity Document Type
  * @param <ID> ID - PK Type
+ * @author Fernando Aspiazu
  */
 @NoRepositoryBean
 public interface MongoPaginationRepository<T, ID extends Serializable>
-				extends MongoRepository<T, ID>, MongoDBQueryExecutor<T> {
+	extends MongoRepository<T, ID>, MongoDBQueryExecutor<T> {
 
 }

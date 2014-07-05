@@ -32,14 +32,14 @@ import java.io.Serializable;
 @Entity
 @Table(name = "role")
 public class Role implements Serializable {
-  private static final long serialVersionUID = 5733137814773772073L;
+	private static final long serialVersionUID = 5733137814773772073L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false, unique = true)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Long id;
 
-  @Column(name = "name", nullable = false)
-  private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
 }

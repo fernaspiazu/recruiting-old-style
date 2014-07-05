@@ -28,14 +28,14 @@ import static it.f2informatica.core.model.builder.LanguageModelBuilder.languageM
 
 @Component("languageToModelConverter")
 public class MongoDBLanguageToModelConverter
-  extends EntityToModelConverter<Language, LanguageModel> {
+	extends EntityToModelConverter<Language, LanguageModel> {
 
-  @Override
-  public LanguageModel convert(Language language) {
-    return (language == null) ? null :
-      languageModel(language.getLanguage())
-        .withProficiency(language.getProficiency())
-        .build();
-  }
+	@Override
+	public LanguageModel convert(Language language) {
+		return (language == null) ? null :
+			languageModel(language.getLanguage())
+				.withProficiency(language.getProficiency())
+				.build();
+	}
 
 }

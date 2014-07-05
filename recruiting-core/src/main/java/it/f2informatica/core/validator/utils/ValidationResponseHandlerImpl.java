@@ -28,22 +28,22 @@ import java.util.Locale;
 @Service
 public class ValidationResponseHandlerImpl implements ValidationResponseHandler {
 
-  @Autowired
-  private ErrorMessageResolver resolver;
+	@Autowired
+	private ErrorMessageResolver resolver;
 
-  @Override
-  public ValidationResponse validationSuccess() {
-    ValidationResponse validationResponse = new ValidationResponse();
-    validationResponse.setStatus(ValidationStatus.SUCCESSFUL);
-    return validationResponse;
-  }
+	@Override
+	public ValidationResponse validationSuccess() {
+		ValidationResponse validationResponse = new ValidationResponse();
+		validationResponse.setStatus(ValidationStatus.SUCCESSFUL);
+		return validationResponse;
+	}
 
-  @Override
-  public ValidationResponse validationFail(Errors errors, Locale locale) {
-    ValidationResponse validationResponse = new ValidationResponse();
-    validationResponse.setStatus(ValidationStatus.FAILED);
-    validationResponse.setErrorMessages(resolver.resolveErrorCodes(errors.getFieldErrors(), locale));
-    return validationResponse;
-  }
+	@Override
+	public ValidationResponse validationFail(Errors errors, Locale locale) {
+		ValidationResponse validationResponse = new ValidationResponse();
+		validationResponse.setStatus(ValidationStatus.FAILED);
+		validationResponse.setErrorMessages(resolver.resolveErrorCodes(errors.getFieldErrors(), locale));
+		return validationResponse;
+	}
 
 }

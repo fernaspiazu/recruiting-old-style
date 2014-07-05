@@ -28,12 +28,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-  @Autowired
-  private UserRepositoryGateway userRepositoryGateway;
+	@Autowired
+	private UserRepositoryGateway userRepositoryGateway;
 
-  @Override
-  public Optional<AuthenticationModel> processLogin(String username) {
-    return userRepositoryGateway.authenticationByUsername(username);
-  }
+	@Override
+	public Optional<AuthenticationModel> processLogin(String username) {
+		return userRepositoryGateway.authenticationByUsername(username);
+	}
 
 }

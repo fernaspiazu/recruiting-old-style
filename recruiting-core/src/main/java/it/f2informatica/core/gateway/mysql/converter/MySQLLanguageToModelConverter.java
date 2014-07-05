@@ -29,12 +29,12 @@ import static it.f2informatica.core.model.builder.LanguageModelBuilder.languageM
 @Component("mysqlLanguageToModelConverter")
 public class MySQLLanguageToModelConverter extends EntityToModelConverter<Language, LanguageModel> {
 
-  @Override
-  public LanguageModel convert(Language language) {
-    return (language == null || language.getId() == null) ? null :
-      languageModel(language.getId().getLang())
-        .withProficiency(language.getProficiency())
-        .build();
-  }
+	@Override
+	public LanguageModel convert(Language language) {
+		return (language == null || language.getId() == null) ? null :
+			languageModel(language.getId().getLang())
+				.withProficiency(language.getProficiency())
+				.build();
+	}
 
 }

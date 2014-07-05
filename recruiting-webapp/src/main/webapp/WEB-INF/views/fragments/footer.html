@@ -2,57 +2,62 @@
 <!DOCTYPE html>
 <html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-  <link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
-  <link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
-  <link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
-  <script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
-  <script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
-  <script th:src="@{/static/js/lib/jquery.dataTables.min.js}" src="../../../static/js/lib/jquery.dataTables.min.js"></script>
-  <script th:src="@{/static/js/lib/dataTables.bootstrap.js}" src="../../../static/js/lib/dataTables.bootstrap.js"></script>
-  <script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}" src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
-  <script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css"
+	      rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css"
+	      rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
+	<script th:src="@{/static/js/lib/jquery.dataTables.min.js}"
+	        src="../../../static/js/lib/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrap.js}"
+	        src="../../../static/js/lib/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}"
+	        src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
+	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body>
 <div id="footer" th:fragment="footer">
-  <div class="footer-container">
-    <p class="text-muted text-center" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
-  </div>
-  <script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-    var oLanguage = {
-      "sEmptyTable": /*[[#{table.emptyTable}]]*/   "No data available in table",
-      "sInfo": /*[[#{table.info}]]*/ "Showing _START_ to _END_ of _TOTAL_ entries",
-      "sInfoEmpty": /*[[#{table.infoEmpty}]]*/ "Showing 0 to 0 of 0 entries",
-      "sInfoFiltered": /*[[#{table.infoFiltered}]]*/ "(filtered from _MAX_ total entries)",
-      "sInfoPostFix": "",
-      "sInfoThousands": /*[[#{table.thousands}]]*/ ",",
-      "sLengthMenu": /*[[#{table.entriesShowed}]]*/ "Show _MENU_ entries",
-      "sLoadingRecords": /*[[#{table.loading}]]*/ "Loading...",
-      "sProcessing": /*[[#{table.processing}]]*/ "Processing...",
-      "sSearch": /*[[#{table.search}]]*/ "Search:",
-      "sZeroRecords": /*[[#{table.emptyFiltered}]]*/ "No matching records found",
-      "oPaginate": {
-        "sFirst": /*[[#{table.first}]]*/ "First",
-        "sLast": /*[[#{table.last}]]*/ "Last",
-        "sNext": /*[[#{table.next}]]*/ "Next",
-        "sPrevious": /*[[#{table.previous}]]*/ "Previous"
-      },
-      "oAria": {
-        "sSortAscending": ": activate to sort column ascending",
-        "sSortDescending": ": activate to sort column descending"
-      }
-    };
+	<div class="footer-container">
+		<p class="text-muted text-center" th:text="#{footer.footer}">&copy; 2014 - F2 Informatica</p>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		var oLanguage = {
+			"sEmptyTable": /*[[#{table.emptyTable}]]*/   "No data available in table",
+			"sInfo": /*[[#{table.info}]]*/ "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfoEmpty": /*[[#{table.infoEmpty}]]*/ "Showing 0 to 0 of 0 entries",
+			"sInfoFiltered": /*[[#{table.infoFiltered}]]*/ "(filtered from _MAX_ total entries)",
+			"sInfoPostFix": "",
+			"sInfoThousands": /*[[#{table.thousands}]]*/ ",",
+			"sLengthMenu": /*[[#{table.entriesShowed}]]*/ "Show _MENU_ entries",
+			"sLoadingRecords": /*[[#{table.loading}]]*/ "Loading...",
+			"sProcessing": /*[[#{table.processing}]]*/ "Processing...",
+			"sSearch": /*[[#{table.search}]]*/ "Search:",
+			"sZeroRecords": /*[[#{table.emptyFiltered}]]*/ "No matching records found",
+			"oPaginate": {
+				"sFirst": /*[[#{table.first}]]*/ "First",
+				"sLast": /*[[#{table.last}]]*/ "Last",
+				"sNext": /*[[#{table.next}]]*/ "Next",
+				"sPrevious": /*[[#{table.previous}]]*/ "Previous"
+			},
+			"oAria": {
+				"sSortAscending": ": activate to sort column ascending",
+				"sSortDescending": ": activate to sort column descending"
+			}
+		};
 
-    $(document).ready(function () {
-      $(".default-datatable").parent().find("input[type='text']").addClass("form-control input-sm").css({"width": 250});
-      $(".default-datatable").parent().find("select").addClass("form-control input-sm");
-    });
-    /*]]>*/
-  </script>
+		$(document).ready(function () {
+			$(".default-datatable").parent().find("input[type='text']").addClass("form-control input-sm").css({"width": 250});
+			$(".default-datatable").parent().find("select").addClass("form-control input-sm");
+		});
+		/*]]>*/
+	</script>
 </div>
 </body>
 </html>

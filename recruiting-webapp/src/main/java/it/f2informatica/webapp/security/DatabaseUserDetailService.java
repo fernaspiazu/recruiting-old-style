@@ -28,40 +28,40 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class DatabaseUserDetailService implements UserDetailsService {
-  private static final Logger logger = Logger.getLogger(DatabaseUserDetailService.class);
+	private static final Logger logger = Logger.getLogger(DatabaseUserDetailService.class);
 
-  private AuthorityService authorityService;
-  private AuthenticationService authenticationService;
+	private AuthorityService authorityService;
+	private AuthenticationService authenticationService;
 
-  @Autowired
-  public void setAuthorityService(AuthorityService authorityService) {
-    this.authorityService = authorityService;
-  }
+	@Autowired
+	public void setAuthorityService(AuthorityService authorityService) {
+		this.authorityService = authorityService;
+	}
 
-  @Autowired
-  public void setAuthenticationService(AuthenticationService authenticationService) {
-    this.authenticationService = authenticationService;
-  }
+	@Autowired
+	public void setAuthenticationService(AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<AuthenticationModel> user = authenticationService.processLogin(username);
-	  if (user.isPresent()) {
-		  AuthenticationModel foundUser = user.get();
-		  logger.info("Authenticating with username: '" + foundUser.getUsername()
-			          + "', with role: '" + foundUser.getAuthorization() + "'");
-		  return createUserDetails(foundUser);
-	  }
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<AuthenticationModel> user = authenticationService.processLogin(username);
+		if (user.isPresent()) {
+			AuthenticationModel foundUser = user.get();
+			logger.info("Authenticating with username: '" + foundUser.getUsername()
+				+ "', with role: '" + foundUser.getAuthorization() + "'");
+			return createUserDetails(foundUser);
+		}
 
-	  UsernameNotFoundException userNotFoundException = new UsernameNotFoundException(
-		  "Bad Credentials!!! User has not been found. Wrong Username[" + username + "]");
-	  logger.info(userNotFoundException.getMessage());
+		UsernameNotFoundException userNotFoundException = new UsernameNotFoundException(
+			"Bad Credentials!!! User has not been found. Wrong Username[" + username + "]");
+		logger.info(userNotFoundException.getMessage());
 
-	  throw userNotFoundException;
-  }
+		throw userNotFoundException;
+	}
 
-  private UserDetails createUserDetails(AuthenticationModel userLogged) {
-    return new UserDetails(userLogged, authorityService.createAuthorities(userLogged.getAuthorization()));
-  }
+	private UserDetails createUserDetails(AuthenticationModel userLogged) {
+		return new UserDetails(userLogged, authorityService.createAuthorities(userLogged.getAuthorization()));
+	}
 
 }

@@ -33,20 +33,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-  private static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
+	private static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  @Override
-  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-    String username = authentication.getName();
-    Optional<UserModel> user = userService.findByUsername(username);
-    if (user.isPresent()) {
-      request.getSession(true).setAttribute("user", user.get());
-      log.info("User in session: [username: " + user.get().getUsername() + ", id: " + user.get().getUserId() + "]");
-    }
-    super.handle(request, response, authentication);
-  }
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+		String username = authentication.getName();
+		Optional<UserModel> user = userService.findByUsername(username);
+		if (user.isPresent()) {
+			request.getSession(true).setAttribute("user", user.get());
+			log.info("User in session: [username: " + user.get().getUsername() + ", id: " + user.get().getUserId() + "]");
+		}
+		super.handle(request, response, authentication);
+	}
 
 }

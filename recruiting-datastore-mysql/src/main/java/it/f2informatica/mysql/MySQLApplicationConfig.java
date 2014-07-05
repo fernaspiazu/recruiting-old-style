@@ -44,69 +44,69 @@ import java.beans.PropertyVetoException;
 @PropertySource("classpath:mysql.properties")
 @MySQL
 public class MySQLApplicationConfig {
-  private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationConfig.class);
-  private static final String DOMAIN_PACKAGE = "it.f2informatica.mysql.domain";
+	private static final Logger logger = LoggerFactory.getLogger(MySQLApplicationConfig.class);
+	private static final String DOMAIN_PACKAGE = "it.f2informatica.mysql.domain";
 
-  @Value("${mysql.driver}")
-  private String driver;
+	@Value("${mysql.driver}")
+	private String driver;
 
-  @Value("${mysql.url}")
-  private String url;
+	@Value("${mysql.url}")
+	private String url;
 
-  @Value("${mysql.user}")
-  private String user;
+	@Value("${mysql.user}")
+	private String user;
 
-  @Value("${mysql.password}")
-  private String password;
+	@Value("${mysql.password}")
+	private String password;
 
-  @Bean(destroyMethod = "close")
-  public ComboPooledDataSource dataSource() {
-    ComboPooledDataSource dataSource = new ComboPooledDataSource();
-    try {
-      dataSource.setDriverClass(driver);
-      dataSource.setJdbcUrl(url);
-      dataSource.setUser(user);
-      dataSource.setPassword(password);
-    } catch (PropertyVetoException e) {
-      logger.error("Error on C3P0 DataSource building...", e);
-    }
-    return dataSource;
-  }
+	@Bean(destroyMethod = "close")
+	public ComboPooledDataSource dataSource() {
+		ComboPooledDataSource dataSource = new ComboPooledDataSource();
+		try {
+			dataSource.setDriverClass(driver);
+			dataSource.setJdbcUrl(url);
+			dataSource.setUser(user);
+			dataSource.setPassword(password);
+		} catch (PropertyVetoException e) {
+			logger.error("Error on C3P0 DataSource building...", e);
+		}
+		return dataSource;
+	}
 
-  @Bean(initMethod = "migrate")
-  public Flyway flyway() {
-    Flyway flyway = new Flyway();
-    flyway.setDataSource(dataSource());
-    flyway.setInitOnMigrate(true);
-    flyway.setCleanOnValidationError(true);
-    return flyway;
-  }
+	@Bean(initMethod = "migrate")
+	public Flyway flyway() {
+		Flyway flyway = new Flyway();
+		flyway.setDataSource(dataSource());
+		flyway.setInitOnMigrate(true);
+		flyway.setCleanOnValidationError(true);
+		return flyway;
+	}
 
-  @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-    vendorAdapter.setDatabase(Database.MYSQL);
-    vendorAdapter.setGenerateDdl(false);
-    vendorAdapter.setShowSql(true);
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setDatabase(Database.MYSQL);
+		vendorAdapter.setGenerateDdl(false);
+		vendorAdapter.setShowSql(true);
 
-    LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-    factoryBean.setPersistenceUnitName(Persistence.PERSISTENCE_UNIT_NAME);
-    factoryBean.setJpaVendorAdapter(vendorAdapter);
-    factoryBean.setPackagesToScan(DOMAIN_PACKAGE);
-    factoryBean.setDataSource(dataSource());
-    return factoryBean;
-  }
+		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+		factoryBean.setPersistenceUnitName(Persistence.PERSISTENCE_UNIT_NAME);
+		factoryBean.setJpaVendorAdapter(vendorAdapter);
+		factoryBean.setPackagesToScan(DOMAIN_PACKAGE);
+		factoryBean.setDataSource(dataSource());
+		return factoryBean;
+	}
 
-  @Bean
-  public PlatformTransactionManager transactionManager() {
-    JpaTransactionManager txManager = new JpaTransactionManager();
-    txManager.setEntityManagerFactory(entityManagerFactory().getObject());
-    return txManager;
-  }
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		JpaTransactionManager txManager = new JpaTransactionManager();
+		txManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		return txManager;
+	}
 
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-    return new PropertySourcesPlaceholderConfigurer();
-  }
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 
 }

@@ -28,10 +28,10 @@ import lombok.*;
 @ToString
 public class ConsultantSearchCriteria {
 
-  private String name;
+	private String name;
 
-  private String lastName;
+	private String lastName;
 
-  private String skills;
+	private String skills;
 
 }

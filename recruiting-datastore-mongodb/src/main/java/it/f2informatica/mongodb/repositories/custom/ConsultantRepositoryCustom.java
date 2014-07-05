@@ -28,25 +28,25 @@ import java.util.List;
 
 public interface ConsultantRepositoryCustom {
 
-  int updateConsultantsPersonalDetails(Update updateFields, String consultantId);
+	int updateConsultantsPersonalDetails(Update updateFields, String consultantId);
 
-  Experience findExperience(String consultantId, String experienceId);
+	Experience findExperience(String consultantId, String experienceId);
 
-  int addExperience(Experience experience, String consultantId);
+	int addExperience(Experience experience, String consultantId);
 
-  int updateExperience(Experience experience, String consultantId);
+	int updateExperience(Experience experience, String consultantId);
 
-  int addLanguages(List<Language> languages, String consultantId);
+	int addLanguages(List<Language> languages, String consultantId);
 
-  int addSkills(String[] skills, String consultantId);
+	int addSkills(String[] skills, String consultantId);
 
-  int removeExperience(String consultantId, String experienceId);
+	int removeExperience(String consultantId, String experienceId);
 
-  Education findEducation(String consultantId, String educationId);
+	Education findEducation(String consultantId, String educationId);
 
-  int addEducation(Education education, String consultantId);
+	int addEducation(Education education, String consultantId);
 
-  int updateEducation(Education education, String consultantId);
+	int updateEducation(Education education, String consultantId);
 
-  int removeEducation(String consultantId, String educationId);
+	int removeEducation(String consultantId, String educationId);
 }

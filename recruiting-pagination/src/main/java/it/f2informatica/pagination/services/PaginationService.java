@@ -33,22 +33,22 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public interface PaginationService {
 
-  String getEmptyPaginatedResultAsJson(QueryParameters parameters);
+	String getEmptyPaginatedResultAsJson(QueryParameters parameters);
 
-  <T> String getPaginatedResultAsJson(QueryParameters parameters, Class<T> entityClass);
+	<T> String getPaginatedResultAsJson(QueryParameters parameters, Class<T> entityClass);
 
-  String getPaginatedResultAsJson(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
+	String getPaginatedResultAsJson(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
 
-  <T> String getPaginatedResultAsJson(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
+	<T> String getPaginatedResultAsJson(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
 
-  <T> String getPaginatedResultAsJson(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
+	<T> String getPaginatedResultAsJson(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
 
-  <T> Page<T> getPaginatedResult(QueryParameters parameters, Class<T> entityClass);
+	<T> Page<T> getPaginatedResult(QueryParameters parameters, Class<T> entityClass);
 
-  Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
+	Page<Tuple> getPaginatedResult(QueryParameters parameters, JPAQuery jpaQuery, Expression<?>... args);
 
-  <T> Page<T> getPaginatedResult(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
+	<T> Page<T> getPaginatedResult(QueryParameters parameters, Predicate predicate, Class<T> entityClass);
 
-  <T> Page<T> getPaginatedResult(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
+	<T> Page<T> getPaginatedResult(QueryParameters parameters, Specification<T> specification, Class<T> entityClass);
 
 }

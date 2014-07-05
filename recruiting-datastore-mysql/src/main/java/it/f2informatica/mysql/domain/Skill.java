@@ -33,10 +33,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "skills")
 public class Skill implements Serializable {
-  private static final long serialVersionUID = -6986844527781037145L;
+	private static final long serialVersionUID = -6986844527781037145L;
 
-  @EmbeddedId
-  @AttributeOverride(name = "skill", column = @Column(name = "skill"))
-  private SkillPK id;
+	@EmbeddedId
+	@AttributeOverride(name = "skill", column = @Column(name = "skill"))
+	private SkillPK id;
 
 }

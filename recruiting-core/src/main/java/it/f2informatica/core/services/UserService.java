@@ -28,25 +28,25 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  Optional<UserModel> findUserById(String userId);
+	Optional<UserModel> findUserById(String userId);
 
-  Optional<UserModel> findByUsername(String username);
+	Optional<UserModel> findByUsername(String username);
 
-  Optional<UserModel> findByUsernameAndPassword(String username, String password);
+	Optional<UserModel> findByUsernameAndPassword(String username, String password);
 
-  String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
+	String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
 
-  Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
+	Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
-  UserModel saveUser(UserModel user);
+	UserModel saveUser(UserModel user);
 
-  void updateUser(UserModel userRequest);
+	void updateUser(UserModel userRequest);
 
-  void deleteUser(String userId);
+	void deleteUser(String userId);
 
-  Iterable<RoleModel> loadRoles();
+	Iterable<RoleModel> loadRoles();
 
-  Optional<RoleModel> findRoleByName(String roleName);
+	Optional<RoleModel> findRoleByName(String roleName);
 
-  UserModel buildEmptyUserModel();
+	UserModel buildEmptyUserModel();
 }

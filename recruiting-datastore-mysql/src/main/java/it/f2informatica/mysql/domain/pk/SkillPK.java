@@ -34,11 +34,11 @@ import java.io.Serializable;
 @ToString(of = "skill")
 @Embeddable
 public class SkillPK implements Serializable {
-  private static final long serialVersionUID = 3869057767286602427L;
+	private static final long serialVersionUID = 3869057767286602427L;
 
-  private String skill;
+	private String skill;
 
-  @ManyToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
-  private Consultant consultant;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
+	private Consultant consultant;
 
 }

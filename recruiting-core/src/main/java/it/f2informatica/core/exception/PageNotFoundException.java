@@ -20,9 +20,9 @@
 package it.f2informatica.core.exception;
 
 public class PageNotFoundException extends RuntimeException {
-  private static final long serialVersionUID = 690031201208658965L;
+	private static final long serialVersionUID = 690031201208658965L;
 
-  public PageNotFoundException(String message) {
-    super(message);
-  }
+	public PageNotFoundException(String message) {
+		super(message);
+	}
 }

@@ -28,23 +28,23 @@ import static it.f2informatica.core.model.builder.EducationModelBuilder.educatio
 
 @Component("educationToModelConverter")
 public class MongoDBEducationToModelConverter
-  extends EntityToModelConverter<Education, EducationModel> {
+	extends EntityToModelConverter<Education, EducationModel> {
 
-  @Override
-  public EducationModel convert(Education education) {
-    return (education == null) ? null :
-      educationModel()
-        .withId(education.getId())
-        .inSchool(education.getSchool())
-        .startedInYear(education.getStartYear())
-        .finishedInYear(education.getEndYear())
-        .withDegreeIn(education.getSchoolDegree())
-        .fieldOfStudyIn(education.getSchoolFieldOfStudy())
-        .withGrade(education.getSchoolGrade())
-        .withActivitiesIn(education.getSchoolActivities())
-        .isInProgress(education.isCurrent())
-        .withDescription(education.getDescription())
-        .build();
-  }
+	@Override
+	public EducationModel convert(Education education) {
+		return (education == null) ? null :
+			educationModel()
+				.withId(education.getId())
+				.inSchool(education.getSchool())
+				.startedInYear(education.getStartYear())
+				.finishedInYear(education.getEndYear())
+				.withDegreeIn(education.getSchoolDegree())
+				.fieldOfStudyIn(education.getSchoolFieldOfStudy())
+				.withGrade(education.getSchoolGrade())
+				.withActivitiesIn(education.getSchoolActivities())
+				.isInProgress(education.isCurrent())
+				.withDescription(education.getDescription())
+				.build();
+	}
 
 }

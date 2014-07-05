@@ -58,145 +58,145 @@ import static it.f2informatica.mysql.domain.QUser.user;
 @Transactional
 public class UserRepositoryGatewayMySQL implements UserRepositoryGateway {
 
-  @PersistenceContext(name = Persistence.PERSISTENCE_UNIT_NAME)
-  private EntityManager entityManager;
+	@PersistenceContext(name = Persistence.PERSISTENCE_UNIT_NAME)
+	private EntityManager entityManager;
 
-  @Autowired
-  private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-  @Autowired
-  private RoleRepository roleRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
-  @Autowired
-  private PaginationService paginationService;
+	@Autowired
+	private PaginationService paginationService;
 
-  @Autowired
-  @Qualifier("mysqlUserToModelConverter")
-  private EntityToModelConverter<User, UserModel> mysqlUserToModelConverter;
+	@Autowired
+	@Qualifier("mysqlUserToModelConverter")
+	private EntityToModelConverter<User, UserModel> mysqlUserToModelConverter;
 
-  @Override
-  @Transactional(readOnly = true)
-  public Optional<AuthenticationModel> authenticationByUsername(String username) {
-	  Optional<User> user = Optional.fromNullable(userRepository.findByUsername(username));
-	  if (user.isPresent()) {
-		  AuthenticationModel authenticationModel = new AuthenticationModel();
-		  authenticationModel.setUsername(user.get().getUsername());
-		  authenticationModel.setPassword(user.get().getPassword());
-		  authenticationModel.setAuthorization(user.get().getRole().getName());
-		  return Optional.of(authenticationModel);
-	  }
-    return Optional.absent();
-  }
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<AuthenticationModel> authenticationByUsername(String username) {
+		Optional<User> user = Optional.fromNullable(userRepository.findByUsername(username));
+		if (user.isPresent()) {
+			AuthenticationModel authenticationModel = new AuthenticationModel();
+			authenticationModel.setUsername(user.get().getUsername());
+			authenticationModel.setPassword(user.get().getPassword());
+			authenticationModel.setAuthorization(user.get().getRole().getName());
+			return Optional.of(authenticationModel);
+		}
+		return Optional.absent();
+	}
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public void updatePassword(UpdatePasswordModel request) {
-    if (arePasswordCompiledCorrectly(request)) {
-      userRepository.updatePassword(
-        Long.parseLong(request.getUserId()),
-        request.getCurrentPassword(),
-        request.getNewPassword());
-    }
-  }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void updatePassword(UpdatePasswordModel request) {
+		if (arePasswordCompiledCorrectly(request)) {
+			userRepository.updatePassword(
+				Long.parseLong(request.getUserId()),
+				request.getCurrentPassword(),
+				request.getNewPassword());
+		}
+	}
 
-  private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
-    return StringUtils.hasText(request.getNewPassword())
-      && StringUtils.hasText(request.getPasswordConfirmed())
-      && request.getNewPassword().equals(request.getPasswordConfirmed());
-  }
+	private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
+		return StringUtils.hasText(request.getNewPassword())
+			&& StringUtils.hasText(request.getPasswordConfirmed())
+			&& request.getNewPassword().equals(request.getPasswordConfirmed());
+	}
 
-  @Override
-  public UserModel findUserById(String userId) {
-    return mysqlUserToModelConverter.convert(userRepository.findOne(Long.parseLong(userId)));
-  }
+	@Override
+	public UserModel findUserById(String userId) {
+		return mysqlUserToModelConverter.convert(userRepository.findOne(Long.parseLong(userId)));
+	}
 
-  @Override
-  public UserModel findByUsername(String username) {
-    return mysqlUserToModelConverter.convert(userRepository.findByUsername(username));
-  }
+	@Override
+	public UserModel findByUsername(String username) {
+		return mysqlUserToModelConverter.convert(userRepository.findByUsername(username));
+	}
 
-  @Override
-  public UserModel findByUsernameAndPassword(String username, String password) {
-    return mysqlUserToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
-  }
+	@Override
+	public UserModel findByUsernameAndPassword(String username, String password) {
+		return mysqlUserToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
+	}
 
-  @Override
-  public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
-    return new PageImpl<>(mysqlUserToModelConverter.convertList(userRepository.findAllExcludingCurrentUser(usernameToExclude)));
-  }
+	@Override
+	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
+		return new PageImpl<>(mysqlUserToModelConverter.convertList(userRepository.findAllExcludingCurrentUser(usernameToExclude)));
+	}
 
-  @Override
-  public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
-    BooleanBuilder whereCondition = new BooleanBuilder(user.username.notEqualsIgnoreCase(currentUsername))
-        .and(user.username.notEqualsIgnoreCase("admin"));
-    if (StringUtils.hasText(parameters.getSearchCriteria())) {
-      whereCondition.and(user.username.toLowerCase().like(contains(parameters.getSearchCriteria())));
-    }
-    JPAQuery jpaQuery = new JPAQuery(entityManager).from(user).where(whereCondition.getValue());
-    return paginationService.getPaginatedResultAsJson(parameters, jpaQuery, user);
-  }
+	@Override
+	public String getAllUsersPaginated(QueryParameters parameters, String currentUsername) {
+		BooleanBuilder whereCondition = new BooleanBuilder(user.username.notEqualsIgnoreCase(currentUsername))
+			.and(user.username.notEqualsIgnoreCase("admin"));
+		if (StringUtils.hasText(parameters.getSearchCriteria())) {
+			whereCondition.and(user.username.toLowerCase().like(contains(parameters.getSearchCriteria())));
+		}
+		JPAQuery jpaQuery = new JPAQuery(entityManager).from(user).where(whereCondition.getValue());
+		return paginationService.getPaginatedResultAsJson(parameters, jpaQuery, user);
+	}
 
-  private static String contains(String value) {
-    return "%" + value.toLowerCase() + "%";
-  }
+	private static String contains(String value) {
+		return "%" + value.toLowerCase() + "%";
+	}
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public UserModel saveUser(UserModel userModel) {
-    User user = new User();
-    user.setUsername(userModel.getUsername());
-    user.setPassword(userModel.getPassword());
-    user.setEmail(userModel.getEmail());
-    user.setFirstName(userModel.getFirstName());
-    user.setLastName(userModel.getLastName());
-    user.setRole(roleRepository.findOne(Long.parseLong(userModel.getRole().getRoleId())));
-    User newUser = userRepository.save(user);
-    return mysqlUserToModelConverter.convert(newUser);
-  }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public UserModel saveUser(UserModel userModel) {
+		User user = new User();
+		user.setUsername(userModel.getUsername());
+		user.setPassword(userModel.getPassword());
+		user.setEmail(userModel.getEmail());
+		user.setFirstName(userModel.getFirstName());
+		user.setLastName(userModel.getLastName());
+		user.setRole(roleRepository.findOne(Long.parseLong(userModel.getRole().getRoleId())));
+		User newUser = userRepository.save(user);
+		return mysqlUserToModelConverter.convert(newUser);
+	}
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public void updateUser(UserModel userModel) {
-    userRepository.updateUser(
-      Long.parseLong(userModel.getUserId()),
-      userModel.getUsername(),
-      userModel.getFirstName(),
-      userModel.getLastName(),
-      userModel.getEmail(),
-      roleRepository.findOne(Long.parseLong(userModel.getRole().getRoleId())));
-  }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void updateUser(UserModel userModel) {
+		userRepository.updateUser(
+			Long.parseLong(userModel.getUserId()),
+			userModel.getUsername(),
+			userModel.getFirstName(),
+			userModel.getLastName(),
+			userModel.getEmail(),
+			roleRepository.findOne(Long.parseLong(userModel.getRole().getRoleId())));
+	}
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public void deleteUser(String userId) {
-    userRepository.delete(Long.parseLong(userId));
-  }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteUser(String userId) {
+		userRepository.delete(Long.parseLong(userId));
+	}
 
-  @Override
-  public Iterable<RoleModel> loadRoles() {
-    return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
-  }
+	@Override
+	public Iterable<RoleModel> loadRoles() {
+		return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
+	}
 
-  @Override
-  public RoleModel findRoleByName(String roleName) {
-    return roleToRoleModel().apply(roleRepository.findByName(roleName));
-  }
+	@Override
+	public RoleModel findRoleByName(String roleName) {
+		return roleToRoleModel().apply(roleRepository.findByName(roleName));
+	}
 
-  private Function<Role, RoleModel> roleToRoleModel() {
-    return new Function<Role, RoleModel>() {
-      @Override
-      public RoleModel apply(Role role) {
-        RoleModel model = new RoleModel();
-        model.setRoleId(String.valueOf(role.getId()));
-        model.setRoleName(role.getName());
-        return model;
-      }
-    };
-  }
+	private Function<Role, RoleModel> roleToRoleModel() {
+		return new Function<Role, RoleModel>() {
+			@Override
+			public RoleModel apply(Role role) {
+				RoleModel model = new RoleModel();
+				model.setRoleId(String.valueOf(role.getId()));
+				model.setRoleName(role.getName());
+				return model;
+			}
+		};
+	}
 
-  @Override
-  public boolean isCurrentPasswordValid(String userId, String currentPwd) {
-    return userRepository.findByIdAndPassword(Long.parseLong(userId), currentPwd) != null;
-  }
+	@Override
+	public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+		return userRepository.findByIdAndPassword(Long.parseLong(userId), currentPwd) != null;
+	}
 
 }

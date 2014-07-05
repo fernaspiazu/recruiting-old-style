@@ -48,106 +48,106 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
-  @Mock
-  private UserRepositoryGateway userRepositoryGateway;
+	@Mock
+	private UserRepositoryGateway userRepositoryGateway;
 
-  @InjectMocks
-  private UserService userService = new UserServiceImpl();
+	@InjectMocks
+	private UserService userService = new UserServiceImpl();
 
-  @Test
-  public void findUserById() {
-    when(userRepositoryGateway.findUserById(anyString())).thenReturn(getUserModel());
-    Optional<UserModel> user = userService.findUserById("1234567890");
-    assertThat(user.isPresent()).isTrue();
-    assertThat(user.get().getUsername()).isEqualTo("jhon");
-  }
+	@Test
+	public void findUserById() {
+		when(userRepositoryGateway.findUserById(anyString())).thenReturn(getUserModel());
+		Optional<UserModel> user = userService.findUserById("1234567890");
+		assertThat(user.isPresent()).isTrue();
+		assertThat(user.get().getUsername()).isEqualTo("jhon");
+	}
 
-  @Test
-  public void findByUsername() {
-    when(userRepositoryGateway.findByUsername(anyString())).thenReturn(getUserModel());
-    Optional<UserModel> user = userService.findByUsername("jhon");
-    assertThat(user.isPresent()).isTrue();
-    assertThat(user.get().getUsername()).isEqualTo("jhon");
-  }
+	@Test
+	public void findByUsername() {
+		when(userRepositoryGateway.findByUsername(anyString())).thenReturn(getUserModel());
+		Optional<UserModel> user = userService.findByUsername("jhon");
+		assertThat(user.isPresent()).isTrue();
+		assertThat(user.get().getUsername()).isEqualTo("jhon");
+	}
 
-  @Test
-  public void findByUsernameAndPassword() {
-    when(userRepositoryGateway.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUserModel());
-    Optional<UserModel> user = userService.findByUsernameAndPassword("jhon", "jhon78*");
-    assertThat(user.get().getUsername()).isEqualTo("jhon");
-  }
+	@Test
+	public void findByUsernameAndPassword() {
+		when(userRepositoryGateway.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUserModel());
+		Optional<UserModel> user = userService.findByUsernameAndPassword("jhon", "jhon78*");
+		assertThat(user.get().getUsername()).isEqualTo("jhon");
+	}
 
-  @Test
-  public void findAllWithPageable() {
-    PageImpl<UserModel> paginatedResult = new PageImpl<>(getUserList().subList(0, 10));
-    when(userRepositoryGateway.findAllExcludingCurrentUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
-    Page<UserModel> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
-    assertThat(users.getContent()).hasSize(10);
-  }
+	@Test
+	public void findAllWithPageable() {
+		PageImpl<UserModel> paginatedResult = new PageImpl<>(getUserList().subList(0, 10));
+		when(userRepositoryGateway.findAllExcludingCurrentUser(any(Pageable.class), anyString())).thenReturn(paginatedResult);
+		Page<UserModel> users = userService.findAllExcludingCurrentUser(new PageRequest(1, 10), "jhon");
+		assertThat(users.getContent()).hasSize(10);
+	}
 
-  @Test
-  public void saveUser() {
-    when(userRepositoryGateway.saveUser(any(UserModel.class))).thenReturn(getUserModel());
-    UserModel userModelSaved = userService.saveUser(userModel().build());
-    assertThat(userModelSaved.getUsername()).isEqualTo("jhon");
-  }
+	@Test
+	public void saveUser() {
+		when(userRepositoryGateway.saveUser(any(UserModel.class))).thenReturn(getUserModel());
+		UserModel userModelSaved = userService.saveUser(userModel().build());
+		assertThat(userModelSaved.getUsername()).isEqualTo("jhon");
+	}
 
-  @Test
-  public void loadRoles() {
-    List<RoleModel> roles = Lists.newArrayList(
-      roleModel().withId("12345").withAuthorization("Administrator").build(),
-      roleModel().withId("12345").withAuthorization("User").build()
-    );
-    when(userRepositoryGateway.loadRoles()).thenReturn(roles);
-    assertThat(userService.loadRoles()).hasSize(2)
-      .contains(roleModel().withId("12345").withAuthorization("User").build());
-  }
+	@Test
+	public void loadRoles() {
+		List<RoleModel> roles = Lists.newArrayList(
+			roleModel().withId("12345").withAuthorization("Administrator").build(),
+			roleModel().withId("12345").withAuthorization("User").build()
+		);
+		when(userRepositoryGateway.loadRoles()).thenReturn(roles);
+		assertThat(userService.loadRoles()).hasSize(2)
+			.contains(roleModel().withId("12345").withAuthorization("User").build());
+	}
 
-  @Test
-  public void findRoleByName() {
-    when(userRepositoryGateway.findRoleByName("Administrator"))
-      .thenReturn(roleModel().withId("12345").withAuthorization("Administrator").build());
-    Optional<RoleModel> role = userService.findRoleByName("Administrator");
-    assertThat(role.get().getRoleName()).isEqualTo("Administrator");
-  }
+	@Test
+	public void findRoleByName() {
+		when(userRepositoryGateway.findRoleByName("Administrator"))
+			.thenReturn(roleModel().withId("12345").withAuthorization("Administrator").build());
+		Optional<RoleModel> role = userService.findRoleByName("Administrator");
+		assertThat(role.get().getRoleName()).isEqualTo("Administrator");
+	}
 
-  @Test
-  public void deleteUserByUserId() {
-    ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
-    userService.deleteUser("1234567890");
-    verify(userRepositoryGateway).deleteUser(argument.capture());
-    assertThat("1234567890").isEqualTo(argument.getValue());
-  }
+	@Test
+	public void deleteUserByUserId() {
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+		userService.deleteUser("1234567890");
+		verify(userRepositoryGateway).deleteUser(argument.capture());
+		assertThat("1234567890").isEqualTo(argument.getValue());
+	}
 
-  private UserModel getUserModel() {
-    return userModel()
-      .withId("1234567890")
-      .withUsername("jhon")
-      .withPassword("jhon78*")
-      .withRole(roleModel().withId("12345").withAuthorization("User"))
-      .build();
-  }
+	private UserModel getUserModel() {
+		return userModel()
+			.withId("1234567890")
+			.withUsername("jhon")
+			.withPassword("jhon78*")
+			.withRole(roleModel().withId("12345").withAuthorization("User"))
+			.build();
+	}
 
-  private List<UserModel> getUserList() {
-    RoleModelBuilder adminRole = roleModel().withId("12345").withAuthorization("Administrator");
-    RoleModelBuilder userRole = roleModel().withId("12345").withAuthorization("User");
-    return Lists.newArrayList(
-      userModel().withUsername("user1").withPassword("password1").withRole(adminRole).build(),
-      userModel().withUsername("user2").withPassword("password2").withRole(adminRole).build(),
-      userModel().withUsername("user3").withPassword("password3").withRole(userRole).build(),
-      userModel().withUsername("user4").withPassword("password4").withRole(userRole).build(),
-      userModel().withUsername("user5").withPassword("password5").withRole(userRole).build(),
-      userModel().withUsername("user6").withPassword("password6").withRole(userRole).build(),
-      userModel().withUsername("user7").withPassword("password7").withRole(userRole).build(),
-      userModel().withUsername("user8").withPassword("password8").withRole(userRole).build(),
-      userModel().withUsername("user9").withPassword("password9").withRole(userRole).build(),
-      userModel().withUsername("user10").withPassword("password10").withRole(userRole).build(),
-      userModel().withUsername("user11").withPassword("password11").withRole(userRole).build(),
-      userModel().withUsername("user12").withPassword("password12").withRole(userRole).build(),
-      userModel().withUsername("user13").withPassword("password13").withRole(userRole).build(),
-      userModel().withUsername("user14").withPassword("password14").withRole(userRole).build(),
-      userModel().withUsername("user15").withPassword("password15").withRole(userRole).build()
-    );
-  }
+	private List<UserModel> getUserList() {
+		RoleModelBuilder adminRole = roleModel().withId("12345").withAuthorization("Administrator");
+		RoleModelBuilder userRole = roleModel().withId("12345").withAuthorization("User");
+		return Lists.newArrayList(
+			userModel().withUsername("user1").withPassword("password1").withRole(adminRole).build(),
+			userModel().withUsername("user2").withPassword("password2").withRole(adminRole).build(),
+			userModel().withUsername("user3").withPassword("password3").withRole(userRole).build(),
+			userModel().withUsername("user4").withPassword("password4").withRole(userRole).build(),
+			userModel().withUsername("user5").withPassword("password5").withRole(userRole).build(),
+			userModel().withUsername("user6").withPassword("password6").withRole(userRole).build(),
+			userModel().withUsername("user7").withPassword("password7").withRole(userRole).build(),
+			userModel().withUsername("user8").withPassword("password8").withRole(userRole).build(),
+			userModel().withUsername("user9").withPassword("password9").withRole(userRole).build(),
+			userModel().withUsername("user10").withPassword("password10").withRole(userRole).build(),
+			userModel().withUsername("user11").withPassword("password11").withRole(userRole).build(),
+			userModel().withUsername("user12").withPassword("password12").withRole(userRole).build(),
+			userModel().withUsername("user13").withPassword("password13").withRole(userRole).build(),
+			userModel().withUsername("user14").withPassword("password14").withRole(userRole).build(),
+			userModel().withUsername("user15").withPassword("password15").withRole(userRole).build()
+		);
+	}
 
 }

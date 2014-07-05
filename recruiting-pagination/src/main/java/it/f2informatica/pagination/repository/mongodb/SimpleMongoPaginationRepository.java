@@ -30,7 +30,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SimpleMongoPaginationRepository<T, ID extends Serializable>
-			extends SimpleMongoRepository<T, ID> implements MongoDBQueryExecutor<T> {
+	extends SimpleMongoRepository<T, ID> implements MongoDBQueryExecutor<T> {
 
 	public SimpleMongoPaginationRepository(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations) {
 		super(metadata, mongoOperations);

@@ -52,109 +52,109 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class WebApplicationContextTest {
 
-  @Mock
-  private InterceptorRegistry interceptorRegistry;
+	@Mock
+	private InterceptorRegistry interceptorRegistry;
 
-  @Mock
-  private ResourceHandlerRegistry handlerRegistry;
+	@Mock
+	private ResourceHandlerRegistry handlerRegistry;
 
-  @Mock
-  private List<HandlerMethodArgumentResolver> argumentResolvers;
+	@Mock
+	private List<HandlerMethodArgumentResolver> argumentResolvers;
 
-  @Mock
-  private ResourceHandlerRegistration resourceHandlerRegistration;
+	@Mock
+	private ResourceHandlerRegistration resourceHandlerRegistration;
 
-  @Mock
-  private DefaultServletHandlerConfigurer servletHandlerConfigurer;
+	@Mock
+	private DefaultServletHandlerConfigurer servletHandlerConfigurer;
 
-  private static WebApplicationConfig webApplicationConfig;
+	private static WebApplicationConfig webApplicationConfig;
 
-  @BeforeClass
-  public static void beforeClass() {
-    webApplicationConfig = new WebApplicationConfig();
-  }
+	@BeforeClass
+	public static void beforeClass() {
+		webApplicationConfig = new WebApplicationConfig();
+	}
 
-  @Test
-  public void resourceHandlers() {
-    when(handlerRegistry.addResourceHandler("/static/**")).thenReturn(resourceHandlerRegistration);
-    when(resourceHandlerRegistration.addResourceLocations("/static/")).thenReturn(resourceHandlerRegistration);
-    webApplicationConfig.addResourceHandlers(handlerRegistry);
-    verify(handlerRegistry).addResourceHandler("/static/**");
-    verify(resourceHandlerRegistration).addResourceLocations("/static/");
-  }
+	@Test
+	public void resourceHandlers() {
+		when(handlerRegistry.addResourceHandler("/static/**")).thenReturn(resourceHandlerRegistration);
+		when(resourceHandlerRegistration.addResourceLocations("/static/")).thenReturn(resourceHandlerRegistration);
+		webApplicationConfig.addResourceHandlers(handlerRegistry);
+		verify(handlerRegistry).addResourceHandler("/static/**");
+		verify(resourceHandlerRegistration).addResourceLocations("/static/");
+	}
 
-  @Test
-  public void argumentResolvers() {
-    ArgumentCaptor<PageableHandlerMethodArgumentResolver> argument = pageableArgumentCaptor();
-    webApplicationConfig.addArgumentResolvers(argumentResolvers);
-    verify(argumentResolvers).add(argument.capture());
-    assertThat(argument.getValue()).isInstanceOf(PageableHandlerMethodArgumentResolver.class);
-  }
+	@Test
+	public void argumentResolvers() {
+		ArgumentCaptor<PageableHandlerMethodArgumentResolver> argument = pageableArgumentCaptor();
+		webApplicationConfig.addArgumentResolvers(argumentResolvers);
+		verify(argumentResolvers).add(argument.capture());
+		assertThat(argument.getValue()).isInstanceOf(PageableHandlerMethodArgumentResolver.class);
+	}
 
-  private ArgumentCaptor<PageableHandlerMethodArgumentResolver> pageableArgumentCaptor() {
-    return ArgumentCaptor.forClass(PageableHandlerMethodArgumentResolver.class);
-  }
+	private ArgumentCaptor<PageableHandlerMethodArgumentResolver> pageableArgumentCaptor() {
+		return ArgumentCaptor.forClass(PageableHandlerMethodArgumentResolver.class);
+	}
 
-  @Test
-  public void configureDefaultServletHandling() {
-    doNothing().when(servletHandlerConfigurer).enable();
-    webApplicationConfig.configureDefaultServletHandling(servletHandlerConfigurer);
-    verify(servletHandlerConfigurer).enable();
-  }
+	@Test
+	public void configureDefaultServletHandling() {
+		doNothing().when(servletHandlerConfigurer).enable();
+		webApplicationConfig.configureDefaultServletHandling(servletHandlerConfigurer);
+		verify(servletHandlerConfigurer).enable();
+	}
 
-  @Test
-  public void beanNameViewResolver() {
-    BeanNameViewResolver beanNameViewResolver = webApplicationConfig.beanNameViewResolver();
-    assertThat(beanNameViewResolver.getOrder()).isEqualTo(1);
-  }
+	@Test
+	public void beanNameViewResolver() {
+		BeanNameViewResolver beanNameViewResolver = webApplicationConfig.beanNameViewResolver();
+		assertThat(beanNameViewResolver.getOrder()).isEqualTo(1);
+	}
 
-  @Test
-  public void thymeleafViewResolver() {
-    ThymeleafViewResolver thymeleafViewResolver = webApplicationConfig.thymeleafViewResolver();
-    assertThat(thymeleafViewResolver.getOrder()).isEqualTo(2);
-  }
+	@Test
+	public void thymeleafViewResolver() {
+		ThymeleafViewResolver thymeleafViewResolver = webApplicationConfig.thymeleafViewResolver();
+		assertThat(thymeleafViewResolver.getOrder()).isEqualTo(2);
+	}
 
-  @Test
-  public void thymeleafTemplateEngine() {
-    SpringTemplateEngine thymeleafTemplateEngine = webApplicationConfig.thymeleafTemplateEngine();
-    IDialect springDialiect = Iterables.getFirst(thymeleafTemplateEngine.getDialects(), null);
-    assertThat(springDialiect).isInstanceOf(SpringStandardDialect.class);
-  }
+	@Test
+	public void thymeleafTemplateEngine() {
+		SpringTemplateEngine thymeleafTemplateEngine = webApplicationConfig.thymeleafTemplateEngine();
+		IDialect springDialiect = Iterables.getFirst(thymeleafTemplateEngine.getDialects(), null);
+		assertThat(springDialiect).isInstanceOf(SpringStandardDialect.class);
+	}
 
-  @Test
-  public void thymeleafTemplateResolver() {
-    ServletContextTemplateResolver templateResolver = webApplicationConfig.thymeleafTemplateResolver();
-    templateResolver.initialize();
-    assertThat(templateResolver.getTemplateMode()).isEqualTo("HTML5");
-  }
+	@Test
+	public void thymeleafTemplateResolver() {
+		ServletContextTemplateResolver templateResolver = webApplicationConfig.thymeleafTemplateResolver();
+		templateResolver.initialize();
+		assertThat(templateResolver.getTemplateMode()).isEqualTo("HTML5");
+	}
 
-  @Test
-  public void messageSource() {
-    ReloadableResourceBundleMessageSource messageSource = webApplicationConfig.messageSource();
-    String englishMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ENGLISH);
-    assertThat(englishMessage).isEqualTo("Message in English");
-    String italianMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ITALIAN);
-    assertThat(italianMessage).isEqualTo("Messaggio in Italiano");
-  }
+	@Test
+	public void messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = webApplicationConfig.messageSource();
+		String englishMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ENGLISH);
+		assertThat(englishMessage).isEqualTo("Message in English");
+		String italianMessage = messageSource.getMessage("message.test", new Object[]{}, Locale.ITALIAN);
+		assertThat(italianMessage).isEqualTo("Messaggio in Italiano");
+	}
 
-  @Test
-  public void addInterceptors() {
-    ArgumentCaptor<LocaleChangeInterceptor> argument = ArgumentCaptor.forClass(LocaleChangeInterceptor.class);
-    webApplicationConfig.addInterceptors(interceptorRegistry);
-    verify(interceptorRegistry).addInterceptor(argument.capture());
-    assertThat(argument.getValue().getParamName()).isEqualTo("siteLanguage");
-  }
+	@Test
+	public void addInterceptors() {
+		ArgumentCaptor<LocaleChangeInterceptor> argument = ArgumentCaptor.forClass(LocaleChangeInterceptor.class);
+		webApplicationConfig.addInterceptors(interceptorRegistry);
+		verify(interceptorRegistry).addInterceptor(argument.capture());
+		assertThat(argument.getValue().getParamName()).isEqualTo("siteLanguage");
+	}
 
-  @Test
-  public void localeChangeInterceptor() {
-    LocaleChangeInterceptor localeChangeInterceptor = webApplicationConfig.localeChangeInterceptor();
-    assertThat(localeChangeInterceptor.getParamName()).isEqualTo("siteLanguage");
-  }
+	@Test
+	public void localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = webApplicationConfig.localeChangeInterceptor();
+		assertThat(localeChangeInterceptor.getParamName()).isEqualTo("siteLanguage");
+	}
 
-  @Test
-  public void localeResolver() {
-    CookieLocaleResolver cookieLocaleResolver = webApplicationConfig.localeResolver();
-    assertThat(cookieLocaleResolver.getCookieName()).isEqualTo("CURRENT_LOCALE");
-  }
+	@Test
+	public void localeResolver() {
+		CookieLocaleResolver cookieLocaleResolver = webApplicationConfig.localeResolver();
+		assertThat(cookieLocaleResolver.getCookieName()).isEqualTo("CURRENT_LOCALE");
+	}
 
 }

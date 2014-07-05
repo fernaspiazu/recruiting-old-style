@@ -32,68 +32,68 @@ import java.util.regex.Pattern;
 
 @Component
 public class UserModelValidator extends AbstractValidator {
-  private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
-    "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+		"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
 
-  private static final String SAVE_EVENT = "save";
-  private static final String UPDATE_EVENT = "update";
+	private static final String SAVE_EVENT = "save";
+	private static final String UPDATE_EVENT = "update";
 
-  @Autowired
-  private RoleModelValidator roleModelValidator;
+	@Autowired
+	private RoleModelValidator roleModelValidator;
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return UserModel.class.equals(clazz);
-  }
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return UserModel.class.equals(clazz);
+	}
 
-  @Override
-  public void validate(Object target, Errors errors) {
-    UserModel userModel = (UserModel) target;
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", FIELD_MANDATORY);
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", FIELD_MANDATORY);
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", FIELD_MANDATORY);
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", FIELD_MANDATORY);
-    if (isSaveEvent(userModel)) {
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", FIELD_MANDATORY);
-    }
-    invokeValidator(roleModelValidator, userModel.getRole(), "role", errors);
-    doFurtherValidation(userModel, errors);
-  }
+	@Override
+	public void validate(Object target, Errors errors) {
+		UserModel userModel = (UserModel) target;
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", FIELD_MANDATORY);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", FIELD_MANDATORY);
+		if (isSaveEvent(userModel)) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", FIELD_MANDATORY);
+		}
+		invokeValidator(roleModelValidator, userModel.getRole(), "role", errors);
+		doFurtherValidation(userModel, errors);
+	}
 
-  private void doFurtherValidation(UserModel userModel, Errors errors) {
-    if (errors.hasErrors()) {
-      return;
-    }
-    if (isEmailInvalid(userModel.getEmail())) {
-      errors.rejectValue("email", "err.email");
-    }
+	private void doFurtherValidation(UserModel userModel, Errors errors) {
+		if (errors.hasErrors()) {
+			return;
+		}
+		if (isEmailInvalid(userModel.getEmail())) {
+			errors.rejectValue("email", "err.email");
+		}
 
-    final String username = userModel.getUsername();
-    Optional<UserModel> user = userService.findByUsername(username);
-    if (user.isPresent()) {
-      if (isSaveEvent(userModel)) {
-        errors.rejectValue("username", "err.username.exists");
-      } else if (isUpdateEvent(userModel) && !username.equals(user.get().getUsername())) {
-        errors.rejectValue("username", "err.username.exists");
-      }
-    }
-  }
+		final String username = userModel.getUsername();
+		Optional<UserModel> user = userService.findByUsername(username);
+		if (user.isPresent()) {
+			if (isSaveEvent(userModel)) {
+				errors.rejectValue("username", "err.username.exists");
+			} else if (isUpdateEvent(userModel) && !username.equals(user.get().getUsername())) {
+				errors.rejectValue("username", "err.username.exists");
+			}
+		}
+	}
 
-  private boolean isEmailInvalid(String email) {
-    Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-    Matcher matcher = pattern.matcher(email);
-    return !matcher.matches();
-  }
+	private boolean isEmailInvalid(String email) {
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(email);
+		return !matcher.matches();
+	}
 
-  private boolean isSaveEvent(UserModel userModel) {
-    return SAVE_EVENT.equals(userModel.getSubmitEvent());
-  }
+	private boolean isSaveEvent(UserModel userModel) {
+		return SAVE_EVENT.equals(userModel.getSubmitEvent());
+	}
 
-  private boolean isUpdateEvent(UserModel userModel) {
-    return UPDATE_EVENT.equals(userModel.getSubmitEvent());
-  }
+	private boolean isUpdateEvent(UserModel userModel) {
+		return UPDATE_EVENT.equals(userModel.getSubmitEvent());
+	}
 
 }

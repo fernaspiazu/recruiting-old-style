@@ -50,127 +50,127 @@ import java.util.List;
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = {"it.f2informatica.webapp"})
 public class WebApplicationConfig extends WebMvcConfigurerAdapter {
-  public static final String GLOBAL_DATE_FORMAT = DatePatterns.GLOBAL_DATE_FORMAT;
-  public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
-  public static final String LANGUAGE = "siteLanguage";
+	public static final String GLOBAL_DATE_FORMAT = DatePatterns.GLOBAL_DATE_FORMAT;
+	public static final String CURRENT_LOCALE_COOKIE = "CURRENT_LOCALE";
+	public static final String LANGUAGE = "siteLanguage";
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-  }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+	}
 
-  @Override
-  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
-  }
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
+	}
 
-  @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("redirect:/home");
-    registry.addViewController("/404").setViewName(Pages.PAGE_NOT_FOUND);
-    registry.addViewController("/500").setViewName(Pages.SERVER_ERROR);
-  }
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("redirect:/home");
+		registry.addViewController("/404").setViewName(Pages.PAGE_NOT_FOUND);
+		registry.addViewController("/500").setViewName(Pages.SERVER_ERROR);
+	}
 
-  @Override
-  public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-    configurer.enable();
-  }
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 
-  @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(localeChangeInterceptor());
-  }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
+	}
 
-  @Bean
-  public LocaleChangeInterceptor localeChangeInterceptor() {
-    LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-    localeChangeInterceptor.setParamName(LANGUAGE);
-    return localeChangeInterceptor;
-  }
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName(LANGUAGE);
+		return localeChangeInterceptor;
+	}
 
-  @Bean
-  public CookieLocaleResolver localeResolver() {
-    CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-    cookieLocaleResolver.setCookieName(CURRENT_LOCALE_COOKIE);
-    return cookieLocaleResolver;
-  }
+	@Bean
+	public CookieLocaleResolver localeResolver() {
+		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+		cookieLocaleResolver.setCookieName(CURRENT_LOCALE_COOKIE);
+		return cookieLocaleResolver;
+	}
 
-  @Bean
-  public StandardServletMultipartResolver multipartResolver() {
-    return new StandardServletMultipartResolver();
-  }
+	@Bean
+	public StandardServletMultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
+	}
 
-  @Bean
-  public BeanNameViewResolver beanNameViewResolver() {
-    BeanNameViewResolver viewResolver = new BeanNameViewResolver();
-    viewResolver.setOrder(1);
-    return viewResolver;
-  }
+	@Bean
+	public BeanNameViewResolver beanNameViewResolver() {
+		BeanNameViewResolver viewResolver = new BeanNameViewResolver();
+		viewResolver.setOrder(1);
+		return viewResolver;
+	}
 
-  @Bean
-  public ThymeleafViewResolver thymeleafViewResolver() {
-    ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-    viewResolver.setTemplateEngine(thymeleafTemplateEngine());
-    viewResolver.setCharacterEncoding("UTF-8");
-    viewResolver.setOrder(2);
-    return viewResolver;
-  }
+	@Bean
+	public ThymeleafViewResolver thymeleafViewResolver() {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(thymeleafTemplateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
+		viewResolver.setOrder(2);
+		return viewResolver;
+	}
 
-  @Bean
-  public SpringTemplateEngine thymeleafTemplateEngine() {
-    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-    templateEngine.setTemplateResolver(thymeleafTemplateResolver());
-    return templateEngine;
-  }
+	@Bean
+	public SpringTemplateEngine thymeleafTemplateEngine() {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(thymeleafTemplateResolver());
+		return templateEngine;
+	}
 
-  @Bean
-  public ServletContextTemplateResolver thymeleafTemplateResolver() {
-    ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-    templateResolver.setPrefix("/WEB-INF/views/");
-    templateResolver.setSuffix(".html");
-    templateResolver.setTemplateMode("HTML5");
-    templateResolver.setCharacterEncoding("UTF-8");
-    // Uncomment these lines in order to use
-    // cache when resolving templates.
-    templateResolver.setCacheable(false);
-    templateResolver.setCacheTTLMs(0L);
-    // -------------------------------------
-    return templateResolver;
-  }
+	@Bean
+	public ServletContextTemplateResolver thymeleafTemplateResolver() {
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setPrefix("/WEB-INF/views/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("UTF-8");
+		// Uncomment these lines in order to use
+		// cache when resolving templates.
+		templateResolver.setCacheable(false);
+		templateResolver.setCacheTTLMs(0L);
+		// -------------------------------------
+		return templateResolver;
+	}
 
-  @Bean
-  public ReloadableResourceBundleMessageSource messageSource() {
-    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasenames(basenames());
-    messageSource.setDefaultEncoding("UTF-8");
-    messageSource.setCacheSeconds(1);
-    messageSource.setFallbackToSystemLocale(false);
-    return messageSource;
-  }
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasenames(basenames());
+		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setCacheSeconds(1);
+		messageSource.setFallbackToSystemLocale(false);
+		return messageSource;
+	}
 
-  private String[] basenames() {
-    return new String[]{
-      "/WEB-INF/i18n/global",
-      "/WEB-INF/i18n/user",
-      "/WEB-INF/i18n/consultant",
-      "/WEB-INF/i18n/months",
-      "/WEB-INF/i18n/language"
-    };
-  }
+	private String[] basenames() {
+		return new String[]{
+			"/WEB-INF/i18n/global",
+			"/WEB-INF/i18n/user",
+			"/WEB-INF/i18n/consultant",
+			"/WEB-INF/i18n/months",
+			"/WEB-INF/i18n/language"
+		};
+	}
 
-  @Bean
-  public FormattingConversionService mvcConversionService() {
-    DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
-    addFormattersForFieldAnnotation(conversionService);
-    DateFormatterRegistrar registrar = new DateFormatterRegistrar();
-    registrar.setFormatter(new DateFormatter(GLOBAL_DATE_FORMAT));
-    registrar.registerFormatters(conversionService);
-    return conversionService;
-  }
+	@Bean
+	public FormattingConversionService mvcConversionService() {
+		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
+		addFormattersForFieldAnnotation(conversionService);
+		DateFormatterRegistrar registrar = new DateFormatterRegistrar();
+		registrar.setFormatter(new DateFormatter(GLOBAL_DATE_FORMAT));
+		registrar.registerFormatters(conversionService);
+		return conversionService;
+	}
 
-  private void addFormattersForFieldAnnotation(DefaultFormattingConversionService conversionService) {
-    conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
-    conversionService.addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
-  }
+	private void addFormattersForFieldAnnotation(DefaultFormattingConversionService conversionService) {
+		conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
+		conversionService.addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
+	}
 
 }

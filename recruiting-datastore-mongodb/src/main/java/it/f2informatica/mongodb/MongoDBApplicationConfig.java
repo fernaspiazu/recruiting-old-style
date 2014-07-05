@@ -45,33 +45,33 @@ import java.net.UnknownHostException;
 	repositoryFactoryBeanClass = MongoPaginationRepositoryFactoryBean.class)
 @MongoDB
 public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
-  private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
+	private static final String OTHER_DATABASE = System.getProperty("mongodb.database.name");
 
-  @Value("${mongodb.host}")
-  private String host;
+	@Value("${mongodb.host}")
+	private String host;
 
-  @Value("${mongodb.port}")
-  private String defaultPort;
+	@Value("${mongodb.port}")
+	private String defaultPort;
 
-  @Value("${mongodb.database}")
-  private String database;
+	@Value("${mongodb.database}")
+	private String database;
 
-  @Value("${mongodb.user}")
-  private String user;
+	@Value("${mongodb.user}")
+	private String user;
 
-  @Value("${mongodb.password}")
-  private String password;
+	@Value("${mongodb.password}")
+	private String password;
 
-  @Override
-  protected String getDatabaseName() {
-    return StringUtils.hasText(OTHER_DATABASE) ? OTHER_DATABASE : database;
-  }
+	@Override
+	protected String getDatabaseName() {
+		return StringUtils.hasText(OTHER_DATABASE) ? OTHER_DATABASE : database;
+	}
 
-  @Bean
-  @Override
-  public Mongo mongo() throws UnknownHostException {
-    return new MongoClient(new ServerAddress(host, Integer.parseInt(defaultPort)), mongoClientOptions());
-  }
+	@Bean
+	@Override
+	public Mongo mongo() throws UnknownHostException {
+		return new MongoClient(new ServerAddress(host, Integer.parseInt(defaultPort)), mongoClientOptions());
+	}
 
 	private MongoClientOptions mongoClientOptions() {
 		return MongoClientOptions.builder()
@@ -84,9 +84,9 @@ public class MongoDBApplicationConfig extends AbstractMongoConfiguration {
 			.build();
 	}
 
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-    return new PropertySourcesPlaceholderConfigurer();
-  }
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 
 }

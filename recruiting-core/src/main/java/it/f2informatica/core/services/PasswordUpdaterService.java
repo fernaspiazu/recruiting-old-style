@@ -23,9 +23,9 @@ import it.f2informatica.core.model.UpdatePasswordModel;
 
 public interface PasswordUpdaterService {
 
-  void updatePassword(UpdatePasswordModel request);
+	void updatePassword(UpdatePasswordModel request);
 
-  boolean isCurrentPasswordValid(String userId, String currentPwd);
+	boolean isCurrentPasswordValid(String userId, String currentPwd);
 
-  UpdatePasswordModel prepareUpdatePasswordModel(String userId);
+	UpdatePasswordModel prepareUpdatePasswordModel(String userId);
 }

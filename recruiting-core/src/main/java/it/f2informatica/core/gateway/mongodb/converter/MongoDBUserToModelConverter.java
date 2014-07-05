@@ -32,27 +32,27 @@ import static it.f2informatica.core.model.builder.UserModelBuilder.userModel;
 @Component("userToModelConverter")
 public class MongoDBUserToModelConverter extends EntityToModelConverter<User, UserModel> {
 
-  @Override
-  public UserModel convert(User user) {
-    return (user == null) ? null :
-      userModel()
-        .withId(String.valueOf(user.getId()))
-        .withUsername(user.getUsername())
-        .withPassword(user.getPassword())
-        .withFirstName(user.getFirstName())
-        .withLastName(user.getLastName())
-        .withEmail(user.getEmail())
-        .withRole(buildRole(user.getRole()))
-        .isNotRemovable(user.isNotRemovable())
-        .build();
-  }
+	@Override
+	public UserModel convert(User user) {
+		return (user == null) ? null :
+			userModel()
+				.withId(String.valueOf(user.getId()))
+				.withUsername(user.getUsername())
+				.withPassword(user.getPassword())
+				.withFirstName(user.getFirstName())
+				.withLastName(user.getLastName())
+				.withEmail(user.getEmail())
+				.withRole(buildRole(user.getRole()))
+				.isNotRemovable(user.isNotRemovable())
+				.build();
+	}
 
-  private RoleModel buildRole(Role role) {
-    return (role == null) ? null :
-      roleModel()
-        .withId(role.getId())
-        .withAuthorization(role.getName())
-        .build();
-  }
+	private RoleModel buildRole(Role role) {
+		return (role == null) ? null :
+			roleModel()
+				.withId(role.getId())
+				.withAuthorization(role.getName())
+				.build();
+	}
 
 }

@@ -32,30 +32,30 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-  private static final long serialVersionUID = 3668933623780484137L;
+	private static final long serialVersionUID = 3668933623780484137L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-  @Column(name = "username")
-  private String username;
+	@Column(name = "username")
+	private String username;
 
-  @Column(name = "password")
-  private String password;
+	@Column(name = "password")
+	private String password;
 
-  @Column(name = "firstname")
-  private String firstName;
+	@Column(name = "firstname")
+	private String firstName;
 
-  @Column(name = "lastname")
-  private String lastName;
+	@Column(name = "lastname")
+	private String lastName;
 
-  @Column(name = "email")
-  private String email;
+	@Column(name = "email")
+	private String email;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "role_id")
-  private Role role;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "role_id")
+	private Role role;
 
 }

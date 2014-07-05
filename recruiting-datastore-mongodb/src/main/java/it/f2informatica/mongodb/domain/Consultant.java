@@ -35,58 +35,58 @@ import java.util.List;
 @ToString(callSuper = true)
 @Document
 public class Consultant extends Identifiable<String> {
-  private static final long serialVersionUID = 6643483509995605407L;
+	private static final long serialVersionUID = 6643483509995605407L;
 
-  @Indexed(unique = true)
-  private String consultantNo;
+	@Indexed(unique = true)
+	private String consultantNo;
 
-  @Indexed(direction = IndexDirection.DESCENDING)
-  private Date registrationDate;
+	@Indexed(direction = IndexDirection.DESCENDING)
+	private Date registrationDate;
 
-  private String fiscalCode;
+	private String fiscalCode;
 
-  private String email;
+	private String email;
 
-  @Indexed(direction = IndexDirection.ASCENDING)
-  private String firstName;
+	@Indexed(direction = IndexDirection.ASCENDING)
+	private String firstName;
 
-  @Indexed(direction = IndexDirection.ASCENDING)
-  private String lastName;
+	@Indexed(direction = IndexDirection.ASCENDING)
+	private String lastName;
 
-  private String gender;
+	private String gender;
 
-  private String phoneNumber;
+	private String phoneNumber;
 
-  private String mobileNumber;
+	private String mobileNumber;
 
-  private Date birthDate;
+	private Date birthDate;
 
-  private String birthCity;
+	private String birthCity;
 
-  private String birthCountry;
+	private String birthCountry;
 
-  private String identityCardNo;
+	private String identityCardNo;
 
-  private String passportNo;
+	private String passportNo;
 
-  private String maritalStatus;
+	private String maritalStatus;
 
-  private List<Experience> experiences = Lists.newArrayList();
+	private List<Experience> experiences = Lists.newArrayList();
 
-  private List<Education> educationList = Lists.newArrayList();
+	private List<Education> educationList = Lists.newArrayList();
 
-  private List<Language> languages = Lists.newArrayList();
+	private List<Language> languages = Lists.newArrayList();
 
-  private List<String> skills = Lists.newArrayList();
+	private List<String> skills = Lists.newArrayList();
 
-  private String interests;
+	private String interests;
 
-  private Address residence;
+	private Address residence;
 
-  private Address domicile;
+	private Address domicile;
 
-  private String curriculum; //TODO: GridFSFile
+	private String curriculum; //TODO: GridFSFile
 
-  private String photo; //TODO: GridFSFile
+	private String photo; //TODO: GridFSFile
 
 }

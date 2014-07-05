@@ -32,27 +32,27 @@ import static it.f2informatica.core.model.builder.UserModelBuilder.userModel;
 @Component("mysqlUserToModelConverter")
 public class MySQLUserToModelConverter extends EntityToModelConverter<User, UserModel> {
 
-  @Override
-  public UserModel convert(User user) {
-    return (user == null) ? null :
-      userModel()
-        .withId(String.valueOf(user.getId()))
-        .withUsername(user.getUsername())
-        .withPassword(user.getPassword())
-        .withFirstName(user.getFirstName())
-        .withLastName(user.getLastName())
-        .withEmail(user.getEmail())
-        .withRole(buildRole(user.getRole()))
-        .isNotRemovable(false)
-        .build();
-  }
+	@Override
+	public UserModel convert(User user) {
+		return (user == null) ? null :
+			userModel()
+				.withId(String.valueOf(user.getId()))
+				.withUsername(user.getUsername())
+				.withPassword(user.getPassword())
+				.withFirstName(user.getFirstName())
+				.withLastName(user.getLastName())
+				.withEmail(user.getEmail())
+				.withRole(buildRole(user.getRole()))
+				.isNotRemovable(false)
+				.build();
+	}
 
-  private RoleModel buildRole(Role role) {
-    return (role == null) ? null :
-      roleModel()
-        .withId(String.valueOf(role.getId()))
-        .withAuthorization(role.getName())
-        .build();
-  }
+	private RoleModel buildRole(Role role) {
+		return (role == null) ? null :
+			roleModel()
+				.withId(String.valueOf(role.getId()))
+				.withAuthorization(role.getName())
+				.build();
+	}
 
 }

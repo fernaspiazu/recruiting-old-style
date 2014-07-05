@@ -29,18 +29,18 @@ import static it.f2informatica.core.model.builder.AddressModelBuilder.addressMod
 @Component("mysqlAddressToModelConverter")
 public class MySQLAddressToModelConverter extends EntityToModelConverter<Address, AddressModel> {
 
-  @Override
-  public AddressModel convert(Address address) {
-    return (address == null) ? null :
-      addressModel()
-        .withStreet(address.getStreet())
-        .withHouseNo(address.getHouseNo())
-        .withZipCode(address.getZipCode())
-        .withCity(address.getCity())
-        .withProvince(address.getProvince())
-        .withRegion(address.getRegion())
-        .withCountry(address.getCountry())
-        .build();
-  }
+	@Override
+	public AddressModel convert(Address address) {
+		return (address == null) ? null :
+			addressModel()
+				.withStreet(address.getStreet())
+				.withHouseNo(address.getHouseNo())
+				.withZipCode(address.getZipCode())
+				.withCity(address.getCity())
+				.withProvince(address.getProvince())
+				.withRegion(address.getRegion())
+				.withCountry(address.getCountry())
+				.build();
+	}
 
 }

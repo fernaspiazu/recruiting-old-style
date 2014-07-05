@@ -28,21 +28,21 @@ import static it.f2informatica.core.model.builder.ExperienceModelBuilder.experie
 
 @Component("experienceToModelConverter")
 public class MongoDBExperienceToModelConverter
-  extends EntityToModelConverter<Experience, ExperienceModel> {
+	extends EntityToModelConverter<Experience, ExperienceModel> {
 
-  @Override
-  public ExperienceModel convert(Experience experience) {
-    return (experience == null) ? null :
-      experienceModel()
-        .withId(experience.getId())
-        .inCompany(experience.getCompanyName())
-        .withPosition(experience.getPosition())
-        .locatedAt(experience.getLocation())
-        .fromPeriod(experience.getPeriodFrom())
-        .toPeriod(experience.getPeriodTo())
-        .isThisTheCurrentJob(experience.isCurrent())
-        .withDescription(experience.getDescription())
-        .build();
-  }
+	@Override
+	public ExperienceModel convert(Experience experience) {
+		return (experience == null) ? null :
+			experienceModel()
+				.withId(experience.getId())
+				.inCompany(experience.getCompanyName())
+				.withPosition(experience.getPosition())
+				.locatedAt(experience.getLocation())
+				.fromPeriod(experience.getPeriodFrom())
+				.toPeriod(experience.getPeriodTo())
+				.isThisTheCurrentJob(experience.isCurrent())
+				.withDescription(experience.getDescription())
+				.build();
+	}
 
 }

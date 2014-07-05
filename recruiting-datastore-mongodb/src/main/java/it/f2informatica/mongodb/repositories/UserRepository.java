@@ -27,9 +27,9 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface UserRepository extends MongoPaginationRepository<User, String> {
 
-  User findByUsername(String username);
+	User findByUsername(String username);
 
-  User findByUsernameAndPassword(String username, String password);
+	User findByUsernameAndPassword(String username, String password);
 
 	@Query(value = "{ 'username' : { $ne : ?0 } }")
 	Page<User> findAllExcludingUser(String username, Pageable pageable);

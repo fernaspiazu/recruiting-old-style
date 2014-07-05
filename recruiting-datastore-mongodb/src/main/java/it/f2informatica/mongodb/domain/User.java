@@ -30,21 +30,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString(callSuper = true)
 @Document
 public class User extends Identifiable<String> {
-  private static final long serialVersionUID = -3058257843321943199L;
+	private static final long serialVersionUID = -3058257843321943199L;
 
-  @Indexed(unique = true)
-  private String username;
+	@Indexed(unique = true)
+	private String username;
 
-  private String password;
+	private String password;
 
-  private String firstName;
+	private String firstName;
 
-  private String lastName;
+	private String lastName;
 
-  private String email;
+	private String email;
 
-  private Role role;
+	private Role role;
 
-  private boolean notRemovable;
+	private boolean notRemovable;
 
 }

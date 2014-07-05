@@ -29,19 +29,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-      .antMatchers(HttpMethod.GET, "/login*").permitAll()
-      .antMatchers(HttpMethod.GET, "/static/**").access("isAnonymous() or isAuthenticated()")
-      .antMatchers(HttpMethod.GET, "/**").authenticated();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+			.antMatchers(HttpMethod.GET, "/login*").permitAll()
+			.antMatchers(HttpMethod.GET, "/static/**").access("isAnonymous() or isAuthenticated()")
+			.antMatchers(HttpMethod.GET, "/**").authenticated();
 
-    http.formLogin()
-      .loginPage("/login")
-      .loginProcessingUrl("/processLogin")
-      .usernameParameter("username")
-      .passwordParameter("password")
-      .defaultSuccessUrl("/home", true)
-      .failureUrl("/login_failed");
-  }
+		http.formLogin()
+			.loginPage("/login")
+			.loginProcessingUrl("/processLogin")
+			.usernameParameter("username")
+			.passwordParameter("password")
+			.defaultSuccessUrl("/home", true)
+			.failureUrl("/login_failed");
+	}
 }

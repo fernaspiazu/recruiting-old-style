@@ -55,100 +55,100 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserRepositoryGatewayMongoDBTest {
 
-  @Mock
-  private MongoTemplate mongoTemplate;
+	@Mock
+	private MongoTemplate mongoTemplate;
 
-  @Mock
-  private UserRepository userRepository;
+	@Mock
+	private UserRepository userRepository;
 
-  @Mock
-  private RoleRepository roleRepository;
+	@Mock
+	private RoleRepository roleRepository;
 
-  @Mock
-  private EntityToModelConverter<User, UserModel> userToModelConverter;
+	@Mock
+	private EntityToModelConverter<User, UserModel> userToModelConverter;
 
-  @InjectMocks
-  private UserRepositoryGateway userRepositoryGateway = new UserRepositoryGatewayMongoDB();
+	@InjectMocks
+	private UserRepositoryGateway userRepositoryGateway = new UserRepositoryGatewayMongoDB();
 
-  @Test
-  public void findUserById() {
-    when(userRepository.findOne(anyString())).thenReturn(getUser());
-    when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
-    UserModel userResponse = userRepositoryGateway.findUserById("52820f6f34bdf55624303fc1");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
-  }
+	@Test
+	public void findUserById() {
+		when(userRepository.findOne(anyString())).thenReturn(getUser());
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findUserById("52820f6f34bdf55624303fc1");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
+	}
 
-  @Test
-  public void findByUsername() {
-    when(userRepository.findByUsername(anyString())).thenReturn(getUser());
-    when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
-    UserModel userResponse = userRepositoryGateway.findByUsername("jhon_kent77");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
-  }
+	@Test
+	public void findByUsername() {
+		when(userRepository.findByUsername(anyString())).thenReturn(getUser());
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findByUsername("jhon_kent77");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
+	}
 
-  @Test
-  public void findByUsernameAndPassword() {
-    when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUser());
-    when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
-    UserModel userResponse = userRepositoryGateway.findByUsernameAndPassword("jhon_kent77", "okisteralio");
-    assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
-  }
+	@Test
+	public void findByUsernameAndPassword() {
+		when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(getUser());
+		when(userToModelConverter.convert(getUser())).thenReturn(userModel().build());
+		UserModel userResponse = userRepositoryGateway.findByUsernameAndPassword("jhon_kent77", "okisteralio");
+		assertThat(userResponse.getUsername()).isEqualTo("jhon_kent77");
+	}
 
-  @Test
-  public void saveUser() {
-    User user = getUser();
-    when(userRepository.save(any(User.class))).thenReturn(user);
-    when(userToModelConverter.convert(user)).thenReturn(userModel().build());
-    UserModel userModelSaved = userRepositoryGateway.saveUser(userModel().build());
-    assertThat(userModelSaved.getUsername()).isEqualTo("jhon_kent77");
-  }
+	@Test
+	public void saveUser() {
+		User user = getUser();
+		when(userRepository.save(any(User.class))).thenReturn(user);
+		when(userToModelConverter.convert(user)).thenReturn(userModel().build());
+		UserModel userModelSaved = userRepositoryGateway.saveUser(userModel().build());
+		assertThat(userModelSaved.getUsername()).isEqualTo("jhon_kent77");
+	}
 
-  private User getUser() {
-    return user()
-      .withId("52820f6f34bdf55624303fc1")
-      .withUsername("jhon_kent77")
-      .withPassword("okisteralio")
-      .withRole(role().thatIsAdministrator())
-      .build();
-  }
+	private User getUser() {
+		return user()
+			.withId("52820f6f34bdf55624303fc1")
+			.withUsername("jhon_kent77")
+			.withPassword("okisteralio")
+			.withRole(role().thatIsAdministrator())
+			.build();
+	}
 
-  @Test
-  public void loadRoles() {
-    String userAuthority = Authority.ROLE_USER.toString();
-    RoleModel roleModel = new RoleModel();
-    roleModel.setRoleName(userAuthority);
-    List<Role> roles = Lists.newArrayList(
-      role().thatIsAdministrator(),
-      role().withAuthorization(userAuthority).build()
-    );
-    when(roleRepository.findAll()).thenReturn(roles);
-    assertThat(userRepositoryGateway.loadRoles()).hasSize(2).contains(roleModel);
-  }
+	@Test
+	public void loadRoles() {
+		String userAuthority = Authority.ROLE_USER.toString();
+		RoleModel roleModel = new RoleModel();
+		roleModel.setRoleName(userAuthority);
+		List<Role> roles = Lists.newArrayList(
+			role().thatIsAdministrator(),
+			role().withAuthorization(userAuthority).build()
+		);
+		when(roleRepository.findAll()).thenReturn(roles);
+		assertThat(userRepositoryGateway.loadRoles()).hasSize(2).contains(roleModel);
+	}
 
-  @Test
-  public void findRoleByName() {
-    String roleAdmin = Authority.ROLE_ADMIN.toString();
-    when(roleRepository.findByName(roleAdmin)).thenReturn(role().thatIsAdministrator());
-    RoleModel response = userRepositoryGateway.findRoleByName(roleAdmin);
-    assertThat(response.getRoleName()).isEqualTo("ROLE_ADMIN");
-  }
+	@Test
+	public void findRoleByName() {
+		String roleAdmin = Authority.ROLE_ADMIN.toString();
+		when(roleRepository.findByName(roleAdmin)).thenReturn(role().thatIsAdministrator());
+		RoleModel response = userRepositoryGateway.findRoleByName(roleAdmin);
+		assertThat(response.getRoleName()).isEqualTo("ROLE_ADMIN");
+	}
 
-  @Test
-  public void updateUser() {
-    stubUpdateSuccess();
-    userRepositoryGateway.updateUser(userModel().build());
-  }
+	@Test
+	public void updateUser() {
+		stubUpdateSuccess();
+		userRepositoryGateway.updateUser(userModel().build());
+	}
 
-  private void stubUpdateSuccess() {
-    WriteResult writeResultMock = mock(WriteResult.class);
-    CommandResult commandResult = mock(CommandResult.class);
-    when(writeResultMock.getLastError()).thenReturn(commandResult);
-    when(commandResult.ok()).thenReturn(true);
-    when(mongoTemplate.updateFirst(
-        any(Query.class),
-        any(Update.class),
-        any(Class.class))
-    ).thenReturn(writeResultMock);
-  }
+	private void stubUpdateSuccess() {
+		WriteResult writeResultMock = mock(WriteResult.class);
+		CommandResult commandResult = mock(CommandResult.class);
+		when(writeResultMock.getLastError()).thenReturn(commandResult);
+		when(commandResult.ok()).thenReturn(true);
+		when(mongoTemplate.updateFirst(
+				any(Query.class),
+				any(Update.class),
+				any(Class.class))
+		).thenReturn(writeResultMock);
+	}
 
 }

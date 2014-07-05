@@ -36,40 +36,40 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({SessionAttribute.NAVBAR_ITEM_ACTIVE, SessionAttribute.ROLES})
 public class NavBarController {
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  @Autowired
-  private ConsultantService consultantService;
+	@Autowired
+	private ConsultantService consultantService;
 
-  @RequestMapping(value = "/home", method = RequestMethod.GET)
-  public String homePage(ModelMap model) {
-    model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 0);
-    return "homePage";
-  }
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String homePage(ModelMap model) {
+		model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 0);
+		return "homePage";
+	}
 
-  @RequestMapping(value = {"/user", "/users"}, method = RequestMethod.GET)
-  public String userManagementPage(ModelMap model) {
-    model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 1);
-    model.addAttribute(SessionAttribute.ROLES, userService.loadRoles());
-    model.addAttribute("userModel", userService.buildEmptyUserModel());
-    return "user/users";
-  }
+	@RequestMapping(value = {"/user", "/users"}, method = RequestMethod.GET)
+	public String userManagementPage(ModelMap model) {
+		model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 1);
+		model.addAttribute(SessionAttribute.ROLES, userService.loadRoles());
+		model.addAttribute("userModel", userService.buildEmptyUserModel());
+		return "user/users";
+	}
 
-  @RequestMapping(value = {"/consultant", "/consultants"}, method = RequestMethod.GET)
-  public String consultantManagementPage(ModelMap model, Pageable pageable) {
-    Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
-    model.addAttribute("page", consultantService.paginateConsultants(pageRequest));
-    model.addAttribute("searchCriteria", new ConsultantSearchCriteria());
-    model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 2);
-    return "consultant/consultants";
-  }
+	@RequestMapping(value = {"/consultant", "/consultants"}, method = RequestMethod.GET)
+	public String consultantManagementPage(ModelMap model, Pageable pageable) {
+		Pageable pageRequest = new PageRequest(pageable.getPageNumber(), 5, Sort.Direction.DESC, "registrationDate");
+		model.addAttribute("page", consultantService.paginateConsultants(pageRequest));
+		model.addAttribute("searchCriteria", new ConsultantSearchCriteria());
+		model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 2);
+		return "consultant/consultants";
+	}
 
-  @RequestMapping(value = "/consultant/new-consultant", method = RequestMethod.GET)
-  public String createConsultant(ModelMap model) {
-    model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 2);
-    model.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
-    return "consultant/consultantForm";
-  }
+	@RequestMapping(value = "/consultant/new-consultant", method = RequestMethod.GET)
+	public String createConsultant(ModelMap model) {
+		model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 2);
+		model.addAttribute("consultantModel", consultantService.buildNewConsultantModel());
+		return "consultant/consultantForm";
+	}
 
 }

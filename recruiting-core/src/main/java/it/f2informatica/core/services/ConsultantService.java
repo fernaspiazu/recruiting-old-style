@@ -30,37 +30,37 @@ import org.springframework.data.domain.Pageable;
 
 public interface ConsultantService {
 
-  ConsultantModel buildNewConsultantModel();
+	ConsultantModel buildNewConsultantModel();
 
-  Page<ConsultantModel> paginateConsultants(Pageable pageable);
+	Page<ConsultantModel> paginateConsultants(Pageable pageable);
 
-  Page paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable);
+	Page paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable);
 
-  Optional<ConsultantModel> findConsultantById(String consultantId);
+	Optional<ConsultantModel> findConsultantById(String consultantId);
 
-  String generateConsultantNumber();
+	String generateConsultantNumber();
 
-  ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
+	ConsultantModel savePersonalDetails(ConsultantModel consultantModel);
 
-  void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
+	void updatePersonalDetails(ConsultantModel consultantModel, String consultantId);
 
-  void addConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	void addConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
-  void addLanguages(LanguageModel[] languageModelArray, String consultantId);
+	void addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
-  void addSkills(String[] skills, String consultantId);
+	void addSkills(String[] skills, String consultantId);
 
-  Optional<ExperienceModel> findExperience(String consultantId, String experienceId);
+	Optional<ExperienceModel> findExperience(String consultantId, String experienceId);
 
-  void updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
+	void updateConsultantExperience(ExperienceModel experienceModel, String consultantId);
 
-  void removeExperience(String consultantId, String experienceId);
+	void removeExperience(String consultantId, String experienceId);
 
-  Optional<EducationModel> findEducation(String consultantId, String educationId);
+	Optional<EducationModel> findEducation(String consultantId, String educationId);
 
-  void addConsultantEducation(EducationModel educationModel, String consultantId);
+	void addConsultantEducation(EducationModel educationModel, String consultantId);
 
-  void updateConsultantEducation(EducationModel educationModel, String consultantId);
+	void updateConsultantEducation(EducationModel educationModel, String consultantId);
 
-  void removeEducation(String consultantId, String educationId);
+	void removeEducation(String consultantId, String educationId);
 }

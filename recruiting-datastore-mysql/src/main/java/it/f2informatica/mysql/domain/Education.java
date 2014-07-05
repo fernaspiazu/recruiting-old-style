@@ -32,41 +32,41 @@ import java.io.Serializable;
 @Entity
 @Table(name = "education")
 public class Education implements Serializable {
-  private static final long serialVersionUID = 5816729224700502683L;
+	private static final long serialVersionUID = 5816729224700502683L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-  @Column(name = "school")
-  private String schoolName;
+	@Column(name = "school")
+	private String schoolName;
 
-  @Column(name = "start_year")
-  private int startYear;
+	@Column(name = "start_year")
+	private int startYear;
 
-  @Column(name = "end_year")
-  private int endYear;
+	@Column(name = "end_year")
+	private int endYear;
 
-  @Column(name = "is_current")
-  private boolean current;
+	@Column(name = "is_current")
+	private boolean current;
 
-  @Column(name = "school_degree")
-  private String schoolDegree;
+	@Column(name = "school_degree")
+	private String schoolDegree;
 
-  @Column(name = "field_study")
-  private String fieldsOfStudy;
+	@Column(name = "field_study")
+	private String fieldsOfStudy;
 
-  @Column(name = "school_grade")
-  private String grade;
+	@Column(name = "school_grade")
+	private String grade;
 
-  @Column(name = "activities")
-  private String activities;
+	@Column(name = "activities")
+	private String activities;
 
-  @Column(name = "description")
-  private String description;
+	@Column(name = "description")
+	private String description;
 
-  @ManyToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
-  @JoinColumn(name = "consultant_id")
-  private Consultant consultant;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class)
+	@JoinColumn(name = "consultant_id")
+	private Consultant consultant;
 }

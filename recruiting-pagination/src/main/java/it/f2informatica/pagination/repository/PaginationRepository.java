@@ -33,13 +33,12 @@ import java.io.Serializable;
  * and {@link QueryDslPredicateExecutor} of QueryDsl.
  * </p>
  *
- * @author Fernando Aspiazu
- *
- * @param <T> Entity Type
+ * @param <T>  Entity Type
  * @param <ID> ID - PK Type
+ * @author Fernando Aspiazu
  */
 @NoRepositoryBean
 public interface PaginationRepository<T, ID extends Serializable>
-		extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, QueryDslPredicateExecutor<T> {
+	extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, QueryDslPredicateExecutor<T> {
 
 }

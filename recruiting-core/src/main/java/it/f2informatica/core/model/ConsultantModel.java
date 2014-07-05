@@ -32,64 +32,64 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class ConsultantModel implements Serializable {
-  private static final long serialVersionUID = 4877550339644654489L;
+	private static final long serialVersionUID = 4877550339644654489L;
 
-  private String id;
+	private String id;
 
-  private String consultantNo;
+	private String consultantNo;
 
-  private Date registrationDate;
+	private Date registrationDate;
 
-  private String fiscalCode;
+	private String fiscalCode;
 
-  private String email;
+	private String email;
 
-  private String firstName;
+	private String firstName;
 
-  private String lastName;
+	private String lastName;
 
-  private String gender;
+	private String gender;
 
-  private String phoneNumber;
+	private String phoneNumber;
 
-  private String mobileNumber;
+	private String mobileNumber;
 
-  private Date birthDate;
+	private Date birthDate;
 
-  private int age;
+	private int age;
 
-  private String birthCity;
+	private String birthCity;
 
-  private String birthCountry;
+	private String birthCountry;
 
-  private String nationality;
+	private String nationality;
 
-  private String identityCardNo;
+	private String identityCardNo;
 
-  private String passportNo;
+	private String passportNo;
 
-  private List<ExperienceModel> experiences = Lists.newArrayList();
+	private List<ExperienceModel> experiences = Lists.newArrayList();
 
-  private List<EducationModel> educationList = Lists.newArrayList();
+	private List<EducationModel> educationList = Lists.newArrayList();
 
-  private List<LanguageModel> languages = Lists.newArrayList();
+	private List<LanguageModel> languages = Lists.newArrayList();
 
-  private List<String> skills = Lists.newArrayList();
+	private List<String> skills = Lists.newArrayList();
 
-  private String interests;
+	private String interests;
 
-  private AddressModel residence;
+	private AddressModel residence;
 
-  private AddressModel domicile;
+	private AddressModel domicile;
 
-  private String curriculum; // TODO: GridFSFile
+	private String curriculum; // TODO: GridFSFile
 
-  private String photo; // TODO: GridFSFile
+	private String photo; // TODO: GridFSFile
 
-  private String submitEvent;
+	private String submitEvent;
 
-  public String getConsultantFullName() {
-    return lastName + " " + firstName;
-  }
+	public String getConsultantFullName() {
+		return lastName + " " + firstName;
+	}
 
 }

@@ -57,138 +57,138 @@ import static org.springframework.data.mongodb.core.query.Update.update;
 @Service
 public class UserRepositoryGatewayMongoDB implements UserRepositoryGateway {
 
-  @Autowired
-  private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-  @Autowired
-  private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-  @Autowired
-  private RoleRepository roleRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private MongoDBPaginationService mongoDBPaginationService;
 
-  @Autowired
-  @Qualifier("userToModelConverter")
-  private EntityToModelConverter<User, UserModel> userToModelConverter;
+	@Autowired
+	@Qualifier("userToModelConverter")
+	private EntityToModelConverter<User, UserModel> userToModelConverter;
 
-  @Override
-  public Optional<AuthenticationModel> authenticationByUsername(String username) {
-    Optional<User> user = Optional.fromNullable(userRepository.findByUsername(username));
-	  if (user.isPresent()) {
-		  AuthenticationModel authenticationModel = new AuthenticationModel();
-		  authenticationModel.setUsername(user.get().getUsername());
-		  authenticationModel.setPassword(user.get().getPassword());
-		  authenticationModel.setAuthorization(user.get().getRole().getName());
-		  return Optional.of(authenticationModel);
-	  }
-	  return Optional.absent();
-  }
+	@Override
+	public Optional<AuthenticationModel> authenticationByUsername(String username) {
+		Optional<User> user = Optional.fromNullable(userRepository.findByUsername(username));
+		if (user.isPresent()) {
+			AuthenticationModel authenticationModel = new AuthenticationModel();
+			authenticationModel.setUsername(user.get().getUsername());
+			authenticationModel.setPassword(user.get().getPassword());
+			authenticationModel.setAuthorization(user.get().getRole().getName());
+			return Optional.of(authenticationModel);
+		}
+		return Optional.absent();
+	}
 
-  @Override
-  public void updatePassword(UpdatePasswordModel request) {
-    if (arePasswordCompiledCorrectly(request)) {
-	    Query query = query(where("id").is(request.getUserId()).and("password").is(request.getCurrentPassword()));
-	    mongoTemplate.updateFirst(query, update("password", request.getCurrentPassword()), User.class);
-    }
-  }
+	@Override
+	public void updatePassword(UpdatePasswordModel request) {
+		if (arePasswordCompiledCorrectly(request)) {
+			Query query = query(where("id").is(request.getUserId()).and("password").is(request.getCurrentPassword()));
+			mongoTemplate.updateFirst(query, update("password", request.getCurrentPassword()), User.class);
+		}
+	}
 
-  private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
-    return StringUtils.hasText(request.getNewPassword())
-      && StringUtils.hasText(request.getPasswordConfirmed())
-      && request.getNewPassword().equals(request.getPasswordConfirmed());
-  }
+	private boolean arePasswordCompiledCorrectly(UpdatePasswordModel request) {
+		return StringUtils.hasText(request.getNewPassword())
+			&& StringUtils.hasText(request.getPasswordConfirmed())
+			&& request.getNewPassword().equals(request.getPasswordConfirmed());
+	}
 
-  @Override
-  public UserModel findUserById(String userId) {
-    return userToModelConverter.convert(userRepository.findOne(userId));
-  }
+	@Override
+	public UserModel findUserById(String userId) {
+		return userToModelConverter.convert(userRepository.findOne(userId));
+	}
 
-  @Override
-  public UserModel findByUsername(String username) {
-    return userToModelConverter.convert(userRepository.findByUsername(username));
-  }
+	@Override
+	public UserModel findByUsername(String username) {
+		return userToModelConverter.convert(userRepository.findByUsername(username));
+	}
 
-  @Override
-  public UserModel findByUsernameAndPassword(String username, String password) {
-    return userToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
-  }
+	@Override
+	public UserModel findByUsernameAndPassword(String username, String password) {
+		return userToModelConverter.convert(userRepository.findByUsernameAndPassword(username, password));
+	}
 
-  @Override
-  public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
-    return new PageImpl<>(Lists.newArrayList(
-      userToModelConverter.convertIterable(userRepository.findAllExcludingUser(usernameToExclude, pageable))
-    ));
-  }
+	@Override
+	public Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude) {
+		return new PageImpl<>(Lists.newArrayList(
+			userToModelConverter.convertIterable(userRepository.findAllExcludingUser(usernameToExclude, pageable))
+		));
+	}
 
-  @Override
-  public String getAllUsersPaginated(QueryParameters parameters, final String currentUsername) {
-	  MongoQueryPredicate<User> queryPredicate = new MongoQueryPredicate<User>(User.class) {
-		  @Override
-		  public Query queryPredicate() {
-			  return query(where("username").nin("admin", currentUsername));
-		  }
-	  };
-	  return mongoDBPaginationService.getPaginatedResultAsJson(parameters, queryPredicate);
-  }
+	@Override
+	public String getAllUsersPaginated(QueryParameters parameters, final String currentUsername) {
+		MongoQueryPredicate<User> queryPredicate = new MongoQueryPredicate<User>(User.class) {
+			@Override
+			public Query queryPredicate() {
+				return query(where("username").nin("admin", currentUsername));
+			}
+		};
+		return mongoDBPaginationService.getPaginatedResultAsJson(parameters, queryPredicate);
+	}
 
-  @Override
-  public UserModel saveUser(UserModel userModel) {
-    User newUser = userRepository.save(user()
-      .withUsername(userModel.getUsername())
-      .withPassword(userModel.getPassword())
-      .withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
-      .withLastName(userModel.getLastName())
-      .withFirstName(userModel.getFirstName())
-      .withEmail(userModel.getEmail())
-      .thatIsRemovable()
-      .build());
-    return userToModelConverter.convert(newUser);
-  }
+	@Override
+	public UserModel saveUser(UserModel userModel) {
+		User newUser = userRepository.save(user()
+			.withUsername(userModel.getUsername())
+			.withPassword(userModel.getPassword())
+			.withRole(roleRepository.findOne(userModel.getRole().getRoleId()))
+			.withLastName(userModel.getLastName())
+			.withFirstName(userModel.getFirstName())
+			.withEmail(userModel.getEmail())
+			.thatIsRemovable()
+			.build());
+		return userToModelConverter.convert(newUser);
+	}
 
-  @Override
-  public void updateUser(UserModel userModel) {
-    Query query = query(where("id").is(userModel.getUserId()));
-    Update update = new Update()
-      .set("username", userModel.getUsername())
-      .set("role", roleRepository.findOne(userModel.getRole().getRoleId()))
-      .set("lastName", userModel.getLastName())
-      .set("firstName", userModel.getFirstName())
-      .set("email", userModel.getEmail());
-    mongoTemplate.updateFirst(query, update, User.class).getLastError().ok();
-  }
+	@Override
+	public void updateUser(UserModel userModel) {
+		Query query = query(where("id").is(userModel.getUserId()));
+		Update update = new Update()
+			.set("username", userModel.getUsername())
+			.set("role", roleRepository.findOne(userModel.getRole().getRoleId()))
+			.set("lastName", userModel.getLastName())
+			.set("firstName", userModel.getFirstName())
+			.set("email", userModel.getEmail());
+		mongoTemplate.updateFirst(query, update, User.class).getLastError().ok();
+	}
 
-  @Override
-  public void deleteUser(String userId) {
-    userRepository.deleteByExcludingNotRemovableUser(userId);
-  }
+	@Override
+	public void deleteUser(String userId) {
+		userRepository.deleteByExcludingNotRemovableUser(userId);
+	}
 
-  @Override
-  public Iterable<RoleModel> loadRoles() {
-    return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
-  }
+	@Override
+	public Iterable<RoleModel> loadRoles() {
+		return Iterables.transform(roleRepository.findAll(), roleToRoleModel());
+	}
 
-  @Override
-  public RoleModel findRoleByName(String roleName) {
-    return roleToRoleModel().apply(roleRepository.findByName(roleName));
-  }
+	@Override
+	public RoleModel findRoleByName(String roleName) {
+		return roleToRoleModel().apply(roleRepository.findByName(roleName));
+	}
 
-  @Override
-  public boolean isCurrentPasswordValid(String userId, String currentPwd) {
-	  return mongoTemplate.count(query(where("id").is(userId).and("password").is(currentPwd)), User.class) != 0;
-  }
+	@Override
+	public boolean isCurrentPasswordValid(String userId, String currentPwd) {
+		return mongoTemplate.count(query(where("id").is(userId).and("password").is(currentPwd)), User.class) != 0;
+	}
 
-  private Function<Role, RoleModel> roleToRoleModel() {
-    return new Function<Role, RoleModel>() {
-      @Override
-      public RoleModel apply(Role role) {
-        RoleModel model = new RoleModel();
-        model.setRoleId(role.getId());
-        model.setRoleName(role.getName());
-        return model;
-      }
-    };
-  }
+	private Function<Role, RoleModel> roleToRoleModel() {
+		return new Function<Role, RoleModel>() {
+			@Override
+			public RoleModel apply(Role role) {
+				RoleModel model = new RoleModel();
+				model.setRoleId(role.getId());
+				model.setRoleName(role.getName());
+				return model;
+			}
+		};
+	}
 
 }

@@ -28,27 +28,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 
 public class BasicAuthorityService implements AuthorityService {
-  private static final String PREFIX_ROLE = "ROLE_";
+	private static final String PREFIX_ROLE = "ROLE_";
 
-  @Override
-  public Collection<GrantedAuthority> createAuthorities(String authorization) {
-    Collection<GrantedAuthority> authorities = Lists.newArrayList();
-    for (Authority roleType : Authority.values()) {
-      final String roleAuthority = roleType.toString();
-      if (matchRoles(authorization, roleAuthority)) {
-        authorities.add(createAuthority(roleAuthority));
-      }
-    }
-    return authorities;
-  }
+	@Override
+	public Collection<GrantedAuthority> createAuthorities(String authorization) {
+		Collection<GrantedAuthority> authorities = Lists.newArrayList();
+		for (Authority roleType : Authority.values()) {
+			final String roleAuthority = roleType.toString();
+			if (matchRoles(authorization, roleAuthority)) {
+				authorities.add(createAuthority(roleAuthority));
+			}
+		}
+		return authorities;
+	}
 
-  private boolean matchRoles(String authorization, String roleAuthority) {
-    final String authorizationName = StringUtils.removeStart(roleAuthority, PREFIX_ROLE);
-    return StringUtils.containsIgnoreCase(authorization, authorizationName);
-  }
+	private boolean matchRoles(String authorization, String roleAuthority) {
+		final String authorizationName = StringUtils.removeStart(roleAuthority, PREFIX_ROLE);
+		return StringUtils.containsIgnoreCase(authorization, authorizationName);
+	}
 
-  private GrantedAuthority createAuthority(String roleAuthority) {
-    return new SimpleGrantedAuthority(roleAuthority);
-  }
+	private GrantedAuthority createAuthority(String roleAuthority) {
+		return new SimpleGrantedAuthority(roleAuthority);
+	}
 
 }

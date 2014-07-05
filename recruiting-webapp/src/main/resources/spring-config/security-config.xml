@@ -15,42 +15,42 @@
  limitations under the License.
 -->
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:beans="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-  <http pattern="/static/img/favicon.ico" security="none"/>
+	<http pattern="/static/img/favicon.ico" security="none"/>
 
-  <http create-session="ifRequired" use-expressions="true">
-    <intercept-url pattern="/400" access="permitAll"/>
-    <intercept-url pattern="/403" access="permitAll"/>
-    <intercept-url pattern="/404" access="permitAll"/>
-    <intercept-url pattern="/500" access="permitAll"/>
-    
-    <intercept-url pattern="/login*" access="permitAll" method="GET"/>
-    <intercept-url pattern="/static/**" access="isAnonymous() or isAuthenticated()"/>
-    <intercept-url pattern="/**" access="isAuthenticated()" method="GET"/>
+	<http create-session="ifRequired" use-expressions="true">
+		<intercept-url pattern="/400" access="permitAll"/>
+		<intercept-url pattern="/403" access="permitAll"/>
+		<intercept-url pattern="/404" access="permitAll"/>
+		<intercept-url pattern="/500" access="permitAll"/>
 
-    <form-login login-page="/login" login-processing-url="/processLogin"
-        username-parameter="username" password-parameter="password"
-        default-target-url="/home" always-use-default-target="true"
-        authentication-failure-url="/login?error=true"
-        authentication-success-handler-ref="authSuccessHandler"/>
+		<intercept-url pattern="/login*" access="permitAll" method="GET"/>
+		<intercept-url pattern="/static/**" access="isAnonymous() or isAuthenticated()"/>
+		<intercept-url pattern="/**" access="isAuthenticated()" method="GET"/>
 
-    <logout logout-url="/logout" logout-success-url="/login" delete-cookies="JSESSIONID"/>
-    <!--<security:session-management invalid-session-url="/invalidSession"/>-->
-  </http>
+		<form-login login-page="/login" login-processing-url="/processLogin"
+		            username-parameter="username" password-parameter="password"
+		            default-target-url="/home" always-use-default-target="true"
+		            authentication-failure-url="/login?error=true"
+		            authentication-success-handler-ref="authSuccessHandler"/>
 
-  <authentication-manager>
-    <authentication-provider user-service-ref="userDetailsService"/>
-  </authentication-manager>
+		<logout logout-url="/logout" logout-success-url="/login" delete-cookies="JSESSIONID"/>
+		<!--<security:session-management invalid-session-url="/invalidSession"/>-->
+	</http>
 
-  <beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.DatabaseUserDetailService"/>
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService"/>
+	</authentication-manager>
 
-  <beans:bean id="authorityService" class="it.f2informatica.webapp.security.BasicAuthorityService"/>
+	<beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.DatabaseUserDetailService"/>
 
-  <beans:bean id="authSuccessHandler" class="it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler"/>
+	<beans:bean id="authorityService" class="it.f2informatica.webapp.security.BasicAuthorityService"/>
 
-  <beans:bean id="securityAccessorService" class="it.f2informatica.webapp.security.SecurityAccessor"/>
+	<beans:bean id="authSuccessHandler" class="it.f2informatica.webapp.security.CustomAuthenticationSuccessHandler"/>
+
+	<beans:bean id="securityAccessorService" class="it.f2informatica.webapp.security.SecurityAccessor"/>
 
 </beans:beans>

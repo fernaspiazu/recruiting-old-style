@@ -36,25 +36,25 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationServiceTest {
 
-  @Mock
-  private UserRepositoryGateway userRepositoryGateway;
+	@Mock
+	private UserRepositoryGateway userRepositoryGateway;
 
-  @InjectMocks
-  private AuthenticationService authenticationService = new AuthenticationServiceImpl();
+	@InjectMocks
+	private AuthenticationService authenticationService = new AuthenticationServiceImpl();
 
-  @Test
-  public void processLoginTest() {
-    when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(Optional.of(response()));
-    Optional<AuthenticationModel> response = authenticationService.processLogin("jhon");
-    assertThat(response.get().getUsername()).isEqualTo("jhon");
-  }
+	@Test
+	public void processLoginTest() {
+		when(userRepositoryGateway.authenticationByUsername("jhon")).thenReturn(Optional.of(response()));
+		Optional<AuthenticationModel> response = authenticationService.processLogin("jhon");
+		assertThat(response.get().getUsername()).isEqualTo("jhon");
+	}
 
-  private AuthenticationModel response() {
-    AuthenticationModel response = new AuthenticationModel();
-    response.setUsername("jhon");
-    response.setPassword("jhon85*");
-    response.setAuthorization("Administrator");
-    return response;
-  }
+	private AuthenticationModel response() {
+		AuthenticationModel response = new AuthenticationModel();
+		response.setUsername("jhon");
+		response.setPassword("jhon85*");
+		response.setAuthorization("Administrator");
+		return response;
+	}
 
 }

@@ -28,18 +28,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthenticationController {
 
-  @RequestMapping(value = "/login", method = RequestMethod.GET)
-  public String loginPage(@RequestParam(value = "error", required = false) String error, ModelMap modelMap) {
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage(@RequestParam(value = "error", required = false) String error, ModelMap modelMap) {
 
-	  if (error != null) {
-		  if (Boolean.parseBoolean(error)) {
-			  modelMap.addAttribute("hasErrors", true);
-		  } else {
-			  return "redirect:/login";
-		  }
-	  }
+		if (error != null) {
+			if (Boolean.parseBoolean(error)) {
+				modelMap.addAttribute("hasErrors", true);
+			} else {
+				return "redirect:/login";
+			}
+		}
 
-	  return "login/login";
-  }
+		return "login/login";
+	}
 
 }

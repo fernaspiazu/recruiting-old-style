@@ -28,24 +28,24 @@ import lombok.ToString;
 @ToString
 public class Education {
 
-  private String id;
+	private String id;
 
-  private String school;
+	private String school;
 
-  private int startYear;
+	private int startYear;
 
-  private int endYear;
+	private int endYear;
 
-  private String schoolDegree;
+	private String schoolDegree;
 
-  private String schoolFieldOfStudy;
+	private String schoolFieldOfStudy;
 
-  private String schoolGrade;
+	private String schoolGrade;
 
-  private String schoolActivities;
+	private String schoolActivities;
 
-  private boolean isCurrent;
+	private boolean isCurrent;
 
-  private String description;
+	private String description;
 
 }

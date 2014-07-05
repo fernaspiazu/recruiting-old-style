@@ -26,9 +26,9 @@ import org.springframework.stereotype.Component;
 @Component("mysqlSkillToStringConverter")
 public class MySQLSkillToStringConverter extends EntityToModelConverter<Skill, String> {
 
-  @Override
-  public String convert(Skill skill) {
-    return (skill == null || skill.getId() == null) ? null : skill.getId().getSkill();
-  }
+	@Override
+	public String convert(Skill skill) {
+		return (skill == null || skill.getId() == null) ? null : skill.getId().getSkill();
+	}
 
 }

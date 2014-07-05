@@ -46,48 +46,48 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CustomAuthenticationSuccessHandlerTest {
 
-  @Mock
-  private UserService userService;
+	@Mock
+	private UserService userService;
 
-  @Mock
-  private HttpSession session;
+	@Mock
+	private HttpSession session;
 
-  @Mock
-  private HttpServletRequest request;
+	@Mock
+	private HttpServletRequest request;
 
-  @Mock
-  private HttpServletResponse response;
+	@Mock
+	private HttpServletResponse response;
 
-  @Mock
-  private Authentication authentication;
+	@Mock
+	private Authentication authentication;
 
-  @InjectMocks
-  private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
+	@InjectMocks
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
 
-  @Before
-  public void setUp() {
-    when(authentication.getName()).thenReturn("username");
-    when(request.getSession(true)).thenReturn(session);
-    when(userService.findByUsername("username")).thenReturn(Optional.of(createUser()));
-  }
+	@Before
+	public void setUp() {
+		when(authentication.getName()).thenReturn("username");
+		when(request.getSession(true)).thenReturn(session);
+		when(userService.findByUsername("username")).thenReturn(Optional.of(createUser()));
+	}
 
-  @Test
-  public void onAuthenticationSuccess() throws ServletException, IOException {
-    ArgumentCaptor<String> attributeArgumentCaptor = ArgumentCaptor.forClass(String.class);
-    ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-    // ------- invocation time --------------
-    customAuthenticationSuccessHandler.onAuthenticationSuccess(request, response, authentication);
-    // --------------------------------------
-    verify(session).setAttribute(attributeArgumentCaptor.capture(), userArgumentCaptor.capture());
-    assertThat(attributeArgumentCaptor.getValue()).isEqualTo("user");
-    assertThat(userArgumentCaptor.getValue()).isEqualTo(createUser());
-  }
+	@Test
+	public void onAuthenticationSuccess() throws ServletException, IOException {
+		ArgumentCaptor<String> attributeArgumentCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+		// ------- invocation time --------------
+		customAuthenticationSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+		// --------------------------------------
+		verify(session).setAttribute(attributeArgumentCaptor.capture(), userArgumentCaptor.capture());
+		assertThat(attributeArgumentCaptor.getValue()).isEqualTo("user");
+		assertThat(userArgumentCaptor.getValue()).isEqualTo(createUser());
+	}
 
-  private UserModel createUser() {
-    UserModel user = new UserModel();
-    user.setUserId("1234567890");
-    user.setUsername("username");
-    return user;
-  }
+	private UserModel createUser() {
+		UserModel user = new UserModel();
+		user.setUserId("1234567890");
+		user.setUsername("username");
+		return user;
+	}
 
 }

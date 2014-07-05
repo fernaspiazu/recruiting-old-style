@@ -29,7 +29,7 @@ import java.util.List;
 
 public interface LanguageRepository extends JpaRepository<Language, LanguagePK> {
 
-  @Query(value = "select * from languages where consultant_id = :consultantId", nativeQuery = true)
-  List<Language> findByConsultantId(@Param("consultantId") Long consultantId);
+	@Query(value = "select * from languages where consultant_id = :consultantId", nativeQuery = true)
+	List<Language> findByConsultantId(@Param("consultantId") Long consultantId);
 
 }

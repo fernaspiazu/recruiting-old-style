@@ -31,20 +31,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServicesAspect {
 
-  @Pointcut("execution(public * it.f2informatica.core.gateway.mysql.*MySQL.findOne*(..))")
-  private void idCorrectness() {}
+	@Pointcut("execution(public * it.f2informatica.core.gateway.mysql.*MySQL.findOne*(..))")
+	private void idCorrectness() {
+	}
 
-  @Before("idCorrectness()")
-  public void handleIdCorrectness(JoinPoint joinPoint) {
-    for (Object arg : joinPoint.getArgs()) {
-      if (isNotNumber(String.valueOf(arg))) {
-        throw new PageNotFoundException("Id is not correct");
-      }
-    }
-  }
+	@Before("idCorrectness()")
+	public void handleIdCorrectness(JoinPoint joinPoint) {
+		for (Object arg : joinPoint.getArgs()) {
+			if (isNotNumber(String.valueOf(arg))) {
+				throw new PageNotFoundException("Id is not correct");
+			}
+		}
+	}
 
-  private static boolean isNotNumber(String value) {
-    return !NumberUtils.isNumber(value);
-  }
+	private static boolean isNotNumber(String value) {
+		return !NumberUtils.isNumber(value);
+	}
 
 }

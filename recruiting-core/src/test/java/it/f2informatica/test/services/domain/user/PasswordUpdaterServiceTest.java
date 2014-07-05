@@ -34,17 +34,17 @@ import static it.f2informatica.test.services.builder.UpdatePasswordRequestBuilde
 @RunWith(MockitoJUnitRunner.class)
 public class PasswordUpdaterServiceTest {
 
-  @Mock
-  private UserRepositoryGateway userRepositoryGateway;
+	@Mock
+	private UserRepositoryGateway userRepositoryGateway;
 
-  @InjectMocks
-  private PasswordUpdaterService passwordUpdaterService = new PasswordUpdaterServiceImpl();
+	@InjectMocks
+	private PasswordUpdaterService passwordUpdaterService = new PasswordUpdaterServiceImpl();
 
-  @Test
-  public void updatePasswordTest() {
-    UpdatePasswordModel updatePasswordModel = updatePasswordRequest().build();
-    userRepositoryGateway.updatePassword(updatePasswordModel);
-    passwordUpdaterService.updatePassword(updatePasswordModel);
-  }
+	@Test
+	public void updatePasswordTest() {
+		UpdatePasswordModel updatePasswordModel = updatePasswordRequest().build();
+		userRepositoryGateway.updatePassword(updatePasswordModel);
+		passwordUpdaterService.updatePassword(updatePasswordModel);
+	}
 
 }

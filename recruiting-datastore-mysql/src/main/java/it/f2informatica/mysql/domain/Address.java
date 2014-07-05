@@ -32,38 +32,38 @@ import java.io.Serializable;
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
-  private static final long serialVersionUID = -189944310625378498L;
+	private static final long serialVersionUID = -189944310625378498L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-  @Column(name = "street")
-  private String street;
+	@Column(name = "street")
+	private String street;
 
-  @Column(name = "house_no")
-  private String houseNo;
+	@Column(name = "house_no")
+	private String houseNo;
 
-  @Column(name = "zip_code")
-  private String zipCode;
+	@Column(name = "zip_code")
+	private String zipCode;
 
-  @Column(name = "city")
-  private String city;
+	@Column(name = "city")
+	private String city;
 
-  @Column(name = "province")
-  private String province;
+	@Column(name = "province")
+	private String province;
 
-  @Column(name = "region")
-  private String region;
+	@Column(name = "region")
+	private String region;
 
-  @Column(name = "country")
-  private String country;
+	@Column(name = "country")
+	private String country;
 
-  @OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "residence")
-  private Consultant consultantResidence;
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "residence")
+	private Consultant consultantResidence;
 
-  @OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "domicile")
-  private Consultant consultantDomicile;
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = Consultant.class, mappedBy = "domicile")
+	private Consultant consultantDomicile;
 
 }

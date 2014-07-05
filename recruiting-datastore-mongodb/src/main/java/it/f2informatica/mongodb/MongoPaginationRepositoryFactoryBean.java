@@ -30,7 +30,7 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 import java.io.Serializable;
 
 public class MongoPaginationRepositoryFactoryBean<R extends SimpleMongoRepository<T, ID>, T, ID extends Serializable>
-				extends MongoRepositoryFactoryBean<R, T, ID> {
+	extends MongoRepositoryFactoryBean<R, T, ID> {
 
 	@Override
 	protected RepositoryFactorySupport getFactoryInstance(MongoOperations operations) {

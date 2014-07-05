@@ -30,12 +30,12 @@ import java.io.Serializable;
 @NoRepositoryBean
 public interface ReadOnlyRepository<T, ID extends Serializable> extends Repository<T, ID> {
 
-  T findOne(ID id);
+	T findOne(ID id);
 
-  Iterable<T> findAll();
+	Iterable<T> findAll();
 
-  Iterable<T> findAll(Sort sort);
+	Iterable<T> findAll(Sort sort);
 
-  Page<T> findAll(Pageable pageable);
+	Page<T> findAll(Pageable pageable);
 
 }

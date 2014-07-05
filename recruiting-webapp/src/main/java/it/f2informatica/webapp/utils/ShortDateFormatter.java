@@ -31,15 +31,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Component
 public class ShortDateFormatter {
 
-  private SimpleDateFormat dateFormat = new SimpleDateFormat(WebApplicationConfig.GLOBAL_DATE_FORMAT);
+	private SimpleDateFormat dateFormat = new SimpleDateFormat(WebApplicationConfig.GLOBAL_DATE_FORMAT);
 
-  public Date parse(String value) throws ParseException {
-    return dateFormat.parse(value);
-  }
+	public Date parse(String value) throws ParseException {
+		return dateFormat.parse(value);
+	}
 
-  public Date parse(String value, String pattern) throws ParseException {
-    dateFormat.applyPattern(checkNotNull(pattern));
-    return dateFormat.parse(value);
-  }
+	public Date parse(String value, String pattern) throws ParseException {
+		dateFormat.applyPattern(checkNotNull(pattern));
+		return dateFormat.parse(value);
+	}
 
 }

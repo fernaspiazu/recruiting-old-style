@@ -28,6 +28,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Skill.class)
 public class Skill_ {
 
-  public static volatile SingularAttribute<Skill, SkillPK> id;
+	public static volatile SingularAttribute<Skill, SkillPK> id;
 
 }

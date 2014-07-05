@@ -25,6 +25,6 @@ import java.util.Collection;
 
 public interface AuthorityService {
 
-  public Collection<GrantedAuthority> createAuthorities(String authorization);
+	public Collection<GrantedAuthority> createAuthorities(String authorization);
 
 }

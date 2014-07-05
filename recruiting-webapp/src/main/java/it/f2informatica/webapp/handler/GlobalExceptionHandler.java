@@ -31,32 +31,32 @@ import java.io.StringWriter;
 
 @ControllerAdvice("it.f2informatica.webapp.controller")
 public class GlobalExceptionHandler {
-  private static Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
+	private static Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
 
-  @ExceptionHandler(NullPointerException.class)
-  public ModelAndView nullPointerExceptionHandler(NullPointerException e) {
-    logger.error("NullPointerException has been thrown.", e);
-    return new ModelAndView(Pages.PAGE_NOT_FOUND);
-  }
+	@ExceptionHandler(NullPointerException.class)
+	public ModelAndView nullPointerExceptionHandler(NullPointerException e) {
+		logger.error("NullPointerException has been thrown.", e);
+		return new ModelAndView(Pages.PAGE_NOT_FOUND);
+	}
 
-  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-  public ModelAndView httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
-    logger.error("HttpRequestMethodNotSupportedException has been thrown.", e);
-    return new ModelAndView(Pages.PAGE_NOT_FOUND);
-  }
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ModelAndView httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
+		logger.error("HttpRequestMethodNotSupportedException has been thrown.", e);
+		return new ModelAndView(Pages.PAGE_NOT_FOUND);
+	}
 
-  @ExceptionHandler(PageNotFoundException.class)
-  public ModelAndView pageNotFoundExceptionHandler(PageNotFoundException e) {
-    logger.error("PageNotFoundException has been thrown.", e);
-    return new ModelAndView(Pages.PAGE_NOT_FOUND);
-  }
+	@ExceptionHandler(PageNotFoundException.class)
+	public ModelAndView pageNotFoundExceptionHandler(PageNotFoundException e) {
+		logger.error("PageNotFoundException has been thrown.", e);
+		return new ModelAndView(Pages.PAGE_NOT_FOUND);
+	}
 
-  @ExceptionHandler(Exception.class)
-  public ModelAndView exceptionHandler(Exception e) {
-    logger.error("Some Exception has been thrown.", e);
-    StringWriter stringWriter = new StringWriter();
-    e.printStackTrace(new PrintWriter(stringWriter));
-    return new ModelAndView(Pages.SERVER_ERROR, "stackTrace", stringWriter.toString());
-  }
+	@ExceptionHandler(Exception.class)
+	public ModelAndView exceptionHandler(Exception e) {
+		logger.error("Some Exception has been thrown.", e);
+		StringWriter stringWriter = new StringWriter();
+		e.printStackTrace(new PrintWriter(stringWriter));
+		return new ModelAndView(Pages.SERVER_ERROR, "stackTrace", stringWriter.toString());
+	}
 
 }

@@ -33,13 +33,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "languages")
 public class Language implements Serializable {
-  private static final long serialVersionUID = -5571076826003486772L;
+	private static final long serialVersionUID = -5571076826003486772L;
 
-  @EmbeddedId
-  @AttributeOverride(name = "lang", column = @Column(name = "lang"))
-  private LanguagePK id;
+	@EmbeddedId
+	@AttributeOverride(name = "lang", column = @Column(name = "lang"))
+	private LanguagePK id;
 
-  @Column(name = "proficiency")
-  private String proficiency;
+	@Column(name = "proficiency")
+	private String proficiency;
 
 }

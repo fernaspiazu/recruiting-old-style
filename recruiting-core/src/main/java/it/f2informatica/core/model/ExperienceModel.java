@@ -30,38 +30,38 @@ import java.util.Date;
 @EqualsAndHashCode(exclude = {"description"})
 @ToString
 public class ExperienceModel implements Serializable {
-  private static final long serialVersionUID = 7350451606929379410L;
+	private static final long serialVersionUID = 7350451606929379410L;
 
-  private String id;
+	private String id;
 
-  private String companyName;
+	private String companyName;
 
-  private String position;
+	private String position;
 
-  private String locality;
+	private String locality;
 
-  private Date periodFrom;
+	private Date periodFrom;
 
-  private String formattedPeriodFrom;
+	private String formattedPeriodFrom;
 
-  private String monthFrom;
+	private String monthFrom;
 
-  private String yearFrom;
+	private String yearFrom;
 
-  private Date periodTo;
+	private Date periodTo;
 
-  private String formattedPeriodTo;
+	private String formattedPeriodTo;
 
-  private String monthTo;
+	private String monthTo;
 
-  private String yearTo;
+	private String yearTo;
 
-  private boolean current;
+	private boolean current;
 
-  private String totalPeriodElapsed;
+	private String totalPeriodElapsed;
 
-  private String description;
+	private String description;
 
-  private String submitEvent;
+	private String submitEvent;
 
 }

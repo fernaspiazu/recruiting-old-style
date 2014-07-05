@@ -29,10 +29,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleModel implements Serializable {
-  private static final long serialVersionUID = 637344076604577987L;
+	private static final long serialVersionUID = 637344076604577987L;
 
-  private String roleId;
+	private String roleId;
 
-  private String roleName;
+	private String roleName;
 
 }

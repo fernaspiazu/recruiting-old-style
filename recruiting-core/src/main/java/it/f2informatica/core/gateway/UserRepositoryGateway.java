@@ -30,29 +30,29 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryGateway {
 
-  Optional<AuthenticationModel> authenticationByUsername(String username);
+	Optional<AuthenticationModel> authenticationByUsername(String username);
 
-  void updatePassword(UpdatePasswordModel request);
+	void updatePassword(UpdatePasswordModel request);
 
-  UserModel findUserById(String userId);
+	UserModel findUserById(String userId);
 
-  UserModel findByUsername(String username);
+	UserModel findByUsername(String username);
 
-  UserModel findByUsernameAndPassword(String username, String password);
+	UserModel findByUsernameAndPassword(String username, String password);
 
-  Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
+	Page<UserModel> findAllExcludingCurrentUser(Pageable pageable, String usernameToExclude);
 
-  String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
+	String getAllUsersPaginated(QueryParameters parameters, String currentUsername);
 
-  UserModel saveUser(UserModel userModel);
+	UserModel saveUser(UserModel userModel);
 
-  void updateUser(UserModel userModel);
+	void updateUser(UserModel userModel);
 
-  void deleteUser(String userId);
+	void deleteUser(String userId);
 
-  Iterable<RoleModel> loadRoles();
+	Iterable<RoleModel> loadRoles();
 
-  RoleModel findRoleByName(String roleName);
+	RoleModel findRoleByName(String roleName);
 
-  boolean isCurrentPasswordValid(String userId, String currentPwd);
+	boolean isCurrentPasswordValid(String userId, String currentPwd);
 }

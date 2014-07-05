@@ -29,19 +29,19 @@ import static it.f2informatica.core.model.builder.ExperienceModelBuilder.experie
 @Component("mysqlExperienceToModelConverter")
 public class MySQLExperienceToModelConverter extends EntityToModelConverter<Experience, ExperienceModel> {
 
-  @Override
-  public ExperienceModel convert(Experience experience) {
-    return (experience == null) ? null :
-      experienceModel()
-        .withId(String.valueOf(experience.getId()))
-        .inCompany(experience.getCompanyName())
-        .withPosition(experience.getJobPosition())
-        .locatedAt(experience.getLocation())
-        .fromPeriod(experience.getPeriodFrom())
-        .toPeriod(experience.getPeriodTo())
-        .isThisTheCurrentJob(experience.isCurrent())
-        .withDescription(experience.getDescription())
-        .build();
-  }
+	@Override
+	public ExperienceModel convert(Experience experience) {
+		return (experience == null) ? null :
+			experienceModel()
+				.withId(String.valueOf(experience.getId()))
+				.inCompany(experience.getCompanyName())
+				.withPosition(experience.getJobPosition())
+				.locatedAt(experience.getLocation())
+				.fromPeriod(experience.getPeriodFrom())
+				.toPeriod(experience.getPeriodTo())
+				.isThisTheCurrentJob(experience.isCurrent())
+				.withDescription(experience.getDescription())
+				.build();
+	}
 
 }

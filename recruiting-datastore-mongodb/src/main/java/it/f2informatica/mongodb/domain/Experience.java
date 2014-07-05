@@ -30,20 +30,20 @@ import java.util.Date;
 @ToString
 public class Experience {
 
-  private String id;
+	private String id;
 
-  private String companyName;
+	private String companyName;
 
-  private String position;
+	private String position;
 
-  private String location;
+	private String location;
 
-  private Date periodFrom;
+	private Date periodFrom;
 
-  private Date periodTo;
+	private Date periodTo;
 
-  private boolean current;
+	private boolean current;
 
-  private String description;
+	private String description;
 
 }
