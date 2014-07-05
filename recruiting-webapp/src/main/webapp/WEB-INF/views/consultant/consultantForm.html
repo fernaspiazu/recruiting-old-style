@@ -28,7 +28,7 @@
   <fieldset>
     <input type="hidden" th:field="*{id}"/>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-7">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title panel-title-custom" th:text="#{consultant.consultantno}">Consultant number</h4>
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title panel-title-custom" th:text="#{consultant.registrationdate}">Registration date</h4>
@@ -61,11 +61,11 @@
           <div class="panel-body panel-body-with-padding">
             <div class="form-group">
               <label for="firstName" class="sr-only" th:text="#{consultant.firstname}">First name</label>
-              <input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm" th:placeholder="#{consultant.firstname}" autofocus="autofocus"/>
+              <input type="text" id="firstName" th:field="*{firstName}" class="form-control" th:placeholder="#{consultant.firstname}" autofocus="autofocus"/>
             </div>
             <div class="form-group">
               <label for="lastName" class="sr-only" th:text="#{consultant.lastname}">Last name</label>
-              <input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm" th:placeholder="#{consultant.lastname}"/>
+              <input type="text" id="lastName" th:field="*{lastName}" class="form-control" th:placeholder="#{consultant.lastname}"/>
             </div>
             <div class="form-group">
               <label class="radio-inline">
@@ -77,49 +77,44 @@
             </div>
             <div class="form-group">
               <label for="email" class="sr-only" th:text="#{consultant.email}">Email</label>
-              <input type="email" id="email" th:field="*{email}" class="form-control input-sm" th:placeholder="#{consultant.email}"/>
+              <input type="email" id="email" th:field="*{email}" class="form-control" th:placeholder="#{consultant.email}"/>
             </div>
             <div class="form-group">
               <label for="fiscalCode" class="sr-only" th:text="#{consultant.fiscalcode}">Fiscal code</label>
-              <input type="text" id="fiscalCode" th:field="*{fiscalCode}" class="form-control input-sm" th:placeholder="#{consultant.fiscalcode}" maxlength="16"/>
+              <input type="text" id="fiscalCode" th:field="*{fiscalCode}" class="form-control" th:placeholder="#{consultant.fiscalcode}" maxlength="16"/>
               <script type="text/javascript">
                 $('#fiscalCode').blur(function() { $(this).val($(this).val().toUpperCase()); });
               </script>
             </div>
             <div class="form-group">
               <label for="birthDate" class="sr-only" th:text="#{consultant.birth.date}">Birthdate</label>
-              <input type="text" id="birthDate" th:field="*{birthDate}" class="form-control input-sm" th:placeholder="|#{consultant.birth.date} (#{global.dateformat})|"/>
+              <input type="text" id="birthDate" th:field="*{birthDate}" class="form-control" th:placeholder="|#{consultant.birth.date} (#{global.dateformat})|"/>
             </div>
             <div class="form-group">
               <label for="birthCity" class="sr-only" th:text="#{consultant.birth.city}">Birth city</label>
-              <input type="text" id="birthCity" th:field="*{birthCity}" class="form-control input-sm" th:placeholder="#{consultant.birth.city}"/>
+              <input type="text" id="birthCity" th:field="*{birthCity}" class="form-control" th:placeholder="#{consultant.birth.city}"/>
             </div>
             <div class="form-group">
               <label for="birthCountry" class="sr-only" th:text="#{consultant.birth.country}">Birth country</label>
-              <input type="text" id="birthCountry" th:field="*{birthCountry}" class="form-control input-sm" th:placeholder="#{consultant.birth.country}"/>
+              <input type="text" id="birthCountry" th:field="*{birthCountry}" class="form-control" th:placeholder="#{consultant.birth.country}"/>
             </div>
             <div class="form-group">
               <label for="nationality" class="sr-only" th:text="#{consultant.nationality}">Nationality</label>
-              <input type="text" id="nationality" th:field="*{nationality}" class="form-control input-sm" th:placeholder="#{consultant.nationality}"/>
+              <input type="text" id="nationality" th:field="*{nationality}" class="form-control" th:placeholder="#{consultant.nationality}"/>
             </div>
             <div class="form-group">
               <label for="phoneNumber" class="sr-only" th:text="#{consultant.phone.number}">Phone number</label>
-              <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control input-sm" th:placeholder="#{consultant.phone.number}"/>
+              <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" th:placeholder="#{consultant.phone.number}"/>
             </div>
             <div class="form-group">
               <label for="mobileNumber" class="sr-only" th:text="#{consultant.mobile.number}">Mobile number</label>
-              <input type="text" id="mobileNumber" th:field="*{mobileNumber}" class="form-control input-sm" th:placeholder="#{consultant.mobile.number}"/>
+              <input type="text" id="mobileNumber" th:field="*{mobileNumber}" class="form-control" th:placeholder="#{consultant.mobile.number}"/>
             </div>
           </div>
         </div>
-        <div class="control-group pull-right">
-          <a class="btn btn-default btn-sm" th:href="@{'/consultants'}" th:inline="text">
-            <div class="glyphicon glyphicon-circle-arrow-left"></div>
-            [[#{global.back}]]
-          </a>
-          <button th:if="${edit}" type="submit" name="submitEvent" value="update" class="btn btn-primary btn-sm" th:text="#{global.update}">Update</button>
-          <button th:unless="${edit}" type="submit" name="submitEvent" value="save" class="btn btn-success btn-sm" th:text="#{global.save}">Save</button>
-        </div>
+	      <a th:if="${edit}" class="btn btn-default" th:href="@{'/consultants'}" th:text="#{global.back}">Back</a>
+	      <button th:if="${edit}" type="submit" name="submitEvent" value="update" class="btn btn-success" th:text="#{consultant.registerupdate}">Update</button>
+	      <button th:unless="${edit}" type="submit" name="submitEvent" value="save" class="btn btn-success" style="width: 100%;" th:text="#{consultant.registernew}">Save</button>
       </div>
       <div class="col-md-5">
         <div class="panel-group" id="accordion">
@@ -133,31 +128,31 @@
               <div class="panel-body panel-body-with-padding">
                 <div class="form-group">
                   <label for="residence-street" class="sr-only" th:text="#{address.street}">Street</label>
-                  <input type="text" id="residence-street" th:field="*{residence.street}" class="form-control input-sm" th:placeholder="#{address.street}"/>
+                  <input type="text" id="residence-street" th:field="*{residence.street}" class="form-control" th:placeholder="#{address.street}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
-                  <input type="text" id="residence-houseNo" th:field="*{residence.houseNo}" class="form-control input-sm" th:placeholder="#{address.houseNo}"/>
+                  <input type="text" id="residence-houseNo" th:field="*{residence.houseNo}" class="form-control" th:placeholder="#{address.houseNo}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
-                  <input type="text" id="residence-zipCode" th:field="*{residence.zipCode}" class="form-control input-sm" th:placeholder="#{address.zipCode}"/>
+                  <input type="text" id="residence-zipCode" th:field="*{residence.zipCode}" class="form-control" th:placeholder="#{address.zipCode}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-city" class="sr-only" th:text="#{address.city}">City</label>
-                  <input type="text" id="residence-city" th:field="*{residence.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
+                  <input type="text" id="residence-city" th:field="*{residence.city}" class="form-control" th:placeholder="#{address.city}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-province" class="sr-only" th:text="#{address.province}">Province</label>
-                  <input type="text" id="residence-province" th:field="*{residence.province}" class="form-control input-sm" th:placeholder="#{address.province}"/>
+                  <input type="text" id="residence-province" th:field="*{residence.province}" class="form-control" th:placeholder="#{address.province}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-region" class="sr-only" th:text="#{address.region}">Region</label>
-                  <input type="text" id="residence-region" th:field="*{residence.region}" class="form-control input-sm" th:placeholder="#{address.region}"/>
+                  <input type="text" id="residence-region" th:field="*{residence.region}" class="form-control" th:placeholder="#{address.region}"/>
                 </div>
                 <div class="form-group">
                   <label for="residence-country" class="sr-only" th:text="#{address.country}">Country</label>
-                  <input type="text" id="residence-country" th:field="*{residence.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
+                  <input type="text" id="residence-country" th:field="*{residence.country}" class="form-control" th:placeholder="#{address.country}"/>
                 </div>
               </div>
             </div>
@@ -172,35 +167,35 @@
               <div class="panel-body panel-body-with-padding">
                 <div class="form-group">
                   <label for="domicile-street" class="sr-only" th:text="#{address.street}">Street</label>
-                  <input type="text" id="domicile-street" th:field="*{domicile.street}" class="form-control input-sm" th:placeholder="#{address.street}"/>
+                  <input type="text" id="domicile-street" th:field="*{domicile.street}" class="form-control" th:placeholder="#{address.street}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-houseNo" class="sr-only" th:text="#{address.houseNo}">House No.</label>
-                  <input type="text" id="domicile-houseNo" th:field="*{domicile.houseNo}" class="form-control input-sm" th:placeholder="#{address.houseNo}"/>
+                  <input type="text" id="domicile-houseNo" th:field="*{domicile.houseNo}" class="form-control" th:placeholder="#{address.houseNo}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-zipCode" class="sr-only" th:text="#{address.zipCode}">Zip Code</label>
-                  <input type="text" id="domicile-zipCode" th:field="*{domicile.zipCode}" class="form-control input-sm" th:placeholder="#{address.zipCode}"/>
+                  <input type="text" id="domicile-zipCode" th:field="*{domicile.zipCode}" class="form-control" th:placeholder="#{address.zipCode}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-city" class="sr-only" th:text="#{address.city}">City</label>
-                  <input type="text" id="domicile-city" th:field="*{domicile.city}" class="form-control input-sm" th:placeholder="#{address.city}"/>
+                  <input type="text" id="domicile-city" th:field="*{domicile.city}" class="form-control" th:placeholder="#{address.city}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-province" class="sr-only" th:text="#{address.province}">Province</label>
-                  <input type="text" id="domicile-province" th:field="*{domicile.province}" class="form-control input-sm" th:placeholder="#{address.province}"/>
+                  <input type="text" id="domicile-province" th:field="*{domicile.province}" class="form-control" th:placeholder="#{address.province}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-region" class="sr-only" th:text="#{address.region}">Region</label>
-                  <input type="text" id="domicile-region" th:field="*{domicile.region}" class="form-control input-sm" th:placeholder="#{address.region}"/>
+                  <input type="text" id="domicile-region" th:field="*{domicile.region}" class="form-control" th:placeholder="#{address.region}"/>
                 </div>
                 <div class="form-group">
                   <label for="domicile-country" class="sr-only" th:text="#{address.country}">Country</label>
-                  <input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control input-sm" th:placeholder="#{address.country}"/>
+                  <input type="text" id="domicile-country" th:field="*{domicile.country}" class="form-control" th:placeholder="#{address.country}"/>
                 </div>
                 <div class="control-group pull-right">
-                  <button type="button" name="resetDomicileInputs" class="btn btn-default btn-sm" th:text="#{global.clear}">Clear</button>
-                  <button type="button" name="copyFromResidence" class="btn btn-primary btn-sm" th:text="#{address.copy-from-residence}">Copy from Residence</button>
+                  <button type="button" name="resetDomicileInputs" class="btn btn-default" th:text="#{global.clear}">Clear</button>
+                  <button type="button" name="copyFromResidence" class="btn btn-primary" th:text="#{address.copy-from-residence}">Copy from Residence</button>
                   <script th:inline="javascript">
                     $('button[name="resetDomicileInputs"]').click(function () {
                       $('input[id|="domicile"]').val('');

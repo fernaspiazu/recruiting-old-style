@@ -21,12 +21,8 @@ package it.f2informatica.mongodb.repositories;
 
 import it.f2informatica.mongodb.domain.Consultant;
 import it.f2informatica.mongodb.repositories.custom.ConsultantRepositoryCustom;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import it.f2informatica.pagination.repository.MongoPaginationRepository;
 
-public interface ConsultantRepository extends MongoRepository<Consultant, String>, ConsultantRepositoryCustom {
-
-  Consultant findByConsultantNo(String consultantNo);
-
-  Consultant findByFiscalCode(String fiscalCode);
+public interface ConsultantRepository extends MongoPaginationRepository<Consultant, String>, ConsultantRepositoryCustom {
 
 }

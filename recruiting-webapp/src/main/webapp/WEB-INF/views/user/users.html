@@ -25,6 +25,11 @@
   </div>
   <div class="row">
     <div class="col-md-12">
+	    <div class="control-group pull-right">
+		    <div class="controls">
+			    <button type="button" id="newUserButton" class="btn btn-success" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
+		    </div>
+	    </div>
       <table id="userTable" class="tableServerSide table table-bordered table-striped default-datatable">
         <thead>
         <tr>
@@ -42,19 +47,13 @@
           <!-- Built by datatables -->
         </tbody>
       </table>
-      <hr/>
-      <div class="control-group pull-right">
-        <div class="controls">
-          <button type="button" id="newUserButton" class="btn btn-success" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" th:text="#{user.newuser}">New User</button>
-        </div>
-      </div>
     </div>
     <div class="modal fade" id="userFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel" th:text="#{user.newuser}">New User Creation</h4>
+            <h3 class="modal-title" id="myModalLabel" th:text="#{user.newuser}">New User Creation</h3>
           </div>
           <div class="modal-body">
             <form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post" class="form-horizontal" role="form">
@@ -64,19 +63,19 @@
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label" th:text="#{user.username}">Username</label>
                   <div class="col-sm-10">
-                    <input type="text" id="username" th:field="*{username}" class="form-control input-sm"/>
+                    <input type="text" id="username" th:field="*{username}" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="password" class="col-sm-2 control-label" th:text="#{user.password}">Password</label>
                   <div class="col-sm-10">
-                    <input type="password" id="password" th:field="*{password}" class="form-control input-sm"/>
+                    <input type="password" id="password" th:field="*{password}" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="role" class="col-sm-2 control-label" th:text="#{user.role}">Role</label>
                   <div class="col-sm-10">
-                    <select class="form-control input-sm" id="role" th:field="*{role.roleId}">
+                    <select class="form-control" id="role" th:field="*{role.roleId}">
                       <option value="">---</option>
                       <option th:each="r : ${roles}" th:value="${r.roleId}" th:text="${r.roleName}">Administrator</option>
                     </select>
@@ -86,19 +85,19 @@
                 <div class="form-group">
                   <label for="firstName" class="col-sm-2 control-label" th:text="#{user.name}">Name</label>
                   <div class="col-sm-10">
-                    <input type="text" id="firstName" th:field="*{firstName}" class="form-control input-sm"/>
+                    <input type="text" id="firstName" th:field="*{firstName}" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="lastName" class="col-sm-2 control-label" th:text="#{user.surename}">Surename</label>
                   <div class="col-sm-10">
-                    <input type="text" id="lastName" th:field="*{lastName}" class="form-control input-sm"/>
+                    <input type="text" id="lastName" th:field="*{lastName}" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="email" class="col-sm-2 control-label" th:text="#{user.email}">Email</label>
                   <div class="col-sm-10">
-                    <input type="email" id="email" th:field="*{email}" class="form-control input-sm"/>
+                    <input type="email" id="email" th:field="*{email}" class="form-control"/>
                   </div>
                 </div>
               </fieldset>

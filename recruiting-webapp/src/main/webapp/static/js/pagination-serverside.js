@@ -29,7 +29,7 @@ function datatableServerSide(params) {
     "aoColumns": params.columns,
     "fnRowCallback" : params.rowCallback,
     "fnServerParams" : params.serverParamsCallback,
-    "bFilter": true,
+    "bFilter": false,
     //"sDom": "ifrtp",
     "sDom": "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
     "sPaginationType": "bootstrap",

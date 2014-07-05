@@ -30,13 +30,16 @@ import it.f2informatica.mongodb.MongoDB;
 import it.f2informatica.mongodb.domain.*;
 import it.f2informatica.mongodb.domain.builder.LanguageBuilder;
 import it.f2informatica.mongodb.repositories.ConsultantRepository;
+import it.f2informatica.pagination.repository.mongodb.MongoQueryPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +49,7 @@ import static it.f2informatica.mongodb.domain.builder.AddressBuilder.anAddress;
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
 import static it.f2informatica.mongodb.domain.builder.EducationBuilder.education;
 import static it.f2informatica.mongodb.domain.builder.ExperienceBuilder.experience;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @MongoDB
 @Service
@@ -93,8 +97,25 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
   }
 
   @Override
-  public Page<ConsultantModel> paginateConsultants(ConsultantSearchCriteria searchCriteria, Pageable pageable) {
-    return null;
+  public Page<ConsultantModel> paginateConsultants(final ConsultantSearchCriteria searchCriteria, Pageable pageable) {
+	  MongoQueryPredicate<Consultant> queryPredicate = new MongoQueryPredicate<Consultant>(Consultant.class) {
+		  @Override
+		  public Query queryPredicate() {
+			  final Query query = new Query();
+			  if (StringUtils.hasText(searchCriteria.getName())) {
+				  query.addCriteria(where("firstName").is(searchCriteria.getName()));
+			  }
+			  if (StringUtils.hasText(searchCriteria.getLastName())) {
+				  query.addCriteria(where("lastName").is(searchCriteria.getLastName()));
+			  }
+			  if (StringUtils.hasText(searchCriteria.getSkills())) {
+				  query.addCriteria(where("skills").in(searchCriteria.getSkills().split(",")));
+			  }
+			  return query;
+		  }
+	  };
+	  Page<Consultant> consultants = consultantRepository.findAll(queryPredicate, pageable);
+	  return new PageImpl<>(consultantToModelConverter.convertList(consultants.getContent()), pageable, consultants.getTotalElements());
   }
 
   @Override
