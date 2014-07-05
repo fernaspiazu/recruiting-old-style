@@ -1,6 +1,6 @@
 var contextRoot = evaluateContextRoot();
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 });
 

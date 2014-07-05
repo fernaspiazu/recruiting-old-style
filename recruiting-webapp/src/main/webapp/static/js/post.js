@@ -1,14 +1,14 @@
 var firedSubmitEvent = null;
 
-$(document).ready(function () {
+$(document).ready(function() {
 	var $form = $(targetForm);
 
-	$("form :input[type=submit]").click(function () {
+	$("form :input[type=submit]").click(function() {
 		$(":input[type=submit]", $(this).parents("form")).removeAttr("clicked");
 		$(this).attr("clicked", "true");
 	});
 
-	$form.bind('submit', function (event) {
+	$form.bind('submit', function(event) {
 		var $inputs = $form.find(':input');
 		var data = collectFormData($inputs);
 		var url = evaluateContextRoot() + asyncUrl;
@@ -16,12 +16,12 @@ $(document).ready(function () {
 		firedSubmitEvent = $(":input[type='submit'][clicked=true]").attr("value");
 		data["submitEvent"] = firedSubmitEvent;
 
-		$.post(url, data, function (response) {
+		$.post(url, data, function(response) {
 			if (response.status == "FAIL") {
 				resetAllErrorMessages();
-				$.each(response.errorMessages, function (i, item) {
+				$.each(response.errorMessages, function(i, item) {
 					var errorMessage = item.errorMessage;
-					var $field = $('#' + item.fieldName);
+					var $field = $('#'+item.fieldName);
 					var $fieldErrors = $('#fieldErrors').html('<div class="alert alert-danger"></div>');
 
 					$field.parent().addClass('has-error');
@@ -34,8 +34,8 @@ $(document).ready(function () {
 			} else {
 				$form.unbind('submit');
 				$form.append('<input type="hidden">').attr({
-					"name": "submitEvent",
-					"value": firedSubmitEvent
+					"name" : "submitEvent",
+					"value" : firedSubmitEvent
 				});
 				$form.submit();
 			}

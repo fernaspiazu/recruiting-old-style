@@ -19,27 +19,27 @@
  */
 
 function datatableServerSide(params) {
-	return $('.tableServerSide').css({'width': '100%'}).dataTable({
-		"bProcessing": true,
-		"bServerSide": true,
-		"sAjaxSource": params.ajaxSource,
-		"sServerMethod": "GET",
-		"aaSorting": [],
-		"bAutoWidth": false,
-		"aoColumns": params.columns,
-		"fnRowCallback": params.rowCallback,
-		"fnServerParams": params.serverParamsCallback,
-		"bFilter": false,
-		//"sDom": "ifrtp",
-		"sDom": "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
-		"sPaginationType": "bootstrap",
-		"bDeferRender": true,
-		"aoColumnDefs": [
-			{"bSortable": false, "aTargets": [ "nosort" ]}
-		],
-		"oLanguage": oLanguage,
-		"iDisplayLength": 10,
-		"bLengthChange": true,
-		"bInfo": true
-	});
+  return $('.tableServerSide').css({'width' : '100%'}).dataTable({
+    "bProcessing" : true,
+    "bServerSide" : true,
+    "sAjaxSource" : params.ajaxSource,
+    "sServerMethod" : "GET",
+    "aaSorting": [],
+    "bAutoWidth" : false,
+    "aoColumns": params.columns,
+    "fnRowCallback" : params.rowCallback,
+    "fnServerParams" : params.serverParamsCallback,
+    "bFilter": false,
+    //"sDom": "ifrtp",
+    "sDom": "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+    "sPaginationType": "bootstrap",
+    "bDeferRender": true,
+    "aoColumnDefs": [
+      {"bSortable": false, "aTargets": [ "nosort" ]}
+    ],
+    "oLanguage": oLanguage,
+    "iDisplayLength": 10,
+    "bLengthChange": true,
+    "bInfo": true
+  });
 }
