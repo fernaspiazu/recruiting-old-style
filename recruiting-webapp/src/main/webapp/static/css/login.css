@@ -6,6 +6,7 @@
 .f2informatica-area {
 	height: 600px;
 	background: url("../img/f2informatica.png") no-repeat fixed top;
+	margin-top: -20px;
 }
 
 .f2-alert {
@@ -15,7 +16,4 @@
 
 .btn {
 	min-width: 80px;
-	height: 30px;
-	vertical-align: middle;
-	padding: 0;
 }
