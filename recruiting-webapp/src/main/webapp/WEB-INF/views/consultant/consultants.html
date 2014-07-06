@@ -29,8 +29,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-10">
-			<form action="#" th:action="@{/consultant/search}" th:object="${searchCriteria}" method="POST" class="style-1"
-			      role="form">
+			<form action="#" th:action="@{/consultant/search}" th:object="${searchCriteria}" method="POST" class="style-1" role="form">
 				<fieldset>
 					<legend>Search Consultant</legend>
 					<div class="form-group col-md-4">
@@ -88,8 +87,8 @@
 						</a>
 					</div>
 				</div>
-				<div th:substituteby="fragments/pagination::pagination (${page})"></div>
 			</div>
+			<div th:substituteby="fragments/pagination::pagination (${page})"></div>
 		</div>
 	</div>
 </div>
