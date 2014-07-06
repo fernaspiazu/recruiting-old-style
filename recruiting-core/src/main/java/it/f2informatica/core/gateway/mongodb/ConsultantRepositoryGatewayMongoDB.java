@@ -103,10 +103,10 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 			public Query queryPredicate() {
 				final Query query = new Query();
 				if (StringUtils.hasText(searchCriteria.getName())) {
-					query.addCriteria(where("firstName").is(searchCriteria.getName()));
+					query.addCriteria(where("firstName").regex(searchCriteria.getName(), "i"));
 				}
 				if (StringUtils.hasText(searchCriteria.getLastName())) {
-					query.addCriteria(where("lastName").is(searchCriteria.getLastName()));
+					query.addCriteria(where("lastName").regex(searchCriteria.getLastName(), "i"));
 				}
 				if (StringUtils.hasText(searchCriteria.getSkills())) {
 					query.addCriteria(where("skills").in(searchCriteria.getSkills().split(",")));

@@ -6,19 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>Consultant Management</title>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css"
-	      rel="stylesheet"/>
-	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css"
-	      rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
 	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
 	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
-	<script th:src="@{/static/js/lib/jquery.dataTables.min.js}"
-	        src="../../../static/js/lib/jquery.dataTables.min.js"></script>
-	<script th:src="@{/static/js/lib/dataTables.bootstrap.js}"
-	        src="../../../static/js/lib/dataTables.bootstrap.js"></script>
-	<script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}"
-	        src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
+	<script th:src="@{/static/js/lib/jquery.dataTables.min.js}" src="../../../static/js/lib/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrap.js}" src="../../../static/js/lib/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}" src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
 </head>
 <body role="document">
@@ -28,7 +23,7 @@
 		<h2 th:text="#{consultant.management}">Consultant Management</h2>
 	</div>
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-12">
 			<form action="#" th:action="@{/consultant/search}" th:object="${searchCriteria}" method="POST" class="style-1" role="form">
 				<fieldset>
 					<legend>Search Consultant</legend>
@@ -53,35 +48,29 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-12">
 			<div th:unless="${page.hasContent()}" class="alert alert-info">
 				<p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
 			</div>
 			<h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="text-info"></h5>
 
 			<div th:if="${page.hasContent()}" th:each="c : ${page}" th:id="${#ids.seq('consultant-')}" class="row">
-				<div class="col-sm-11 col-lg-11 margin-bottom-10px border-bottom">
+				<div class="col-md-12 margin-bottom-10px border-bottom">
 					<div class="pull-left">
-						<h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30
-							years old)</h4>
-
+						<h4 th:text="|${c.lastName}&nbsp;${c.firstName}&nbsp;(${c.age}&nbsp;#{global.yearsold})|">Rossi Mario (30 years old)</h4>
 						<div>
 							<span th:text="|#{consultant.registrationdate}: ${{c.registrationDate}}|" class="text-muted small">Registration date: 01-01-2013</span>
 							<h6 th:text="|#{consultant.consultantno}: ${c.consultantNo}|">Consultant No. 201311529C5A707AD0713</h6>
-							<h6 th:if="${#lists.isEmpty(c.skills)}" th:text="#{skill.noskills}" class="text-warning">No skill
-								assigned</h6>
-							<h6 th:unless="${#lists.isEmpty(c.skills)}"
-							    th:text="|#{skill.title}: ${#strings.listJoin(c.skills, ', ')}|" class="text-success">Skills</h6>
+							<h6 th:if="${#lists.isEmpty(c.skills)}" th:text="#{skill.noskills}" class="text-warning">No skill assigned</h6>
+							<h6 th:unless="${#lists.isEmpty(c.skills)}" th:text="|#{skill.title}: ${#strings.listJoin(c.skills, ', ')}|" class="text-success">Skills</h6>
 						</div>
 					</div>
 					<div class="pull-right">
-						<a th:href="@{/consultant/edit-personal-details?consultantId=}+${c.id}" class="btn btn-default click-icon"
-						   th:inline="text">
+						<a th:href="@{/consultant/edit-personal-details?consultantId=}+${c.id}" class="btn btn-default click-icon" th:inline="text">
 							<div class="glyphicon glyphicon-briefcase" style="margin-right: 8px;"></div>
 							[[#{global.edit}]]
 						</a>
-						<a th:href="@{/consultant/profile?consultantId=}+${c.id}" class="btn btn-default click-icon"
-						   th:inline="text">
+						<a th:href="@{/consultant/profile?consultantId=}+${c.id}" class="btn btn-default click-icon" th:inline="text">
 							<div class="glyphicon glyphicon-edit" style="margin-right: 8px;"></div>
 							[[#{consultant.profile}]]
 						</a>

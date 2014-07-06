@@ -11,7 +11,7 @@
 	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
 </head>
 <body>
-<div th:fragment="pagination (page)">
+<div th:unless="${#lists.isEmpty(page.content)}" th:fragment="pagination (page)">
 	<ul class="pagination"></ul>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
