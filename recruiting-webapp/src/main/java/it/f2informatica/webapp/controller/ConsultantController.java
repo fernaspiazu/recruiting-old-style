@@ -43,6 +43,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -187,7 +188,10 @@ public class ConsultantController {
 	private void setExperiencePeriods(ExperienceModel experienceModel) {
 		experienceModel.setPeriodFrom(periodParser.resolveDateByMonthAndYear(experienceModel.getMonthFrom(), experienceModel.getYearFrom()));
 		if (!experienceModel.isCurrent()) {
-			experienceModel.setPeriodTo(periodParser.resolveDateByMonthAndYear(experienceModel.getMonthTo(), experienceModel.getYearTo()));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(periodParser.resolveDateByMonthAndYear(experienceModel.getMonthTo(), experienceModel.getYearTo()));
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			experienceModel.setPeriodTo(calendar.getTime());
 		}
 	}
 

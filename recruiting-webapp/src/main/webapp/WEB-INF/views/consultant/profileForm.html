@@ -200,9 +200,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
-					<button type="button" id="btnDeleteExperience" class="btn btn-danger" data-dismiss="modal"
-					        th:text="#{global.delete}">Delete
-					</button>
+					<button type="button" id="btnDeleteExperience" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
 				</div>
 			</div>
 		</div>
@@ -445,24 +443,15 @@
 					<input type="hidden" th:value="${education.id}"/>
 					<h4 th:inline="text">
 						[[${education.school}]]
-						<div class="pull-right small" style="margin-right: 40px;">
-							<div class="glyphicon glyphicon-edit click-icon edit-education" th:title="#{global.edit}"
-							     th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-							<div class="glyphicon glyphicon-trash click-icon delete-education" th:title="#{global.delete}"
-							     th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+						<div class="pull-right small">
+							<div class="glyphicon glyphicon-edit click-icon edit-education" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+							<div class="glyphicon glyphicon-trash click-icon delete-education" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
 						</div>
 					</h4>
-					<p th:text="|${education.schoolFieldOfStudy}, ${education.schoolGrade}|" style="margin-bottom: 5px;">School
-						degree</p>
-
-					<p th:if="${education.current}" th:text="|${education.startYear} - #{experience.present}|"
-					   class="text-muted small"></p>
-
-					<p th:unless="${education.current}" th:text="|${education.startYear} - ${education.endYear}|"
-					   class="text-muted small"></p>
-
+					<p th:text="|${education.schoolFieldOfStudy}, ${education.schoolGrade}|" style="margin-bottom: 5px;">School degree</p>
+					<p th:if="${education.current}" th:text="|${education.startYear} - #{experience.present}|" class="text-muted small"></p>
+					<p th:unless="${education.current}" th:text="|${education.startYear} - ${education.endYear}|" class="text-muted small"></p>
 					<p th:text="${education.description}" class="text-justify">Education Description</p>
-
 					<p th:text="${education.schoolActivities}" class="text-justify">Education Description</p>
 				</div>
 			</div>
@@ -586,21 +575,15 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel</button>
-					<button type="button" id="btnDeleteEducation" class="btn btn-danger" data-dismiss="modal"
-					        th:text="#{global.delete}">Delete
+					<button type="button" id="btnDeleteEducation" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="pull-left">
-	<a class="btn btn-default" th:href="@{'/consultants'}" th:inline="text">
-		<div class="glyphicon glyphicon-circle-arrow-left"></div>
-		[[#{global.back}]]
-	</a>
 </div>
-</div>
+<a class="btn btn-warning btn-lg" th:href="@{'/consultants'}" th:text="#{global.back}" style="width: 100%;">Back</a>
 </div>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">

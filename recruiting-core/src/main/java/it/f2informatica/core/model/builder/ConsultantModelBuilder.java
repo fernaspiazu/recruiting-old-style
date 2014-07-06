@@ -23,6 +23,7 @@ import it.f2informatica.core.model.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -128,6 +129,7 @@ public class ConsultantModelBuilder {
 	}
 
 	public ConsultantModelBuilder withExperiencesIn(List<ExperienceModel> experiences) {
+		Collections.sort(experiences, Collections.reverseOrder());
 		consultant.getExperiences().addAll(experiences);
 		return this;
 	}
@@ -142,6 +144,7 @@ public class ConsultantModelBuilder {
 	}
 
 	public ConsultantModelBuilder withEducationIn(List<EducationModel> educations) {
+//		Collections.sort(educations, Collections.reverseOrder());
 		consultant.getEducationList().addAll(educations);
 		return this;
 	}

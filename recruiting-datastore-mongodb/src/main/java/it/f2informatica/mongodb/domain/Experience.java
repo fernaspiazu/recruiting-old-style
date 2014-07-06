@@ -22,6 +22,8 @@ package it.f2informatica.mongodb.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.Date;
 
@@ -38,6 +40,7 @@ public class Experience {
 
 	private String location;
 
+	@Indexed(direction = IndexDirection.DESCENDING)
 	private Date periodFrom;
 
 	private Date periodTo;

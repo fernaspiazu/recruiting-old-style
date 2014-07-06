@@ -29,7 +29,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(exclude = {"description"})
 @ToString
-public class ExperienceModel implements Serializable {
+public class ExperienceModel implements Serializable, Comparable<ExperienceModel> {
 	private static final long serialVersionUID = 7350451606929379410L;
 
 	private String id;
@@ -64,4 +64,12 @@ public class ExperienceModel implements Serializable {
 
 	private String submitEvent;
 
+	@Override
+	public int compareTo(ExperienceModel o) {
+		if (this.periodFrom.before(o.getPeriodFrom()))
+			return -1;
+		else if (this.periodFrom.after(o.getPeriodFrom()))
+			return 1;
+		return 0;
+	}
 }
