@@ -157,7 +157,7 @@ public class ConsultantController {
 		Optional<ExperienceModel> experience = consultantService.findExperience(consultantId, experienceId);
 		if (experience.isPresent()) {
 			formatDateByMonthNameAndYear(experience.get());
-			return gson.toJson(experience);
+			return gson.toJson(experience.get());
 		}
 
 		return pageNotFound();
@@ -232,7 +232,7 @@ public class ConsultantController {
 	String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
 		Optional<EducationModel> education = consultantService.findEducation(consultantId, educationId);
 		if (education.isPresent()) {
-			return gson.toJson(education);
+			return gson.toJson(education.get());
 		}
 
 		return pageNotFound();

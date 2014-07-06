@@ -30,7 +30,7 @@
 	</h2>
 </div>
 <div class="row">
-<div class="col-md-9 col-md-offset-1">
+<div class="col-md-12">
 <div id="experienceSection" class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -92,17 +92,17 @@
 
 							<div class="form-group">
 								<label for="companyName" class="sr-only" th:text="#{experience.companyname}">Company name</label>
-								<input type="text" id="companyName" th:field="*{companyName}" class="form-control input-sm"
+								<input type="text" id="companyName" th:field="*{companyName}" class="form-control"
 								       th:placeholder="#{experience.companyname}" placeholder="Company name"/>
 							</div>
 							<div class="form-group">
 								<label for="position" class="sr-only" th:text="#{experience.position}">Position</label>
-								<input type="text" id="position" th:field="*{position}" class="form-control input-sm"
+								<input type="text" id="position" th:field="*{position}" class="form-control"
 								       th:placeholder="#{experience.position}" placeholder="Position"/>
 							</div>
 							<div class="form-group">
 								<label for="locality" class="sr-only" th:text="#{experience.locality}">Locality</label>
-								<input type="text" id="locality" th:field="*{locality}" class="form-control input-sm"
+								<input type="text" id="locality" th:field="*{locality}" class="form-control"
 								       th:placeholder="#{experience.locality}" placeholder="Locality"/>
 							</div>
 							<div class="form-group">
@@ -111,7 +111,7 @@
 								<div class="row">
 									<div class="col-md-5">
 										<div class="col-md-6" style="padding-right: 0">
-											<select class="form-control input-sm" th:field="*{monthFrom}">
+											<select class="form-control" th:field="*{monthFrom}">
 												<option value="" th:text="#{global.month}">Select Month</option>
 												<option th:each="month : ${months}" th:value="${month.monthNumber}"
 												        th:text="${month.monthLabel}">January - December
@@ -119,7 +119,7 @@
 											</select>
 										</div>
 										<div class="col-md-6">
-											<input type="text" class="form-control input-sm" th:field="*{yearFrom}"
+											<input type="text" class="form-control" th:field="*{yearFrom}"
 											       th:placeholder="#{global.year}" placeholder="Year"/>
 										</div>
 									</div>
@@ -129,7 +129,7 @@
 									<div class="col-md-5">
 										<div id="periodToBlock">
 											<div class="col-md-6" style="padding-right: 0">
-												<select class="form-control input-sm" th:field="*{monthTo}">
+												<select class="form-control" th:field="*{monthTo}">
 													<option value="" th:text="#{global.month}">Select Month</option>
 													<option th:each="month : ${months}" th:value="${month.monthNumber}"
 													        th:text="${month.monthLabel}">January - December
@@ -137,7 +137,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<input type="text" class="form-control input-sm" th:field="*{yearTo}"
+												<input type="text" class="form-control" th:field="*{yearTo}"
 												       th:placeholder="#{global.year}" placeholder="Year"/>
 											</div>
 										</div>
@@ -175,11 +175,11 @@
 							</div>
 						</fieldset>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.close}">
+							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">
 								Close
 							</button>
 							<button type="submit" id="btnSubmitExperience" name="submitEvent" value="saveExperience"
-							        class="btn btn-primary btn-sm" th:text="#{global.save}">Save
+							        class="btn btn-success" th:text="#{global.save}">Save
 							</button>
 						</div>
 					</form>
@@ -285,53 +285,29 @@
 								var nativeOrBilingualSelected = (languageModel != null && languageModel.proficiency === 'native_or_bilingual') ? ' selected="selected"' : '';
 
 								return $('<div class="row">').append(
-												'<div class="form-group col-md-5">' +
-												'<select name="languages[' + index + '].language" class="form-control input-sm">' +
-												'<option value="">' + [
-											[#{language.selectlanguage}]
-										] + '</option>' +
-												'<option value="english"' + englishSelected + '>' + [
-											[#{english}]
-										] + '</option>' +
-												'<option value="italian"' + italianSelected + '>' + [
-											[#{italian}]
-										] + '</option>' +
-												'<option value="spanish"' + spanishSelected + '>' + [
-											[#{spanish}]
-										] + '</option>' +
-												'<option value="german"' + germanSelected + '>' + [
-											[#{german}]
-										] + '</option>' +
-												'<option value="dutch"' + dutchSelected + '>' + [
-											[#{dutch}]
-										] + '</option>' +
-												'</select>' +
-												'</div>' +
-												'<div class="form-group col-md-5">' +
-												'<select name="languages[' + index + '].proficiency" class="form-control input-sm">' +
-												'<option value="">' + [
-											[#{language.selectproficiency}]
-										] + '</option>' +
-												'<option value="elementary"' + elementarySelected + '>' + [
-											[#{elementary}]
-										] + '</option>' +
-												'<option value="limited_working"' + limitedWorkinSelected + '>' + [
-											[#{limited_working}]
-										] + '</option>' +
-												'<option value="professional_working"' + professionalWorkingSelected + '>' + [
-											[#{professional_working}]
-										] + '</option>' +
-												'<option value="full_professional"' + fullProfessionalSelected + '>' + [
-											[#{full_professional}]
-										] + '</option>' +
-												'<option value="native_or_bilingual"' + nativeOrBilingualSelected + '>' + [
-											[#{native_or_bilingual}]
-										] + '</option>' +
-												'</select>' +
-												'</div>' +
-												'<div class="form-group col-md-1">' +
-												'<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>' +
-												'</div>'
+									'<div class="form-group col-md-5">' +
+									'<select name="languages[' + index + '].language" class="form-control">' +
+										'<option value="">' + [[#{language.selectlanguage}]] + '</option>' +
+										'<option value="english"' + englishSelected + '>' + [[#{english}]] + '</option>' +
+										'<option value="italian"' + italianSelected + '>' + [[#{italian}]] + '</option>' +
+										'<option value="spanish"' + spanishSelected + '>' + [[#{spanish}]] + '</option>' +
+										'<option value="german"' + germanSelected + '>' + [[#{german}]] + '</option>' +
+										'<option value="dutch"' + dutchSelected + '>' + [[#{dutch}]] + '</option>' +
+									'</select>' +
+									'</div>' +
+									'<div class="form-group col-md-5">' +
+									'<select name="languages[' + index + '].proficiency" class="form-control">' +
+										'<option value="">' + [[#{language.selectproficiency}]] + '</option>' +
+										'<option value="elementary"' + elementarySelected + '>' + [[#{elementary}]] + '</option>' +
+										'<option value="limited_working"' + limitedWorkinSelected + '>' + [[#{limited_working}]] + '</option>' +
+										'<option value="professional_working"' + professionalWorkingSelected + '>' + [[#{professional_working}]] + '</option>' +
+										'<option value="full_professional"' + fullProfessionalSelected + '>' + [[#{full_professional}]] + '</option>' +
+										'<option value="native_or_bilingual"' + nativeOrBilingualSelected + '>' + [[#{native_or_bilingual}]] + '</option>' +
+									'</select>' +
+									'</div>' +
+									'<div class="form-group col-md-1">' +
+									'<button type="button" class="close" onclick="dropLanguage(this);">&times;</button>' +
+									'</div>'
 								);
 							}
 
@@ -348,11 +324,11 @@
 							/*]]>*/
 						</script>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.close}">
+							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">
 								Close
 							</button>
 							<button type="submit" id="btnSubmitLanguages" name="submitEvent" value="saveLanguages"
-							        class="btn btn-primary btn-sm" th:text="#{global.save}">Save
+							        class="btn btn-success" th:text="#{global.save}">Save
 							</button>
 						</div>
 					</form>
@@ -397,11 +373,11 @@
 							<button class="btn btn-link" type="button" id="linkAddNewSkill" th:text="#{skill.add}">Add</button>
 						</fieldset>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.close}">
+							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">
 								Close
 							</button>
 							<button type="submit" id="btnSubmitSkills" name="submitEvent" value="saveLanguages"
-							        class="btn btn-primary btn-sm" th:text="#{global.save}">Save
+							        class="btn btn-success" th:text="#{global.save}">Save
 							</button>
 						</div>
 					</form>
@@ -426,13 +402,13 @@
 						function createNewSkillRow(value) {
 							var skillLabel = /*[[#{skill.skill}]]*/ null;
 							return $('<div class="row">').append(
-											'<div class="form-group col-md-11">' +
-											'<label class="sr-only">' + skillLabel + '</label>' +
-											'<input type="text" name="skill" value="' + value + '" class="form-control input-sm"/>' +
-											'</div>' +
-											'<div class="form-group col-md-1">' +
-											'<button type="button" class="close" onclick="dropSkill(this);">&times;</button>' +
-											'</div>'
+								'<div class="form-group col-md-11">' +
+								'<label class="sr-only">' + skillLabel + '</label>' +
+								'<input type="text" name="skill" value="' + value + '" class="form-control"/>' +
+								'</div>' +
+								'<div class="form-group col-md-1">' +
+								'<button type="button" class="close" onclick="dropSkill(this);">&times;</button>' +
+								'</div>'
 							);
 						}
 
@@ -509,7 +485,7 @@
 
 							<div class="form-group">
 								<label for="school" class="sr-only" th:text="#{education.school}">School</label>
-								<input type="text" id="school" th:field="*{school}" class="form-control input-sm"
+								<input type="text" id="school" th:field="*{school}" class="form-control"
 								       th:placeholder="#{education.school}" placeholder="School"/>
 							</div>
 							<div class="form-group">
@@ -518,7 +494,7 @@
 								<div class="row">
 									<div class="col-md-3">
 										<label for="startYear" class="sr-only" th:text="#{education.startyear}">Start year</label>
-										<input type="text" id="startYear" th:field="*{startYear}" class="form-control input-sm"
+										<input type="text" id="startYear" th:field="*{startYear}" class="form-control"
 										       th:placeholder="#{education.startyear}" placeholder="Start year"/>
 									</div>
 									<div class="col-md-1" style="padding: 0; width: 10px; margin-top: 3px;">
@@ -527,7 +503,7 @@
 									<div class="col-md-3">
 										<div id="endYearBlock">
 											<label for="endYear" class="sr-only" th:text="#{education.endyear}">End year</label>
-											<input type="text" id="endYear" th:field="*{endYear}" class="form-control input-sm"
+											<input type="text" id="endYear" th:field="*{endYear}" class="form-control"
 											       th:placeholder="#{education.endyear}" placeholder="End year"/>
 										</div>
 										<div id="currentEducationBlock" class="hidden">
@@ -559,37 +535,37 @@
 							</div>
 							<div class="form-group">
 								<label for="schoolDegree" class="sr-only" th:text="#{education.schooldegree}">School degree</label>
-								<input type="text" id="schoolDegree" th:field="*{schoolDegree}" class="form-control input-sm"
+								<input type="text" id="schoolDegree" th:field="*{schoolDegree}" class="form-control"
 								       th:placeholder="#{education.schooldegree}" placeholder="School degree"/>
 							</div>
 							<div class="form-group">
 								<label for="schoolFieldOfStudy" class="sr-only" th:text="#{education.fieldstudy}">Field of
 									studies</label>
 								<input type="text" id="schoolFieldOfStudy" th:field="*{schoolFieldOfStudy}"
-								       class="form-control input-sm" th:placeholder="#{education.fieldstudy}"
+								       class="form-control" th:placeholder="#{education.fieldstudy}"
 								       placeholder="Field of studies"/>
 							</div>
 							<div class="form-group">
 								<label for="schoolGrade" class="sr-only" th:text="#{education.schoolgrade}">Grade</label>
-								<input type="text" id="schoolGrade" th:field="*{schoolGrade}" class="form-control input-sm"
+								<input type="text" id="schoolGrade" th:field="*{schoolGrade}" class="form-control"
 								       th:placeholder="#{education.schoolgrade}" placeholder="Grade"/>
 							</div>
 							<div class="form-group">
 								<label for="schoolActivities" class="sr-only" th:text="#{education.schoolactivity}">Activities</label>
-								<textarea id="schoolActivities" th:field="*{schoolActivities}" rows="3" class="form-control input-sm"
+								<textarea id="schoolActivities" th:field="*{schoolActivities}" rows="3" class="form-control"
 								          th:placeholder="#{education.schoolactivity}" placeholder="Activities"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="educationDescription" class="sr-only" th:text="#{education.description}">Description</label>
-								<textarea id="educationDescription" th:field="*{description}" rows="5" class="form-control input-sm"
+								<textarea id="educationDescription" th:field="*{description}" rows="5" class="form-control"
 								          th:placeholder="#{education.description}" placeholder="Description"></textarea>
 							</div>
 						</fieldset>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal" th:text="#{global.close}">Close
+							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close
 							</button>
 							<button type="submit" id="btnSubmitEducation" name="submitEvent" value="saveEducation"
-							        class="btn btn-primary btn-sm" th:text="#{global.save}">Save
+							        class="btn btn-success" th:text="#{global.save}">Save
 							</button>
 						</div>
 					</form>
@@ -619,7 +595,7 @@
 	</div>
 </div>
 <div class="pull-left">
-	<a class="btn btn-default btn-sm" th:href="@{'/consultants'}" th:inline="text">
+	<a class="btn btn-default" th:href="@{'/consultants'}" th:inline="text">
 		<div class="glyphicon glyphicon-circle-arrow-left"></div>
 		[[#{global.back}]]
 	</a>
