@@ -19,6 +19,7 @@
  */
 package it.f2informatica.test.services.gateway.mongodb;
 
+import com.google.common.collect.Lists;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
 import it.f2informatica.core.gateway.mongodb.ConsultantRepositoryGatewayMongoDB;
@@ -36,10 +37,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -58,6 +61,7 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 	@Test
 	public void findAllConsultantsTest() {
 		when(consultantRepository.findAll(any(Pageable.class))).thenReturn(consultants());
+		when(consultantToModelConverter.convertList(anyListOf(Consultant.class))).thenReturn(consultantModels());
 		Page<ConsultantModel> paginated = consultantRepositoryGateway.findAllConsultants(new PageRequest(1, 10));
 		assertThat(paginated).isNotEmpty().hasSize(2);
 	}
@@ -67,6 +71,13 @@ public class ConsultantRepositoryGatewayMongoDBTest {
 			consultant().withFirstName("consultant_1").withLastName("consultant_1").build(),
 			consultant().withFirstName("consultant_2").withLastName("consultant_2").build()
 		));
+	}
+
+	private List<ConsultantModel> consultantModels() {
+		return Lists.newArrayList(
+			consultantModel().withFirstName("consultant_1").withLastName("consultant_1").build(),
+			consultantModel().withFirstName("consultant_2").withLastName("consultant_2").build()
+		);
 	}
 
 	@Test

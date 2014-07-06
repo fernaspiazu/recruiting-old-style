@@ -19,8 +19,6 @@
  */
 package it.f2informatica.core.gateway.mongodb;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
 import it.f2informatica.core.gateway.EntityToModelConverter;
@@ -44,7 +42,6 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.UUID;
 
-import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
 import static it.f2informatica.mongodb.domain.builder.AddressBuilder.anAddress;
 import static it.f2informatica.mongodb.domain.builder.ConsultantBuilder.consultant;
 import static it.f2informatica.mongodb.domain.builder.EducationBuilder.education;
@@ -79,21 +76,7 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 	@Override
 	public Page<ConsultantModel> findAllConsultants(Pageable pageable) {
 		Page<Consultant> consultantPage = consultantRepository.findAll(pageable);
-		return new PageImpl<>(Lists.newArrayList(Iterables.transform(consultantPage,
-			new Function<Consultant, ConsultantModel>() {
-				@Override
-				public ConsultantModel apply(Consultant consultant) {
-					return consultantModel()
-						.withId(consultant.getId())
-						.withConsultantNo(consultant.getConsultantNo())
-						.withRegistrationDate(consultant.getRegistrationDate())
-						.withFirstName(consultant.getFirstName())
-						.withLastName(consultant.getLastName())
-						.withBirthDate(consultant.getBirthDate())
-						.build();
-				}
-			}
-		)), pageable, consultantPage.getTotalElements());
+		return new PageImpl<>(consultantToModelConverter.convertList(consultantPage.getContent()), pageable, consultantPage.getTotalElements());
 	}
 
 	@Override
@@ -114,8 +97,8 @@ public class ConsultantRepositoryGatewayMongoDB implements ConsultantRepositoryG
 				return query;
 			}
 		};
-		Page<Consultant> consultants = consultantRepository.findAll(queryPredicate, pageable);
-		return new PageImpl<>(consultantToModelConverter.convertList(consultants.getContent()), pageable, consultants.getTotalElements());
+		Page<Consultant> consultantPage = consultantRepository.findAll(queryPredicate, pageable);
+		return new PageImpl<>(consultantToModelConverter.convertList(consultantPage.getContent()), pageable, consultantPage.getTotalElements());
 	}
 
 	@Override
