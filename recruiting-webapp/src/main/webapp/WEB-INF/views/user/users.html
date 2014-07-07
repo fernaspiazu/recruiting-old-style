@@ -6,21 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>User Management</title>
 	<link th:href="@{/static/css/bootstrap.css}" href="../../../static/css/bootstrap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css"
-	      rel="stylesheet"/>
-	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css"
-	      rel="stylesheet"/>
+	<link th:href="@{/static/css/sticky-footer-navbar.css}" href="../../../static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/dataTables.bootstrap.css}" href="../../../static/css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<link th:href="@{/static/css/main.css}" href="../../../static/css/main.css" rel="stylesheet"/>
 	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../static/js/lib/jquery-1.10.2.min.js"></script>
 	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../static/js/lib/bootstrap.min.js"></script>
-	<script th:src="@{/static/js/lib/jquery.dataTables.min.js}"
-	        src="../../../static/js/lib/jquery.dataTables.min.js"></script>
-	<script th:src="@{/static/js/lib/dataTables.bootstrap.js}"
-	        src="../../../static/js/lib/dataTables.bootstrap.js"></script>
-	<script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}"
-	        src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
+	<script th:src="@{/static/js/lib/jquery.dataTables.min.js}" src="../../../static/js/lib/jquery.dataTables.min.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrap.js}" src="../../../static/js/lib/dataTables.bootstrap.js"></script>
+	<script th:src="@{/static/js/lib/dataTables.bootstrapPagination.js}" src="../../../static/js/lib/dataTables.bootstrapPagination.js"></script>
 	<script th:src="@{/static/js/main.js}" src="../../../static/js/main.js"></script>
-
 </head>
 <body role="document">
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation"></div>
@@ -53,8 +47,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="modal fade" id="userFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-		     aria-hidden="true">
+		<div class="modal fade" id="userFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -62,29 +55,24 @@
 						<h3 class="modal-title" id="myModalLabel" th:text="#{user.newuser}">New User Creation</h3>
 					</div>
 					<div class="modal-body">
-						<form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post"
-						      class="form-horizontal" role="form">
+						<form id="userModelForm" th:action="@{/user/save}" th:object="${userModel}" action="#" method="post" class="form-horizontal" role="form">
 							<fieldset>
 								<div id="fieldErrors"></div>
 								<input type="hidden" th:field="*{userId}"/>
-
 								<div class="form-group">
 									<label for="username" class="col-sm-2 control-label" th:text="#{user.username}">Username</label>
-
 									<div class="col-sm-10">
 										<input type="text" id="username" th:field="*{username}" class="form-control"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="password" class="col-sm-2 control-label" th:text="#{user.password}">Password</label>
-
 									<div class="col-sm-10">
 										<input type="password" id="password" th:field="*{password}" class="form-control"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="role" class="col-sm-2 control-label" th:text="#{user.role}">Role</label>
-
 									<div class="col-sm-10">
 										<select class="form-control" id="role" th:field="*{role.roleId}">
 											<option value="">---</option>
@@ -96,21 +84,18 @@
 								<hr/>
 								<div class="form-group">
 									<label for="firstName" class="col-sm-2 control-label" th:text="#{user.name}">Name</label>
-
 									<div class="col-sm-10">
 										<input type="text" id="firstName" th:field="*{firstName}" class="form-control"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="lastName" class="col-sm-2 control-label" th:text="#{user.surename}">Surename</label>
-
 									<div class="col-sm-10">
 										<input type="text" id="lastName" th:field="*{lastName}" class="form-control"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="email" class="col-sm-2 control-label" th:text="#{user.email}">Email</label>
-
 									<div class="col-sm-10">
 										<input type="email" id="email" th:field="*{email}" class="form-control"/>
 									</div>
@@ -119,17 +104,14 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close
 								</button>
-								<button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-success"
-								        th:text="#{global.save}">Save
-								</button>
+								<button type="submit" id="submitEvent" name="submitEvent" value="save" class="btn btn-success" th:text="#{global.save}">Save</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="deleteUserMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-		     aria-hidden="true">
+		<div class="modal fade" id="deleteUserMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -142,9 +124,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.cancel}">Cancel
 						</button>
-						<button type="button" id="deleteUserBtn" class="btn btn-danger" data-dismiss="modal"
-						        th:text="#{global.delete}">Delete
-						</button>
+						<button type="button" id="deleteUserBtn" class="btn btn-danger" data-dismiss="modal" th:text="#{global.delete}">Delete</button>
 					</div>
 				</div>
 			</div>

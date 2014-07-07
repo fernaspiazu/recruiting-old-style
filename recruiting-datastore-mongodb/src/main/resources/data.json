@@ -3,7 +3,7 @@
 		"id": "52602b9b92bede6f44717f87",
 		"_class": "it.f2informatica.mongodb.domain.User",
 		"username": "admin",
-		"password": "admin",
+		"password": "$2a$11$bXaiPyCME6J1iN.0VxlWyOz3nbJPALXHeyYqOvVKyZ5/chVuHZbay",
 		"notRemovable": "true",
 		"role": {
 			"id": "52602b9b92bede6f44752e34",

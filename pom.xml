@@ -78,6 +78,7 @@
     <aspectjweaver.version>1.8.0</aspectjweaver.version>
     <querydsl.version>3.3.4</querydsl.version>
     <apt-maven-plugin.version>1.1.1</apt-maven-plugin.version>
+	  <jasypt.version>1.9.2</jasypt.version>
   </properties>
 
   <build>
@@ -241,6 +242,16 @@
         <artifactId>spring-test</artifactId>
         <version>${spring.version}</version>
       </dependency>
+	    <dependency>
+		    <groupId>org.jasypt</groupId>
+		    <artifactId>jasypt</artifactId>
+		    <version>${jasypt.version}</version>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.jasypt</groupId>
+		    <artifactId>jasypt-springsecurity3</artifactId>
+		    <version>${jasypt.version}</version>
+	    </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>

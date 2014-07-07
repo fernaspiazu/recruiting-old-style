@@ -211,26 +211,6 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-core</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-aop</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-aop</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
       <exclusions>
         <exclusion>
@@ -239,6 +219,16 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+	  <!-- Jasypt dependencies -->
+	  <dependency>
+		  <groupId>org.jasypt</groupId>
+		  <artifactId>jasypt</artifactId>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.jasypt</groupId>
+		  <artifactId>jasypt-springsecurity3</artifactId>
+	  </dependency>
 
     <!-- Web dependencies -->
     <dependency>

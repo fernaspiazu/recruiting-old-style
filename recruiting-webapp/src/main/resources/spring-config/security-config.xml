@@ -21,7 +21,11 @@
 
 	<http pattern="/static/img/favicon.ico" security="none"/>
 
-	<http create-session="ifRequired" use-expressions="true">
+	<http auto-config="true" create-session="ifRequired" use-expressions="true">
+		<headers>
+			<cache-control/>
+		</headers>
+
 		<intercept-url pattern="/400" access="permitAll"/>
 		<intercept-url pattern="/403" access="permitAll"/>
 		<intercept-url pattern="/404" access="permitAll"/>
@@ -31,9 +35,12 @@
 		<intercept-url pattern="/static/**" access="isAnonymous() or isAuthenticated()"/>
 		<intercept-url pattern="/**" access="isAuthenticated()" method="GET"/>
 
-		<form-login login-page="/login" login-processing-url="/processLogin"
-		            username-parameter="username" password-parameter="password"
-		            default-target-url="/home" always-use-default-target="true"
+		<form-login login-page="/login"
+		            login-processing-url="/processLogin"
+		            username-parameter="username"
+		            password-parameter="password"
+		            default-target-url="/home"
+		            always-use-default-target="true"
 		            authentication-failure-url="/login?error=true"
 		            authentication-success-handler-ref="authSuccessHandler"/>
 
@@ -42,8 +49,17 @@
 	</http>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userDetailsService"/>
+		<authentication-provider ref="daoAuthenticationProvider"/>
 	</authentication-manager>
+
+	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService"/>
+		<beans:property name="passwordEncoder" ref="passwordEncoder"/>
+	</beans:bean>
+
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="11"/>
+	</beans:bean>
 
 	<beans:bean id="userDetailsService" class="it.f2informatica.webapp.security.DatabaseUserDetailService"/>
 

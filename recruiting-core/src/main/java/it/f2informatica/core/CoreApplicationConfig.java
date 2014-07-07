@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan(basePackages = {"it.f2informatica.core"})
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @Import({PaginationConfig.class, MongoDBApplicationConfig.class, MySQLApplicationConfig.class})
 public class CoreApplicationConfig {
 
