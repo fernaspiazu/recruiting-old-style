@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../../static/js/lib/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:fragment="experienceForm (modalId, modalTitle)" class="modal fade" th:id="${modalId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel" th:text="${modalTitle}">New experience</h4>
+				<h5>New popup</h5>
+			</div>
+			<div class="modal-body">
+				<form id="experienceForm" th:action="@{/consultant/save-experience}" th:object="${experienceModel}" action="#" method="post" role="form">
+					<fieldset>
+						<div class="error-block"></div>
+						<input type="hidden" id="experienceId" th:field="*{id}"/>
+						<div class="form-group">
+							<label for="companyName" class="sr-only" th:text="#{experience.companyname}">Company name</label>
+							<input type="text" id="companyName" th:field="*{companyName}" class="form-control" th:placeholder="#{experience.companyname}" placeholder="Company name"/>
+						</div>
+						<div class="form-group">
+							<label for="position" class="sr-only" th:text="#{experience.position}">Position</label>
+							<input type="text" id="position" th:field="*{position}" class="form-control" th:placeholder="#{experience.position}" placeholder="Position"/>
+						</div>
+						<div class="form-group">
+							<label for="locality" class="sr-only" th:text="#{experience.locality}">Locality</label>
+							<input type="text" id="locality" th:field="*{locality}" class="form-control" th:placeholder="#{experience.locality}" placeholder="Locality"/>
+						</div>
+						<div class="form-group">
+							<label th:text="#{experience.period}">Period</label>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="col-md-6" style="padding-right: 0">
+										<select class="form-control" th:field="*{monthFrom}">
+											<option value="" th:text="#{global.month}">Select Month</option>
+											<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<input type="text" class="form-control" th:field="*{yearFrom}" th:placeholder="#{global.year}" placeholder="Year"/>
+									</div>
+								</div>
+								<div class="col-md-1" style="padding: 0; width: 10px;">
+									<span class="text-muted">&mdash;</span>
+								</div>
+								<div class="col-md-5">
+									<div id="periodToBlock">
+										<div class="col-md-6" style="padding-right: 0">
+											<select class="form-control" th:field="*{monthTo}">
+												<option value="" th:text="#{global.month}">Select Month</option>
+												<option th:each="month : ${months}" th:value="${month.monthNumber}" th:text="${month.monthLabel}">January - December</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<input type="text" class="form-control" th:field="*{yearTo}" th:placeholder="#{global.year}" placeholder="Year"/>
+										</div>
+									</div>
+									<div id="presentPeriodBlock" class="hidden">
+										<div class="col-md-12" style="padding-right: 0">
+											<p class="text-success" style="margin: 2px 0 0 0;" th:text="#{experience.present}">Present</p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="checkbox">
+											<label th:inline="text">
+												<input id="isCurrent-endDate-position" type="checkbox" th:field="*{current}"/>
+												[[#{experience.current}]]
+											</label>
+										</div>
+										<script th:inline="javascript">
+											$('#isCurrent-endDate-position').click(function () {
+												if ($(this).is(':checked')) {
+													$('#periodToBlock').addClass('hidden');
+													$('#presentPeriodBlock').removeClass('hidden');
+												} else {
+													$('#presentPeriodBlock').addClass('hidden');
+													$('#periodToBlock').removeClass('hidden');
+												}
+											});
+										</script>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="sr-only" th:text="#{experience.description}">Description</label>
+							<textarea id="description" th:field="*{description}" class="form-control" rows="5" th:placeholder="#{experience.description}" placeholder="Description"></textarea>
+						</div>
+					</fieldset>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
+						<button type="submit" id="btnSubmitExperience" name="submitEvent" value="saveExperience" class="btn btn-success" th:text="#{global.save}">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

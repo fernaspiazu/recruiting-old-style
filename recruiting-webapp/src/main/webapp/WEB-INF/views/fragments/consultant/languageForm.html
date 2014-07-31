@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../../static/css/bootstrap.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/bootstrap.css}" href="../../../../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/main.css}" href="../../../../static/css/main.css" rel="stylesheet"/>
+	<script th:src="@{/static/js/lib/jquery-1.10.2.min.js}" src="../../../../static/js/lib/jquery-1.10.2.min.js"></script>
+	<script th:src="@{/static/js/lib/bootstrap.min.js}" src="../../../../static/js/lib/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:fragment="languageForm (modalId, modalTitle)" class="modal fade" th:id="${modalId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="languageModalLabel" th:text="${modalTitle}">New language</h4>
+			</div>
+			<div class="modal-body">
+				<form id="languagesForm" th:action="@{/consultant/save-languages}" th:object="${consultantModel}" action="#" method="post" role="form">
+					<fieldset>
+						<button class="btn btn-link" type="button" id="linkAddNewLanguage" th:text="#{language.add}">Add</button>
+					</fieldset>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
+						<button type="submit" id="btnSubmitLanguages" name="submitEvent" value="saveLanguages" class="btn btn-success" th:text="#{global.save}">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/static/js/languagesForm.js}" src="../../../../static/js/languagesForm.js"></script>
+	<script th:inline="javascript">
+		var languageParameters = {
+			languages : /*[[${consultantModel.languages}]]*/ [],
+			selectLanguage : /*[[#{language.selectlanguage}]]*/ '',
+			english : /*[[#{english}]]*/ '',
+			italian : /*[[#{italian}]]*/ '',
+			spanish : /*[[#{spanish}]]*/ '',
+			german : /*[[#{german}]]*/ '',
+			dutch : /*[[#{dutch}]]*/ '',
+			selectproficiency : /*[[#{language.selectproficiency}]]*/ '',
+			elementary : /*[[#{elementary}]]*/ '',
+			limited_working : /*[[#{limited_working}]]*/ '',
+			professional_working : /*[[#{professional_working}]]*/ '',
+			full_professional : /*[[#{full_professional}]]*/ '',
+			native_or_bilingual : /*[[#{native_or_bilingual}]]*/ ''
+		};
+		$languageForm.manageForm(languageParameters);
+	</script>
+</div>
+</body>
+</html>

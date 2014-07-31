@@ -238,7 +238,6 @@ public class ConsultantController {
 		if (education.isPresent()) {
 			return gson.toJson(education.get());
 		}
-
 		return pageNotFound();
 	}
 
