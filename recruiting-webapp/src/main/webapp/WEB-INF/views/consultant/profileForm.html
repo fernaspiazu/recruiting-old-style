@@ -19,313 +19,145 @@
 <body role="document">
 <div th:substituteby="fragments/navbar::navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation"></div>
 <div class="container">
-<div class="page-header">
-	<h2 th:inline="text">[[#{consultant.profile}]]
-		<small>&emsp;&mdash;&nbsp;[[${consultantModel.firstName}]] [[${consultantModel.lastName}]]</small>
-	</h2>
-</div>
-<div class="row">
-<div class="col-md-12">
-
-<!--Experience Section-->
-<div id="experienceSection" class="row">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title panel-title-custom" th:text="#{experience.title}">Experience</h4>
-		</div>
-		<div class="panel-body panel-body-with-padding">
-			<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
-				<button type="button" id="btnAddExperience" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#experienceFormModal" data-backdrop="static">
-					<div class="glyphicon glyphicon-plus"></div>
-					[[#{experience.add}]]
-				</button>
-			</div>
-			<div class="row" th:if="${#lists.isEmpty(consultantModel.experiences)}">
-				<p th:text="#{experience.norecords}" class="text-info text-center" style="padding-top: 10px;">No experience registered at the moment</p>
-			</div>
-			<div class="row" th:unless="${#lists.isEmpty(consultantModel.experiences)}" th:each="experience : ${consultantModel.experiences}" th:id="${experience.id}">
-				<div class="col-md-12 margin-bottom-10px border-bottom">
-					<h4 th:inline="text">
-						[[${experience.position}]]
-						<div class="pull-right small" style="margin-right: 10px;">
-							<div class="glyphicon glyphicon-edit click-icon edit-experience" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-							<div class="glyphicon glyphicon-trash click-icon delete-experience" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-						</div>
-					</h4>
-					<p th:text="${experience.companyName}" style="margin-bottom: 5px;">Accenture</p>
-					<p th:if="${experience.current}" th:text="|${{experience.periodFrom}} - #{experience.present} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
-					<p th:unless="${experience.current}" th:text="|${{experience.periodFrom}} - ${{experience.periodTo}} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
-					<p th:text="${experience.description}" class="text-justify">Experience Description</p>
-				</div>
-			</div>
-		</div>
+	<div class="page-header">
+		<h2 th:inline="text">[[#{consultant.profile}]]
+			<small>&emsp;&mdash;&nbsp;[[${consultantModel.firstName}]] [[${consultantModel.lastName}]]</small>
+		</h2>
 	</div>
-	<div th:substituteby="fragments/consultant/experienceForm::experienceForm('experienceFormModal', #{experience.new})"></div>
-	<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteExperienceMessageModal', #{experience.delete}, #{experience.delete.msg}, 'btnDeleteExperience')"></div>
-</div>
-
-<!--Language Section-->
-<div id="languageSection" class="row">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title panel-title-custom" th:text="#{language.title}">Languages</h4>
-		</div>
-		<div class="panel-body panel-body-with-padding">
-			<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
-				<button type="button" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#languageFormModal" data-backdrop="static">
-					<div class="glyphicon glyphicon-edit"></div>
-					[[#{global.edit}]]
-				</button>
-			</div>
-			<div class="clearfix"></div>
-			<div class="row" th:if="${#lists.isEmpty(consultantModel.languages)}">
-				<p th:text="#{language.norecords}" class="text-info text-center" style="padding-top: 10px;">No language registered at the moment</p>
-			</div>
-			<div class="row" th:unless="${#lists.isEmpty(consultantModel.languages)}">
-				<div th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}" class="col-md-4 margin-bottom-10px">
-					<h4 th:text="#{__${lang.language}__}">Spanish</h4>
-					<p th:text="#{__${lang.proficiency}__}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div th:substituteby="fragments/consultant/languageForm::languageForm('languageFormModal', #{language.new})"></div>
-</div>
-
-
-<div id="skillSection" class="row">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title panel-title-custom" th:text="#{skill.title}">Skills</h4>
-		</div>
-		<div class="panel-body panel-body-with-padding">
-			<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
-				<button type="button" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#skillFormModal" data-backdrop="static">
-					<div class="glyphicon glyphicon-edit"></div>
-					[[#{global.edit}]]
-				</button>
-			</div>
-			<div class="clearfix"></div>
-			<div class="row" th:if="${#lists.isEmpty(consultantModel.skills)}">
-				<p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No skill registered at the moment</p>
-			</div>
-			<div th:unless="${#lists.isEmpty(consultantModel.skills)}" style="margin: 10px 0;">
-				<p th:text="${#strings.listJoin(consultantModel.skills, ', ')}"></p>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="skillFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="skillModalLabel" th:text="#{skill.skill}">Skill</h4>
-				</div>
-				<div class="modal-body">
-					<form id="skillForm" th:action="@{/consultant/save-skills}" action="#" method="post" role="form">
-						<fieldset>
-							<button class="btn btn-link" type="button" id="linkAddNewSkill" th:text="#{skill.add}">Add</button>
-						</fieldset>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
-							<button type="submit" id="btnSubmitSkills" name="submitEvent" value="saveLanguages" class="btn btn-success" th:text="#{global.save}">Save</button>
-						</div>
-					</form>
-					<script th:inline="javascript">
-						/*<![CDATA[*/
-						var skills = /*[[${consultantModel.skills}]]*/ null;
-						$("#skillFormModal").on("show.bs.modal", function (e) {
-							for (var i = 0; i < skills.length; i++) {
-								$(createNewSkillRow(skills[i])).insertBefore($('#linkAddNewSkill'));
-							}
-							$(createNewSkillRow('')).insertBefore($('#linkAddNewSkill'));
-						});
-
-						$("#skillFormModal").on("hidden.bs.modal", function (e) {
-							$("#skillForm").find(".row").remove();
-						});
-
-						$('#linkAddNewSkill').click(function () {
-							$(createNewSkillRow('')).insertBefore($('#linkAddNewSkill'));
-						});
-
-						function createNewSkillRow(value) {
-							var skillLabel = /*[[#{skill.skill}]]*/ null;
-							return $('<div class="row">').append(
-								'<div class="form-group col-md-11">' +
-								'<label class="sr-only">' + skillLabel + '</label>' +
-								'<input type="text" name="skill" value="' + value + '" class="form-control"/>' +
-								'</div>' +
-								'<div class="form-group col-md-1">' +
-								'<button type="button" class="close" onclick="dropSkill(this);">&times;</button>' +
-								'</div>'
-							);
-						}
-
-						function dropSkill(button) {
-							$(button).closest('.row').remove();
-						}
-						/*]]>*/
-					</script>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<div id="educationSection" class="row">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title panel-title-custom" th:text="#{education.title}">Education</h4>
-		</div>
-		<div class="panel-body panel-body-with-padding">
-			<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
-				<button type="button" id="btnAddEducation" class="btn btn-primary btn-block" th:inline="text"
-				        data-toggle="modal" data-target="#educationFormModal" data-backdrop="static">
-					<div class="glyphicon glyphicon-plus"></div>
-					[[#{education.add}]]
-				</button>
-			</div>
-			<div class="row" th:if="${#lists.isEmpty(consultantModel.educationList)}">
-				<p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No education registered
-					at the moment</p>
-			</div>
-			<div class="row" th:unless="${#lists.isEmpty(consultantModel.educationList)}"
-			     th:each="education : ${consultantModel.educationList}" th:id="${education.id}">
-				<div class="col-md-12 margin-bottom-10px border-bottom">
-					<input type="hidden" th:value="${education.id}"/>
-					<h4 th:inline="text">
-						[[${education.school}]]
-						<div class="pull-right small">
-							<div class="glyphicon glyphicon-edit click-icon edit-education" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-							<div class="glyphicon glyphicon-trash click-icon delete-education" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
-						</div>
-					</h4>
-					<p th:text="|${education.schoolFieldOfStudy}, ${education.schoolGrade}|" style="margin-bottom: 5px;">School degree</p>
-					<p th:if="${education.current}" th:text="|${education.startYear} - #{experience.present}|" class="text-muted small"></p>
-					<p th:unless="${education.current}" th:text="|${education.startYear} - ${education.endYear}|" class="text-muted small"></p>
-					<p th:text="${education.description}" class="text-justify">Education Description</p>
-					<p th:text="${education.schoolActivities}" class="text-justify">Education Description</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="educationFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	     aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="educationFormModalLabel" th:text="#{education.title}">Education</h4>
-				</div>
-				<div class="modal-body">
-					<form id="educationForm" th:action="@{/consultant/save-education}" th:object="${educationModel}" action="#"
-					      method="post" role="form">
-						<fieldset>
-							<div class="error-block"></div>
-							<input type="hidden" id="educationId" th:field="*{id}"/>
-
-							<div class="form-group">
-								<label for="school" class="sr-only" th:text="#{education.school}">School</label>
-								<input type="text" id="school" th:field="*{school}" class="form-control"
-								       th:placeholder="#{education.school}" placeholder="School"/>
-							</div>
-							<div class="form-group">
-								<label th:text="#{education.period}">Period</label>
-
-								<div class="row">
-									<div class="col-md-3">
-										<label for="startYear" class="sr-only" th:text="#{education.startyear}">Start year</label>
-										<input type="text" id="startYear" th:field="*{startYear}" class="form-control"
-										       th:placeholder="#{education.startyear}" placeholder="Start year"/>
-									</div>
-									<div class="col-md-1" style="padding: 0; width: 10px; margin-top: 3px;">
-										<span class="text-muted">&mdash;</span>
-									</div>
-									<div class="col-md-3">
-										<div id="endYearBlock">
-											<label for="endYear" class="sr-only" th:text="#{education.endyear}">End year</label>
-											<input type="text" id="endYear" th:field="*{endYear}" class="form-control"
-											       th:placeholder="#{education.endyear}" placeholder="End year"/>
-										</div>
-										<div id="currentEducationBlock" class="hidden">
-											<div class="col-md-12" style="padding-right: 0">
-												<p class="text-success" style="margin: 2px 0 0 0;" th:text="#{experience.present}">Present</p>
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="checkbox">
-												<label th:inline="text">
-													<input id="isCurrent-education" type="checkbox" th:field="*{current}"/>
-													[[#{education.current}]]
-												</label>
-											</div>
-											<script th:inline="javascript">
-												$('#isCurrent-education').click(function () {
-													if ($(this).is(':checked')) {
-														$('#endYearBlock').addClass('hidden');
-														$('#currentEducationBlock').removeClass('hidden');
-													} else {
-														$('#currentEducationBlock').addClass('hidden');
-														$('#endYearBlock').removeClass('hidden');
-													}
-												});
-											</script>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="schoolDegree" class="sr-only" th:text="#{education.schooldegree}">School degree</label>
-								<input type="text" id="schoolDegree" th:field="*{schoolDegree}" class="form-control"
-								       th:placeholder="#{education.schooldegree}" placeholder="School degree"/>
-							</div>
-							<div class="form-group">
-								<label for="schoolFieldOfStudy" class="sr-only" th:text="#{education.fieldstudy}">Field of
-									studies</label>
-								<input type="text" id="schoolFieldOfStudy" th:field="*{schoolFieldOfStudy}"
-								       class="form-control" th:placeholder="#{education.fieldstudy}"
-								       placeholder="Field of studies"/>
-							</div>
-							<div class="form-group">
-								<label for="schoolGrade" class="sr-only" th:text="#{education.schoolgrade}">Grade</label>
-								<input type="text" id="schoolGrade" th:field="*{schoolGrade}" class="form-control"
-								       th:placeholder="#{education.schoolgrade}" placeholder="Grade"/>
-							</div>
-							<div class="form-group">
-								<label for="schoolActivities" class="sr-only" th:text="#{education.schoolactivity}">Activities</label>
-								<textarea id="schoolActivities" th:field="*{schoolActivities}" rows="3" class="form-control"
-								          th:placeholder="#{education.schoolactivity}" placeholder="Activities"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="educationDescription" class="sr-only" th:text="#{education.description}">Description</label>
-								<textarea id="educationDescription" th:field="*{description}" rows="5" class="form-control"
-								          th:placeholder="#{education.description}" placeholder="Description"></textarea>
-							</div>
-						</fieldset>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close
-							</button>
-							<button type="submit" id="btnSubmitEducation" name="submitEvent" value="saveEducation"
-							        class="btn btn-success" th:text="#{global.save}">Save
+	<div class="row">
+		<div class="col-md-12">
+			<!--Experience Section-->
+			<div id="experienceSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{experience.title}">Experience</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
+							<button type="button" id="btnAddExperience" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#experienceFormModal" data-backdrop="static">
+								<div class="glyphicon glyphicon-plus"></div>
+								[[#{experience.add}]]
 							</button>
 						</div>
-					</form>
+						<div class="row" th:if="${#lists.isEmpty(consultantModel.experiences)}">
+							<p th:text="#{experience.norecords}" class="text-info text-center" style="padding-top: 10px;">No experience registered at the moment</p>
+						</div>
+						<div class="row" th:unless="${#lists.isEmpty(consultantModel.experiences)}" th:each="experience : ${consultantModel.experiences}" th:id="${experience.id}">
+							<div class="col-md-12 margin-bottom-10px border-bottom">
+								<h4 th:inline="text">
+									[[${experience.position}]]
+									<div class="pull-right small" style="margin-right: 10px;">
+										<div class="glyphicon glyphicon-edit click-icon edit-experience" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-trash click-icon delete-experience" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+									</div>
+								</h4>
+								<p th:text="${experience.companyName}" style="margin-bottom: 5px;">Accenture</p>
+								<p th:if="${experience.current}" th:text="|${{experience.periodFrom}} - #{experience.present} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
+								<p th:unless="${experience.current}" th:text="|${{experience.periodFrom}} - ${{experience.periodTo}} ${experience.totalPeriodElapsed}| + '&emsp;|&emsp;' + |${experience.locality}|" class="text-muted small"></p>
+								<p th:text="${experience.description}" class="text-justify">Experience Description</p>
+							</div>
+						</div>
+					</div>
 				</div>
+				<div th:substituteby="fragments/consultant/experienceForm::experienceForm('experienceFormModal', #{experience.new})"></div>
+				<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteExperienceMessageModal', #{experience.delete}, #{experience.delete.msg}, 'btnDeleteExperience')"></div>
 			</div>
+
+			<!--Language Section-->
+			<div id="languageSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{language.title}">Languages</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#languageFormModal" data-backdrop="static">
+								<div class="glyphicon glyphicon-edit"></div>
+								[[#{global.edit}]]
+							</button>
+						</div>
+						<div class="clearfix"></div>
+						<div class="row" th:if="${#lists.isEmpty(consultantModel.languages)}">
+							<p th:text="#{language.norecords}" class="text-info text-center" style="padding-top: 10px;">No language registered at the moment</p>
+						</div>
+						<div class="row" th:unless="${#lists.isEmpty(consultantModel.languages)}">
+							<div th:each="lang : ${consultantModel.languages}" th:id="${#ids.seq('language-')}" class="col-md-4 margin-bottom-10px">
+								<h4 th:text="#{__${lang.language}__}">Spanish</h4>
+								<p th:text="#{__${lang.proficiency}__}" class="text-muted small" style="margin-bottom: 5px;">Native</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:substituteby="fragments/consultant/languageForm::languageForm('languageFormModal', #{language.new})"></div>
+			</div>
+
+			<!--Skill Section-->
+			<div id="skillSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{skill.title}">Skills</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 200px; margin: 0 auto 10px;">
+							<button type="button" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#skillFormModal" data-backdrop="static">
+								<div class="glyphicon glyphicon-edit"></div>
+								[[#{global.edit}]]
+							</button>
+						</div>
+						<div class="clearfix"></div>
+						<div class="row" th:if="${#lists.isEmpty(consultantModel.skills)}">
+							<p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No skill registered at the moment</p>
+						</div>
+						<div th:unless="${#lists.isEmpty(consultantModel.skills)}" style="margin: 10px 0;">
+							<p th:text="${#strings.listJoin(consultantModel.skills, ', ')}"></p>
+						</div>
+					</div>
+				</div>
+				<div th:substituteby="fragments/consultant/skillForm::skillForm('skillFormModal', #{skill.skill})"></div>
+			</div>
+
+			<!--Education Section-->
+			<div id="educationSection" class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title panel-title-custom" th:text="#{education.title}">Education</h4>
+					</div>
+					<div class="panel-body panel-body-with-padding">
+						<div class="well well-sm" style="max-width: 300px; margin: 0 auto 10px;">
+							<button type="button" id="btnAddEducation" class="btn btn-primary btn-block" th:inline="text" data-toggle="modal" data-target="#educationFormModal" data-backdrop="static">
+								<div class="glyphicon glyphicon-plus"></div>
+								[[#{education.add}]]
+							</button>
+						</div>
+						<div class="row" th:if="${#lists.isEmpty(consultantModel.educationList)}">
+							<p th:text="#{skill.norecords}" class="text-info text-center" style="padding-top: 10px;">No education registered at the moment</p>
+						</div>
+						<div class="row" th:unless="${#lists.isEmpty(consultantModel.educationList)}" th:each="education : ${consultantModel.educationList}" th:id="${education.id}">
+							<div class="col-md-12 margin-bottom-10px border-bottom">
+								<input type="hidden" th:value="${education.id}"/>
+								<h4 th:inline="text">
+									[[${education.school}]]
+									<div class="pull-right small">
+										<div class="glyphicon glyphicon-edit click-icon edit-education" th:title="#{global.edit}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+										<div class="glyphicon glyphicon-trash click-icon delete-education" th:title="#{global.delete}" th:alt="#{global.edit}" style="margin-right: 10px;"></div>
+									</div>
+								</h4>
+								<p th:text="|${education.schoolFieldOfStudy}, ${education.schoolGrade}|" style="margin-bottom: 5px;">School degree</p>
+								<p th:if="${education.current}" th:text="|${education.startYear} - #{experience.present}|" class="text-muted small"></p>
+								<p th:unless="${education.current}" th:text="|${education.startYear} - ${education.endYear}|" class="text-muted small"></p>
+								<p th:text="${education.description}" class="text-justify">Education Description</p>
+								<p th:text="${education.schoolActivities}" class="text-justify">Education Description</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:substituteby="fragments/consultant/educationForm::educationForm('educationFormModal', #{education.title})"></div>
+				<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteEducationMessageModal', #{education.delete}, #{education.delete.msg}, 'btnDeleteEducation')"></div>
+			</div>
+
 		</div>
+		<a class="btn btn-warning btn-lg" th:href="@{'/consultants'}" th:text="#{global.back}" style="width: 100%;">Back</a>
 	</div>
-
-	<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteEducationMessageModal', #{education.delete}, #{education.delete.msg}, 'btnDeleteEducation')"></div>
-
-</div>
-
-
-
-</div>
-<a class="btn btn-warning btn-lg" th:href="@{'/consultants'}" th:text="#{global.back}" style="width: 100%;">Back</a>
-</div>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">
 	<div class="container">
@@ -333,121 +165,13 @@
 	</div>
 </div>
 <script th:src="@{/static/js/postFunction.js}" src="../../../static/js/postFunction.js"></script>
+<script th:src="@{/static/js/profileForm.js}" src="../../../static/js/profileForm.js"></script>
 <script th:inline="javascript">
-	/*<![CDATA[*/
-	$('#btnSubmitExperience').click(function () {
-		executePost("#experienceForm", "/consultant/validate-experience");
-	});
-
-	$('#btnAddExperience').click(function () {
-		clearFormInputs('#experienceForm');
-		var saveLabel = /*[[#{global.save}]]*/ 'Save';
-		$('#experienceForm').attr('action', contextRoot + '/consultant/save-experience');
-		$('#btnSubmitExperience').html(saveLabel).val('saveExperience');
-	});
-
-	$('.edit-experience').click(function () {
-		clearFormInputs('#experienceForm');
-		var url = contextRoot + '/consultant/edit-experience';
-		var params = {'experienceId': $(this).closest('div.row').attr('id')};
-		$.get(url, params, function (data) {
-			$('#experienceId').val(data.id);
-			$('#companyName').val(data.companyName);
-			$('#position').val(data.position);
-			$('#locality').val(data.locality);
-			$('#monthFrom').val(data.monthFrom);
-			$('#yearFrom').val(data.yearFrom);
-			$('#monthTo').val(data.monthTo);
-			if (eval(data.current)) {
-				$('#periodToBlock').addClass('hidden');
-				$('#presentPeriodBlock').removeClass('hidden');
-				$('#isCurrent-endDate-position').attr('checked', 'checked');
-			} else {
-				$('#presentPeriodBlock').addClass('hidden');
-				$('#periodToBlock').removeClass('hidden');
-				$('#isCurrent-endDate-position').removeAttr('checked');
-			}
-			$('#yearTo').val(data.yearTo);
-			$('#description').val(data.description);
-			var updateLabel = /*[[#{global.update}]]*/ 'Update';
-			$('#experienceForm').attr('action', contextRoot + '/consultant/update-experience');
-			$('#btnSubmitExperience').html(updateLabel).val('updateExperience');
-			$("#experienceFormModal").modal({
-				'show': true,
-				'backdrop': 'static'
-			});
-		});
-	});
-
-	$('.delete-experience').click(function () {
-		$("#deleteExperienceMessageModal").modal({
-			'show': true,
-			'backdrop': 'static'
-		});
-		$('#btnDeleteExperience').val($(this).closest('div.row').attr('id'));
-	});
-
-	$('#btnDeleteExperience').click(function () {
-		window.location = contextRoot + '/consultant/delete-experience?' + $.param({'experienceId': $(this).val()});
-	});
-
-
-	$('#btnSubmitEducation').click(function () {
-		executePost("#educationForm", "/consultant/validate-education");
-	});
-
-	$('#btnAddEducation').click(function () {
-		clearFormInputs('#educationForm');
-		var saveLabel = /*[[#{global.save}]]*/ 'Save';
-		$('#educationForm').attr('action', contextRoot + '/consultant/save-education');
-		$('#btnSubmitEducation').html(saveLabel).val('saveExperience');
-	});
-
-	$('.edit-education').click(function () {
-		clearFormInputs('#educationForm');
-		var url = contextRoot + '/consultant/edit-education';
-		var params = {'educationId': $(this).closest('div.row').attr('id')};
-		$.get(url, params, function (data) {
-			$('#educationId').val(data.id);
-			$('#school').val(data.school);
-			$('#startYear').val(data.startYear);
-			$('#endYear').val(data.endYear);
-			$('#schoolDegree').val(data.schoolDegree);
-			$('#schoolFieldOfStudy').val(data.schoolFieldOfStudy);
-			$('#schoolGrade').val(data.schoolGrade);
-			$('#schoolActivities').val(data.schoolActivities);
-			if (eval(data.current)) {
-				$('#endYearBlock').addClass('hidden');
-				$('#currentEducationBlock').removeClass('hidden');
-				$('#isCurrent-education').attr('checked', 'checked');
-			} else {
-				$('#endYearBlock').removeClass('hidden');
-				$('#currentEducationBlock').addClass('hidden');
-				$('#isCurrent-education').removeAttr('checked');
-			}
-			$('#educationDescription').val(data.description);
-			var updateLabel = /*[[#{global.update}]]*/ 'Update';
-			$('#educationForm').attr('action', contextRoot + '/consultant/update-education');
-			$('#btnSubmitEducation').html(updateLabel).val('updateEducation');
-			$("#educationFormModal").modal({
-				'show': true,
-				'backdrop': 'static'
-			});
-		});
-	});
-
-	$('.delete-education').click(function () {
-		$("#deleteEducationMessageModal").modal({
-			'show': true,
-			'backdrop': 'static'
-		});
-		$('#btnDeleteEducation').val($(this).closest('div.row').attr('id'));
-	});
-
-	$('#btnDeleteEducation').click(function () {
-		window.location = contextRoot + '/consultant/delete-education?' + $.param({'educationId': $(this).val()});
-	});
-	/*]]>*/
+	var params = {
+		saveLabel : /*[[#{global.save}]]*/ 'Save',
+		updateLabel : /*[[#{global.update}]]*/ 'Update'
+	};
+	$profileForm.config(params).processProfileForm();
 </script>
 </body>
 </html>
