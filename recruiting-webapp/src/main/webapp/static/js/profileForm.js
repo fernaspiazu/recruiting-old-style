@@ -37,7 +37,6 @@ var $profileForm = (function profileForm() {
 
 		$('#btnAddExperience').click(function () {
 			clearFormInputs('#experienceForm');
-			var saveLabel = /*[[#{global.save}]]*/ 'Save';
 			$('#experienceForm').attr('action', contextRoot + '/consultant/save-experience');
 			$('#btnSubmitExperience').html(saveLabel).val('saveExperience');
 		});
@@ -65,7 +64,6 @@ var $profileForm = (function profileForm() {
 				}
 				$('#yearTo').val(data.yearTo);
 				$('#description').val(data.description);
-				var updateLabel = /*[[#{global.update}]]*/ 'Update';
 				$('#experienceForm').attr('action', contextRoot + '/consultant/update-experience');
 				$('#btnSubmitExperience').html(updateLabel).val('updateExperience');
 				$("#experienceFormModal").modal({
@@ -94,7 +92,6 @@ var $profileForm = (function profileForm() {
 
 		$('#btnAddEducation').click(function () {
 			clearFormInputs('#educationForm');
-			var saveLabel = /*[[#{global.save}]]*/ 'Save';
 			$('#educationForm').attr('action', contextRoot + '/consultant/save-education');
 			$('#btnSubmitEducation').html(saveLabel).val('saveExperience');
 		});
@@ -103,16 +100,16 @@ var $profileForm = (function profileForm() {
 			clearFormInputs('#educationForm');
 			var url = contextRoot + '/consultant/edit-education';
 			var params = {'educationId': $(this).closest('div.row').attr('id')};
-			$.get(url, params, function (data) {
-				$('#educationId').val(data.id);
-				$('#school').val(data.school);
-				$('#startYear').val(data.startYear);
-				$('#endYear').val(data.endYear);
-				$('#schoolDegree').val(data.schoolDegree);
-				$('#schoolFieldOfStudy').val(data.schoolFieldOfStudy);
-				$('#schoolGrade').val(data.schoolGrade);
-				$('#schoolActivities').val(data.schoolActivities);
-				if (eval(data.current)) {
+			$.get(url, params, function (response) {
+				$('#educationId').val(response.id);
+				$('#school').val(response.school);
+				$('#startYear').val(response.startYear);
+				$('#endYear').val(response.endYear);
+				$('#schoolDegree').val(response.schoolDegree);
+				$('#schoolFieldOfStudy').val(response.schoolFieldOfStudy);
+				$('#schoolGrade').val(response.schoolGrade);
+				$('#schoolActivities').val(response.schoolActivities);
+				if (eval(response.current)) {
 					$('#endYearBlock').addClass('hidden');
 					$('#currentEducationBlock').removeClass('hidden');
 					$('#isCurrent-education').attr('checked', 'checked');
@@ -121,8 +118,7 @@ var $profileForm = (function profileForm() {
 					$('#currentEducationBlock').addClass('hidden');
 					$('#isCurrent-education').removeAttr('checked');
 				}
-				$('#educationDescription').val(data.description);
-				var updateLabel = /*[[#{global.update}]]*/ 'Update';
+				$('#educationDescription').val(response.description);
 				$('#educationForm').attr('action', contextRoot + '/consultant/update-education');
 				$('#btnSubmitEducation').html(updateLabel).val('updateEducation');
 				$("#educationFormModal").modal({
@@ -133,10 +129,7 @@ var $profileForm = (function profileForm() {
 		});
 
 		$('.delete-education').click(function () {
-			$("#deleteEducationMessageModal").modal({
-				'show': true,
-				'backdrop': 'static'
-			});
+			$("#deleteEducationMessageModal").modal({'show': true, 'backdrop': 'static'});
 			$('#btnDeleteEducation').val($(this).closest('div.row').attr('id'));
 		});
 
