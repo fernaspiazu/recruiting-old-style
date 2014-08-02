@@ -107,7 +107,6 @@ public class ConsultantController {
 			model.addAttribute("consultantModel", consultant.get());
 			return "consultant/consultantForm";
 		}
-
 		return pageNotFound();
 	}
 
@@ -118,9 +117,8 @@ public class ConsultantController {
 	}
 
 	@RequestMapping(value = "/validate-personal-details", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
 	@ResponseBody
-	ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
+	public ValidationResponse validatePersonalDetails(@ModelAttribute("consultantModel") ConsultantModel consultantModel, BindingResult result) {
 		personalDetailsValidator.validate(consultantModel, result);
 		if (result.hasErrors()) {
 			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
@@ -139,7 +137,6 @@ public class ConsultantController {
 			model.addAttribute("educationModel", new EducationModel());
 			return "consultant/profileForm";
 		}
-
 		return pageNotFound();
 	}
 
@@ -152,15 +149,13 @@ public class ConsultantController {
 	}
 
 	@RequestMapping(value = "/edit-experience", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
 	@ResponseBody
-	String editExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
+	public String editExperience(@ModelAttribute("consultantId") String consultantId, @RequestParam String experienceId) {
 		Optional<ExperienceModel> experience = consultantService.findExperience(consultantId, experienceId);
 		if (experience.isPresent()) {
 			formatDateByMonthNameAndYear(experience.get());
 			return gson.toJson(experience.get());
 		}
-
 		return pageNotFound();
 	}
 
@@ -196,9 +191,8 @@ public class ConsultantController {
 	}
 
 	@RequestMapping(value = "/validate-experience", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
 	@ResponseBody
-	ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
+	public ValidationResponse validateProfile(@ModelAttribute("experienceModel") ExperienceModel experienceModel, BindingResult result) {
 		experienceValidator.validate(experienceModel, result);
 		if (result.hasErrors()) {
 			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
@@ -231,9 +225,8 @@ public class ConsultantController {
 	}
 
 	@RequestMapping(value = "/edit-education", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
 	@ResponseBody
-	String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
+	public String editEducation(@ModelAttribute("consultantId") String consultantId, @RequestParam String educationId) {
 		Optional<EducationModel> education = consultantService.findEducation(consultantId, educationId);
 		if (education.isPresent()) {
 			return gson.toJson(education.get());
@@ -254,9 +247,8 @@ public class ConsultantController {
 	}
 
 	@RequestMapping(value = "/validate-education", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
 	@ResponseBody
-	ValidationResponse validateEducation(@ModelAttribute("educationModel") EducationModel educationModel, BindingResult result) {
+	public ValidationResponse validateEducation(@ModelAttribute("educationModel") EducationModel educationModel, BindingResult result) {
 		educationValidator.validate(educationModel, result);
 		if (result.hasErrors()) {
 			return validationResponseHandler.validationFail(result, httpRequest.getLocale());
