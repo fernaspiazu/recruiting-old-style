@@ -212,8 +212,8 @@ public class ConsultantController {
 		return "redirect:/consultant/profile";
 	}
 
-	@RequestMapping(value = "/save-skills", method = RequestMethod.POST)
-	public String saveSkills(@ModelAttribute("consultantId") String consultantId, @RequestParam("skill") String[] skill) {
+	@RequestMapping(value = "/save-skill", method = RequestMethod.POST)
+	public String saveSkill(@ModelAttribute("consultantId") String consultantId, @RequestParam("skill") String skill) {
 		consultantService.addSkills(skill, consultantId);
 		return "redirect:/consultant/profile";
 	}

@@ -21,6 +21,7 @@ package it.f2informatica.core.services;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import it.f2informatica.core.gateway.ConsultantRepositoryGateway;
@@ -29,18 +30,21 @@ import it.f2informatica.core.model.EducationModel;
 import it.f2informatica.core.model.ExperienceModel;
 import it.f2informatica.core.model.LanguageModel;
 import it.f2informatica.core.model.query.ConsultantSearchCriteria;
+import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import static it.f2informatica.core.model.builder.ConsultantModelBuilder.consultantModel;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 public class ConsultantServiceImpl implements ConsultantService {
@@ -133,19 +137,22 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 
 	@Override
-	public void addSkills(String[] skills, String consultantId) {
-		consultantRepositoryGateway.addSkills(removeBlankContentFromArray(skills), consultantId);
+	public void addSkills(String skills, String consultantId) {
+		String[] tmpSkillArray = isNotBlank(skills) ? makeItArray(skills) : ArrayUtils.EMPTY_STRING_ARRAY;
+		consultantRepositoryGateway.addSkills(removeEmptyElementsFrom(tmpSkillArray), consultantId);
 	}
 
-	private String[] removeBlankContentFromArray(String[] skillsToProcess) {
-		List<String> listOfSkill = Lists.newArrayList(skillsToProcess);
-		Iterables.removeIf(listOfSkill, new Predicate<String>() {
+	private String[] makeItArray(String skills) {
+		return skills.replaceAll("\\s+", "").split(",+");
+	}
+
+	private String[] removeEmptyElementsFrom(String[] skills) {
+		return FluentIterable.from(Arrays.asList(skills)).filter(new Predicate<String>() {
 			@Override
 			public boolean apply(String input) {
-				return isBlank(input);
+				return isNotBlank(input);
 			}
-		});
-		return Iterables.toArray(listOfSkill, String.class);
+		}).toArray(String.class);
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public interface ConsultantService {
 
 	void addLanguages(LanguageModel[] languageModelArray, String consultantId);
 
-	void addSkills(String[] skills, String consultantId);
+	void addSkills(String skills, String consultantId);
 
 	Optional<ExperienceModel> findExperience(String consultantId, String experienceId);
 

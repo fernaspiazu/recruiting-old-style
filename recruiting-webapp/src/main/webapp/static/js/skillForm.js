@@ -20,51 +20,14 @@
 
 var $skillForm = (function skillForm() {
 
-	var skills = [];
-	var skillLabel = '';
-
-	function configure(params) {
-		skills = params.skills;
-		skillLabel = params.skillLabel;
-	}
-
-	function processSkillForm() {
-		$("#skillFormModal").on("show.bs.modal", function (e) {
-			for (var i = 0; i < skills.length; i++) {
-				$(createNewSkillRow(skills[i])).insertBefore($('#linkAddNewSkill'));
-			}
-			$(createNewSkillRow('')).insertBefore($('#linkAddNewSkill'));
+	function processSkillForm(skills) {
+		$("#skillFormModal").on("shown.bs.modal", function (e) {
+			$('#skill-txt-area').focus().val('').val(skills);
 		});
-
-		$("#skillFormModal").on("hidden.bs.modal", function (e) {
-			$("#skillForm").find(".row").remove();
-		});
-
-		$('#linkAddNewSkill').click(function () {
-			$(createNewSkillRow('')).insertBefore($('#linkAddNewSkill'));
-		});
-	}
-
-	function createNewSkillRow(value) {
-		return $('<div class="row">').append(
-				'<div class="form-group col-md-11">' +
-				'<label class="sr-only">' + skillLabel + '</label>' +
-				'<input type="text" name="skill" value="' + value + '" class="form-control"/>' +
-				'</div>' +
-				'<div class="form-group col-md-1">' +
-				'<button type="button" class="close" onclick="$skillForm.dropSkill(this);">&times;</button>' +
-				'</div>'
-		);
-	}
-
-	function dropSkill(button) {
-		$(button).closest('.row').remove();
 	}
 
 	return {
-		configure : configure,
-		processSkillForm : processSkillForm,
-		dropSkill : dropSkill
+		processSkillForm : processSkillForm
 	}
 
 }());

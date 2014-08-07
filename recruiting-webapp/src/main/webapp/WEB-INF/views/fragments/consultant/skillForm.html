@@ -16,10 +16,11 @@
 				<h4 class="modal-title" id="skillModalLabel" th:text="${modalTitle}">Skill</h4>
 			</div>
 			<div class="modal-body">
-				<form id="skillForm" th:action="@{/consultant/save-skills}" action="#" method="post" role="form">
-					<fieldset>
-						<button class="btn btn-link" type="button" id="linkAddNewSkill" th:text="#{skill.add}">Add</button>
-					</fieldset>
+				<form id="skillForm" th:action="@{/consultant/save-skill}" action="#" method="post" role="form">
+					<div class="form-group">
+						<label for="skill-txt-area" class="control-label" th:text="#{skill.add.separated.commas.msg}">Add the skills separated by commas</label>
+						<textarea id="skill-txt-area" name="skill" rows="3" class="form-control" th:placeholder="#{skill.add.example}" placeholder="Java, SQL, Ruby"></textarea>
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{global.close}">Close</button>
 						<button type="submit" id="btnSubmitSkills" name="submitEvent" value="saveLanguages" class="btn btn-success" th:text="#{global.save}">Save</button>
@@ -30,13 +31,8 @@
 	</div>
 	<script th:src="@{/static/js/skillForm.js}" src="../../../../static/js/skillForm.js"></script>
 	<script th:inline="javascript">
-		var params = {
-			skills : /*[[${consultantModel.skills}]]*/ [],
-			skillLabel : /*[[#{skill.skill}]]*/ ''
-		};
-		$skillForm.configure(params);
-		$skillForm.processSkillForm();
-
+		var skills = /*[[${#strings.listJoin(consultantModel.skills, ', ')}]]*/ '';
+		$skillForm.processSkillForm(skills);
 	</script>
 </div>
 </body>
