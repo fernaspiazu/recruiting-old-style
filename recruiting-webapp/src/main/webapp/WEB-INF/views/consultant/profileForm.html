@@ -25,9 +25,9 @@
 		</h2>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-7">
 			<!--Experience Section-->
-			<div id="experienceSection" class="row">
+			<div id="experienceSection" class="row" style="margin-right: 10px;">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title panel-title-custom" th:text="#{experience.title}">Experience</h4>
@@ -62,7 +62,9 @@
 				<div th:substituteby="fragments/consultant/experienceForm::experienceForm('experienceFormModal', #{experience.new})"></div>
 				<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteExperienceMessageModal', #{experience.delete}, #{experience.delete.msg}, 'btnDeleteExperience')"></div>
 			</div>
+		</div>
 
+		<div class="col-md-5">
 			<!--Language Section-->
 			<div id="languageSection" class="row">
 				<div class="panel panel-default">
@@ -154,9 +156,7 @@
 				<div th:substituteby="fragments/consultant/educationForm::educationForm('educationFormModal', #{education.title})"></div>
 				<div th:substituteby="fragments/deleteMsgModal::deleteMsgModal('deleteEducationMessageModal', #{education.delete}, #{education.delete.msg}, 'btnDeleteEducation')"></div>
 			</div>
-
 		</div>
-		<a class="btn btn-warning btn-lg" th:href="@{'/consultants'}" th:text="#{global.back}" style="width: 100%;">Back</a>
 	</div>
 </div>
 <div id="footer" th:substituteby="fragments/footer::footer">

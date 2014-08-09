@@ -22,11 +22,11 @@
 						<div class="error-block"></div>
 						<input type="hidden" id="educationId" th:field="*{id}"/>
 						<div class="form-group">
-							<label for="school" class="sr-only" th:text="#{education.school}">School</label>
+							<label for="school" class="control-label required" th:text="#{education.school}">School</label>
 							<input type="text" id="school" th:field="*{school}" class="form-control" th:placeholder="#{education.school}" placeholder="School"/>
 						</div>
 						<div class="form-group">
-							<label th:text="#{education.period}">Period</label>
+							<label th:text="#{education.period}" class="required">Period</label>
 							<div class="row">
 								<div class="col-md-3">
 									<label for="startYear" class="sr-only" th:text="#{education.startyear}">Start year</label>
@@ -68,24 +68,27 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="schoolDegree" class="sr-only" th:text="#{education.schooldegree}">School degree</label>
+							<label for="schoolDegree" class="control-label" th:text="#{education.schooldegree}">School degree</label>
 							<input type="text" id="schoolDegree" th:field="*{schoolDegree}" class="form-control" th:placeholder="#{education.schooldegree}" placeholder="School degree"/>
 						</div>
 						<div class="form-group">
-							<label for="schoolFieldOfStudy" class="sr-only" th:text="#{education.fieldstudy}">Field of studies</label>
+							<label for="schoolFieldOfStudy" class="control-label" th:text="#{education.fieldstudy}">Field of studies</label>
 							<input type="text" id="schoolFieldOfStudy" th:field="*{schoolFieldOfStudy}" class="form-control" th:placeholder="#{education.fieldstudy}" placeholder="Field of studies"/>
 						</div>
 						<div class="form-group">
-							<label for="schoolGrade" class="sr-only" th:text="#{education.schoolgrade}">Grade</label>
+							<label for="schoolGrade" class="control-label" th:text="#{education.schoolgrade}">Grade</label>
 							<input type="text" id="schoolGrade" th:field="*{schoolGrade}" class="form-control" th:placeholder="#{education.schoolgrade}" placeholder="Grade"/>
 						</div>
 						<div class="form-group">
-							<label for="schoolActivities" class="sr-only" th:text="#{education.schoolactivity}">Activities</label>
+							<label for="schoolActivities" class="control-label" th:text="#{education.schoolactivity}">Activities</label>
 							<textarea id="schoolActivities" th:field="*{schoolActivities}" rows="3" class="form-control" th:placeholder="#{education.schoolactivity}" placeholder="Activities"></textarea>
 						</div>
 						<div class="form-group">
-							<label for="educationDescription" class="sr-only" th:text="#{education.description}">Description</label>
+							<label for="educationDescription" class="control-label" th:text="#{education.description}">Description</label>
 							<textarea id="educationDescription" th:field="*{description}" rows="5" class="form-control" th:placeholder="#{education.description}" placeholder="Description"></textarea>
+						</div>
+						<div>
+							<label th:text="#{global.mandatory.asterik}" class="control-label red">*</label>&nbsp;<span class="text-muted small" th:text="#{global.mandatory.message}"></span>
 						</div>
 					</fieldset>
 					<div class="modal-footer">

@@ -22,19 +22,19 @@
 						<div class="error-block"></div>
 						<input type="hidden" id="experienceId" th:field="*{id}"/>
 						<div class="form-group">
-							<label for="companyName" class="sr-only" th:text="#{experience.companyname}">Company name</label>
-							<input type="text" id="companyName" th:field="*{companyName}" class="form-control" th:placeholder="#{experience.companyname}" placeholder="Company name"/>
+							<label for="companyName" class="control-label required" th:text="#{experience.companyname}">Company name</label>
+							<input type="text" id="companyName" th:field="*{companyName}" class="form-control" placeholder="Company SpA"/>
 						</div>
 						<div class="form-group">
-							<label for="position" class="sr-only" th:text="#{experience.position}">Position</label>
-							<input type="text" id="position" th:field="*{position}" class="form-control" th:placeholder="#{experience.position}" placeholder="Position"/>
+							<label for="position" class="control-label required" th:text="#{experience.position}">Position</label>
+							<input type="text" id="position" th:field="*{position}" class="form-control" placeholder="HR Manager"/>
 						</div>
 						<div class="form-group">
-							<label for="locality" class="sr-only" th:text="#{experience.locality}">Locality</label>
-							<input type="text" id="locality" th:field="*{locality}" class="form-control" th:placeholder="#{experience.locality}" placeholder="Locality"/>
+							<label for="locality" class="control-label required" th:text="#{experience.locality}">Locality</label>
+							<input type="text" id="locality" th:field="*{locality}" class="form-control" placeholder="New York"/>
 						</div>
 						<div class="form-group">
-							<label th:text="#{experience.period}">Period</label>
+							<label th:text="#{experience.period}" class="required">Period</label>
 							<div class="row">
 								<div class="col-md-5">
 									<div class="col-md-6" style="padding-right: 0">
@@ -90,8 +90,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="description" class="sr-only" th:text="#{experience.description}">Description</label>
+							<label for="description" class="control-label required" th:text="#{experience.description}">Description</label>
 							<textarea id="description" th:field="*{description}" class="form-control" rows="5" th:placeholder="#{experience.description}" placeholder="Description"></textarea>
+						</div>
+						<div>
+							<label th:text="#{global.mandatory.asterik}" class="control-label red">*</label>&nbsp;<span class="text-muted small" th:text="#{global.mandatory.message}"></span>
 						</div>
 					</fieldset>
 					<div class="modal-footer">

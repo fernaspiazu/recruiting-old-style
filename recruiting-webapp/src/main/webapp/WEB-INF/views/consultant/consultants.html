@@ -52,7 +52,7 @@
 			<div th:unless="${page.hasContent()}" class="alert alert-info">
 				<p class="lead text-info text-center" th:text="#{consultant.norecord}">No consultant registered</p>
 			</div>
-			<h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="text-info"></h5>
+			<h5 th:text="|Total number of consultants registered: ${page.totalElements}|" class="alert alert-info"></h5>
 
 			<div th:if="${page.hasContent()}" th:each="c : ${page}" th:id="${#ids.seq('consultant-')}" class="row">
 				<div class="col-md-12 margin-bottom-10px border-bottom">

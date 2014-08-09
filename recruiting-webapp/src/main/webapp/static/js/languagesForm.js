@@ -34,6 +34,8 @@ var $languageForm = (function languagesForm() {
 	var full_professional = '';
 	var native_or_bilingual = '';
 	var lastIndex = 0;
+	var languageLbl = '';
+	var proficiencyLbl = '';
 
 	function manageForm(p) {
 		setFields(p);
@@ -70,6 +72,8 @@ var $languageForm = (function languagesForm() {
 		full_professional = p.full_professional;
 		native_or_bilingual = p.native_or_bilingual;
 		lastIndex = languages.length - 1;
+		languageLbl = p.language;
+		proficiencyLbl = p.proficiency;
 	}
 
 	function createSingleRowEntry(languageModel, index) {
@@ -87,7 +91,7 @@ var $languageForm = (function languagesForm() {
 		var nativeOrBilingualSelected = (languageModel != null && languageModel.proficiency === 'native_or_bilingual') ? ' selected="selected"' : '';
 
 		return $('<div class="row">').append(
-				'<div class="form-group col-md-5">' +
+				'<div class="form-group col-md-5"><label class="control-label">'+ languageLbl +'</label>' +
 				'<select name="languages[' + index + '].language" class="form-control">' +
 				'<option value="">' + selectLanguage + '</option>' +
 				'<option value="english"' + englishSelected + '>' + english + '</option>' +
@@ -97,7 +101,7 @@ var $languageForm = (function languagesForm() {
 				'<option value="dutch"' + dutchSelected + '>' + dutch + '</option>' +
 				'</select>' +
 				'</div>' +
-				'<div class="form-group col-md-5">' +
+				'<div class="form-group col-md-5"><label class="control-label">'+ proficiencyLbl +'</label>' +
 				'<select name="languages[' + index + '].proficiency" class="form-control">' +
 				'<option value="">' + selectproficiency + '</option>' +
 				'<option value="elementary"' + elementarySelected + '>' + elementary + '</option>' +
