@@ -38,6 +38,7 @@ $(document).ready(function() {
 		$.post(url, data, function(response) {
 			if (response.status == "FAIL") {
 				resetAllErrorMessages();
+				var $inputToFocus = null;
 				$.each(response.errorMessages, function(i, item) {
 					var errorMessage = item.errorMessage;
 					var $field = $('#'+item.fieldName);
@@ -49,7 +50,13 @@ $(document).ready(function() {
 					} else {
 						$fieldErrors.find('.alert-danger').append(errorMessage);
 					}
+
+					if ($inputToFocus === null && $field.attr('autofocus') !== undefined) {
+						$inputToFocus = $field;
+					}
 				});
+
+				$inputToFocus.focus();
 			} else {
 				$form.unbind('submit');
 				$form.append('<input type="hidden">').attr({
