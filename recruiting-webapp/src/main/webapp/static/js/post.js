@@ -56,7 +56,9 @@ $(document).ready(function() {
 					}
 				});
 
-				$inputToFocus.focus();
+				if ($inputToFocus !== null) {
+					$inputToFocus.focus();
+				}
 			} else {
 				$form.unbind('submit');
 				$form.append('<input type="hidden">').attr({

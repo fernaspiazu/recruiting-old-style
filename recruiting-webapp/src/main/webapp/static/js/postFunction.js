@@ -38,6 +38,7 @@ function executePost(targetForm, asyncUrl) {
 		$.post(url, data, function(response) {
 			if (response.status == "FAIL") {
 				resetAllErrorMessages(targetForm);
+				var $inputToFocus = null;
 				$.each(response.errorMessages, function(i, item) {
 					var errorMessage = item.errorMessage;
 					var $field = $('#'+item.fieldName);
@@ -49,7 +50,15 @@ function executePost(targetForm, asyncUrl) {
 					} else {
 						$fieldErrors.find('.alert-danger').append(errorMessage);
 					}
+
+					if ($inputToFocus === null && $field.attr('autofocus') !== undefined) {
+						$inputToFocus = $field;
+					}
 				});
+
+				if ($inputToFocus !== null) {
+					$inputToFocus.focus();
+				}
 			} else {
 				$form.unbind('submit');
 				$form.append('<input type="hidden">').attr({
