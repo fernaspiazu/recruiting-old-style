@@ -42,8 +42,12 @@ public class NavBarController {
 	@Autowired
 	private ConsultantService consultantService;
 
+	private static int number = 0;
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
+		number++;
+		System.out.println(number);
 		model.addAttribute(SessionAttribute.NAVBAR_ITEM_ACTIVE, 0);
 		return "homePage";
 	}
