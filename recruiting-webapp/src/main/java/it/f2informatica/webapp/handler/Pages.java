@@ -21,8 +21,8 @@ package it.f2informatica.webapp.handler;
 
 public interface Pages {
 
-	public static final String PAGE_NOT_FOUND = "404";
+	String PAGE_NOT_FOUND = "404";
 
-	public static final String SERVER_ERROR = "500";
+	String SERVER_ERROR = "500";
 
 }

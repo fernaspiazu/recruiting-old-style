@@ -36,7 +36,7 @@ import java.util.Locale;
  * Class which represents the current Http Request performed.
  */
 @Component
-public class CurrentHttpRequest {
+public class HttpRequest {
 
 	/**
 	 * Returns the current locale associated to this request
@@ -46,14 +46,14 @@ public class CurrentHttpRequest {
 	 * @return the current locale
 	 */
 	public Locale getLocale() {
-		String languageParam = getCurrentHttpRequest().getParameter(WebApplicationConfig.LANGUAGE);
+		String languageParam = getHttpServletRequest().getParameter(WebApplicationConfig.LANGUAGE);
 		if (StringUtils.hasText(languageParam)) {
 			return LocaleUtils.toLocale(languageParam);
 		}
 		Cookie cookie = getCookie(WebApplicationConfig.CURRENT_LOCALE_COOKIE);
 		return (cookie != null)
 			? LocaleUtils.toLocale(cookie.getValue())
-			: getCurrentHttpRequest().getLocale();
+			: getHttpServletRequest().getLocale();
 	}
 
 	/**
@@ -64,13 +64,13 @@ public class CurrentHttpRequest {
 	 * @return Cookie belonging this request
 	 */
 	public Cookie getCookie(String cookieName) {
-		return WebUtils.getCookie(getCurrentHttpRequest(), cookieName);
+		return WebUtils.getCookie(getHttpServletRequest(), cookieName);
 	}
 
 	/**
 	 * Gets the current Http Request
 	 */
-	public HttpServletRequest getCurrentHttpRequest() {
+	public HttpServletRequest getHttpServletRequest() {
 		return getServletRequestAttributes().getRequest();
 	}
 

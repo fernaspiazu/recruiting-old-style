@@ -27,7 +27,7 @@ import it.f2informatica.core.validator.ConsultantPersonalDetailsValidator;
 import it.f2informatica.core.validator.utils.ValidationResponseHandler;
 import it.f2informatica.webapp.controller.ConsultantController;
 import it.f2informatica.webapp.test.context.GsonFactory;
-import it.f2informatica.webapp.utils.CurrentHttpRequest;
+import it.f2informatica.webapp.utils.HttpRequest;
 import it.f2informatica.webapp.utils.MonthHelper;
 import it.f2informatica.webapp.utils.PeriodParser;
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class ConsultantControllerTest {
 	private PeriodParser periodParser;
 
 	@Mock
-	private CurrentHttpRequest httpRequest;
+	private HttpRequest httpRequest;
 
 	@Mock
 	private ConsultantService consultantService;

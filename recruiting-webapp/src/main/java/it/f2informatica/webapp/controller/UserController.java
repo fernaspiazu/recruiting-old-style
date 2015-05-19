@@ -30,14 +30,20 @@ import it.f2informatica.core.validator.utils.ValidationResponse;
 import it.f2informatica.core.validator.utils.ValidationResponseHandler;
 import it.f2informatica.pagination.services.QueryParameters;
 import it.f2informatica.webapp.security.SecurityAccessor;
-import it.f2informatica.webapp.utils.CurrentHttpRequest;
+import it.f2informatica.webapp.utils.HttpRequest;
 import it.f2informatica.webapp.utils.HttpRequestQueryParameters;
-import it.f2informatica.webapp.utils.MediaTypeUTF8;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import static it.f2informatica.webapp.utils.MediaTypeUTF8.JSON_UTF_8;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/user")
@@ -47,7 +53,7 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private CurrentHttpRequest httpRequest;
+	private HttpRequest httpRequest;
 
 	@Autowired
 	private SecurityAccessor securityAccessor;
@@ -64,40 +70,40 @@ public class UserController {
 	@Autowired
 	private UpdatePasswordModelValidator updatePasswordModelValidator;
 
-	@RequestMapping(value = "/load-users", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
+	@RequestMapping(value = "/load-users", method = GET, produces = JSON_UTF_8)
 	public
 	@ResponseBody
 	String loadUsers() {
-		QueryParameters parameters = new HttpRequestQueryParameters(httpRequest.getCurrentHttpRequest());
+		QueryParameters parameters = new HttpRequestQueryParameters(httpRequest.getHttpServletRequest());
 		return userService.getAllUsersPaginated(parameters, securityAccessor.getCurrentUsername());
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = POST)
 	public String saveUser(@ModelAttribute("userModel") UserModel userModel) {
 		userService.saveUser(userModel);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaTypeUTF8.JSON_UTF_8)
+	@RequestMapping(value = "/edit", method = GET, produces = JSON_UTF_8)
 	public
 	@ResponseBody
 	UserModel editUser(@RequestParam String userId) {
 		return userService.findUserById(userId).orNull();
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = POST)
 	public String updateUser(@ModelAttribute("userModel") UserModel userModel) {
 		userService.updateUser(userModel);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = GET)
 	public String deleteUser(@RequestParam String userId) {
 		userService.deleteUser(userId);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validate-user", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
+	@RequestMapping(value = "/validate-user", method = POST, produces = JSON_UTF_8)
 	public
 	@ResponseBody
 	ValidationResponse validateUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result) {
@@ -108,7 +114,7 @@ public class UserController {
 		return validationResponseHandler.validationSuccess();
 	}
 
-	@RequestMapping(value = "/change-password", method = RequestMethod.GET)
+	@RequestMapping(value = "/change-password", method = GET)
 	public String changePasswordForm(@RequestParam("userId") String userId, ModelMap model) {
 		Optional<UserModel> user = userService.findUserById(userId);
 		if (user.isPresent()) {
@@ -116,20 +122,21 @@ public class UserController {
 			model.addAttribute("changePasswordModel", passwordUpdaterService.prepareUpdatePasswordModel(userId));
 			return "user/changePasswordForm";
 		}
-
 		return pageNotFound();
 	}
 
-	@RequestMapping(value = "/update-password", method = RequestMethod.POST)
+	@RequestMapping(value = "/update-password", method = POST)
 	public String updatePassword(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel) {
 		passwordUpdaterService.updatePassword(updatePasswordModel);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/validate-password-updating", method = RequestMethod.POST, produces = MediaTypeUTF8.JSON_UTF_8)
-	public
+	@RequestMapping(value = "/validate-password-updating", method = POST, produces = JSON_UTF_8)
 	@ResponseBody
-	ValidationResponse validatePasswordUpdating(@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel, BindingResult result) {
+	public ValidationResponse validatePasswordUpdating(
+			@ModelAttribute("changePasswordModel") UpdatePasswordModel updatePasswordModel,
+			BindingResult result) {
+
 		updatePasswordModelValidator.validate(updatePasswordModel, result);
 		if (result.hasErrors()) {
 			return validationResponseHandler.validationFail(result, httpRequest.getLocale());

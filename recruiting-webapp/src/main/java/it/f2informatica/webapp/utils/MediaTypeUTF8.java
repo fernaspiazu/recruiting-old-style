@@ -28,6 +28,6 @@ public interface MediaTypeUTF8 {
 	/**
 	 * application/json;charset=UTF-8
 	 */
-	public static final String JSON_UTF_8 = "application/json;charset=UTF-8";
+	String JSON_UTF_8 = "application/json;charset=UTF-8";
 
 }

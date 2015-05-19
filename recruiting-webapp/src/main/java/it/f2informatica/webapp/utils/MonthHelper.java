@@ -33,7 +33,7 @@ public class MonthHelper {
 	private MessageSource messageSource;
 
 	@Autowired
-	private CurrentHttpRequest httpRequest;
+	private HttpRequest httpRequest;
 
 	public List<Month> getMonths() {
 		return Lists.newArrayList(
