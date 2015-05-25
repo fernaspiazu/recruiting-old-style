@@ -47,6 +47,7 @@ public class HttpServer {
 		httpServerConnector.setIdleTimeout(30000);
 		httpServerConnector.setAcceptQueueSize(200);
 		server.addConnector(httpServerConnector);
+    System.out.println("Hello World!!!");
 		return server;
 	}
 
